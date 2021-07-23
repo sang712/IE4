@@ -26,26 +26,26 @@ public class UserRepositorySupport {
         return Optional.ofNullable(user);
     }
 
-    // user 정보 업데이트
-    public int findByUserId(String userId, UserUpdatePatchReq updateInfo) {
-
-        long ret = jpaQueryFactory.update(qUser)
-                .set(qUser.department, updateInfo.getDepartment())
-                .set(qUser.position, updateInfo.getPosition())
-                .set(qUser.name, updateInfo.getName())
-                .where(qUser.userId.eq(userId))
-                .execute();
-
-        System.out.println("Querydsl updateUser >>>>>>>>>>> " + ret);
-
-        return (int) ret;
-    }
-
-    // user 탈퇴
-    public int deleteUser(String userId) {
-        long ret = jpaQueryFactory.delete(qUser).where(qUser.userId.eq(userId)).execute();
-        System.out.println("delete!!! >>>>>>>>>>> " + ret);
-
-        return (int) ret;
-    }
+//    // user 정보 업데이트
+//    public int findByUserId(String userId, UserUpdatePatchReq updateInfo) {
+//
+//        long ret = jpaQueryFactory.update(qUser)
+//                .set(qUser.department, updateInfo.getDepartment())
+//                .set(qUser.position, updateInfo.getPosition())
+//                .set(qUser.name, updateInfo.getName())
+//                .where(qUser.userId.eq(userId))
+//                .execute();
+//
+//        System.out.println("Querydsl updateUser >>>>>>>>>>> " + ret);
+//
+//        return (int) ret;
+//    }
+//
+//    // user 탈퇴
+//    public int deleteUser(String userId) {
+//        long ret = jpaQueryFactory.delete(qUser).where(qUser.userId.eq(userId)).execute();
+//        System.out.println("delete!!! >>>>>>>>>>> " + ret);
+//
+//        return (int) ret;
+//    }
 }

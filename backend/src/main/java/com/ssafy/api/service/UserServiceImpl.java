@@ -10,6 +10,8 @@ import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
 
+import java.util.Optional;
+
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
@@ -49,19 +51,29 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int updateUser(String userId, UserUpdatePatchReq userUpdatePatchReq) {
+	public User updateUser(UserUpdatePatchReq userUpdateInfo, String userId) {
+		User user = userRepository.findByUserId(userId).get();
 
-		int ret = userRepositorySupport.findByUserId(userId, userUpdatePatchReq);
+		user.setName(userUpdateInfo.getName());
+		user.setDepartment(userUpdateInfo.getDepartment());
+		user.setPosition(userUpdateInfo.getPosition());
 
-		return ret;
+		return userRepository.save(user);
 	}
 
 	@Override
 	public int deleteUser(String userId) {
+		// 디비에 유저 정보 조회 (userId 를 통한 조회).
+		Optional<User> user = userRepositorySupport.findUserByUserId(userId);
 
-		int ret = userRepositorySupport.deleteUser(userId);
+		int result = 0; // 0 : fail, 1 : success
 
-		return ret;
+		if(user.isPresent()){
+			result = 1;
+			userRepository.delete(user.get());
+		}
+
+		return result;
 	}
 
 

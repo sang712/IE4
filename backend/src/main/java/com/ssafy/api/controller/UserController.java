@@ -39,12 +39,8 @@ public class UserController {
 	
 	@PostMapping()
 	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "성공"),
-        @ApiResponse(code = 401, message = "인증 실패"),
-        @ApiResponse(code = 404, message = "사용자 없음"),
-        @ApiResponse(code = 500, message = "서버 오류")
-    })
+    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+					@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseResponseBody> register(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
 		
@@ -56,10 +52,8 @@ public class UserController {
 
 	@GetMapping("/{userId}")
 	@ApiOperation(value = "유저 정보", notes = "존재하는 회원 확인")
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "사용 가능한 ID"),
-		@ApiResponse(code = 409, message = "이미 존재하는 사용자 ID 입니다.")
-	})
+	@ApiResponses({ @ApiResponse(code = 200, message = "사용 가능한 ID"),
+					@ApiResponse(code = 409, message = "이미 존재하는 사용자 ID 입니다.") })
 	public ResponseEntity<? extends BaseResponseBody> checkId(@PathVariable String userId) {
 
 		// 유저 ID 검색~~?
@@ -73,12 +67,8 @@ public class UserController {
 	
 	@GetMapping("/me")
 	@ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.") 
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "성공"),
-        @ApiResponse(code = 401, message = "인증 실패"),
-        @ApiResponse(code = 404, message = "사용자 없음"),
-        @ApiResponse(code = 500, message = "서버 오류")
-    })
+    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+        			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<UserRes> getUserInfo(@ApiIgnore Authentication authentication) {
 		/**
 		 * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
@@ -93,35 +83,30 @@ public class UserController {
 
 	@PatchMapping("/{userId}")
 	@ApiOperation(value = "유저 정보 수정", notes = "유저의 정보를 수정한다.")
-	@ApiResponses({
-			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
-	})
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+					@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	@Transactional		// update, delete는 트랜잭션 어노테이션 필수!!
-	public ResponseEntity<? extends BaseResponseBody> updateUser(@PathVariable String userId,
-																 @RequestBody @ApiParam(value="수정할 정보", required = true) UserUpdatePatchReq updateInfo) {
+	public ResponseEntity<? extends BaseResponseBody> updateUser(
+			@PathVariable String userId,
+			@RequestBody @ApiParam(value="수정할 정보", required = true) UserUpdatePatchReq updateInfo) {
 
-		int ret = userService.updateUser(userId, updateInfo);
+		User user = userService.updateUser(updateInfo, userId);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
 	@DeleteMapping("/{userId}")
 	@ApiOperation(value = "유저 정보 삭제", notes = "유저의 정보를 삭제한다. 탈퇴.")
-	@ApiResponses({
-			@ApiResponse(code = 204, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
-	})
+	@ApiResponses({ @ApiResponse(code = 204, message = "성공"),@ApiResponse(code = 401, message = "인증 실패"),
+					@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	@Transactional		// update, delete는 트랜잭션 어노테이션 필수!!
 	public ResponseEntity<? extends BaseResponseBody> deleteUser(@PathVariable String userId) {
 
+		int deleteResult = userService.deleteUser(userId);
 
-		int ret = userService.deleteUser(userId);
-
-		return ResponseEntity.status(204).body(BaseResponseBody.of(204, "Success"));
+		if(deleteResult == 1)
+			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "삭제 성공"));
+		else
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "사용자가 존재하지 않습니다."));
 	}
 }
