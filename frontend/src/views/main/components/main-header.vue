@@ -14,8 +14,22 @@
           </el-input>
         </div>
         <div class="button-wrapper">
-          <el-button>회원가입</el-button>
-          <el-button type="primary" @click="clickLogin">로그인</el-button>
+          <!-- <div v-if="state.isLogin">
+            <el-button @click="clickProfile">
+              <i class="fas fa-user" style="margin-right: 5px;"></i>회원정보
+            </el-button>
+            <el-button type="danger" @click="clickLogout">
+              <i class="fas fa-power-off" style="margin-right: 5px;"></i>로그아웃
+            </el-button>
+          </div> -->
+          <div> 
+            <el-button @click="clickSignup">
+              <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>회원가입
+            </el-button>
+            <el-button type="primary" @click="clickLogin">
+              <i class="fas fa-key" style="margin-right: 5px;"></i>로그인
+            </el-button>
+          </div>
         </div>
       </div>
 
@@ -106,6 +120,10 @@ export default {
       })
     }
 
+    const clickSignup = () => {
+      emit('openSignupDialog')
+    }
+
     const clickLogin = () => {
       emit('openLoginDialog')
     }
@@ -114,7 +132,7 @@ export default {
       state.isCollapse = !state.isCollapse
     }
 
-    return { state, menuSelect, clickLogo, clickLogin, changeCollapse }
+    return { state, menuSelect, clickLogo, clickSignup, clickLogin, changeCollapse }
   }
 }
 </script>
