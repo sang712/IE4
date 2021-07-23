@@ -14,15 +14,15 @@
           </el-input>
         </div>
         <div class="button-wrapper">
-          <!-- <div v-if="state.isLogin">
+          <div v-if="state.isLogin">
             <el-button @click="clickProfile">
               <i class="fas fa-user" style="margin-right: 5px;"></i>회원정보
             </el-button>
             <el-button type="danger" @click="clickLogout">
               <i class="fas fa-power-off" style="margin-right: 5px;"></i>로그아웃
             </el-button>
-          </div> -->
-          <div> 
+          </div>
+          <div v-else> 
             <el-button @click="clickSignup">
               <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>회원가입
             </el-button>
@@ -79,7 +79,13 @@ export default {
   setup(props, { emit }) {
     const store = useStore()
     const router = useRouter()
+    const isLogin = ref(false)
     const state = reactive({
+      isLogin: computed(() => {
+        const jwt = localStorage.getItem('jwt')
+        if (jwt == null) { return false }
+        else { return true }
+      }),
       searchValue: null,
       isCollapse: true,
       menuItems: computed(() => {
@@ -128,11 +134,42 @@ export default {
       emit('openLoginDialog')
     }
 
+    const clickProfile = () => {
+      store.dispatch('root/requestProfile')
+      .then(function (result) {
+        console.log('내 프로필 정보', result.data)
+        emit('openProfileDialog', result.data)
+      })
+      .catch(function (err) {
+        const status = err.response.request.status
+        if (status == 500) {
+          Swal.fire({
+            title: '이런!',
+            text: '서버 오류가 발생했습니다..',
+            icon: 'error',
+          })
+        } else {
+          Swal.fire({
+            title: '이런!',
+            text: '알 수 없는 오류가 발생했습니다.',
+            icon: 'error',
+          })
+        } 
+      })
+    }
+
+    const clickLogout = () => {
+      const jwt = localStorage.getItem('jwt')
+      console.log(jwt)
+      localStorage.removeItem('jwt')
+      localStorage.removeItem('username')
+    }
+
     const changeCollapse = () => {
       state.isCollapse = !state.isCollapse
     }
 
-    return { state, menuSelect, clickLogo, clickSignup, clickLogin, changeCollapse }
+    return { state, menuSelect, clickLogo, clickSignup, clickLogin, clickLogout, clickProfile, changeCollapse }
   }
 }
 </script>
