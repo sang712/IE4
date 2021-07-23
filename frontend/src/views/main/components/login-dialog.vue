@@ -101,13 +101,38 @@ export default {
           console.log('submit')
           store.dispatch('root/requestLogin', { id: state.form.id, password: state.form.password })
           .then(function (result) {
-            alert('accessToken: ' + result.data.accessToken)
+            localStorage.setItem('jwt', result.data.accessToken)
+            localStorage.setItem('userId', result.data.userId)
+            emit('closeLoginDialog')
           })
           .catch(function (err) {
-            alert(err)
+            const status = err.response.request.status
+            if (status == 500) {
+              Swal.fire({
+                title: '이런!',
+                text: '서버 오류가 발생했습니다..',
+                icon: 'error',
+              })
+            } else if (status == 404) {
+              Swal.fire({
+                title: '이런!',
+                text: '존재하지 않는 계정입니다.',
+                icon: 'error',
+              })
+            } else if (status == 401) {
+              Swal.fire({
+                title: '이런!',
+                text: '잘못된 비밀번호 입니다.',
+                icon: 'error',
+              })
+            }
           })
         } else {
-          alert('Validate error!')
+          Swal.fire({
+            title: '이런!',
+            text: '로그인에 실패했습니다.',
+            icon: 'error',
+          })
         }
       });
     }
