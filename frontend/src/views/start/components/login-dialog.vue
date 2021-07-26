@@ -16,8 +16,9 @@
   </el-dialog>
 </template>
 <style>
+
 .login-dialog {
-  width: 400px !important;
+  width: 400px;
   height: 300px;
 }
 .login-dialog .el-dialog__headerbtn {
@@ -33,6 +34,7 @@
   margin-bottom: 20px;
 }
 .login-dialog .el-form-item__error {
+  margin-top: 5px;
   font-size: 12px;
   color: red;
 }
@@ -80,10 +82,10 @@ export default {
       },
       rules: {
         id: [
-          { required: true, message: 'Please input ID', trigger: 'blur' }
+          { required: true, message: '아이디를 입력해주세요.', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: 'Please input password', trigger: 'blur' }
+          { required: true, message: '비밀번호를 입력해주세요.', trigger: 'blur' }
         ]
       },
       dialogVisible: computed(() => props.open),

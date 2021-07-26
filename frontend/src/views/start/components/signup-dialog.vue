@@ -1,27 +1,51 @@
 <template>
   <el-dialog custom-class="signup-dialog" title="회원가입" v-model="state.dialogVisible" @close="handleClose">
-    <el-form :model="state.form" :rules="state.rules" ref="signupForm" :label-position="state.form.align">
-      <div class="el-form-item" style="margin: 0px;">
-        <el-button @click="clickCheckId" size="mini" style="margin: 0px 0px 0px 280px">중복확인</el-button>
-      </div>
-      <el-form-item prop="id" label="아이디" :label-width="state.formLabelWidth" >
-        <el-input v-model="state.form.id" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item prop="password" label="비밀번호" :label-width="state.formLabelWidth">
-        <el-input v-model="state.form.password" autocomplete="off" show-password></el-input>
-      </el-form-item>
-      <el-form-item prop="passwordConfirmation" label="비밀번호확인" :label-width="state.formLabelWidth">
-        <el-input v-model="state.form.passwordConfirmation" autocomplete="off" show-password></el-input>
-      </el-form-item>
-      <el-form-item prop="department" label="소속" :label-width="state.formLabelWidth">
-        <el-input v-model="state.form.department" autocomplete="on"></el-input>
-      </el-form-item>
-      <el-form-item prop="position" label="직책" :label-width="state.formLabelWidth">
-        <el-input v-model="state.form.position" autocomplete="on"></el-input>
-      </el-form-item>
-      <el-form-item prop="name" label="이름" :label-width="state.formLabelWidth">
-        <el-input v-model="state.form.name" autocomplete="off"></el-input>
-      </el-form-item>
+    <el-form :model="state.form" :rules="state.rules" ref="signupForm" :label-position="state.form.align" style="width: 25vw;">
+      <el-scrollbar height="400px" style="display: flex; justify-content: center;">
+        <div style="margin: 0px;">
+          <el-button @click="clickCheckId" size="mini" style="margin: 0px 0px 0px 280px">중복확인</el-button>
+        </div>
+        <el-form-item prop="id" label="아이디" :label-width="state.formLabelWidth" >
+          <el-input v-model="state.form.id" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="password" label="비밀번호" :label-width="state.formLabelWidth">
+          <el-input v-model="state.form.password" autocomplete="off" show-password></el-input>
+        </el-form-item>
+        <el-form-item prop="passwordConfirmation" label="비밀번호확인" :label-width="state.formLabelWidth">
+          <el-input v-model="state.form.passwordConfirmation" autocomplete="off" show-password></el-input>
+        </el-form-item>
+        <el-form-item prop="name" label="이름" :label-width="state.formLabelWidth">
+          <el-input v-model="state.form.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="학년 / 반 / 번호" :label-width="state.formLabelWidth">
+          <el-select v-model="state.form.grade" placeholder="학년" style="width: 35%">
+            <el-option label="1학년" value="1"></el-option>
+            <el-option label="2학년" value="2"></el-option>
+            <el-option label="3학년" value="3"></el-option>
+            <el-option label="4학년" value="4"></el-option>
+            <el-option label="5학년" value="5"></el-option>
+            <el-option label="6학년" value="6"></el-option>
+          </el-select>
+          <el-select v-model="state.form.class_no" placeholder="반" style="width: 30%">
+            <el-option label="1반" value="01"></el-option>
+            <el-option label="2반" value="02"></el-option>
+            <el-option label="3반" value="03"></el-option>
+            <el-option label="4반" value="04"></el-option>
+            <el-option label="5반" value="05"></el-option>
+            <el-option label="6반" value="06"></el-option>
+          </el-select>
+          <el-input v-model="state.form.snum" placeholder="번호" style="width: 35%"></el-input>
+        </el-form-item>
+        <el-form-item prop="sex" label="성별" :label-width="state.formLabelWidth">
+          <el-radio-group v-model="state.form.sex">
+            <el-radio label="남">남</el-radio>
+            <el-radio label="여">여</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item prop="phone" label="휴대전화" :label-width="state.formLabelWidth">
+          <el-input v-model="state.form.phone"></el-input>
+        </el-form-item>
+      </el-scrollbar>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -31,6 +55,80 @@
   </el-dialog>
 </template>
 <style>
+@import url("https://fonts.googleapis.com/css?family=Fjalla+One&display=swap");
+* {
+  margin: 0;
+  padding: 0; }
+
+.el-dialog {
+  background-size: fill !important;
+  background-color: #FFFFFF;
+  background-image: url('../../../assets/images/signuppage1.png') !important;
+  background-position: center;
+  /* background: #FFFFFF  center center no-repeat !important; */
+  /* background-opacity: 0.5; */
+  background-size: 100% !important;
+  width: 100vw;
+  /* height: 100vh; */
+  display: grid;
+  align-items: center;
+  justify-items: center; 
+  margin: 5px 0px;}
+
+.el-scrollbar__view {
+  display: inline;
+  align-items: center;
+}
+
+.el-form-item {
+  display: block;
+  width: 100%;
+  font-size: 14pt;
+  line-height: 28pt;
+  font-family: "Fjalla One";
+  margin-bottom: 28pt;
+  border: none;
+  border-bottom: 2px solid black;
+  border-radius: 5px;
+  background: #f8f4e5;
+  min-width: 250px;
+  outline: none;
+  color: black; }
+
+input:focus {
+  border-bottom: 5px solid #ffa580; }
+
+button {
+  display: block;
+  margin: 0 auto;
+  line-height: 28pt;
+  padding: 0 20px;
+  background: #ffa580;
+  letter-spacing: 2px;
+  transition: .2s all ease-in-out;
+  outline: none;
+  border: 1px solid black;
+  box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px black; }
+button:hover {
+  background: black;
+  color: white;
+  border: 1px solid black; }
+
+::selection {
+  background: #ffc8ff; }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  border-bottom: 5px solid #95a4ff;
+  -webkit-text-fill-color: #2A293E;
+  -webkit-box-shadow: 0 0 0px 1000px #f8f4e5 inset;
+  transition: background-color 5000s ease-in-out 0s; }
+
+/* .signup-dialog .el-dialog__header {
+  margin: 0;
+  padding: 0;
+}
 .signup-dialog {
   width: 400px !important;
   height: 580px;
@@ -46,14 +144,30 @@
 }
 .signup-dialog .el-form-item {
   margin-bottom: 20px;
+} */
+.el-dialog__header {
+  background: rgba(255, 255, 255, 0.80);
+  padding: 10px 20px !important;
+  margin: 10px;
+  border-radius: 10px;
+}
+.el-dialog__body {
+  background: rgba(255, 255, 255, 0.80);
+  padding: 20px !important;
+  margin-bottom: 10px;
+  border-radius: 20px;
+}
+.el-dialog__body form{
+  opacity: 1.0;
 }
 .signup-dialog .el-form-item__error {
+  margin-top: 5px;
   font-size: 12px;
   color: red;
 }
-.signup-dialog .el-input__suffix {
+/* .signup-dialog .el-input__suffix {
   display: none;
-}
+} */
 .signup-dialog .el-dialog__footer {
   margin: 0 calc(50% - 80px);
   padding-top: 0;
@@ -118,7 +232,6 @@ export default {
         callback(new Error('비밀번호를 다시 입력해주세요.'))
       }
     }
-
     const checkDepartment = (rule, value, callback) => {
       if (value.length > 30) {
         callback(new Error('소속은 30자 이내여야 합니다.'))
@@ -144,9 +257,12 @@ export default {
         id: '',
         password: '',
         passwordConfirmation: '',
-        department: '',
-        position: '',
         name: '',
+        grade: '',
+        class_no: '',
+        snum: '',
+        sex: '',
+        phone: '',
         align: 'left'
       },
       rules: {
@@ -157,11 +273,15 @@ export default {
         password: [
           { required: true, message: '비밀번호를 입력해주세요.', trigger: 'blur' },
           { validator: checkPassword, trigger: ['blur', 'change'] }
-          // { regex: '[A-Za-z]+[0-9]+[!@#$%^&*-_]+', message: '비밀번호는 영문, 숫자, 특수문자가 조합되어야 합니다.', trigger: 'blur'},
         ],
         passwordConfirmation: [
           { required: true, message: '비밀번호를 한 번 더 입력해주세요.', trigger: 'blur' },
           { validator: checkPasswordConfirmation, trigger: 'blur'}
+        ],
+        name: [
+          { required: true, message: '이름을 입력해주세요.', trigger: 'blur'},
+          { validator: checkName, trigger: 'blur'}
+          // { maxLength: 30, message: '최대 30자까지 입력 가능합니다.', trigger: 'blur'},
         ],
         department: [
           { required: false },
@@ -173,11 +293,6 @@ export default {
           { validator: checkPosition, trigger: 'blur'}
           // { maxLength: 30, message: '최대 30자까지 입력 가능합니다.', trigger: 'blur'},
         ],
-        name: [
-          { required: true, message: '이름을 입력해주세요.', trigger: 'blur'},
-          { validator: checkName, trigger: 'blur'}
-          // { maxLength: 30, message: '최대 30자까지 입력 가능합니다.', trigger: 'blur'},
-        ]
       },
       dialogVisible: computed(() => props.open),
       formLabelWidth: '120px'
