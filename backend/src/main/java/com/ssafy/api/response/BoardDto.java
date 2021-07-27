@@ -24,6 +24,7 @@ public class BoardDto {
     @ApiModelProperty(name="게시물 학급 정보", example="603")
     int classId;
 
+
     public Board toEntity(){
         Board build = Board.builder()
                 .boardType(boardType)
@@ -37,12 +38,22 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(String boardType, int userId, String userName, int classId, String title, String content){
+    public void BoardDtoBuild(String boardType, int userId, String userName, int classId, String title, String content){
         this.boardType = boardType;
         this.userId = userId;
         this.userName = userName;
         this.classId = classId;
         this.title = title;
         this.content = content;
+    }
+    public static BoardDto of(Board board) {
+        BoardDto dto = new BoardDto();
+        dto.setBoardType(board.getBoardType());
+        dto.setUserId(board.getUserId());
+        dto.setUserName(board.getUserName());
+        dto.setClassId(board.getClassId());
+        dto.setTitle(board.getTitle());
+        dto.setContent(board.getContent());
+        return dto;
     }
 }
