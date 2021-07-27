@@ -2,8 +2,15 @@ package com.ssafy.api.service;
 
 import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.repository.EduClassRepository;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Service("myClassService")
 public class EduClassServiceImpl implements EduClassService {
@@ -22,10 +29,56 @@ public class EduClassServiceImpl implements EduClassService {
 
     }
 
-//    @Override
-//    public int updateTimetable(int classId) {
-//        return 0;
-//    }
+    @Override
+    public String updateTimetable(int eduClassId, MultipartHttpServletRequest request) {
+
+        String uploadFolder = "timetable";
+        String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
+        String saveUrl = "";
+
+        try {
+            MultipartFile file = request.getFile("file");
+
+            File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+            if(!uploadDir.exists()) uploadDir.mkdir();
+
+            String fileUrl = eduClassRepository.findByEduClassId(eduClassId).orElse(null);
+
+            // fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
+            // fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
+            if(fileUrl != null) {
+                File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+                if(deleteFile.exists()) deleteFile.delete();
+            }
+
+            //
+            String fileName = file.getOriginalFilename();
+
+            // Random File Id
+            UUID uuid = UUID.randomUUID();
+
+            // file extension
+            String extension = FilenameUtils.getExtension(fileName);
+            String savingFileName = uuid + "." + extension;
+            File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+
+            System.out.println("파일 경로!!!>>> " + destFile);
+
+            file.transferTo(destFile);
+
+            EduClass c = eduClassRepository.findEduClassById(eduClassId).get();
+            saveUrl = uploadFolder + "/" + savingFileName;
+            c.setConferenceUrl(saveUrl);
+            eduClassRepository.save(c);
+
+        } catch(IOException e) {
+            e.printStackTrace();
+
+        }
+
+        return saveUrl;
+    }
+
 //
 //    @Override
 //    public List<String> getRank(int classId) {
