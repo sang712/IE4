@@ -64,7 +64,7 @@ public class BoardController {
             return ResponseEntity.status(404).body(BaseResponseBody.of(404, "사용자가 존재하지 않습니다."));
     }
 
-    public 
+
 //    @GetMapping("/{classId}")
 //    public String boardList(Model model,
 //                            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
