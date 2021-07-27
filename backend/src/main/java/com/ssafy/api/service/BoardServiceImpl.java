@@ -7,6 +7,8 @@ import com.ssafy.db.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  *	게시판 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
@@ -38,4 +40,14 @@ public class BoardServiceImpl implements BoardService{
         board.setContent(boardUpdateInfo.getContent());
         return boardRepository.save(board);
     }
+
+    @Override
+    public int deleteBoard(int boardId) {
+        Optional<Board> board = boardRepository.findBoardById(boardId);
+
+        boardRepository.delete(board.get());
+        return 1;
+    }
+
+
 }

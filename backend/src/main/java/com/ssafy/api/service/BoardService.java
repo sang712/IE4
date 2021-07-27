@@ -7,4 +7,5 @@ import com.ssafy.db.entity.Board;
 public interface BoardService {
     Board insertBoard(BoardRegisterPostReq boardRegisterPosReq);
     Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId);
+    int deleteBoard(int boardId);
 }
