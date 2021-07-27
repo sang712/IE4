@@ -27,8 +27,10 @@
   width: 100%;
   height: 75%;
   background-size: contain;
-  background-repeat: no-repeat;
   background-image: url('../../assets/images/startpage.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  object-fit: contain !important;
 }
 .start-button {
   font-size: large;
@@ -36,6 +38,9 @@
   margin: 10px 10px;
   border-width: 0.75em;
   border-color: #C4C4C4;
+}
+.start-button:hover {
+  border: 13px solid #DEDEDE;
 }
 </style>
 
@@ -57,7 +62,7 @@ export default {
   },
   methods: {
     clickSignup () {
-      this. signupDialogOpen = true
+      this.signupDialogOpen = true
     },
     onCloseSignupDialog () {
       this.signupDialogOpen = false
