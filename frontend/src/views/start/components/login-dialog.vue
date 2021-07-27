@@ -51,7 +51,7 @@
 }
 /* 얼럿창 화면 맨 앞으로 */
 .swal2-container {
-  z-index: 2040;
+  z-index: 5000;
 }
 </style>
 <script>

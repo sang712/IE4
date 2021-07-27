@@ -48,6 +48,14 @@
         <el-form-item prop="address" label="주소" :label-width="state.formLabelWidth">
           <el-input v-model="state.form.address"></el-input>
         </el-form-item>
+        <el-form-item prop="password_question" label="비밀번호 질문" :label-width="state.formLabelWidth">
+          <el-select v-model="state.form.password_question" placeholder="질문을 선택하세요." style="width: 100%">
+            <el-option v-for="item in state.passQuestions" :key="item.question" :label="item.question" :value="item.question"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="password_answer" label="비밀번호 답변" :label-width="state.formLabelWidth">
+          <el-input v-model="state.form.password_answer"></el-input>
+        </el-form-item>
       </el-scrollbar>
     </el-form>
     <template #footer>
@@ -181,7 +189,7 @@ input:-webkit-autofill:focus {
 }
 /* 얼럿창 화면 맨 앞으로 */
 .swal2-container {
-  z-index: 2040;
+  z-index: 5000;
 }
 </style>
 <script>
@@ -232,7 +240,6 @@ export default {
 
     const checkPasswordConfirmation = (rule, value, callback) => {
       if (value != state.form.password) {
-        console.log(state.form.password, value)
         callback(new Error('비밀번호를 다시 입력해주세요.'))
       }
     }
@@ -271,6 +278,15 @@ export default {
     // Element UI Validator
     // rules의 객체 키 값과 form의 객체 키 값이 같아야 매칭되어 적용됨
     const state = reactive({
+      passQuestions: [
+        { question: "가장 좋아하는 색깔은?" },
+        { question: "키우고 있는 애완동물의 이름은?" },
+        { question: "가장 친한 친구의 이름은?" },
+        { question: "이효진의 별명은?" },
+        { question: "김윤주의 별명은?" },
+        { question: "임아연의 별명은?" },
+        { question: "강현구의 별명은?" },
+      ],
       form: {
         id: '',
         password: '',
@@ -314,7 +330,7 @@ export default {
           { validator: checkSnum, trigger: ['blur', 'change'] }
         ],
         sex: [
-          { required: true, message: '성별을 체크하세요.', trigger: 'blur'},
+          { required: true, message: '성별을 체크하세요.', trigger: ['blur', 'change']},
         ],
         phone: [
           { required: true, message: '연락처를 입력하세요.', trigger: 'blur'},
@@ -345,11 +361,25 @@ export default {
       signupForm.value.validate((valid) => {
         if (valid) {
           console.log('submit')
-          store.dispatch('root/requestSignup', { id: state.form.id, password: state.form.password, department: state.form.department, position: state.form.position, name: state.form.name })
+          store.dispatch('root/requestSignup', { 
+            id: state.form.id, 
+            password: state.form.password, 
+            name: state.form.name,
+            grade: state.form.grade,
+            class_no: state.form.class_no,
+            snum: state.form.snum,
+            sex: state.form.sex,
+            phone: state.form.phone,
+            address: state.form.address,
+            password_question: state.form.password_question,
+            password_answer: state.form.password_answer,
+          })
           .then(function (result) {
+            console.log(result)
             emit('closeSignupDialog')
           })
           .catch(function (err) {
+            console.log(err.response.request.status)
             if (err.response.request.status == 500) {
               Swal.fire({
                 title: '이런!',
@@ -397,6 +427,14 @@ export default {
       state.form.password = ''
       state.form.passwordConfirmation = ''
       state.form.name = ''
+      state.form.grade = ''
+      state.form.class_no = ''
+      state.form.snum = ''
+      state.form.sex = ''
+      state.form.phone = ''
+      state.form.address = ''
+      state.form.password_question = ''
+      state.form.password_answer = ''
       emit('closeSignupDialog')
     }
 
