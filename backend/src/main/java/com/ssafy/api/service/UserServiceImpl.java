@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
 		User user = new User();
 
-		user.setUserId(userRegisterInfo.getId());
+		user.setLoginId(userRegisterInfo.getLoginId());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
 		user.setName(userRegisterInfo.getName());
@@ -41,20 +41,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-		public User updateUser(UserUpdatePatchReq userUpdateInfo, String userId) {
-			User user = userRepository.findByUserId(userId).get();
+		public User updateUser(UserUpdatePatchReq userUpdateInfo, String loginId) {
+			User user = userRepository.findByLoginId(loginId).orElse(null);
 
-			user.setName(userUpdateInfo.getName());
-			user.setDepartment(userUpdateInfo.getDepartment());
-			user.setPosition(userUpdateInfo.getPosition());
+			if(user != null){
+				user.setName(userUpdateInfo.getName());
+				user.setDepartment(userUpdateInfo.getDepartment());
+				user.setPosition(userUpdateInfo.getPosition());
+			}
 
 			return userRepository.save(user);
 	}
 
 	@Override
-	public int deleteUser(String userId) {
+	public int deleteUser(String loginId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		Optional<User> user = userRepositorySupport.findUserByUserId(userId);
+		Optional<User> user = userRepositorySupport.findUserByLoginId(loginId);
 
 		int result = 0; // 0 : fail, 1 : success
 
@@ -68,9 +70,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserByUserId(String userId) {
+	public User getUserByLoginId(String loginId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserId(userId).orElse(null);
+		User user = userRepositorySupport.findUserByLoginId(loginId).orElse(null);
 
 		return user;
 	}
