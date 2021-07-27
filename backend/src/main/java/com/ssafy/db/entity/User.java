@@ -16,9 +16,14 @@ import javax.persistence.Entity;
 @Setter
 public class User extends BaseEntity{
     String position;
-    String department;
+    String loginId;
     String name;
-    String userId;
+    String sex;
+    int classId;
+    String phone;
+    String address;
+    String profile_img_url;
+    String department;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

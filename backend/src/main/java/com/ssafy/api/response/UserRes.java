@@ -28,7 +28,7 @@ public class UserRes{
 	
 	public static UserRes of(User user) {
 		UserRes res = new UserRes();
-		res.setUserId(user.getUserId());
+		res.setUserId(user.getLoginId());
 		res.setPassword(user.getPassword());
 		res.setName(user.getName());
 		res.setDepartment(user.getDepartment());
