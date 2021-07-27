@@ -1,7 +1,7 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.BoardRegisterPostReq;
 import com.ssafy.api.request.BoardUpdatePatchReq;
+import com.ssafy.api.response.BoardDto;
 import com.ssafy.db.entity.Board;
 import com.ssafy.db.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +15,15 @@ import java.util.Optional;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService{
+    private static final int BLOCK_PAGE_NUM_COUNT = 5;
+    private static final int PAGE_POST_COUNT = 4;
 
     @Autowired
     BoardRepository boardRepository;
 
     @Override
-    public Board insertBoard(BoardRegisterPostReq boardRegisterInfo) {
-        Board board = new Board();
-
-        board.setBoardType(boardRegisterInfo.getBoardType());
-        board.setUserId(boardRegisterInfo.getUserId());
-        board.setUserName(boardRegisterInfo.getUserName());
-        board.setTitle(boardRegisterInfo.getTitle());
-        board.setContent(boardRegisterInfo.getContent());
-        board.setClassId(boardRegisterInfo.getClassId());
-
-        return boardRepository.save(board);
+    public Board insertBoard(BoardDto boardDto) {
+        return boardRepository.save(boardDto.toEntity());
     }
 
     @Override
@@ -49,6 +42,17 @@ public class BoardServiceImpl implements BoardService{
         boardRepository.delete(board.get());
         return 1;
     }
+
+//    @Override
+//    public List<Board> getBoardList(int classID, int pageNum) {
+//
+//        Page<Board> page = boardRepository
+//                .findAll(PageRequest.of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createDate")));
+//
+//        List<Board> boards = page.getContent();
+//        List<Board>
+//        return null;
+//    }
 
 
 }

@@ -1,11 +1,13 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.BoardRegisterPostReq;
 import com.ssafy.api.request.BoardUpdatePatchReq;
+import com.ssafy.api.response.BoardDto;
 import com.ssafy.db.entity.Board;
 
 public interface BoardService {
-    Board insertBoard(BoardRegisterPostReq boardRegisterPosReq);
+    Board insertBoard(BoardDto boardDto);
     Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId);
     int deleteBoard(int boardId);
+    //List<Board> getBoardList(int classID, int pageNum);
+
 }
