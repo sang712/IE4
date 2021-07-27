@@ -43,6 +43,12 @@ public class BoardServiceImpl implements BoardService{
         return 1;
     }
 
+    @Override
+    public Board detailBoard(int boardId) {
+        Board board = boardRepository.findBoardById(boardId).get();
+        return board;
+    }
+
 //    @Override
 //    public List<Board> getBoardList(int classID, int pageNum) {
 //

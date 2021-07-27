@@ -9,7 +9,9 @@ import com.ssafy.db.repository.BoardRepository;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
@@ -64,6 +66,15 @@ public class BoardController {
             return ResponseEntity.status(404).body(BaseResponseBody.of(404, "사용자가 존재하지 않습니다."));
     }
 
+    @GetMapping("/{boardId}")
+    @ApiOperation(value = "게시글 확인", notes = "게시글을 자세히 확인한다.")
+    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "글 없음"), @ApiResponse(code = 500, message = "서버 오류") })
+    public ResponseEntity<BoardDto> detail(@ApiIgnore Authentication authentication, @PathVariable int boardId) {
+        Board board = boardService.detailBoard(boardId);
+
+        return ResponseEntity.status(200).body(BoardDto.of(board));
+    }
 
 //    @GetMapping("/{classId}")
 //    public String boardList(Model model,

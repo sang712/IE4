@@ -8,6 +8,7 @@ public interface BoardService {
     Board insertBoard(BoardDto boardDto);
     Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId);
     int deleteBoard(int boardId);
+    Board detailBoard(int boardId);
     //List<Board> getBoardList(int classID, int pageNum);
 
 }
