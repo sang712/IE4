@@ -1,12 +1,13 @@
 package com.ssafy.api.service;
 
 import com.ssafy.db.entity.EduClass;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
 public interface EduClassService {
     EduClass getEduClassByEduClassId(int eduClassId);
-//    int updateTimetable(int classId);
+    String updateTimetable(int eduClassId, MultipartHttpServletRequest request);
 //    List<String> getRank(int classId);
 //    List<?> getClassMem(int classId);
 }
