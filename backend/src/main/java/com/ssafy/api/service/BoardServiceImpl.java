@@ -31,8 +31,8 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, Integer boardId) {
-        Board board = boardRepository.findBoardByBoardId(boardId).get();
+    public Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId) {
+        Board board = boardRepository.findBoardById(boardId).get();
 
         board.setTitle(boardUpdateInfo.getTitle());
         board.setContent(boardUpdateInfo.getContent());
