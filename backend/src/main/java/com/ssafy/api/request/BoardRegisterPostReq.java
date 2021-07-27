@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 /* 게시판 글 등록 API ([POST] /api/v1/users) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
@@ -23,7 +21,9 @@ public class BoardRegisterPostReq {
     String title;
     @ApiModelProperty(name="게시판 글 내용", example="example_content")
     String content;
+    @ApiModelProperty(name="게시물 학급 정보", example="603")
+    int classId;
 
     @ApiModelProperty(name="게시판 글 첨부파일 리스트")
-    List<BoardFileRegisterPostReq> fileList;
+    BoardFileRegisterPostReq file;
 }

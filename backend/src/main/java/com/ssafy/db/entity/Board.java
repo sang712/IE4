@@ -14,5 +14,6 @@ public class Board extends BaseEntity {
     String userName;
     String title;
     String content;
+    int classId;
 
 }
