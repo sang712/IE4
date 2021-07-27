@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("UserLoginPostResponse")
-public class UserLoginPostRes extends BaseResponseBody{
+public class UserLoginPostRes {
 	@ApiModelProperty(name="USER ID", example="1")
 	int id;
 	@ApiModelProperty(name="Class ID", example="101")
