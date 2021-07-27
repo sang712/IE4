@@ -30,7 +30,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Api(value = "유저 API", tags = {"User"})
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 public class UserController {
 	
 	@Autowired
@@ -55,9 +55,9 @@ public class UserController {
 			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 409, message = "아이디 중복"),
 			@ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseResponseBody> checkDuplicate(
-			@PathVariable @ApiParam(value="아이디 정보", required = true) String userId) {
+			@PathVariable @ApiParam(value="아이디 정보", required = true) String loginId) {
 
-		User user = userService.getUserByUserId(userId);
+		User user = userService.getUserByLoginId(loginId);
 
 		if(user == null){
 			return ResponseEntity.status(201).body(BaseResponseBody.of(201, "이용 가능한 ID 입니다."));
@@ -76,20 +76,20 @@ public class UserController {
 		 * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
 		 */
 		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
-		String userId = userDetails.getUsername();
-		User user = userService.getUserByUserId(userId);
+		String loginId = userDetails.getUsername();
+		User user = userService.getUserByLoginId(loginId);
 
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
 
-	@PatchMapping("/{userId}")
+	@PatchMapping("/{loginId}")
 	@ApiOperation(value = "회원정보 수정", notes = "회원정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseResponseBody> update(
-			@PathVariable @ApiParam(value="회원 정보", required = true) String userId, @RequestBody @ApiParam(value="회원 아이디", required = true) UserUpdatePatchReq updateInfo) {
+			@PathVariable @ApiParam(value="회원 정보", required = true) String loginId, @RequestBody @ApiParam(value="회원 아이디", required = true) UserUpdatePatchReq updateInfo) {
 
-		User user = userService.updateUser(updateInfo, userId);
+		User user = userService.updateUser(updateInfo, loginId);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
@@ -100,9 +100,9 @@ public class UserController {
 					@ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "사용자 없음"),
 					@ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseResponseBody> delete(
-			@PathVariable @ApiParam(value="회원 정보", required = true) String userId) {
+			@PathVariable @ApiParam(value="회원 정보", required = true) String loginId) {
 
-		int deleteResult = userService.deleteUser(userId);
+		int deleteResult = userService.deleteUser(loginId);
 
 		if(deleteResult == 1)
 			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "삭제 성공"));
