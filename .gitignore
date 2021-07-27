@@ -55,3 +55,7 @@ build
 .project
 .classpath
 *.gz
+
+
+# Tracked gradle-wrapper
+!/backend/gradle/wrapper/gradle-wrapper.jar
