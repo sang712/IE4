@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
-
-import java.util.Optional;
 
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -28,37 +28,27 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
-
-		System.out.println("부서!!!!! >>>> " + userRegisterInfo.getDepartment());
-
 		User user = new User();
-		user.setUserId(userRegisterInfo.getId());
-		user.setDepartment(userRegisterInfo.getDepartment());
-		user.setName(userRegisterInfo.getName());
-		user.setPosition(userRegisterInfo.getPosition());
 
+		user.setUserId(userRegisterInfo.getId());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
+		user.setName(userRegisterInfo.getName());
+		user.setDepartment(userRegisterInfo.getDepartment());
+		user.setPosition(userRegisterInfo.getPosition());
+
 		return userRepository.save(user);
 	}
 
 	@Override
-	public User getUserByUserId(String userId) {
-		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserId(userId).orElse(null);
+		public User updateUser(UserUpdatePatchReq userUpdateInfo, String userId) {
+			User user = userRepository.findByUserId(userId).get();
 
-		return user;
-	}
+			user.setName(userUpdateInfo.getName());
+			user.setDepartment(userUpdateInfo.getDepartment());
+			user.setPosition(userUpdateInfo.getPosition());
 
-	@Override
-	public User updateUser(UserUpdatePatchReq userUpdateInfo, String userId) {
-		User user = userRepository.findByUserId(userId).get();
-
-		user.setName(userUpdateInfo.getName());
-		user.setDepartment(userUpdateInfo.getDepartment());
-		user.setPosition(userUpdateInfo.getPosition());
-
-		return userRepository.save(user);
+			return userRepository.save(user);
 	}
 
 	@Override
@@ -74,6 +64,15 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return result;
+
+	}
+
+	@Override
+	public User getUserByUserId(String userId) {
+		// 디비에 유저 정보 조회 (userId 를 통한 조회).
+		User user = userRepositorySupport.findUserByUserId(userId).orElse(null);
+
+		return user;
 	}
 
 

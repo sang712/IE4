@@ -36,8 +36,8 @@ public class JwtTokenUtil {
 	}
     
 	public void setExpirationTime() {
-    		//JwtTokenUtil.expirationTime = Integer.parseInt(expirationTime);
-    		JwtTokenUtil.expirationTime = expirationTime;
+        //JwtTokenUtil.expirationTime = Integer.parseInt(expirationTime);
+        JwtTokenUtil.expirationTime = expirationTime;
 	}
 
 	public static JWTVerifier getVerifier() {

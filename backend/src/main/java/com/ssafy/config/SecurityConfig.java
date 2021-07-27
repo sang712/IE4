@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/v1/users").permitAll()               // 회원가입! permitAll() -> 인증 없이 모든 사용자 접근 가능
                 .antMatchers("/api/v1/users/**").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정   // authenticated() -> 인증이 필요함
-    	        	    .anyRequest().permitAll()
+                .anyRequest().permitAll()
                 .and().cors();
     }
 }

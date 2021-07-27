@@ -1,7 +1,6 @@
 package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.api.request.UserUpdatePatchReq;
 import com.ssafy.db.entity.QUser;
 import com.ssafy.db.entity.User;
 
@@ -26,7 +25,8 @@ public class UserRepositorySupport {
         return Optional.ofNullable(user);
     }
 
-//    // user 정보 업데이트
+
+//    user 정보 업데이트
 //    public int findByUserId(String userId, UserUpdatePatchReq updateInfo) {
 //
 //        long ret = jpaQueryFactory.update(qUser)
@@ -48,4 +48,5 @@ public class UserRepositorySupport {
 //
 //        return (int) ret;
 //    }
+
 }
