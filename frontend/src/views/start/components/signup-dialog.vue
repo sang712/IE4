@@ -17,7 +17,7 @@
         <el-form-item prop="name" label="이름" :label-width="state.formLabelWidth">
           <el-input v-model="state.form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="학년 / 반 / 번호" :label-width="state.formLabelWidth">
+        <el-form-item prop="grade" label="학년 / 반 / 번호" :label-width="state.formLabelWidth">
           <el-select v-model="state.form.grade" placeholder="학년" style="width: 35%">
             <el-option label="1학년" value="1"></el-option>
             <el-option label="2학년" value="2"></el-option>
@@ -44,6 +44,9 @@
         </el-form-item>
         <el-form-item prop="phone" label="휴대전화" :label-width="state.formLabelWidth">
           <el-input v-model="state.form.phone"></el-input>
+        </el-form-item>
+        <el-form-item prop="address" label="주소" :label-width="state.formLabelWidth">
+          <el-input v-model="state.form.address"></el-input>
         </el-form-item>
       </el-scrollbar>
     </el-form>
@@ -176,8 +179,9 @@ input:-webkit-autofill:focus {
 .signup-dialog .dialog-footer .el-button {
   width: 120px;
 }
+/* 얼럿창 화면 맨 앞으로 */
 .swal2-container {
-  z-index: 2020;
+  z-index: 2040;
 }
 </style>
 <script>
@@ -201,14 +205,14 @@ export default {
     console.log('아이디'.length)
     
     const checkId = (rule, value, callback) => {
-      if (value.length > 16) {
-        callback(new Error('아이디는 16자 이내여야 합니다.'));
+      if (value.length > 20) {
+        callback(new Error('아이디는 20자 이내여야 합니다.'));
       } 
     }
 
     const checkPassword = (rule, value, callback) => {
-      if (value.length < 9 || value.length > 16) {
-        callback(new Error('비밀번호는 9자 이상 16자 이하여야 합니다.'))
+      if (value.length < 8 || value.length > 16) {
+        callback(new Error('비밀번호는 8자 이상 16자 이하여야 합니다.'))
       }
       else if (!(/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).$/.test(value))) {
         if (!/[a-z]/.test(value)) {
@@ -232,26 +236,36 @@ export default {
         callback(new Error('비밀번호를 다시 입력해주세요.'))
       }
     }
-    const checkDepartment = (rule, value, callback) => {
-      if (value.length > 30) {
-        callback(new Error('소속은 30자 이내여야 합니다.'))
-      }
-    }
-    const checkPosition = (rule, value, callback) => {
-      if (value.length > 30) {
-        callback(new Error('직책은 30자 이내여야 합니다.'))
-      }
-    }
     const checkName = (rule, value, callback) => {
-      if (value.length > 30) {
-        callback(new Error('이름은 30자 이내여야 합니다.'))
+      if (value.length > 10) {
+        callback(new Error('이름은 10자 이내여야 합니다.'))
       }
     }
-    /*
-      // Element UI Validator
-      // rules의 객체 키 값과 form의 객체 키 값이 같아야 매칭되어 적용됨
-      //
-    */
+    const checkSnum = (rule, value, callback) => {
+      if (0 < value <= 99) {
+        callback(new Error('번호는 1이상의 숫자여야 합니다.'))
+      }
+    }
+    const checkPhone = (rule, value, callback) => {
+      if (!(/^010\d{3,4}\d{4}$/.test(value))) {
+        if(!(/^010/.test(value))) {
+          callback(new Error('휴대전화번호는 010으로 시작해야 합니다.'))
+        } else if (/-/.test(value)) {
+          callback(new Error('-없이 입력해주세요.'))
+        } else {
+          callback(new Error('올바른 휴대전화번호를 입력해주세요.'))
+        }
+      }
+    }
+
+    const checkAddress = (rule, value, callback) => {
+      if (value.length > 50) {
+        callback(new Error('주소를 50자 이내로 입력해주세요.'))
+      }
+    }
+
+    // Element UI Validator
+    // rules의 객체 키 값과 form의 객체 키 값이 같아야 매칭되어 적용됨
     const state = reactive({
       form: {
         id: '',
@@ -263,6 +277,7 @@ export default {
         snum: '',
         sex: '',
         phone: '',
+        address: '',
         align: 'left'
       },
       rules: {
@@ -281,18 +296,28 @@ export default {
         name: [
           { required: true, message: '이름을 입력해주세요.', trigger: 'blur'},
           { validator: checkName, trigger: 'blur'}
-          // { maxLength: 30, message: '최대 30자까지 입력 가능합니다.', trigger: 'blur'},
         ],
-        department: [
-          { required: false },
-          { validator: checkDepartment, trigger: 'blur'}
-          // { maxLength: 30, message: '최대 30자까지 입력 가능합니다.', trigger: 'blur'},
+        grade: [
+          { required: true, message: '학년 / 반 / 번호를 입력하세요.', trigger: 'blur'},
         ],
-        position: [
-          { required: false },
-          { validator: checkPosition, trigger: 'blur'}
-          // { maxLength: 30, message: '최대 30자까지 입력 가능합니다.', trigger: 'blur'},
+        class_no: [
+          { required: true, message: '반을 입력하세요.', trigger: 'blur'},
         ],
+        snum: [
+          { required: true, message: '번호를 입력하세요.', trigger: 'blur'},
+          { validator: checkSnum, trigger: ['blur', 'change'] }
+        ],
+        sex: [
+          { required: true, message: '성별을 체크하세요.', trigger: 'blur'},
+        ],
+        phone: [
+          { required: true, message: '연락처를 입력하세요.', trigger: 'blur'},
+          { validator: checkPhone, trigger: 'blur'}
+        ],
+        address: [
+          { required: true, message: '주소를 입력해주세요.', trigger: 'blur'},
+          { validator: checkAddress, trigger: 'blur'}
+        ]
       },
       dialogVisible: computed(() => props.open),
       formLabelWidth: '120px'

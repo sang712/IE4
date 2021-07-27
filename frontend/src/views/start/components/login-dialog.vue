@@ -49,6 +49,10 @@
 .login-dialog .dialog-footer .el-button {
   width: 120px;
 }
+/* 얼럿창 화면 맨 앞으로 */
+.swal2-container {
+  z-index: 2040;
+}
 </style>
 <script>
 import { reactive, computed, ref, onMounted } from 'vue'
@@ -69,11 +73,8 @@ export default {
     // 마운드 이후 바인딩 될 예정 - 컨텍스트에 노출시켜야함. <return>
     const loginForm = ref(null)
 
-    /*
-      // Element UI Validator
-      // rules의 객체 키 값과 form의 객체 키 값이 같아야 매칭되어 적용됨
-      //
-    */
+    // Element UI Validator
+    // rules의 객체 키 값과 form의 객체 키 값이 같아야 매칭되어 적용됨
     const state = reactive({
       form: {
         id: '',
@@ -106,6 +107,7 @@ export default {
             localStorage.setItem('jwt', result.data.accessToken)
             localStorage.setItem('userId', result.data.userId)
             emit('closeLoginDialog')
+            // 홈으로 넘어가는 부분 추가해야함 要
           })
           .catch(function (err) {
             const status = err.response.request.status
