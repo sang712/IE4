@@ -257,10 +257,14 @@ export default {
         }
       }
     }
-
     const checkAddress = (rule, value, callback) => {
       if (value.length > 50) {
         callback(new Error('주소를 50자 이내로 입력해주세요.'))
+      }
+    }
+    const checkPassAnswer = (rule, value, callback) => {
+      if (value.length < 2) {
+        callback(new Error('비밀번호 답변은 2자 이상이어야 합니다.'))
       }
     }
 
@@ -278,6 +282,8 @@ export default {
         sex: '',
         phone: '',
         address: '',
+        password_question: '',
+        password_answer: '',
         align: 'left'
       },
       rules: {
@@ -317,7 +323,14 @@ export default {
         address: [
           { required: true, message: '주소를 입력해주세요.', trigger: 'blur'},
           { validator: checkAddress, trigger: 'blur'}
-        ]
+        ],
+        password_question: [
+          { required: true, message: '비밀번호확인 질문을 선택해주세요.', trigger: 'blur'},
+        ],
+        password_answer: [
+          { required: true, message: '비밀번호확인 답변을 입력해주세요.', trigger: 'blur'},
+          { validator: checkPassAnswer, trigger: 'blur'}
+        ],
       },
       dialogVisible: computed(() => props.open),
       formLabelWidth: '120px'
@@ -383,8 +396,6 @@ export default {
       state.form.id = ''
       state.form.password = ''
       state.form.passwordConfirmation = ''
-      state.form.department = ''
-      state.form.position = ''
       state.form.name = ''
       emit('closeSignupDialog')
     }
