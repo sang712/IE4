@@ -12,5 +12,4 @@ public interface UserService {
 	User getUserByUserId(String userId);
 	User updateUser(UserUpdatePatchReq userUpdateInfo, String userId);
 	int deleteUser(String userId);
-	Boolean checkIdDuplicate(String userId);
 }

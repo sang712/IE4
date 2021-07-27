@@ -28,11 +28,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
+
+		System.out.println("부서!!!!! >>>> " + userRegisterInfo.getDepartment());
+
 		User user = new User();
 		user.setUserId(userRegisterInfo.getId());
 		user.setDepartment(userRegisterInfo.getDepartment());
 		user.setName(userRegisterInfo.getName());
 		user.setPosition(userRegisterInfo.getPosition());
+
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
 		return userRepository.save(user);
@@ -41,32 +45,44 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByUserId(String userId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserId(userId).get();
+		User user = userRepositorySupport.findUserByUserId(userId).orElse(null);
+
 		return user;
 	}
 
 	@Override
 	public User updateUser(UserUpdatePatchReq userUpdateInfo, String userId) {
-		User user = userRepositorySupport.findUserByUserId(userId).get();
-		user.setDepartment(userUpdateInfo.getDepartment());
+		User user = userRepository.findByUserId(userId).get();
+
 		user.setName(userUpdateInfo.getName());
+		user.setDepartment(userUpdateInfo.getDepartment());
 		user.setPosition(userUpdateInfo.getPosition());
+
 		return userRepository.save(user);
 	}
 
-
 	@Override
 	public int deleteUser(String userId) {
-		Optional<User> user = Optional.of(userRepositorySupport.findUserByUserId(userId).get());
-		if(user.isPresent()) {
+		// 디비에 유저 정보 조회 (userId 를 통한 조회).
+		Optional<User> user = userRepositorySupport.findUserByUserId(userId);
+
+		int result = 0; // 0 : fail, 1 : success
+
+		if(user.isPresent()){
+			result = 1;
 			userRepository.delete(user.get());
-			return 1;
 		}
-		return 0;
+
+		return result;
 	}
 
-	@Override
-	public Boolean checkIdDuplicate( String userId) {
-		return userRepository.existsByUserId(userId);
-	}
+
+//	@Override
+//	public int checkUserId(String userId) {
+//		// 디비에 유저 ID 조회
+//		User user = userRepositorySupport.findUserByUserId(userId).get();
+//
+//		if(user != null) return 1;
+//		else return 0;
+//	}
 }
