@@ -1,12 +1,14 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.UserUpdatePatchReq;
+import com.ssafy.api.request.StudentUpdatePatchReq;
+import com.ssafy.api.request.TeacherUpdatePatchReq;
+import com.ssafy.api.response.BaseUserResponseBody;
+import com.ssafy.db.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.api.request.StudentRegisterPostReq;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -36,16 +38,15 @@ public class UserController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 409, message = "아이디 중복"),
 			@ApiResponse(code = 500, message = "서버 오류") })
-	public ResponseEntity<? extends BaseResponseBody> checkDuplicate(
+	public ResponseEntity<? extends BaseUserResponseBody> checkDuplicate(
 			@PathVariable @ApiParam(value="아이디 정보", required = true) String loginId) {
 
 		User user = userService.getUserByLoginId(loginId);
 
-		if(user == null){
-			return ResponseEntity.status(201).body(BaseResponseBody.of(201, "이용 가능한 ID 입니다."));
-		}else{
-			return ResponseEntity.status(409).body(BaseResponseBody.of(409, "이미 존재하는 사용자 ID 입니다."));
-		}
+		if(user == null)
+			return ResponseEntity.status(201).body(BaseUserResponseBody.of(user.getId(), "이용가능한 ID 입니다."));
+		else
+			return ResponseEntity.status(409).body(BaseUserResponseBody.of("이미 존재하는 ID입니다."));
 	}
 
 	@GetMapping("/me")
@@ -65,31 +66,50 @@ public class UserController {
 	}
 
 	@PatchMapping("/{loginId}")
-	@ApiOperation(value = "회원정보 수정", notes = "회원정보를 수정한다.")
+	@ApiOperation(value = "학생정보 수정", notes = "학생정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
-	public ResponseEntity<? extends BaseResponseBody> update(
-			@PathVariable @ApiParam(value="회원 정보", required = true) String loginId, @RequestBody @ApiParam(value="회원 아이디", required = true) UserUpdatePatchReq updateInfo) {
+	public ResponseEntity<? extends BaseUserResponseBody> update(
+			@PathVariable @ApiParam(value="회원 아이디", required = true) String loginId, @RequestBody @ApiParam(value="학생 정보", required = true) StudentUpdatePatchReq updateInfo) {
 
-		User user = userService.updateUser(updateInfo, loginId);
+		Student student = userService.updateStudent(updateInfo, loginId);
 
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		if(student != null)
+			return ResponseEntity.status(200).body(BaseUserResponseBody.of(student.getId()));
+		else
+			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Student Modify Fail"));
+	}
+
+	@PatchMapping()
+	@ApiOperation(value = "교사정보 수정", notes = "교사정보를 수정한다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
+	public ResponseEntity<? extends BaseUserResponseBody> update(
+			@RequestParam @ApiParam(value="회원 아이디", required = true) String loginId,
+			@RequestParam @ApiParam(value="배정 반", required = true) int classId, @RequestBody @ApiParam(value="회원 정보", required = true) TeacherUpdatePatchReq updateInfo) {
+
+		User user = userService.updateTeacher(updateInfo, loginId, classId);
+
+		if(user != null)
+			return ResponseEntity.status(200).body(BaseUserResponseBody.of(user.getId()));
+		else
+			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Teacher Modify Fail"));
 	}
 
 	@DeleteMapping("/{userId}")
-	@ApiOperation(value = "회원정보 삭제", notes = "회원정보를 삭제한다..")
+	@ApiOperation(value = "회원정보 삭제", notes = "회원정보를 삭제한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 204, message = "삭제 성공"),
 					@ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "사용자 없음"),
 					@ApiResponse(code = 500, message = "서버 오류") })
-	public ResponseEntity<? extends BaseResponseBody> delete(
+	public ResponseEntity<? extends BaseUserResponseBody> delete(
 			@PathVariable @ApiParam(value="회원 정보", required = true) String loginId) {
 
 		int deleteResult = userService.deleteUser(loginId);
 
 		if(deleteResult == 1)
-			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "삭제 성공"));
+			return ResponseEntity.status(204).body(BaseUserResponseBody.of("Delete Success"));
 		else
-			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "사용자가 존재하지 않습니다."));
+			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Delete Fail"));
 	}
 
 
