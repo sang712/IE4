@@ -7,10 +7,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Api(value = "반 정보 API", tags = {"Class"})
 @RestController
@@ -32,5 +33,19 @@ public class EduClassController {
         return new ResponseEntity<EduClass>(c,HttpStatus.OK);
 
     }
+
+    @PatchMapping("/{classId}")
+    @ApiOperation(value = "시간표 수정", notes = "수정된 시간표 이미지의 url을 반환한다.")
+    public ResponseEntity<Map<String, String>> updateTimeTable(@PathVariable int classId, MultipartHttpServletRequest request) {
+        String url = eduClassService.updateTimetable(classId, request);
+        Map<String, String> map = new HashMap<String, String>() {
+            {
+                put("url", url);
+            }
+        };
+
+        return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
+    }
+
 
 }
