@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+
 /**
  * 모델 간 공통 사항 정의.
  */

@@ -7,6 +7,8 @@ import com.ssafy.db.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -49,16 +51,29 @@ public class BoardServiceImpl implements BoardService{
         return board;
     }
 
-//    @Override
-//    public List<Board> getBoardList(int classID, int pageNum) {
-//
+    @Override
+    public List<BoardDto> getBoardList(int classId, String boardType) {
+
 //        Page<Board> page = boardRepository
 //                .findAll(PageRequest.of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createDate")));
-//
+
 //        List<Board> boards = page.getContent();
-//        List<Board>
-//        return null;
-//    }
+        List<Board> boards = boardRepository.findByClassIdAndBoardType(classId, boardType);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        for(Board board : boards) {
+            BoardDto boardDto = BoardDto.builder()
+                    .id(board.getId())
+                    .userId(board.getUserId())
+                    .userName(board.getUserName())
+                    .classId(board.getClassId())
+                    .title(board.getTitle())
+                    .content(board.getContent())
+                    .boardType(board.getBoardType()).build();
+            boardDtoList.add(boardDto);
+        }
+        return boardDtoList;
+    }
 
 
 }
