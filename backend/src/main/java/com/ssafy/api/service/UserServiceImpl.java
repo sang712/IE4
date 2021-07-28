@@ -83,20 +83,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-		public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId) {
-			User user = userRepository.findById(id).get();
+	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId) {
+		User user = userRepository.findById(id).get();
 
-			user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
-			user.setPhone(teacherUpdateInfo.getPhone());
-			user.setAddress(teacherUpdateInfo.getAddress());
-			user.setProfileImgUrl(teacherUpdateInfo.getProfileImgUrl());
+		user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
+		user.setPhone(teacherUpdateInfo.getPhone());
+		user.setAddress(teacherUpdateInfo.getAddress());
+		user.setProfileImgUrl(teacherUpdateInfo.getProfileImgUrl());
 
-			EduClass eduClass = eduClassRepository.findById(classId).get();
-			eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
+		EduClass eduClass = eduClassRepository.findEduClassById(classId).get();
+		eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
 
-			if(eduClassRepository.save(eduClass) == null) return null;
+		if(eduClassRepository.save(eduClass) == null) return null;
 
-			return userRepository.save(user);
+		return userRepository.save(user);
 	}
 
 	@Override
@@ -117,11 +117,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByLoginId(String loginId) {
-		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByLoginId(loginId).orElse(null);
+		// 디비에 유저 정보 조회 (loginId 를 통한 조회).
+		User user = userRepository.findByLoginId(loginId).orElse(null);
 
 		return user;
 	}
+
+	@Override
+	public Student getStudentByUserId(int userId) {
+		// 디비에 유저 정보 조회 (userId 를 통한 조회).
+		Student student = studentRepository.findByUserId(userId).orElse(null);
+
+		return student;
+	}
+
+
 
 
 //	@Override

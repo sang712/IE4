@@ -14,6 +14,4 @@ public interface EduClassRepository extends JpaRepository<EduClass, Integer> {
 
     @Query("SELECT e.conferenceUrl FROM EduClass e WHERE e.id = :id")
     Optional<String> findByEduClassId(@Param("id")int eduClassId);
-
-    Optional<EduClass> findById(int eduClassId);
 }

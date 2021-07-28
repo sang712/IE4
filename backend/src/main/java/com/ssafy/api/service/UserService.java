@@ -15,4 +15,5 @@ public interface UserService {
 	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId);
 	int deleteUser(String loginId);
 	User getUserByLoginId(String loginId);
+	Student getStudentByUserId(int UserId);
 }
