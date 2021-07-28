@@ -3,23 +3,32 @@
   <!-- <Main/> -->
 
   <!-- start 로 시작 -->
-  <Start/>
+  <Main v-if="state.isLogin"/>
+  <Start style="width: 100vw; height: 100vh;" v-else/>
 </template>
 
 <script>
-// import Main from './views/main/main.vue'
+import { reactive } from '@vue/reactivity'
+import Main from './views/main/main.vue'
 import Start from './views/start/start.vue'
 
 export default {
   name: 'App',
 
   components: {
-    // Main,
+    Main,
     Start,
   },
 
   data: () => ({
     //
   }),
+  setup(props,{ emit }){
+    const state = reactive({
+      isLogin : false,
+    })
+    return { state }
+
+  }
 }
 </script>
