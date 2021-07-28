@@ -10,8 +10,11 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 
 /**
@@ -70,10 +73,10 @@ public class BoardController {
     @ApiOperation(value = "게시글 확인", notes = "게시글을 자세히 확인한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "글 없음"), @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<BoardDto> detail(@ApiIgnore Authentication authentication, @PathVariable int boardId) {
+    public ResponseEntity<Board> detail(@ApiIgnore Authentication authentication, @PathVariable int boardId) {
         Board board = boardService.detailBoard(boardId);
 
-        return ResponseEntity.status(200).body(BoardDto.of(board));
+        return ResponseEntity.status(200).body(board);
     }
 
 //    @GetMapping("/{classId}")
@@ -101,14 +104,18 @@ public class BoardController {
 //        model.addAttribute("blist", blist); return blist; }
 
 
-//    @GetMapping("/{classId}")
-//    public String list(Model model, @RequestParam(value = "page", defaultValue = "1") int pageNum, @PathVariable int classId) {
-//        List<Board> boardList = boardService.getBoardlist(pageNum);
-//        int[] pageList = boardService.getPageList(pageNum);
-//
-//        model.addAttribute("boardList", boardList);
-//        model.addAttribute("pageList", pageList);
-//
-//        return "board/list.html";
-//    }
+    @GetMapping("/")
+    public List<BoardDto> list(Model model,
+                       @RequestParam(value = "classId") int classId,
+                       @RequestParam(value = "boardType") String boardType ) {
+        // @RequestParam(value = "page", defaultValue = "1") int pageNum
+
+        List<BoardDto> boardDtoList = boardService.getBoardList(classId,boardType);
+        //int[] pageList = boardService.getPageList(pageNum);
+
+        model.addAttribute("boardList", boardDtoList);
+        //model.addAttribute("pageList", pageList);
+
+        return boardDtoList;
+    }
 }

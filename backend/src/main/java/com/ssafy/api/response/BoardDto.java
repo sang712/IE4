@@ -38,7 +38,7 @@ public class BoardDto {
     }
 
     @Builder
-    public void BoardDtoBuild(String boardType, int userId, String userName, int classId, String title, String content){
+    public BoardDto(String boardType, int userId, String userName, int classId, String title, String content){
         this.boardType = boardType;
         this.userId = userId;
         this.userName = userName;
@@ -46,14 +46,14 @@ public class BoardDto {
         this.title = title;
         this.content = content;
     }
-    public static BoardDto of(Board board) {
-        BoardDto dto = new BoardDto();
-        dto.setBoardType(board.getBoardType());
-        dto.setUserId(board.getUserId());
-        dto.setUserName(board.getUserName());
-        dto.setClassId(board.getClassId());
-        dto.setTitle(board.getTitle());
-        dto.setContent(board.getContent());
-        return dto;
-    }
+//    public static BoardDto of(Board board) {
+//        BoardDto dto = new BoardDto;
+//        dto.setBoardType(board.getBoardType());
+//        dto.setUserId(board.getUserId());
+//        dto.setUserName(board.getUserName());
+//        dto.setClassId(board.getClassId());
+//        dto.setTitle(board.getTitle());
+//        dto.setContent(board.getContent());
+//        return dto;
+//    }
 }
