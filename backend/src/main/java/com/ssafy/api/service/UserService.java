@@ -11,8 +11,8 @@ import com.ssafy.db.entity.User;
  */
 public interface UserService {
 	Student createStudent(StudentRegisterPostReq studentRegisterInfo);
-	Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, String userId);
-	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, String userId, int classId);
+	Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id);
+	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId);
 	int deleteUser(String loginId);
 	User getUserByLoginId(String loginId);
 }

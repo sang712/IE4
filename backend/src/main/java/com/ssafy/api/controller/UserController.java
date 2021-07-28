@@ -65,17 +65,17 @@ public class UserController {
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
 
-	@PatchMapping("/{loginId}")
+	@PatchMapping("/{id}")
 	@ApiOperation(value = "학생정보 수정", notes = "학생정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseUserResponseBody> update(
-			@PathVariable @ApiParam(value="회원 아이디", required = true) String loginId, @RequestBody @ApiParam(value="학생 정보", required = true) StudentUpdatePatchReq updateInfo) {
+			@PathVariable @ApiParam(value="회원 아이디", required = true) int id, @RequestBody @ApiParam(value="학생 정보", required = true) StudentUpdatePatchReq updateInfo) {
 
-		Student student = userService.updateStudent(updateInfo, loginId);
+		Student student = userService.updateStudent(updateInfo, id);
 
 		if(student != null)
-			return ResponseEntity.status(200).body(BaseUserResponseBody.of(student.getId()));
+			return ResponseEntity.status(200).body(BaseUserResponseBody.of(id));
 		else
 			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Student Modify Fail"));
 	}
@@ -85,10 +85,10 @@ public class UserController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseUserResponseBody> update(
-			@RequestParam @ApiParam(value="회원 아이디", required = true) String loginId,
-			@RequestParam @ApiParam(value="배정 반", required = true) int classId, @RequestBody @ApiParam(value="회원 정보", required = true) TeacherUpdatePatchReq updateInfo) {
+			@RequestParam @ApiParam(value="회원 아이디", required = true) int id,
+			@RequestParam @ApiParam(value="배정 반", required = false) int classId, @RequestBody @ApiParam(value="회원 정보", required = true) TeacherUpdatePatchReq updateInfo) {
 
-		User user = userService.updateTeacher(updateInfo, loginId, classId);
+		User user = userService.updateTeacher(updateInfo, id, classId);
 
 		if(user != null)
 			return ResponseEntity.status(200).body(BaseUserResponseBody.of(user.getId()));

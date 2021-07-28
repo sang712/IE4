@@ -65,9 +65,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, String loginId) {
-		Student student = new Student();
-		User user = new User();
+	public Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id) {
+		Student student = studentRepository.findByUserId(id).get();
+		User user = userRepository.findById(id).get();
 
 		user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
 		user.setPhone(studentUpdateInfo.getPhone());
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-		public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, String loginId, int classId) {
+		public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId) {
 			User user = new User();
 
 			user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));

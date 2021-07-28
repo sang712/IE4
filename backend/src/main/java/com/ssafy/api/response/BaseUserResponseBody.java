@@ -11,12 +11,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel("BaseUserResponse")
+@ApiModel("BaseUserResponseBody")
 public class BaseUserResponseBody {
 	@ApiModelProperty(name="응답 아이디", example = "200")
 	Integer id;
 	@ApiModelProperty(name="응답 메시지", example = "Fail")
-	String message = null;
+	String message;
 
 	public BaseUserResponseBody() {}
 
