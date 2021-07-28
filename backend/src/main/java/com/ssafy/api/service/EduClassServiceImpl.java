@@ -75,7 +75,7 @@ public class EduClassServiceImpl implements EduClassService {
 
             EduClass c = eduClassRepository.findEduClassById(eduClassId).get();
             saveUrl = uploadFolder + "/" + savingFileName;
-            c.setConferenceUrl(saveUrl);
+            c.setTimetable(saveUrl);
             eduClassRepository.save(c);
 
         } catch(IOException e) {
