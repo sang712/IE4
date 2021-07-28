@@ -84,14 +84,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 		public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId) {
-			User user = new User();
+			User user = userRepository.findById(id).get();
 
 			user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
 			user.setPhone(teacherUpdateInfo.getPhone());
 			user.setAddress(teacherUpdateInfo.getAddress());
 			user.setProfileImgUrl(teacherUpdateInfo.getProfileImgUrl());
 
-			EduClass eduClass = new EduClass();
+			EduClass eduClass = eduClassRepository.findById(classId).get();
 			eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
 
 			if(eduClassRepository.save(eduClass) == null) return null;

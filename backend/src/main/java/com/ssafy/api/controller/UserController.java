@@ -75,9 +75,9 @@ public class UserController {
 		Student student = userService.updateStudent(updateInfo, id);
 
 		if(student != null)
-			return ResponseEntity.status(200).body(BaseUserResponseBody.of(id));
+			return ResponseEntity.status(200).body(BaseUserResponseBody.of(student.getUser().getId()));
 		else
-			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Student Modify Fail"));
+			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Student Update Fail"));
 	}
 
 	@PatchMapping()
@@ -93,7 +93,7 @@ public class UserController {
 		if(user != null)
 			return ResponseEntity.status(200).body(BaseUserResponseBody.of(user.getId()));
 		else
-			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Teacher Modify Fail"));
+			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Teacher Update Fail"));
 	}
 
 	@DeleteMapping("/{userId}")
