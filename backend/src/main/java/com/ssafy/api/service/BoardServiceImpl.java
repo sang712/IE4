@@ -63,6 +63,7 @@ public class BoardServiceImpl implements BoardService{
 
         for(Board board : boards) {
             BoardDto boardDto = BoardDto.builder()
+                    .id(board.getId())
                     .userId(board.getUserId())
                     .userName(board.getUserName())
                     .classId(board.getClassId())

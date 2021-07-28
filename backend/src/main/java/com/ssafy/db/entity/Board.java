@@ -2,12 +2,16 @@ package com.ssafy.db.entity;
 
 import lombok.*;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
+@AttributeOverride(name = "id", column = @Column(name="id"))
 @Entity
 @Getter
 @Setter
 public class Board extends BaseEntity {
+    Integer id;
     String boardType;
     int userId;
     String userName;
@@ -16,7 +20,8 @@ public class Board extends BaseEntity {
     int classId;
 
     @Builder
-    public Board(String boardType, int userId, String userName, int classId, String title, String content) {
+    public Board(int id, String boardType, int userId, String userName, int classId, String title, String content) {
+        this.id = id;
         this.boardType = boardType;
         this.userId = userId;
         this.userName = userName;

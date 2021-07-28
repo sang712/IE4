@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 @ApiModel("BoardDto")
 public class BoardDto {
+    @ApiModelProperty(name="게시판 글 id")
+    int id;
     @ApiModelProperty(name="게시판 글 type", example="학습자료")
     String boardType;
     @ApiModelProperty(name="게시판 작성자 ID", example="3")
@@ -27,6 +29,7 @@ public class BoardDto {
 
     public Board toEntity(){
         Board build = Board.builder()
+                .id(id)
                 .boardType(boardType)
                 .userId(userId)
                 .userName(userName)
@@ -38,7 +41,8 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(String boardType, int userId, String userName, int classId, String title, String content){
+    public BoardDto(int id, String boardType, int userId, String userName, int classId, String title, String content){
+        this.id = id;
         this.boardType = boardType;
         this.userId = userId;
         this.userName = userName;
