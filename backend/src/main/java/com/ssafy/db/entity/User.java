@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * 유저 모델 정의.
@@ -22,7 +25,7 @@ public class User extends BaseEntity{
     int classId;
     String phone;
     String address;
-    String profile_img_url;
+    String profileImgUrl;
     String department;
 
     @JsonIgnore
