@@ -47,6 +47,9 @@
 .login-dialog .dialog-footer .el-button {
   width: 120px;
 }
+.swal2-container {
+  z-index: 2020;
+}
 </style>
 <script>
 import { reactive, computed, ref, onMounted } from 'vue'
@@ -101,38 +104,19 @@ export default {
           console.log('submit')
           store.dispatch('root/requestLogin', { id: state.form.id, password: state.form.password })
           .then(function (result) {
-            localStorage.setItem('jwt', result.data.accessToken)
-            localStorage.setItem('userId', result.data.userId)
+            localStorage.setItem = {'jwt': result.data.accessToken}
+            localStorage.setItem = {'username': result.data.username}
             emit('closeLoginDialog')
+            location.reload()
+            // alert('accessToken: ' + result.data.accessToken)
+            // result.data.status
           })
           .catch(function (err) {
-            const status = err.response.request.status
-            if (status == 500) {
-              Swal.fire({
-                title: '이런!',
-                text: '서버 오류가 발생했습니다..',
-                icon: 'error',
-              })
-            } else if (status == 404) {
-              Swal.fire({
-                title: '이런!',
-                text: '존재하지 않는 계정입니다.',
-                icon: 'error',
-              })
-            } else if (status == 401) {
-              Swal.fire({
-                title: '이런!',
-                text: '잘못된 비밀번호 입니다.',
-                icon: 'error',
-              })
-            }
+            // err.response.request.status
+            alert(err)
           })
         } else {
-          Swal.fire({
-            title: '이런!',
-            text: '로그인에 실패했습니다.',
-            icon: 'error',
-          })
+          alert('Validate error!', '로그인 실패')
         }
       });
     }
