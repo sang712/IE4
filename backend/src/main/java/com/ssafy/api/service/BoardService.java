@@ -11,6 +11,7 @@ public interface BoardService {
     Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId);
     int deleteBoard(int boardId);
     Board detailBoard(int boardId);
-    List<BoardDto> getBoardList(int classID, String boardType);
+    List<BoardDto> getBoardList(int classId, String boardType);
+    List<BoardDto> searchBoard(int classId, String boardType, String keyword);
 
 }

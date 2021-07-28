@@ -105,6 +105,7 @@ public class BoardController {
 
 
     @GetMapping("/")
+    @ApiOperation(value = "게시글 목록", notes = "게시글 리스트를 가져온다.")
     public List<BoardDto> list(Model model,
                        @RequestParam(value = "classId") int classId,
                        @RequestParam(value = "boardType") String boardType ) {
@@ -115,6 +116,18 @@ public class BoardController {
 
         model.addAttribute("boardList", boardDtoList);
         //model.addAttribute("pageList", pageList);
+
+        return boardDtoList;
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "게시글 검색", notes = "검색 단어로 게시글을 검색한다.")
+    public List<BoardDto> search(Model model,
+                                 @RequestParam(value = "classId") int classId,
+                                 @RequestParam(value = "boardType") String boardType,
+                                 @RequestParam(value = "keyword") String keyword){
+        List<BoardDto> boardDtoList = boardService.searchBoard(classId,boardType,keyword);
+        model.addAttribute("boardList", boardDtoList);
 
         return boardDtoList;
     }

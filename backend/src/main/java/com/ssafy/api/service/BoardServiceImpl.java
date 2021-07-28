@@ -75,5 +75,24 @@ public class BoardServiceImpl implements BoardService{
         return boardDtoList;
     }
 
+    @Override
+    public List<BoardDto> searchBoard(int classId, String boardType, String keyword) {
+        List<Board> boards = boardRepository.findByClassIdAndBoardTypeAndTitleContaining(classId, boardType, keyword);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        for(Board board : boards) {
+            BoardDto boardDto = BoardDto.builder()
+                    .id(board.getId())
+                    .userId(board.getUserId())
+                    .userName(board.getUserName())
+                    .classId(board.getClassId())
+                    .title(board.getTitle())
+                    .content(board.getContent())
+                    .boardType(board.getBoardType()).build();
+            boardDtoList.add(boardDto);
+        }
+        return boardDtoList;
+    }
+
 
 }
