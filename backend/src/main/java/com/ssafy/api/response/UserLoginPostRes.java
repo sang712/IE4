@@ -14,17 +14,20 @@ import lombok.Setter;
 @Setter
 @ApiModel("UserLoginPostResponse")
 public class UserLoginPostRes {
-	@ApiModelProperty(name="USER ID", example="1")
+	@ApiModelProperty(name="USER ID", example="21")
 	int id;
 	@ApiModelProperty(name="Class ID", example="101")
 	int classId;
+	@ApiModelProperty(name="USER POSITION", example="학생")
+	String position;
 	@ApiModelProperty(name="JWT 인증 토큰", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
 	String accessToken;
 	
-	public static UserLoginPostRes of(int id, int classId, String accessToken) {
+	public static UserLoginPostRes of(int id, int classId, String position, String accessToken) {
 		UserLoginPostRes res = new UserLoginPostRes();
 		res.setId(id);
 		res.setClassId(classId);
+		res.setPosition(position);
 		res.setAccessToken(accessToken);
 		return res;
 	}

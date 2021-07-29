@@ -41,21 +41,6 @@ public class UserController {
 	@Autowired
 	EduClassService eduClassService;
 
-	@GetMapping("/{userId}")
-	@ApiOperation(value = "아이디 중복체크", notes = "아이디를 중복체크한다.")
-	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 409, message = "아이디 중복"),
-			@ApiResponse(code = 500, message = "서버 오류") })
-	public ResponseEntity<? extends BaseUserResponseBody> checkDuplicate(
-			@PathVariable @ApiParam(value="아이디 정보", required = true) String loginId) {
-
-		User user = userService.getUserByLoginId(loginId);
-
-		if(user == null)
-			return ResponseEntity.status(201).body(BaseUserResponseBody.of(user.getId(), "이용가능한 ID 입니다."));
-		else
-			return ResponseEntity.status(409).body(BaseUserResponseBody.of("이미 존재하는 ID입니다."));
-	}
 
 	@GetMapping()
 	@ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.")

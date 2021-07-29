@@ -164,15 +164,18 @@ public class UserServiceImpl implements UserService {
 			result = 1;
 			userRepository.delete(user.get());
 		}
-
 		return result;
+	}
 
+	@Override
+	public boolean checkIdDuplicate( String loginId) {
+		return userRepository.existsByLoginId(loginId);
 	}
 
 	@Override
 	public User getUserByLoginId(String loginId) {
 		// 디비에 유저 정보 조회 (loginId 를 통한 조회).
-		User user = userRepository.findByLoginId(loginId).orElse(null);
+		User user = userRepository.findUserByLoginId(loginId).orElse(null);
 
 		return user;
 	}
