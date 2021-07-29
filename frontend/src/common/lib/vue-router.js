@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/home/home'
 import ConferencesDetail from '@/views/conferences/conference-detail'
 import History from '@/views/history/history'
+import SectionHome from '@/views/main/main-section/section-home'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -22,9 +23,77 @@ function makeRoutesFromMenu () {
     name: 'conference-detail',
     component: ConferencesDetail
   })
+  // 로그인버튼  라우터
+  routes.push({
+    path: '/home',
+    name: 'home',
+    component: SectionHome,
+    // children: [
+    //   {
+    //     // 시간표버튼 라우터
+    //     path: 'schedule',
+    //     name: 'schedule',
+    //     component: SectionSchedule,
+    //   },
+    //   {
+    //     // 알림장버튼 라우터
+    //     path: 'note',
+    //     name: 'note',
+    //     component: SectionNote,
+    //   },
+    //   {
+    //     // MVP버튼 라우터
+    //     path: 'mvp',
+    //     name: 'mvp',
+    //     component: SectionMvp,
+    //   }
+    // ]
+  })
+// // 공지사항버튼 라우터
+//   routes.push({
+//     path: '/news',
+//     name: 'news',
+//     component: SectionNews,
+//   })
+// // 학습자료버튼 라우터
+//   routes.push({
+//     path: '/meterials',
+//     name: 'meterials',
+//     component: SectionMeterials,
+//   })
+// // 우리반버튼 라우터
+//   routes.push({
+//     path: '/myclass',
+//     name: 'myclass',
+//     component: SectionMyclass,
+//   })
+// // 내정보버튼 라우터
+//   routes.push({
+//     path: '/mypage',
+//     name: 'mypage',
+//     component: SectionMypage,
+//   })
   return routes
 }
+// const router = new VueRouter({
+//   routes : [
+//     {
+//       path: '/home',
+//       name: 'home',
+//       component: SectionHome,
+//       children: [
+//         {          
+//         },
+//         // {
+//         //   path: 'home',
+//         //   name: 'home',
+//         //   component: SectionHome,
+//         // }
+//       ]
+//     }
+//   ]
 
+// })
 const routes = makeRoutesFromMenu()
 
 const router = createRouter({

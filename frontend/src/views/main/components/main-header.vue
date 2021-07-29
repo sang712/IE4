@@ -8,10 +8,10 @@
         <div class="logo-wrapper" @click="clickLogo"><div class="ic ic-logo"/></div>
         <div class="tool-wrapper">
           <div class="button-wrapper">
-            <el-button  type="default" @click="" style="width: 10vw;">공지사항</el-button>
-            <el-button  type="default" @click="" style="width: 10vw;">학습자료</el-button>
-            <el-button  type="default" @click="" style="width: 10vw;">우리반</el-button>
-            <el-button  type="danger" @click="clickLogout" style="width: 10vw;">로그아웃</el-button>
+            <el-button  type="default" @click="" style="width: 10vw; font-size: 120%">공지사항</el-button>
+            <el-button  type="default" @click="" style="width: 10vw; font-size: 120%">학습자료</el-button>
+            <el-button  type="default" @click="" style="width: 10vw; font-size: 120%">우리반</el-button>
+            <el-button  type="danger" @click="clickLogout" style="width: 10vw; font-size: 120%">로그아웃</el-button>
           </div>       
         </div>
       </div>
@@ -123,7 +123,7 @@ export default {
 </script>
 <style>
   .main-headers{
-    background-image: url('../../../assets/images/main-header.jpg');    
+    background-image: url('../../../assets/images/main-header2.jpg');    
     background-position:center;
     
   }

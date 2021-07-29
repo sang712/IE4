@@ -14,22 +14,22 @@
         <router-view></router-view>
       </el-main>
     </el-container> -->
-    <div class="container" style="height: 75vh; margin: 0px; padding: 0px" >
+    
       <div class="d-flex align-items-stretch">
-        <div class="side-bar col-3">          
-          <div class="profile-img"></div>
+        <div class="side-bar">          
+          <div class="profile-img" style="max-width: 230px ; min-width: 230px;"></div>
           <h1>이름: 한상길</h1>
           <h1>2학년 7반 30번</h1>
           
           
         </div>
-        <div class="col-9">
+        <div >
           <router-view></router-view>
         </div>
         
 
       </div>
-    </div>
+   
     <main-footer :height="`110px`"/>
   </el-container>
   <signup-dialog
@@ -47,9 +47,9 @@
 
 
   .profile-img{
-    margin: 10vh 5px;
+    margin: 10vh auto;
     height: 23vh;
-    background-image: url('../../assets/images/logo1.png'); 
+    background-image: url('../../assets/images/profile-picture.png'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -59,6 +59,7 @@
   .side-bar {
     background-color: #efeee9 ;
     margin: 5px 5px;
+    width: 300px;
   }
 </style>
 <script>
