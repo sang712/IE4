@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex align-items-stretch ">
+  <div class="d-flex align-items-stretch">
     <div class="col d-flex justify-content-center row">     
-      <div class="meeting-preview d-flex justify-content-center row " >
+      <div class="meeting-preview d-flex justify-content-center row" >
         <div class="host-profile" style="margin-top: 5%"> </div>
         <h1 class="text-center">자상길 선생님</h1>
         <h1 class="text-center">2학년 7반 수업을 시작합니다.</h1>
@@ -45,7 +45,7 @@ export default {
     border-radius: 100px;
   }
   .meeting-preview{
-    height: 35vh;
+    height: 38vh;
     width: 39vw;
     background-color: #ffffff ;
     margin: 25px 5px 0px 5px;   

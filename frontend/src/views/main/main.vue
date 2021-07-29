@@ -10,7 +10,7 @@
           <h1>이름: 한상길</h1>
           <h1>2학년 7반 30번</h1>
         </div>
-        <div >
+        <div class="main-content" >
           <router-view></router-view>
         </div>
       </div>
@@ -44,6 +44,10 @@
     background-color: #efeee9 ;
     margin: 5px 5px;
     width: 300px;
+    height: 66vh;
+  }
+  .main-content {
+   height: 66vh; 
   }
 </style>
 <script>
