@@ -19,10 +19,24 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findUserById(int id);
     Optional<User> findByLoginId(String loginId);
 
+    //id로 profileImgUrl 찾기
     @Query("SELECT u.profileImgUrl FROM User u WHERE u.id = :id")
     Optional<String> findById(@Param("id")int id);
+
+    // snum으로 user_id 찾기
+    @Query("SELECT s.user.id FROM Student s WHERE s.snum = :snum")
+    Optional<List<Integer>> findBySnum(@Param("snum") int snum);
+
+    @Query("SELECT u.loginId FROM User u WHERE u.id in :ids AND u.name = :name AND u.phone = :phone")
+    Optional<String> findByIdsAndNameAndPhone(@Param("ids")List<Integer> idList, @Param("name")String name, @Param("phone")String phone);
+
+//    @Query(value = "SELECT u.login_id FROM User u WHERE u.id = :id IN (SELECT user_id FROM student WHERE snum=:snum) AND name = :name AND phone = :phone", nativeQuery = true)
+//    Optional<String> findByIdAndSnumAndPhone(@Param("name")String name, @Param("snum")int snum, @Param("phone")String phone);
 
 //    @Query("SELECT u.name, u.profileImgUrl FROM User u WHERE u.classId = :classId AND u.position = :position ORDER BY u.name")    --> 이건 왜 안되는 건지?
     @Query(value = "SELECT u.name, u.profile_img_url FROM User u WHERE u.class_id = :classId AND u.position = :position ORDER BY u.name", nativeQuery = true)
     Optional<List<EduClassMem>> findByClassIdAndPositionOrderByName(@Param("classId")int classId, @Param("position")String position);
+
+
+
 }

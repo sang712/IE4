@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.StudentUpdatePatchReq;
 import com.ssafy.api.request.TeacherUpdatePatchReq;
+import com.ssafy.api.response.EduClassMem;
 import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.entity.Student;
 import com.ssafy.db.repository.EduClassRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -180,6 +183,17 @@ public class UserServiceImpl implements UserService {
 		Student student = studentRepository.findByUserId(userId).orElse(null);
 
 		return student;
+	}
+
+	@Override
+	public String findLoginId(String name, int snum, String phone){
+		List<Integer> userIdList = new LinkedList<>();
+
+		userIdList.addAll(userRepository.findBySnum(snum).orElse(null));
+
+		String loginId = userRepository.findByIdsAndNameAndPhone(userIdList, name, phone).orElse(null);
+
+		return loginId;
 	}
 
 
