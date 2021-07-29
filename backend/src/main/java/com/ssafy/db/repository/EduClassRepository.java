@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface EduClassRepository extends JpaRepository<EduClass, Integer> {
     Optional<EduClass> findEduClassById(int eduClassId);
 
-    @Query("SELECT e.conferenceUrl FROM EduClass e WHERE e.id = :id")
+    @Query("SELECT e.timetable FROM EduClass e WHERE e.id = :id")
     Optional<String> findByEduClassId(@Param("id")int eduClassId);
 }

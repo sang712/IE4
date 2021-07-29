@@ -2,14 +2,19 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.response.EduClassMem;
 import com.ssafy.db.entity.EduClass;
+import com.ssafy.db.entity.UserPoint;
 import com.ssafy.db.repository.EduClassRepository;
+import com.ssafy.db.repository.UserPointRepository;
 import com.ssafy.db.repository.UserRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -23,6 +28,9 @@ public class EduClassServiceImpl implements EduClassService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserPointRepository userPointRepository;
 
     @Override
     public EduClass getEduClassByEduClassId(int eduClassId) {
@@ -75,7 +83,7 @@ public class EduClassServiceImpl implements EduClassService {
 
             EduClass c = eduClassRepository.findEduClassById(eduClassId).get();
             saveUrl = uploadFolder + "/" + savingFileName;
-            c.setConferenceUrl(saveUrl);
+            c.setTimetable(saveUrl);
             eduClassRepository.save(c);
 
         } catch(IOException e) {
@@ -101,10 +109,20 @@ public class EduClassServiceImpl implements EduClassService {
         return list;
     }
 
-//
-//    @Override
-//    public List<String> getRank(int classId) {
-//        return null;
-//    }
+
+    @Override
+    public List<String> getRank(int classId) {
+//        PageRequest limitThree = PageRequest.of(0, 3);
+//        List<String> list = userPointRepository.findAllBy(classId, limitThree).orElse(null);
+
+        List<String> list = userPointRepository.findAllBy(classId).orElse(null);
+
+//        System.out.println("Query 결과 리스트!!!! >>>>>>>>>>>>> ");
+//        for(int i=0; i<list.size(); i++) {
+//            System.out.println(list.get(i));
+//        }
+
+        return list;
+    }
 
 }
