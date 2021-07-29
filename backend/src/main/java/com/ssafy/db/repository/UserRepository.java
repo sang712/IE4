@@ -27,8 +27,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT s.user.id FROM Student s WHERE s.snum = :snum")
     Optional<List<Integer>> findBySnum(@Param("snum") int snum);
 
+    // snum으로 찾은 user_id와 name, phone을 가지고 LoginId 찾기
     @Query("SELECT u.loginId FROM User u WHERE u.id in :ids AND u.name = :name AND u.phone = :phone")
     Optional<String> findByIdsAndNameAndPhone(@Param("ids")List<Integer> idList, @Param("name")String name, @Param("phone")String phone);
+
+    // passwordQuestion과 passwordAnswer으로 user_id 찾기
+    @Query("SELECT s.user.id FROM Student s WHERE s.passwordQuestion = :passwordQuestion AND s.passwordAnswer = :passwordAnswer")
+    Optional<List<Integer>> findByPasswordQuestionAndPasswordAnswer(@Param("passwordQuestion")String passwordQuestion, @Param("passwordAnswer")String passwordAnswer);
+
+    // passwordQuestion과 passwordAnswer로 찾은 user_id로 user의 password찾기
+    @Query("SELECT u.password FROM User u WHERE u.id in :ids AND u.loginId = :loginId")
+    Optional<String> findByIdsAndLoginId(@Param("ids")List<Integer> idList, @Param("loginId")String loginId);
 
 //    @Query(value = "SELECT u.login_id FROM User u WHERE u.id = :id IN (SELECT user_id FROM student WHERE snum=:snum) AND name = :name AND phone = :phone", nativeQuery = true)
 //    Optional<String> findByIdAndSnumAndPhone(@Param("name")String name, @Param("snum")int snum, @Param("phone")String phone);
