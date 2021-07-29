@@ -11,13 +11,17 @@ import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer> {
-    Optional<Board> findBoardById(int boardId);
+    Optional<Board> findById(int boardId);
 
     @Override
     Page<Board> findAll(Pageable pageable);
 
     List<Board> findByClassIdAndBoardType(int classId, String boardType);
     List<Board> findByClassIdAndBoardTypeAndTitleContaining(int classId, String boardType, String keyword);
+
+    Page<Board> findByClassIdAndBoardType(int classId, String boardType, Pageable pageable);
+    Page<Board> findByClassIdAndBoardTypeAndTitleContaining(int classId, String boardType, String keyword,  Pageable pageable);
+
     //Board findFirstbyTitleContainingOrderByIdDesc(String title);
     // 검색 기능
 //    Page<Board> findByTitleContaining(String title, Pageable pageable);

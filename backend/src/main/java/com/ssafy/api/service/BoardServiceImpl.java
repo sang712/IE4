@@ -7,6 +7,8 @@ import com.ssafy.db.repository.BoardFileRepository;
 import com.ssafy.db.repository.BoardRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,8 +25,6 @@ import java.util.UUID;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService{
-    private static final int BLOCK_PAGE_NUM_COUNT = 5;
-    private static final int PAGE_POST_COUNT = 4;
 
     @Autowired
     BoardRepository boardRepository;
@@ -45,7 +45,7 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public BoardFile insertBoard(MultipartFile files, Board board) throws IOException {
         System.out.println("------------------게시판 글 등록 시도-----------------" );
-        Board newboard = boardRepository.save(board.toEntity());
+        Board newboard = boardRepository.save(board);
 
         String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
         File uploadDir = new File(uploadPath + File.separator + uploadFolder);
@@ -74,7 +74,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId) {
-        Board board = boardRepository.findBoardById(boardId).get();
+        Board board = boardRepository.findById(boardId).get();
 
         board.setTitle(boardUpdateInfo.getTitle());
         board.setContent(boardUpdateInfo.getContent());
@@ -83,36 +83,38 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public int deleteBoard(int boardId) {
-        Optional<Board> board = boardRepository.findBoardById(boardId);
+        Optional<Board> board = boardRepository.findById(boardId);
         boardRepository.delete(board.get());
         return 1;
     }
 
     @Override
     public Board detailBoard(int boardId) {
-        Board board = boardRepository.findBoardById(boardId).get();
+        Board board = boardRepository.findById(boardId).get();
         return board;
+    }
+    @Override
+    public BoardFile detailBoardFile(int boardId) {
+        BoardFile file = boardFileRepository.findByBoardId(boardId).get();
+        return file;
     }
 
     @Override
     public List<Board> getBoardList(int classId, String boardType) {
-
-//        Page<Board> page = boardRepository
-//                .findAll(PageRequest.of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createDate")));
-
-//        List<Board> boards = page.getContent();
         List<Board> boards = boardRepository.findByClassIdAndBoardType(classId, boardType);
         List<Board> boardList = new ArrayList<>();
 
         for(Board boardEl : boards) {
-            Board board = Board.builder()
-                    //.id(boardEl.getId())
-                    .userId(boardEl.getUserId())
-                    .userName(boardEl.getUserName())
-                    .classId(boardEl.getClassId())
-                    .title(boardEl.getTitle())
-                    .content(boardEl.getContent())
-                    .boardType(boardEl.getBoardType()).build();
+            Board board = new Board();
+            board.setId(boardEl.getId());
+            board.setUserId(boardEl.getUserId());
+            board.setClassId(boardEl.getClassId());
+            board.setUserName(boardEl.getUserName());
+            board.setTitle(boardEl.getTitle());
+            board.setContent(boardEl.getContent());
+            board.setBoardType(boardEl.getBoardType());
+            board.setRegDt(boardEl.getRegDt());
+
             boardList.add(board);
         }
         return boardList;
@@ -124,18 +126,30 @@ public class BoardServiceImpl implements BoardService{
         List<Board> boardList = new ArrayList<>();
 
         for(Board boardEl : boards) {
-            Board board = Board.builder()
-                    //.id(boardEl.getId())
-                    .userId(boardEl.getUserId())
-                    .userName(boardEl.getUserName())
-                    .classId(boardEl.getClassId())
-                    .title(boardEl.getTitle())
-                    .content(boardEl.getContent())
-                    .boardType(boardEl.getBoardType()).build();
+            Board board = new Board();
+            board.setId(boardEl.getId());
+            board.setUserId(boardEl.getUserId());
+            board.setClassId(boardEl.getClassId());
+            board.setUserName(boardEl.getUserName());
+            board.setTitle(boardEl.getTitle());
+            board.setContent(boardEl.getContent());
+            board.setBoardType(boardEl.getBoardType());
+            board.setRegDt(boardEl.getRegDt());
+
             boardList.add(board);
         }
         return boardList;
     }
 
+    @Override
+    public Page<Board> boardPage(int classId, String boardType, Pageable pageRequest) {
+        Page<Board> boardList = boardRepository.findByClassIdAndBoardType(classId, boardType, pageRequest);
+        return boardList;
+    }
 
+    @Override
+    public Page<Board> searchBoardPage(int classId, String boardType, Pageable pageRequest, String keykord) {
+        Page<Board> boardList = boardRepository.findByClassIdAndBoardTypeAndTitleContaining(classId, boardType, keykord, pageRequest);
+        return boardList;
+    }
 }
