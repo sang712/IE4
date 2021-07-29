@@ -1,7 +1,10 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.UserUpdatePatchReq;
+import com.ssafy.api.request.StudentUpdatePatchReq;
+import com.ssafy.api.request.TeacherUpdatePatchReq;
+import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.entity.Student;
+import com.ssafy.db.repository.EduClassRepository;
 import com.ssafy.db.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	StudentRepository studentRepository;
+
+	@Autowired
+	EduClassRepository eduClassRepository;
 	
 	@Autowired
 	UserRepositorySupport userRepositorySupport;
@@ -32,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder passwordEncoder;
 	
 	@Override
-	public int createUser(StudentRegisterPostReq studentRegisterInfo) {
+	public Student createStudent(StudentRegisterPostReq studentRegisterInfo) {
 		Student student = new Student();
 		User user = new User();
 
@@ -53,25 +59,44 @@ public class UserServiceImpl implements UserService {
 			student.setParentPhone(studentRegisterInfo.getParentPhone());
 			student.setPasswordQuestion(studentRegisterInfo.getPasswordQuestion());
 			student.setPasswordAnswer(studentRegisterInfo.getPasswordAnswer());
-			return studentRepository.save(student) != null? 1 : 0;
+			return studentRepository.save(student);
 		}
-		else return 0;
-
-
-
+		else return null;
 	}
 
 	@Override
-		public User updateUser(UserUpdatePatchReq userUpdateInfo, String loginId) {
-			User user = userRepository.findByLoginId(loginId).orElse(null);
+	public Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id) {
+		Student student = studentRepository.findByUserId(id).get();
+		User user = userRepository.findById(id).get();
 
-			if(user != null){
-				user.setName(userUpdateInfo.getName());
-				user.setDepartment(userUpdateInfo.getDepartment());
-				user.setPosition(userUpdateInfo.getPosition());
-			}
+		user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
+		user.setPhone(studentUpdateInfo.getPhone());
+		user.setAddress(studentUpdateInfo.getAddress());
+		user.setProfileImgUrl(studentUpdateInfo.getProfileImgUrl());
 
-			return userRepository.save(user);
+		if(userRepository.save(user) != null) {
+			student.setParentPhone(studentUpdateInfo.getParentPhone());
+			student.setPasswordAnswer(studentUpdateInfo.getPasswordAnswer());
+			return studentRepository.save(student);
+		}
+		else return null;
+	}
+
+	@Override
+	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId) {
+		User user = userRepository.findById(id).get();
+
+		user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
+		user.setPhone(teacherUpdateInfo.getPhone());
+		user.setAddress(teacherUpdateInfo.getAddress());
+		user.setProfileImgUrl(teacherUpdateInfo.getProfileImgUrl());
+
+		EduClass eduClass = eduClassRepository.findEduClassById(classId).get();
+		eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
+
+		if(eduClassRepository.save(eduClass) == null) return null;
+
+		return userRepository.save(user);
 	}
 
 	@Override
@@ -92,11 +117,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByLoginId(String loginId) {
-		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByLoginId(loginId).orElse(null);
+		// 디비에 유저 정보 조회 (loginId 를 통한 조회).
+		User user = userRepository.findByLoginId(loginId).orElse(null);
 
 		return user;
 	}
+
+	@Override
+	public Student getStudentByUserId(int userId) {
+		// 디비에 유저 정보 조회 (userId 를 통한 조회).
+		Student student = studentRepository.findByUserId(userId).orElse(null);
+
+		return student;
+	}
+
+
 
 
 //	@Override
