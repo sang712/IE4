@@ -28,8 +28,7 @@ public class BoardDto {
 
 
     public Board toEntity(){
-        Board build = Board.builder()
-                .id(id)
+        Board board = Board.builder()
                 .boardType(boardType)
                 .userId(userId)
                 .userName(userName)
@@ -37,12 +36,11 @@ public class BoardDto {
                 .title(title)
                 .content(content)
                 .build();
-        return build;
+        return board;
     }
 
     @Builder
-    public BoardDto(int id, String boardType, int userId, String userName, int classId, String title, String content){
-        this.id = id;
+    public BoardDto(String boardType, int userId, String userName, int classId, String title, String content){
         this.boardType = boardType;
         this.userId = userId;
         this.userName = userName;

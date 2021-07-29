@@ -1,15 +1,16 @@
 package com.ssafy.db.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 @Entity
 @Getter
 @Setter
+@Table(name="board")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {
     String boardType;
     int userId;
@@ -19,8 +20,7 @@ public class Board extends BaseEntity {
     int classId;
 
     @Builder
-    public Board(int id, String boardType, int userId, String userName, int classId, String title, String content) {
-        super.id = id;
+    public Board( String boardType, int userId, String userName, int classId, String title, String content) {
         this.boardType = boardType;
         this.userId = userId;
         this.userName = userName;
@@ -29,6 +29,15 @@ public class Board extends BaseEntity {
         this.content = content;
     }
 
-    public Board() {
+    public Board toEntity(){
+        Board board = Board.builder()
+                .boardType(boardType)
+                .userId(userId)
+                .userName(userName)
+                .classId(classId)
+                .title(title)
+                .content(content)
+                .build();
+        return board;
     }
 }

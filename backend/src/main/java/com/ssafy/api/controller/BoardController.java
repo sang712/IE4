@@ -1,10 +1,10 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.BoardUpdatePatchReq;
-import com.ssafy.api.response.BoardDto;
 import com.ssafy.api.service.BoardService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Board;
+import com.ssafy.db.entity.BoardFile;
 import com.ssafy.db.repository.BoardRepository;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -31,16 +33,53 @@ public class BoardController {
     @Autowired
     BoardRepository boardRepository;
 
-    @PostMapping()
-    @ApiOperation(value = "게시판 글 등록", notes = "게시판에 글을 작성한다.")
-    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "없음"), @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<? extends BaseResponseBody> register(
-            @RequestBody @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto) {
-        Board board = boardService.insertBoard(boardDto);
+    @PostMapping(value = "/insert", consumes = {"multipart/form-data"})
+    @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
+    public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
+            @ApiParam(value="classId", required = true)
+            @RequestParam(value = "classId",required = true) int classId,
+            @ApiParam(value="boardType", required = true)
+            @RequestParam(value = "boardType", required = true) String boardType,
+            @ApiParam(value="userId", required = true)
+            @RequestParam(value = "userId", required = true) int userId,
+            @ApiParam(value="userName", required = true)
+            @RequestParam(value = "userName", required = true) String userName,
+            @ApiParam(value="title", required = false)
+            @RequestParam(value = "title", required = false) String title,
+            @ApiParam(value="content", required = false)
+            @RequestParam(value = "content",required = false) String content,
+            @ApiParam(value="파일", required = false) @RequestParam("file") MultipartFile files) throws IOException {
+        //  @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto
+        System.out.println("------------------파일 등록 시도------------" );
+        Board board = new Board(boardType, userId, userName, classId, title,content);
 
+        BoardFile boardfile = boardService.insertBoard(files, board);
+        System.out.println("------------------파일 등록 결과는------------" );
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
+//    @PostMapping(value = "/insert", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
+//    public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
+//            @ApiParam(value="파일", required = false) @RequestPart("file") MultipartFile files
+//            , @Validated @RequestParam("json") @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto) throws IOException {
+//        //  @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto
+//        System.out.println("------------------파일 등록 시도------------" );
+//        Board board = boardService.insertBoard(files, boardDto);
+//        System.out.println("------------------파일 등록 결과는------------" );
+//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//    }
+
+//    @PostMapping()
+//    @ApiOperation(value = "게시판 글 등록", notes = "게시판에 글을 작성한다.")
+//    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "없음"), @ApiResponse(code = 500, message = "서버 오류") })
+//    public ResponseEntity<? extends BaseResponseBody> register(
+//            @RequestBody @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto) {
+//        Board board = boardService.insertBoard(boardDto);
+//
+//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//    }
+
 
     @PatchMapping("/{boardId}")
     @ApiOperation(value = "게시판 글 수정", notes = "글의 제목 및 내용을 수정한다.")
@@ -106,29 +145,31 @@ public class BoardController {
 
     @GetMapping("/")
     @ApiOperation(value = "게시글 목록", notes = "게시글 리스트를 가져온다.")
-    public List<BoardDto> list(Model model,
+    public List<Board> list(Model model,
                        @RequestParam(value = "classId") int classId,
                        @RequestParam(value = "boardType") String boardType ) {
         // @RequestParam(value = "page", defaultValue = "1") int pageNum
 
-        List<BoardDto> boardDtoList = boardService.getBoardList(classId,boardType);
+        List<Board> boardList = boardService.getBoardList(classId,boardType);
         //int[] pageList = boardService.getPageList(pageNum);
 
-        model.addAttribute("boardList", boardDtoList);
+        model.addAttribute("boardList", boardList);
         //model.addAttribute("pageList", pageList);
 
-        return boardDtoList;
+        return boardList;
     }
 
     @GetMapping("/search")
     @ApiOperation(value = "게시글 검색", notes = "검색 단어로 게시글을 검색한다.")
-    public List<BoardDto> search(Model model,
+    public List<Board> search(Model model,
                                  @RequestParam(value = "classId") int classId,
                                  @RequestParam(value = "boardType") String boardType,
                                  @RequestParam(value = "keyword") String keyword){
-        List<BoardDto> boardDtoList = boardService.searchBoard(classId,boardType,keyword);
-        model.addAttribute("boardList", boardDtoList);
+        List<Board> boardList = boardService.searchBoard(classId,boardType,keyword);
+        model.addAttribute("boardList", boardList);
 
-        return boardDtoList;
+        return boardList;
     }
+
+
 }
