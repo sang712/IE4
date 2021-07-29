@@ -15,6 +15,9 @@ public interface UserService {
 	Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id, MultipartHttpServletRequest request);
 	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId);
 	int deleteUser(String loginId);
+
 	User getUserByLoginId(String loginId);
 	Student getStudentByUserId(int UserId);
+
+	String findLoginId(String name, int snum, String phone);
 }
