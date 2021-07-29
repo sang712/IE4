@@ -14,7 +14,7 @@
         <router-view></router-view>
       </el-main>
     </el-container> -->
-    <div class="container" style="height: 75vh; margin: 0px; padding: 0px" >
+    
       <div class="d-flex align-items-stretch">
         <div class="side-bar col-3">          
           <div class="profile-img"></div>
@@ -29,7 +29,7 @@
         
 
       </div>
-    </div>
+   
     <main-footer :height="`110px`"/>
   </el-container>
   <signup-dialog

@@ -25,7 +25,7 @@ export default {
   }),
   setup(props,{ emit }){
     const state = reactive({
-      isLogin : false,
+      isLogin : true,
     })
     return { state }
 

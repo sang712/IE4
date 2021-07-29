@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/home/home'
 import ConferencesDetail from '@/views/conferences/conference-detail'
 import History from '@/views/history/history'
+import SectionHome from '@/views/main/main-section/section-home'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -22,9 +23,37 @@ function makeRoutesFromMenu () {
     name: 'conference-detail',
     component: ConferencesDetail
   })
+  
+  routes.push({
+      path: '/home',
+      name: 'home',
+      component: SectionHome,
+      // children: [
+      //     {          
+      //     }
+      //   ]
+  })
   return routes
 }
+// const router = new VueRouter({
+//   routes : [
+//     {
+//       path: '/home',
+//       name: 'home',
+//       component: SectionHome,
+//       children: [
+//         {          
+//         },
+//         // {
+//         //   path: 'home',
+//         //   name: 'home',
+//         //   component: SectionHome,
+//         // }
+//       ]
+//     }
+//   ]
 
+// })
 const routes = makeRoutesFromMenu()
 
 const router = createRouter({
