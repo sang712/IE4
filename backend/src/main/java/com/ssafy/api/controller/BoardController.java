@@ -36,50 +36,19 @@ public class BoardController {
     @PostMapping(value = "/insert", consumes = {"multipart/form-data"})
     @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
     public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
-            @ApiParam(value="classId", required = true)
             @RequestParam(value = "classId",required = true) int classId,
-            @ApiParam(value="boardType", required = true)
             @RequestParam(value = "boardType", required = true) String boardType,
-            @ApiParam(value="userId", required = true)
             @RequestParam(value = "userId", required = true) int userId,
-            @ApiParam(value="userName", required = true)
             @RequestParam(value = "userName", required = true) String userName,
-            @ApiParam(value="title", required = false)
             @RequestParam(value = "title", required = false) String title,
-            @ApiParam(value="content", required = false)
             @RequestParam(value = "content",required = false) String content,
-            @ApiParam(value="파일", required = false) @RequestParam("file") MultipartFile files) throws IOException {
-        //  @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto
-        System.out.println("------------------파일 등록 시도------------" );
-        Board board = new Board(boardType, userId, userName, classId, title,content);
+            @RequestParam("file") MultipartFile files) throws IOException {
 
+        Board board = new Board(boardType, userId, userName, classId, title,content);
         BoardFile boardfile = boardService.insertBoard(files, board);
-        System.out.println("------------------파일 등록 결과는------------" );
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
-//    @PostMapping(value = "/insert", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-//    @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
-//    public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
-//            @ApiParam(value="파일", required = false) @RequestPart("file") MultipartFile files
-//            , @Validated @RequestParam("json") @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto) throws IOException {
-//        //  @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto
-//        System.out.println("------------------파일 등록 시도------------" );
-//        Board board = boardService.insertBoard(files, boardDto);
-//        System.out.println("------------------파일 등록 결과는------------" );
-//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//    }
-
-//    @PostMapping()
-//    @ApiOperation(value = "게시판 글 등록", notes = "게시판에 글을 작성한다.")
-//    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-//            @ApiResponse(code = 404, message = "없음"), @ApiResponse(code = 500, message = "서버 오류") })
-//    public ResponseEntity<? extends BaseResponseBody> register(
-//            @RequestBody @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto) {
-//        Board board = boardService.insertBoard(boardDto);
-//
-//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//    }
-
 
     @PatchMapping("/{boardId}")
     @ApiOperation(value = "게시판 글 수정", notes = "글의 제목 및 내용을 수정한다.")
