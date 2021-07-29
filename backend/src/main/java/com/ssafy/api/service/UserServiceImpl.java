@@ -6,16 +6,22 @@ import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.entity.Student;
 import com.ssafy.db.repository.EduClassRepository;
 import com.ssafy.db.repository.StudentRepository;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.ssafy.api.request.StudentRegisterPostReq;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -61,18 +67,63 @@ public class UserServiceImpl implements UserService {
 			student.setPasswordAnswer(studentRegisterInfo.getPasswordAnswer());
 			return studentRepository.save(student);
 		}
+
 		else return null;
 	}
 
 	@Override
-	public Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id) {
+	public Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id, MultipartHttpServletRequest request) {
 		Student student = studentRepository.findByUserId(id).get();
-		User user = userRepository.findById(id).get();
+		User user = userRepository.findUserById(id).get();
 
 		user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
 		user.setPhone(studentUpdateInfo.getPhone());
 		user.setAddress(studentUpdateInfo.getAddress());
-		user.setProfileImgUrl(studentUpdateInfo.getProfileImgUrl());
+
+
+		String uploadFolder = "profile";
+		String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
+		String saveUrl = "";
+
+		try {
+			MultipartFile file = request.getFile("file");
+
+			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+			if(!uploadDir.exists()) uploadDir.mkdir();
+
+			String fileUrl = userRepository.findById(id).orElse(null);
+
+			// fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
+			// fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
+			if(fileUrl != null) {
+				File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+				if(deleteFile.exists()) deleteFile.delete();
+			}
+
+			//
+			String fileName = file.getOriginalFilename();
+
+			// Random File Id
+			UUID uuid = UUID.randomUUID();
+
+			// file extension
+			String extension = FilenameUtils.getExtension(fileName);
+			String savingFileName = uuid + "." + extension;
+			File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+
+			System.out.println("파일 경로!!!>>> " + destFile);
+
+			file.transferTo(destFile);
+
+			saveUrl = uploadFolder + "/" + savingFileName;
+
+		} catch(IOException e) {
+			e.printStackTrace();
+
+		}
+
+		user.setProfileImgUrl(saveUrl);
+
 
 		if(userRepository.save(user) != null) {
 			student.setParentPhone(studentUpdateInfo.getParentPhone());
@@ -84,7 +135,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId) {
-		User user = userRepository.findById(id).get();
+		User user = userRepository.findUserById(id).get();
 
 		user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
 		user.setPhone(teacherUpdateInfo.getPhone());

@@ -16,8 +16,11 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     // 아래와 같이, Query Method 인터페이스(반환값, 메소드명, 인자) 정의를 하면 자동으로 Query Method 구현됨.
-    Optional<User> findById(int id);
+    Optional<User> findUserById(int id);
     Optional<User> findByLoginId(String loginId);
+
+    @Query("SELECT u.profileImgUrl FROM User u WHERE u.id = :id")
+    Optional<String> findById(@Param("id")int id);
 
 //    @Query("SELECT u.name, u.profileImgUrl FROM User u WHERE u.classId = :classId AND u.position = :position ORDER BY u.name")    --> 이건 왜 안되는 건지?
     @Query(value = "SELECT u.name, u.profile_img_url FROM User u WHERE u.class_id = :classId AND u.position = :position ORDER BY u.name", nativeQuery = true)
