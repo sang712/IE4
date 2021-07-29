@@ -61,4 +61,12 @@ public class EduClassController {
 
     }
 
+    @GetMapping("/ranking/{classId}")
+    @ApiOperation(value = "학생 랭킹 조회", notes = "해당 반 학생의 point 총합 랭킹 상위 3명을 가져온다.")
+    public ResponseEntity<List<String>> getEduClassRanking(@PathVariable int classId) {
+        List<String> list = eduClassService.getRank(classId);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }
