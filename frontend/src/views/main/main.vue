@@ -4,32 +4,16 @@
       :height="`70px`"
       @openSignupDialog="onOpenSignupDialog"
       @openLoginDialog="onOpenLoginDialog"/>
-    
-    <!-- <el-container class="main-container">
-      <el-aside class="hide-on-small" width="240px">
-        <main-sidebar
-          :width="`240px`"/>
-      </el-aside>
-      <el-main>
-        <router-view></router-view>
-      </el-main>
-    </el-container> -->
-    
       <div class="d-flex align-items-stretch">
         <div class="side-bar">          
           <div class="profile-img" style="max-width: 230px ; min-width: 230px;"></div>
           <h1>이름: 한상길</h1>
           <h1>2학년 7반 30번</h1>
-          
-          
         </div>
         <div >
           <router-view></router-view>
         </div>
-        
-
       </div>
-   
     <main-footer :height="`110px`"/>
   </el-container>
   <signup-dialog
@@ -66,17 +50,15 @@
 import SignupDialog from './components/signup-dialog'
 import LoginDialog from './components/login-dialog'
 import MainHeader from './components/main-header'
-import MainSidebar from './components/main-sidebar'
 import MainFooter from './components/main-footer'
 
 export default {
   name: 'Main',
   components: {
     MainHeader,
-    MainSidebar,
     MainFooter,
     SignupDialog,
-    LoginDialog
+    LoginDialog,
   },
   data () {
     return {
