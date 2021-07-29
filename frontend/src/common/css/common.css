@@ -9,21 +9,21 @@ body {
   font-weight: 400;
 }
 
-@media (max-width: 1269px) {
-  .hide-on-small {
+/* @media (max-width: 1269px) {
+  .upper-header {
     display: none !important;
   }
   .hide-on-big {
     display: block;
   }
-}
+} */
 
 @media (min-width: 1270px) {
   html, body {
     min-width: 1270px;
   }
 
-  .hide-on-small {
+  .upper-header {
     display: block;
   }
   .hide-on-big {

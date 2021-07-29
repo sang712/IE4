@@ -1,5 +1,7 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.response.EduClassMem;
+import com.ssafy.api.response.EduClassMemListRes;
 import com.ssafy.api.service.EduClassService;
 import com.ssafy.db.entity.EduClass;
 import io.swagger.annotations.Api;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Api(value = "반 정보 API", tags = {"Class"})
@@ -34,7 +37,7 @@ public class EduClassController {
 
     }
 
-    @PatchMapping("/{classId}")
+    @PatchMapping("/timetable/{classId}")
     @ApiOperation(value = "시간표 수정", notes = "수정된 시간표 이미지의 url을 반환한다.")
     public ResponseEntity<Map<String, String>> updateTimeTable(@PathVariable int classId, MultipartHttpServletRequest request) {
         String url = eduClassService.updateTimetable(classId, request);
@@ -47,5 +50,15 @@ public class EduClassController {
         return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
     }
 
+    @GetMapping("/myclass/{classId}")
+    @ApiOperation(value = "우리 반 구성원 조회", notes = "해당 반의 담임 선생님과 학생들 리스트를 가져온다.")
+    public ResponseEntity<List<EduClassMemListRes>> getEduClassPeopleList(@PathVariable int classId) {
+        
+        // index 0은 교사, 1부터 학생
+        List<EduClassMem> list = eduClassService.getEduClassMem(classId);
+
+        return new ResponseEntity<List<EduClassMemListRes>>(EduClassMemListRes.of(list),HttpStatus.OK);
+
+    }
 
 }

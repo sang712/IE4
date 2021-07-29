@@ -1,7 +1,9 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.response.EduClassMem;
 import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.repository.EduClassRepository;
+import com.ssafy.db.repository.UserRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,12 +12,17 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Service("myClassService")
 public class EduClassServiceImpl implements EduClassService {
     @Autowired
     EduClassRepository eduClassRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public EduClass getEduClassByEduClassId(int eduClassId) {
@@ -79,14 +86,25 @@ public class EduClassServiceImpl implements EduClassService {
         return saveUrl;
     }
 
+    @Override
+    public List<EduClassMem> getEduClassMem(int classId) {
+        List<EduClassMem> list = new LinkedList<>();
+
+        list.addAll(userRepository.findByClassIdAndPositionOrderByName(classId, "교사").orElse(null));
+        list.addAll(userRepository.findByClassIdAndPositionOrderByName(classId, "학생").orElse(null));
+
+//        System.out.println("list 출력!!!!!>>>>>>> ");
+//        for(int i=0; i<list.size(); i++) {
+//            System.out.println(list.get(i).getName());
+//        }
+
+        return list;
+    }
+
 //
 //    @Override
 //    public List<String> getRank(int classId) {
 //        return null;
 //    }
-//
-//    @Override
-//    public List<?> getClassMem(int classId) {
-//        return null;
-//    }
+
 }

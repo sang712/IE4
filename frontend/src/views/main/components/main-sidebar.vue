@@ -3,18 +3,21 @@
     class="main-sidebar"
     :gutter="10"
     :style="{ 'width': width }">
-    <div class="hide-on-small">
-      <el-menu
+    <!-- <div class="hide-on-small"> -->
+      <!-- <el-menu
         :default-active="String(state.activeIndex)"
         active-text-color="#ffd04b"
         class="el-menu-vertical-demo"
         @select="menuSelect">
-        <el-menu-item v-for="(item, index) in state.menuItems" :key="index" :index="index.toString()">
-          <i v-if="item.icon" :class="['ic', item.icon]"/>
-          <span>{{ item.title }}</span>
+        <el-menu-item>     
+          <img src="../../../../assets/images/logo.png" alt="">
         </el-menu-item>
-      </el-menu>
-    </div>
+        
+      </el-menu> -->
+      <div style="height: 10vh; width: 10vw; background-image: url('../../../assets/images/main-header.jpg')">
+        
+      </div>
+    <!-- </div> -->
   </el-row>
 </template>
 <style>
@@ -22,12 +25,12 @@
   margin-top: 0;
   padding-left: 0;
 }
-.main-sidebar .hide-on-small {
+/* .main-sidebar .hide-on-small {
   height: 100%;
 }
 .main-sidebar .hide-on-small .el-menu {
   height: 100%;
-}
+} */
 .main-sidebar .el-menu .el-menu-item {
   cursor: pointer;
   border-right: none;

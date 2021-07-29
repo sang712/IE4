@@ -1,68 +1,35 @@
 <template>
-  <el-row
-    class="main-header"
-    :gutter="10"
-    :style="{ 'height': height }">
-    <div class="hide-on-small">
-      <div class="logo-wrapper" @click="clickLogo"><div class="ic ic-logo"/></div>
-      <div class="tool-wrapper">
-        <div class="search-field">
-          <el-input
-            placeholder="검색"
-            prefix-icon="el-icon-search"
-            v-model="state.searchValue">
-          </el-input>
-        </div>
-        <div class="button-wrapper">
-          <div v-if="state.isLogin">
-            <el-button @click="clickProfile">
-              <i class="fas fa-user" style="margin-right: 5px;"></i>회원정보
-            </el-button>
-            <el-button type="danger" @click="clickLogout">
-              <i class="fas fa-power-off" style="margin-right: 5px;"></i>로그아웃
-            </el-button>
-          </div>
-          <div v-else> 
-            <el-button @click="clickSignup">
-              <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>회원가입
-            </el-button>
-            <el-button type="primary" @click="clickLogin">
-              <i class="fas fa-key" style="margin-right: 5px;"></i>로그인
-            </el-button>
-          </div>
+  <div class= "main-headers">
+    <el-row
+      class="main-header"
+      :gutter="10"
+      :style="{ 'height': height }">
+      <div class="upper-header" >
+        <div class="logo-wrapper" @click="clickLogo"><div class="ic ic-logo"/></div>
+        <div class="tool-wrapper">
+          <div class="button-wrapper">
+            <el-button  type="default" @click="" style="width: 10vw;">공지사항</el-button>
+            <el-button  type="default" @click="" style="width: 10vw;">학습자료</el-button>
+            <el-button  type="default" @click="" style="width: 10vw;">우리반</el-button>
+            <el-button  type="danger" @click="clickLogout" style="width: 10vw;">로그아웃</el-button>
+          </div>       
         </div>
       </div>
+    </el-row>
+<!--################        급     훈         #############-->
+    <el-row class="main-header" style="height: 10vh;">
+      <div class="lower-header" >  
+        <div class="class-motto">
+          <h1>급훈 : 갓상길을 찬양하라</h1>
+        </div>
+      </div>  
+    </el-row>
+  </div>
 
-    </div>
-    <div class="hide-on-big">
-      <div class="menu-icon-wrapper" @click="changeCollapse"><i class="el-icon-menu"></i></div>
-      <div class="logo-wrapper" @click="clickLogo"><div class="ic ic-logo"/></div>
-      <div class="menu-icon-wrapper"><i class="el-icon-search"></i></div>
-      <div class="mobile-sidebar-wrapper" v-if="!state.isCollapse">
-        <div class="mobile-sidebar">
-          <div class="mobile-sidebar-tool-wrapper">
-            <div class="logo-wrapper"><div class="ic ic-logo"/></div>
-            <el-button type="primary" class="mobile-sidebar-btn login-btn" @click="clickLogin">로그인</el-button>
-            <el-button class="mobile-sidebar-btn register-btn">회원가입</el-button>
-          </div>
-          <el-menu
-            :default-active="String(state.activeIndex)"
-            active-text-color="#ffd04b"
-            class="el-menu-vertical-demo"
-            @select="menuSelect">
-            <el-menu-item v-for="(item, index) in state.menuItems" :key="index" :index="index.toString()">
-              <i v-if="item.icon" :class="['ic', item.icon]"/>
-              <span>{{ item.title }}</span>
-            </el-menu-item>
-          </el-menu>
-        </div>
-        <div class="mobile-sidebar-backdrop" @click="changeCollapse"></div>
-      </div>
-    </div>
-  </el-row>
+  
 </template>
 <script>
-import { reactive, computed } from 'vue'
+import { reactive, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -79,12 +46,16 @@ export default {
   setup(props, { emit }) {
     const store = useStore()
     const router = useRouter()
-    const isLogin = ref(false)
+    // const jwt = ref(localStorage.getItem('jwt'))
+    
     const state = reactive({
       isLogin: computed(() => {
         const jwt = localStorage.getItem('jwt')
-        if (jwt == null) { return false }
-        else { return true }
+        if (jwt == null) {
+          return false
+        } else {
+          return true
+        }
       }),
       searchValue: null,
       isCollapse: true,
@@ -134,50 +105,52 @@ export default {
       emit('openLoginDialog')
     }
 
-    const clickProfile = () => {
-      store.dispatch('root/requestProfile')
-      .then(function (result) {
-        console.log('내 프로필 정보', result.data)
-        emit('openProfileDialog', result.data)
-      })
-      .catch(function (err) {
-        const status = err.response.request.status
-        if (status == 500) {
-          Swal.fire({
-            title: '이런!',
-            text: '서버 오류가 발생했습니다..',
-            icon: 'error',
-          })
-        } else {
-          Swal.fire({
-            title: '이런!',
-            text: '알 수 없는 오류가 발생했습니다.',
-            icon: 'error',
-          })
-        } 
-      })
-    }
-
     const clickLogout = () => {
       const jwt = localStorage.getItem('jwt')
       console.log(jwt)
       localStorage.removeItem('jwt')
       localStorage.removeItem('username')
+      // location.reload()
     }
 
     const changeCollapse = () => {
       state.isCollapse = !state.isCollapse
     }
 
-    return { state, menuSelect, clickLogo, clickSignup, clickLogin, clickLogout, clickProfile, changeCollapse }
+    return { state, menuSelect, clickLogo, clickSignup, clickLogin, clickLogout, changeCollapse }
   }
 }
 </script>
 <style>
+  .main-headers{
+    background-image: url('../../../assets/images/main-header.jpg');    
+    background-position:center;
+    
+  }
+  .lower-header{
+    height: 100%;
+  }
+
+  .class-motto {
+    height: 80%;
+    background: rgba(255, 255, 255, 0.80);
+    padding: 20px !important;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    text-align: center;
+    
+    /* vertical-align: middle; */
+  }
+
   .main-header {
     padding: 10px 20px;
   }
   /*Mobile, Tablet*/
+ 
+  .main-header.upper-header{
+    display: flex;
+    justify-content: space-between;
+  }
   .menu-icon-wrapper {
     display: inline-block;
     vertical-align: top;
@@ -194,6 +167,7 @@ export default {
     height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
+/* ############# 우리껄로 바꿔넣어>>안돼네 ############*/
     background-image: url('../../../assets/images/ssafy-logo.png');
   }
   .mobile-sidebar-wrapper {
@@ -254,32 +228,32 @@ export default {
   }
 
   /*Desktop - Need to add Class if Need*/
-  .main-header .hide-on-small .logo-wrapper {
+  .main-header .upper-header .logo-wrapper {
     cursor: pointer;
     display: inline-block;
   }
-  .main-header .hide-on-small .logo-wrapper .ic.ic-logo {
+  .main-header .upper-header .logo-wrapper .ic.ic-logo {
     width: 70px;
     height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url('../../../assets/images/ssafy-logo.png');
   }
-  .main-header .hide-on-small .tool-wrapper {
-    width: 50%;
-    float: right;
-  }
-  .main-header .hide-on-small .tool-wrapper .button-wrapper {
+  .main-header .upper-header .tool-wrapper {
     width: 45%;
     float: right;
   }
-  .main-header .hide-on-small .tool-wrapper .button-wrapper .el-button {
+  .main-header .upper-header .tool-wrapper .button-wrapper {
+    width:45vw;
+    float: right;
+  }
+  .main-header .upper-header .tool-wrapper .button-wrapper .el-button {
     width: 45%;
     height: 50px;
     cursor: pointer;
     margin-right: 1%;
   }
-  .main-header .hide-on-small .tool-wrapper .search-field {
+  .main-header .upper-header .tool-wrapper .search-field {
     width: 50%;
     height: 50px;
     max-width: 400px;
@@ -287,16 +261,16 @@ export default {
     display: inline-block;
     background-color: white;
   }
-  .main-header .hide-on-small .tool-wrapper .search-field .el-input {
+  .main-header .upper-header .tool-wrapper .search-field .el-input {
     width: 100%;
     height: 100%;
   }
-  .main-header .hide-on-small .tool-wrapper .search-field .el-input .el-input__inner {
+  .main-header .upper-header .tool-wrapper .search-field .el-input .el-input__inner {
     width: 88%;
     height: 50px;
     margin-right: 1%;
   }
-  .main-header .hide-on-small .tool-wrapper .search-field .el-input .el-input__prefix {
+  .main-header .upper-header .tool-wrapper .search-field .el-input .el-input__prefix {
     top: 5px;
   }
 
