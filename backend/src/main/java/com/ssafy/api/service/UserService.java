@@ -20,4 +20,5 @@ public interface UserService {
 	Student getStudentByUserId(int UserId);
 
 	String findLoginId(String name, int snum, String phone);
+	String findPassword(String loginId, String passwordQuestion, String passwordAnswer);
 }

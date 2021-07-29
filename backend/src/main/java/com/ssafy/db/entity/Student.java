@@ -22,7 +22,7 @@ public class Student extends BaseEntity{
 
     int snum;
     String parentPhone;
-    String PasswordQuestion;
-    String PasswordAnswer;
+    String passwordQuestion;
+    String passwordAnswer;
 
 }

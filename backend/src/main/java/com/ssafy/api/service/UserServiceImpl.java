@@ -196,6 +196,16 @@ public class UserServiceImpl implements UserService {
 		return loginId;
 	}
 
+	@Override
+	public String findPassword(String loginId, String passwordQuestion, String passwordAnswer){
+		List<Integer> userIdList = new LinkedList<>();
+
+		userIdList.addAll(userRepository.findByPasswordQuestionAndPasswordAnswer(passwordQuestion, passwordAnswer).orElse(null));
+
+		String password = userRepository.findByIdsAndLoginId(userIdList, loginId).orElse(null);
+
+		return password;
+	}
 
 
 

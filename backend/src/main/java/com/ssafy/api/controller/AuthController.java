@@ -68,23 +68,40 @@ public class AuthController {
 		return ResponseEntity.status(401).body(UserLoginPostRes.of(0,0, null));
 	}
 
-	@GetMapping()
+	@GetMapping("/findId")
 	@ApiOperation(value = "아이디 찾기", notes = "<strong>이름과 배정번호와 전화번호</strong>를 통해 로그인 아이디를 찾는다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<Map<String, String>> findMyLoginId(
-			@RequestParam @ApiParam(value="회원 아이디", required = true) String name,
-			@RequestParam @ApiParam(value="배정 반", required = true) int snum,
-			@RequestParam @ApiParam(value="회원 정보", required = true) String phone) {
+			@RequestParam @ApiParam(value="학생 이름", required = true) String name,
+			@RequestParam @ApiParam(value="학생 배정번호", required = true) int snum,
+			@RequestParam @ApiParam(value="학생 전화번호", required = true) String phone) {
 		String loginId = userService.findLoginId(name, snum, phone);
 		Map<String, String> map = new HashMap<String, String>() {
 			{
 				put("loginId", loginId);
 			}
 		};
-		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
 
+		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
 	}
 
 
+	@GetMapping("/findPw")
+	@ApiOperation(value = "아이디 찾기", notes = "<strong>이름과 배정번호와 전화번호</strong>를 통해 로그인 아이디를 찾는다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
+	public ResponseEntity<Map<String, String>> findMyLoginId(
+			@RequestParam @ApiParam(value="회원 로그인 아이디", required = true) String loginId,
+			@RequestParam @ApiParam(value="회원 비밀번호 질문", required = true) String passwordQuestion,
+			@RequestParam @ApiParam(value="회원 비밀번호 질문 답", required = true) String passwordAnswer) {
+		String password = userService.findPassword(loginId, passwordQuestion, passwordAnswer);
+		Map<String, String> map = new HashMap<String, String>() {
+			{
+				put("password", password);
+			}
+		};
+
+		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
+	}
 }
