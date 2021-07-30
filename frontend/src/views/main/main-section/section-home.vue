@@ -16,8 +16,6 @@
           <el-button style="width: 22%; height: 50%; font-size: 120%">MVP</el-button>             
         </div>
         <router-view class='notice-content'></router-view>
-        <!-- <div class="notice-content" style="margin-top:25px">         
-        </div> -->
       </div>
     </div> 
   </div>
@@ -55,8 +53,7 @@ export default {
     height: 41vh;
     width: 32vw;
     background-color: #ffffff ;
-    margin: 10px 5px;
-    /* background-image: url('../../../assets/images/time-table.png');  */
+    margin: 20px 5px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;    

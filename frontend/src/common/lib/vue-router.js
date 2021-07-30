@@ -3,6 +3,7 @@ import Home from '@/views/home/home'
 import ConferencesDetail from '@/views/conferences/conference-detail'
 import History from '@/views/history/history'
 import SectionHome from '@/views/main/main-section/section-home'
+import SectionSchedule from '@/views/main/main-section/section-schedule'
 import SectionNote from '@/views/main/main-section/section-note'
 
 const fullMenu = require('@/views/main/menu.json')
@@ -30,12 +31,12 @@ function makeRoutesFromMenu () {
     name: 'home',
     component: SectionHome,
     children: [
-    //   {
-    //     // 시간표버튼 라우터
-    //     path: '/',
-    //     name: 'schedule',
-    //     component: SectionSchedule,
-    //   },
+      {
+        // 시간표버튼 라우터
+        path: '',
+        name: 'schedule',
+        component: SectionSchedule,
+      },
       {
         // 알림장버튼 라우터
         path: 'note',
