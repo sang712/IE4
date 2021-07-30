@@ -98,48 +98,48 @@ public class BoardServiceImpl implements BoardService{
         BoardFile file = boardFileRepository.findByBoardId(boardId).get();
         return file;
     }
-
-    @Override
-    public List<Board> getBoardList(int classId, String boardType) {
-        List<Board> boards = boardRepository.findByClassIdAndBoardType(classId, boardType);
-        List<Board> boardList = new ArrayList<>();
-
-        for(Board boardEl : boards) {
-            Board board = new Board();
-            board.setId(boardEl.getId());
-            board.setUserId(boardEl.getUserId());
-            board.setClassId(boardEl.getClassId());
-            board.setUserName(boardEl.getUserName());
-            board.setTitle(boardEl.getTitle());
-            board.setContent(boardEl.getContent());
-            board.setBoardType(boardEl.getBoardType());
-            board.setRegDt(boardEl.getRegDt());
-
-            boardList.add(board);
-        }
-        return boardList;
-    }
-
-    @Override
-    public List<Board> searchBoard(int classId, String boardType, String keyword) {
-        List<Board> boards = boardRepository.findByClassIdAndBoardTypeAndTitleContaining(classId, boardType, keyword);
-        List<Board> boardList = new ArrayList<>();
-
-        for(Board boardEl : boards) {
-            Board board = new Board();
-            board.setId(boardEl.getId());
-            board.setUserId(boardEl.getUserId());
-            board.setClassId(boardEl.getClassId());
-            board.setUserName(boardEl.getUserName());
-            board.setTitle(boardEl.getTitle());
-            board.setContent(boardEl.getContent());
-            board.setBoardType(boardEl.getBoardType());
-            board.setRegDt(boardEl.getRegDt());
-
-            boardList.add(board);
-        }
-        return boardList;
-    }
+//일반 게시글 목록
+//    @Override
+//    public List<Board> getBoardList(int classId, String boardType) {
+//        List<Board> boards = boardRepository.findByClassIdAndBoardType(classId, boardType);
+//        List<Board> boardList = new ArrayList<>();
+//
+//        for(Board boardEl : boards) {
+//            Board board = new Board();
+//            board.setId(boardEl.getId());
+//            board.setUserId(boardEl.getUserId());
+//            board.setClassId(boardEl.getClassId());
+//            board.setUserName(boardEl.getUserName());
+//            board.setTitle(boardEl.getTitle());
+//            board.setContent(boardEl.getContent());
+//            board.setBoardType(boardEl.getBoardType());
+//            board.setRegDt(boardEl.getRegDt());
+//
+//            boardList.add(board);
+//        }
+//        return boardList;
+//    }
+//
+//    @Override
+//    public List<Board> searchBoard(int classId, String boardType, String keyword) {
+//        List<Board> boards = boardRepository.findByClassIdAndBoardTypeAndTitleContaining(classId, boardType, keyword);
+//        List<Board> boardList = new ArrayList<>();
+//
+//        for(Board boardEl : boards) {
+//            Board board = new Board();
+//            board.setId(boardEl.getId());
+//            board.setUserId(boardEl.getUserId());
+//            board.setClassId(boardEl.getClassId());
+//            board.setUserName(boardEl.getUserName());
+//            board.setTitle(boardEl.getTitle());
+//            board.setContent(boardEl.getContent());
+//            board.setBoardType(boardEl.getBoardType());
+//            board.setRegDt(boardEl.getRegDt());
+//
+//            boardList.add(board);
+//        }
+//        return boardList;
+//    }
 
     @Override
     public Page<Board> boardPage(int classId, String boardType, Pageable pageRequest) {

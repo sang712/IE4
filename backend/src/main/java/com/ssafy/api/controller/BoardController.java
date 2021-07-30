@@ -14,13 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
-import java.util.List;
 
 
 /**
@@ -90,29 +88,29 @@ public class BoardController {
         BoardFile file = boardService.detailBoardFile(boardId);
         return ResponseEntity.status(200).body(BoardDetailRes.of(board, file));
     }
+// 일반 게시글
+//    @GetMapping("/")
+//    @ApiOperation(value = "게시글 목록", notes = "게시글 리스트를 가져온다.")
+//    public List<Board> list(Model model,
+//                       @RequestParam(value = "classId") int classId,
+//                       @RequestParam(value = "boardType") String boardType) {
+//        List<Board> boardList = boardService.getBoardList(classId,boardType);
+//
+//        model.addAttribute("boardList", boardList);
+//        return boardList;
+//    }
 
-    @GetMapping("/")
-    @ApiOperation(value = "게시글 목록", notes = "게시글 리스트를 가져온다.")
-    public List<Board> list(Model model,
-                       @RequestParam(value = "classId") int classId,
-                       @RequestParam(value = "boardType") String boardType) {
-        List<Board> boardList = boardService.getBoardList(classId,boardType);
-
-        model.addAttribute("boardList", boardList);
-        return boardList;
-    }
-
-    @GetMapping("/search")
-    @ApiOperation(value = "게시글 검색", notes = "검색 단어로 게시글을 검색한다.")
-    public List<Board> search(Model model,
-                                 @RequestParam(value = "classId") int classId,
-                                 @RequestParam(value = "boardType") String boardType,
-                                 @RequestParam(value = "keyword") String keyword){
-        List<Board> boardList = boardService.searchBoard(classId,boardType,keyword);
-        model.addAttribute("boardList", boardList);
-
-        return boardList;
-    }
+//    @GetMapping("/search")
+//    @ApiOperation(value = "게시글 검색", notes = "검색 단어로 게시글을 검색한다.")
+//    public List<Board> search(Model model,
+//                                 @RequestParam(value = "classId") int classId,
+//                                 @RequestParam(value = "boardType") String boardType,
+//                                 @RequestParam(value = "keyword") String keyword){
+//        List<Board> boardList = boardService.searchBoard(classId,boardType,keyword);
+//        model.addAttribute("boardList", boardList);
+//
+//        return boardList;
+//    }
 
 
     //pageing 목록 불러오기
@@ -125,7 +123,7 @@ public class BoardController {
 
         return boardList;
     }
-    //pageing 검색 목록 불러오기
+    //paging 검색 목록 불러오기
     @CrossOrigin
     @GetMapping("/page/{keyword}")
     public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt") Pageable pageRequest,
