@@ -47,7 +47,8 @@
     height: 66vh;
   }
   .main-content {
-   height: 66vh; 
+    width: 100%;
+    height: 66vh; 
   }
 </style>
 <script>

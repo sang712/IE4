@@ -5,6 +5,7 @@ import History from '@/views/history/history'
 import SectionHome from '@/views/main/main-section/section-home'
 import SectionSchedule from '@/views/main/main-section/section-schedule'
 import SectionNote from '@/views/main/main-section/section-note'
+import SectionNews from '@/views/main/main-section/section-news'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -51,12 +52,12 @@ function makeRoutesFromMenu () {
     //   }
     ]
   })
-// // 공지사항버튼 라우터
-//   routes.push({
-//     path: '/news',
-//     name: 'news',
-//     component: SectionNews,
-//   })
+// 공지사항버튼 라우터
+  routes.push({
+    path: '/news',
+    name: 'news',
+    component: SectionNews,
+  })
 // // 학습자료버튼 라우터
 //   routes.push({
 //     path: '/meterials',
