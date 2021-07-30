@@ -1,16 +1,18 @@
 package com.ssafy.db.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 
 @Entity
 @Getter
 @Setter
 @Table(name="board")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Board extends BaseEntity {
     String boardType;
     int userId;
@@ -18,6 +20,8 @@ public class Board extends BaseEntity {
     String title;
     String content;
     int classId;
+    @CreationTimestamp
+    LocalDateTime regDt;
 
     @Builder
     public Board( String boardType, int userId, String userName, int classId, String title, String content) {
@@ -27,6 +31,7 @@ public class Board extends BaseEntity {
         this.classId = classId;
         this.title = title;
         this.content = content;
+        this.regDt = LocalDateTime.now();
     }
 
     public Board toEntity(){

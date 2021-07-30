@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.BoardUpdatePatchReq;
+import com.ssafy.api.response.BoardDetailRes;
 import com.ssafy.api.service.BoardService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Board;
@@ -8,15 +9,16 @@ import com.ssafy.db.entity.BoardFile;
 import com.ssafy.db.repository.BoardRepository;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
-import java.util.List;
 
 
 /**
@@ -36,50 +38,19 @@ public class BoardController {
     @PostMapping(value = "/insert", consumes = {"multipart/form-data"})
     @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
     public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
-            @ApiParam(value="classId", required = true)
             @RequestParam(value = "classId",required = true) int classId,
-            @ApiParam(value="boardType", required = true)
             @RequestParam(value = "boardType", required = true) String boardType,
-            @ApiParam(value="userId", required = true)
             @RequestParam(value = "userId", required = true) int userId,
-            @ApiParam(value="userName", required = true)
             @RequestParam(value = "userName", required = true) String userName,
-            @ApiParam(value="title", required = false)
             @RequestParam(value = "title", required = false) String title,
-            @ApiParam(value="content", required = false)
             @RequestParam(value = "content",required = false) String content,
-            @ApiParam(value="파일", required = false) @RequestParam("file") MultipartFile files) throws IOException {
-        //  @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto
-        System.out.println("------------------파일 등록 시도------------" );
-        Board board = new Board(boardType, userId, userName, classId, title,content);
+            @RequestParam("file") MultipartFile files) throws IOException {
 
+        Board board = new Board(boardType, userId, userName, classId, title,content);
         BoardFile boardfile = boardService.insertBoard(files, board);
-        System.out.println("------------------파일 등록 결과는------------" );
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
-//    @PostMapping(value = "/insert", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-//    @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
-//    public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
-//            @ApiParam(value="파일", required = false) @RequestPart("file") MultipartFile files
-//            , @Validated @RequestParam("json") @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto) throws IOException {
-//        //  @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto
-//        System.out.println("------------------파일 등록 시도------------" );
-//        Board board = boardService.insertBoard(files, boardDto);
-//        System.out.println("------------------파일 등록 결과는------------" );
-//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//    }
-
-//    @PostMapping()
-//    @ApiOperation(value = "게시판 글 등록", notes = "게시판에 글을 작성한다.")
-//    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-//            @ApiResponse(code = 404, message = "없음"), @ApiResponse(code = 500, message = "서버 오류") })
-//    public ResponseEntity<? extends BaseResponseBody> register(
-//            @RequestBody @ApiParam(value="글 작성 정보", required = true) BoardDto boardDto) {
-//        Board board = boardService.insertBoard(boardDto);
-//
-//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//    }
-
 
     @PatchMapping("/{boardId}")
     @ApiOperation(value = "게시판 글 수정", notes = "글의 제목 및 내용을 수정한다.")
@@ -112,64 +83,55 @@ public class BoardController {
     @ApiOperation(value = "게시글 확인", notes = "게시글을 자세히 확인한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "글 없음"), @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<Board> detail(@ApiIgnore Authentication authentication, @PathVariable int boardId) {
+    public ResponseEntity<BoardDetailRes> detail(@ApiIgnore Authentication authentication, @PathVariable int boardId) {
         Board board = boardService.detailBoard(boardId);
-
-        return ResponseEntity.status(200).body(board);
+        BoardFile file = boardService.detailBoardFile(boardId);
+        return ResponseEntity.status(200).body(BoardDetailRes.of(board, file));
     }
+// 일반 게시글
+//    @GetMapping("/")
+//    @ApiOperation(value = "게시글 목록", notes = "게시글 리스트를 가져온다.")
+//    public List<Board> list(Model model,
+//                       @RequestParam(value = "classId") int classId,
+//                       @RequestParam(value = "boardType") String boardType) {
+//        List<Board> boardList = boardService.getBoardList(classId,boardType);
+//
+//        model.addAttribute("boardList", boardList);
+//        return boardList;
+//    }
 
-//    @GetMapping("/{classId}")
-//    public String boardList(Model model,
-//                            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-//                            @PathVariable int classId) {
-        // 검색기능 하고싶으면 아래들 주석 참고
-        //                           @RequestParam(required = false, defaultValue = "") String field,
-        //                           @RequestParam(required = false, defaultValue = "") String word
-//        Page<Board> blist=boardRepository.findAll(pageable);
-//        if(field.equals("username")) {
-//            ulist = userRepository.findByUsernameContaining(word, pageable);
-//        }else if(field.equals("email")){
-//            ulist = userRepository.findByEmailContaining(word, pageable);
-//        }
-
-//        int pageNumber=blist.getPageable().getPageNumber(); //현재페이지
-//        int totalPages=blist.getTotalPages(); //총 페이지 수. 검색에따라 10개면 10개..
-//        int pageBlock = 5; //블럭의 수 1, 2, 3, 4, 5
-//        int startBlockPage = ((pageNumber)/pageBlock)*pageBlock+1; //현재 페이지가 7이라면 1*5+1=6
-//        int endBlockPage = startBlockPage+pageBlock-1; //6+5-1=10. 6,7,8,9,10해서 10.
-//        endBlockPage= totalPages<endBlockPage? totalPages:endBlockPage;
-//        model.addAttribute("startBlockPage", startBlockPage);
-//        model.addAttribute("endBlockPage", endBlockPage);
-//        model.addAttribute("blist", blist); return blist; }
+//    @GetMapping("/search")
+//    @ApiOperation(value = "게시글 검색", notes = "검색 단어로 게시글을 검색한다.")
+//    public List<Board> search(Model model,
+//                                 @RequestParam(value = "classId") int classId,
+//                                 @RequestParam(value = "boardType") String boardType,
+//                                 @RequestParam(value = "keyword") String keyword){
+//        List<Board> boardList = boardService.searchBoard(classId,boardType,keyword);
+//        model.addAttribute("boardList", boardList);
+//
+//        return boardList;
+//    }
 
 
-    @GetMapping("/")
-    @ApiOperation(value = "게시글 목록", notes = "게시글 리스트를 가져온다.")
-    public List<Board> list(Model model,
-                       @RequestParam(value = "classId") int classId,
-                       @RequestParam(value = "boardType") String boardType ) {
-        // @RequestParam(value = "page", defaultValue = "1") int pageNum
-
-        List<Board> boardList = boardService.getBoardList(classId,boardType);
-        //int[] pageList = boardService.getPageList(pageNum);
-
-        model.addAttribute("boardList", boardList);
-        //model.addAttribute("pageList", pageList);
+    //pageing 목록 불러오기
+    @CrossOrigin
+    @GetMapping("/page")
+    public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt") Pageable pageRequest,
+        @RequestParam(value = "classId") int classId,
+        @RequestParam(value = "boardType") String boardType) {
+        Page<Board> boardList = boardService.boardPage(classId, boardType, pageRequest);
 
         return boardList;
     }
-
-    @GetMapping("/search")
-    @ApiOperation(value = "게시글 검색", notes = "검색 단어로 게시글을 검색한다.")
-    public List<Board> search(Model model,
-                                 @RequestParam(value = "classId") int classId,
-                                 @RequestParam(value = "boardType") String boardType,
-                                 @RequestParam(value = "keyword") String keyword){
-        List<Board> boardList = boardService.searchBoard(classId,boardType,keyword);
-        model.addAttribute("boardList", boardList);
+    //paging 검색 목록 불러오기
+    @CrossOrigin
+    @GetMapping("/page/{keyword}")
+    public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt") Pageable pageRequest,
+                                   @RequestParam(value = "classId") int classId,
+                                   @RequestParam(value = "boardType") String boardType,
+                                   @PathVariable String keyword) {
+        Page<Board> boardList = boardService.searchBoardPage(classId,boardType, pageRequest, keyword);
 
         return boardList;
     }
-
-
 }
