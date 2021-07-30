@@ -12,11 +12,12 @@
       <div class="d-flex justify-content-center row">
         <div class="notice-button-wrapper d-flex justify-content-evenly align-items-center" >
           <el-button style="width: 22%; height: 50%; font-size: 120%">시간표</el-button>
-          <el-button style="width: 22%; height: 50%; font-size: 120%">알림창</el-button>
+          <el-button style="width: 22%; height: 50%; font-size: 120%">알림장</el-button>
           <el-button style="width: 22%; height: 50%; font-size: 120%">MVP</el-button>             
         </div>
-        <div class="notice-content" style="margin-top:25px">         
-        </div>
+        <router-view class='notice-content'></router-view>
+        <!-- <div class="notice-content" style="margin-top:25px">         
+        </div> -->
       </div>
     </div> 
   </div>
@@ -54,8 +55,8 @@ export default {
     height: 41vh;
     width: 32vw;
     background-color: #ffffff ;
-    margin: 5px 5px;
-    background-image: url('../../../assets/images/time-table.png'); 
+    margin: 10px 5px;
+    /* background-image: url('../../../assets/images/time-table.png');  */
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;    

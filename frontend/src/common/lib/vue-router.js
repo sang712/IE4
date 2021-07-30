@@ -3,6 +3,7 @@ import Home from '@/views/home/home'
 import ConferencesDetail from '@/views/conferences/conference-detail'
 import History from '@/views/history/history'
 import SectionHome from '@/views/main/main-section/section-home'
+import SectionNote from '@/views/main/main-section/section-note'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -28,26 +29,26 @@ function makeRoutesFromMenu () {
     path: '/home',
     name: 'home',
     component: SectionHome,
-    // children: [
+    children: [
     //   {
     //     // 시간표버튼 라우터
-    //     path: 'schedule',
+    //     path: '/',
     //     name: 'schedule',
     //     component: SectionSchedule,
     //   },
-    //   {
-    //     // 알림장버튼 라우터
-    //     path: 'note',
-    //     name: 'note',
-    //     component: SectionNote,
-    //   },
+      {
+        // 알림장버튼 라우터
+        path: 'note',
+        name: 'note',
+        component: SectionNote,
+      },
     //   {
     //     // MVP버튼 라우터
     //     path: 'mvp',
     //     name: 'mvp',
     //     component: SectionMvp,
     //   }
-    // ]
+    ]
   })
 // // 공지사항버튼 라우터
 //   routes.push({
