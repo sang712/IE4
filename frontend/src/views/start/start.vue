@@ -1,7 +1,6 @@
 <template>
   <div class="start-page">
     <div class="start-background"></div>
-    <!-- <img src="@/assets/images/startpage.png" alt="엑박떴지롱~" > -->
     <div style="display: flex; flex-direction: column; align-items: center;">
       <el-button class="start-button" type="default" @click="clickLogin" size="medium" round>로그인</el-button>
       <el-button class="start-button" type="default" @click="clickSignup" size="medium" round>회원가입</el-button>

@@ -76,11 +76,8 @@
   background-color: #FFFFFF;
   background-image: url('../../../assets/images/signuppage1.png') !important;
   background-position: center;
-  /* background: #FFFFFF  center center no-repeat !important; */
-  /* background-opacity: 0.5; */
   background-size: 100% !important;
   width: 100vw;
-  /* height: 100vh; */
   display: grid;
   align-items: center;
   justify-items: center; 
@@ -136,26 +133,6 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #f8f4e5 inset;
   transition: background-color 5000s ease-in-out 0s; }
 
-/* .signup-dialog .el-dialog__header {
-  margin: 0;
-  padding: 0;
-}
-.signup-dialog {
-  width: 400px !important;
-  height: 580px;
-}
-.signup-dialog .el-dialog__headerbtn {
-  float: right;
-}
-.signup-dialog .el-form-item__content {
-  margin-left: 0 !important;
-  float: right;
-  width: 200px;
-  display: inline-block;
-}
-.signup-dialog .el-form-item {
-  margin-bottom: 20px;
-} */
 .el-dialog__header {
   background: rgba(255, 255, 255, 0.80);
   padding: 10px 20px !important;
@@ -176,9 +153,7 @@ input:-webkit-autofill:focus {
   font-size: 12px;
   color: red;
 }
-/* .signup-dialog .el-input__suffix {
-  display: none;
-} */
+
 .signup-dialog .el-dialog__footer {
   margin: 0 calc(50% - 80px);
   padding-top: 0;
