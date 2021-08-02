@@ -5,10 +5,8 @@
       @openSignupDialog="onOpenSignupDialog"
       @openLoginDialog="onOpenLoginDialog"/>
       <div class="d-flex align-items-stretch">
-        <div class="side-bar">          
-          <div class="profile-img" style="max-width: 230px ; min-width: 230px;"></div>
-          <h1>이름: 한상길</h1>
-          <h1>2학년 7반 30번</h1>
+        <div class="side-bar">
+          <main-sidebar/>
         </div>
         <div class="main-content" >
           <router-view></router-view>
@@ -29,17 +27,6 @@
   @import '../../common/css/common.css';
   @import '../../common/css/element-plus.css';
 
-
-  .profile-img{
-    margin: 10vh auto;
-    height: 23vh;
-    background-image: url('../../assets/images/profile-picture.png'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 1px solid;
-    border-radius: 10px;
-  }
   .side-bar {
     background-color: #efeee9 ;
     margin: 5px 5px;
@@ -56,6 +43,7 @@ import SignupDialog from './components/signup-dialog'
 import LoginDialog from './components/login-dialog'
 import MainHeader from './components/main-header'
 import MainFooter from './components/main-footer'
+import MainSidebar from './components/main-sidebar'
 
 export default {
   name: 'Main',
@@ -64,6 +52,7 @@ export default {
     MainFooter,
     SignupDialog,
     LoginDialog,
+    MainSidebar,
   },
   data () {
     return {
