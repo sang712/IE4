@@ -5,6 +5,7 @@ import History from '@/views/history/history'
 import SectionHome from '@/views/main/main-section/section-home'
 import SectionSchedule from '@/views/main/main-section/section-schedule'
 import SectionNote from '@/views/main/main-section/section-note'
+import SectionMvp from '@/views/main/main-section/section-mvp'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -43,12 +44,12 @@ function makeRoutesFromMenu () {
         name: 'note',
         component: SectionNote,
       },
-    //   {
-    //     // MVP버튼 라우터
-    //     path: 'mvp',
-    //     name: 'mvp',
-    //     component: SectionMvp,
-    //   }
+      {
+        // MVP버튼 라우터
+        path: 'mvp',
+        name: 'mvp',
+        component: SectionMvp,
+      }
     ]
   })
 // // 공지사항버튼 라우터
