@@ -14,3 +14,10 @@ export function requestSignup ({ state }, payload) {
   let body = payload
   return $axios.post(url, body)
 }
+
+export function requestMyprofile ({ state }, payload) {
+  console.log('requestMyprofile', state, payload)
+  const url = 'http://localhost:8080/users'
+  let header = { headers: { 'Authorization': `bearer + ${payload}` }} 
+  return $axios.get(url, header)
+}

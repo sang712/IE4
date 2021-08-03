@@ -90,7 +90,7 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
-  console.log(to)
+  console.log(`${to.fullPath} 로 이동`, to)
 })
 
 export default router

@@ -11,15 +11,24 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 export default {
   name: 'main-sidebar',
 
   setup(props, { emit }) {
+    const store = useStore()
     const router = useRouter()
 
     const clickMypage = () => {
+      store.dispatch('rootMain/requestMyprofile', localStorage.getItem('jwt'))
+      .then(function (result) {
+        console.log('다음 정보들을 store에 저장하기', result.data)
+      })
+      .catch(function (err) {
+        console.log('에러 정보', err.response)
+      })
       router.push({ name: 'mypage' })
     }
 

@@ -26,3 +26,9 @@ export function requestProfile ({ state }) {
   const url = '/users/me'
   return $axios.post(url)
 }
+
+export function requestUser ({ state }, payload) {
+  const url = `http://localhost:8080/users`
+  let headers = payload
+  return $axios.post(url, params, headers)
+}
