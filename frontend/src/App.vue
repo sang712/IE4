@@ -25,7 +25,8 @@ export default {
   }),
   setup(props,{ emit }){
     const state = reactive({
-      isLogin : true,
+      // isLogin : true ? localStorage.getItem('jwt') : false,
+      isLogin : false
     })
     return { state }
 

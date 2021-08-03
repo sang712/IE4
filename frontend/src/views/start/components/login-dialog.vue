@@ -1,8 +1,8 @@
 <template>
   <el-dialog custom-class="login-dialog" title="로그인" v-model="state.dialogVisible" @close="handleClose">
     <el-form :model="state.form" :rules="state.rules" ref="loginForm" :label-position="state.form.align">
-      <el-form-item prop="id" label="아이디" :label-width="state.formLabelWidth" >
-        <el-input v-model="state.form.id" autocomplete="off"></el-input>
+      <el-form-item prop="loginId" label="아이디" :label-width="state.formLabelWidth" >
+        <el-input v-model="state.form.loginId" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item prop="password" label="비밀번호" :label-width="state.formLabelWidth">
         <el-input v-model="state.form.password" autocomplete="off" show-password></el-input>
@@ -77,12 +77,12 @@ export default {
     // rules의 객체 키 값과 form의 객체 키 값이 같아야 매칭되어 적용됨
     const state = reactive({
       form: {
-        id: '',
+        loginId: '',
         password: '',
         align: 'left'
       },
       rules: {
-        id: [
+        loginId: [
           { required: true, message: '아이디를 입력해주세요.', trigger: 'blur' }
         ],
         password: [
@@ -101,13 +101,12 @@ export default {
       // 로그인 클릭 시 validate 체크 후 그 결과 값에 따라, 로그인 API 호출 또는 경고창 표시
       loginForm.value.validate((valid) => {
         if (valid) {
-          console.log('submit')
-          store.dispatch('root/requestLogin', { id: state.form.id, password: state.form.password })
+          store.dispatch('root/requestLogin', { loginId: state.form.loginId, password: state.form.password })
           .then(function (result) {
             localStorage.setItem('jwt', result.data.accessToken)
             localStorage.setItem('userId', result.data.userId)
             emit('closeLoginDialog')
-            // 홈으로 넘어가는 부분 추가해야함 要
+            router.push({ name: 'schedule' })
           })
           .catch(function (err) {
             const status = err.response.request.status
@@ -142,7 +141,7 @@ export default {
     }
 
     const handleClose = function () {
-      state.form.id = ''
+      state.form.loginId = ''
       state.form.password = ''
       emit('closeLoginDialog')
     }

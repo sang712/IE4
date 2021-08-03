@@ -185,7 +185,6 @@ export default {
     const store = useStore()
     // 마운드 이후 바인딩 될 예정 - 컨텍스트에 노출시켜야함. <return>
     const signupForm = ref(null)
-    console.log('아이디'.length)
     
     const checkId = (rule, value, callback) => {
       if (value.length > 20) {
@@ -316,7 +315,7 @@ export default {
           { validator: checkAddress, trigger: 'blur'}
         ],
         password_question: [
-          { required: true, message: '비밀번호확인 질문을 선택해주세요.', trigger: 'blur'},
+          { required: true, message: '비밀번호확인 질문을 선택해주세요.', trigger: ['blur', 'change']},
         ],
         password_answer: [
           { required: true, message: '비밀번호확인 답변을 입력해주세요.', trigger: 'blur'},
@@ -332,8 +331,10 @@ export default {
     })
 
     const clickSignup = function () {
+      console.log('폼', signupForm.value.model)
       // 가입하기 클릭 시 validate 체크 후 그 결과 값에 따라, 회원가입 API 호출 또는 경고창 표시
-      signupForm.value.validate((valid) => {
+      signupForm.value.validate((valid, object) => {
+        console.log(signupForm.value.model)
         if (valid) {
           console.log('submit')
           store.dispatch('root/requestSignup', { 
@@ -354,7 +355,7 @@ export default {
             emit('closeSignupDialog')
           })
           .catch(function (err) {
-            console.log(err.response.request.status)
+            console.log('에러발생', err.response.request.status)
             if (err.response.request.status == 500) {
               Swal.fire({
                 title: '이런!',
@@ -370,6 +371,7 @@ export default {
             }
           })
         } else {
+          console.log(valid)
           Swal.fire({
             title: '이런!',
             text: '유효한 정보를 입력해주세요.',
@@ -389,11 +391,19 @@ export default {
         })
       })
       .catch(function (err) {
-        Swal.fire({
-          title: '이런!',
-          text: '서버 오류가 발생했습니다..',
-          icon: 'error',
-        })
+        if (err.response.request.status == 409) {
+          Swal.fire({
+            title: '아이고!',
+            text: '중복된 아이디가 있습니다.',
+            icon: 'error',
+          })
+        } else {
+          Swal.fire({
+            title: '이런!',
+            text: '서버 오류가 발생했습니다..',
+            icon: 'error',
+          })
+        }
       })
     }
 
