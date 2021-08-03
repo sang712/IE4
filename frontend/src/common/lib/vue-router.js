@@ -6,10 +6,7 @@ import SectionHome from '@/views/main/main-section/section-home'
 import SectionSchedule from '@/views/main/main-section/section-schedule'
 import SectionNote from '@/views/main/main-section/section-note'
 import SectionMvp from '@/views/main/main-section/section-mvp'
-import SectionNews from '@/views/main/main-section/section-news'
-import SectionMeterials from '@/views/main/main-section/section-meterials'
-import SectionMyclass from '@/views/main/main-section/section-myclass'
-
+import SectionMypage from '@/views/main/main-section/section-mypage'
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
   let routes = Object.keys(fullMenu).map((key) => { 
@@ -55,30 +52,30 @@ function makeRoutesFromMenu () {
       }
     ]
   })
-// 공지사항버튼 라우터
-  routes.push({
-    path: '/news',
-    name: 'news',
-    component: SectionNews,
-  })
-// 학습자료버튼 라우터
-  routes.push({
-    path: '/meterials',
-    name: 'meterials',
-    component: SectionMeterials,
-  })
-// 우리반버튼 라우터
-  routes.push({
-    path: '/myclass',
-    name: 'myclass',
-    component: SectionMyclass,
-  })
-// // 내정보버튼 라우터
+// // 공지사항버튼 라우터
 //   routes.push({
-//     path: '/mypage',
-//     name: 'mypage',
-//     component: SectionMypage,
+//     path: '/news',
+//     name: 'news',
+//     component: SectionNews,
 //   })
+// // 학습자료버튼 라우터
+//   routes.push({
+//     path: '/meterials',
+//     name: 'meterials',
+//     component: SectionMeterials,
+//   })
+// // 우리반버튼 라우터
+//   routes.push({
+//     path: '/myclass',
+//     name: 'myclass',
+//     component: SectionMyclass,
+//   })
+// 내정보버튼 라우터
+  routes.push({
+    path: '/mypage',
+    name: 'mypage',
+    component: SectionMypage,
+  })
   return routes
 }
 // const router = new VueRouter({
