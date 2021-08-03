@@ -111,8 +111,10 @@ export default {
       const jwt = localStorage.getItem('jwt')
       console.log(jwt)
       localStorage.removeItem('jwt')
-      localStorage.removeItem('username')
-      // location.reload()
+      localStorage.removeItem('userId')
+      localStorage.removeItem('classId')
+      localStorage.removeItem('position')
+      router.go()
     }
 
     const changeCollapse = () => {

@@ -334,7 +334,7 @@ export default {
       console.log('폼', signupForm.value.model)
       // 가입하기 클릭 시 validate 체크 후 그 결과 값에 따라, 회원가입 API 호출 또는 경고창 표시
       signupForm.value.validate((valid, object) => {
-        console.log(signupForm.value.model)
+        console.log('유효성체크완료', signupForm.value.model)
         if (valid) {
           console.log('submit')
           store.dispatch('root/requestSignup', { 
