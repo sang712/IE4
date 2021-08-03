@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-stretch">
+  <div class="section-home d-flex align-items-stretch">
     <div class="col d-flex justify-content-center row">     
       <div class="meeting-preview d-flex justify-content-center row" >
         <div class="host-profile" style="margin-top: 5%"> </div>
@@ -11,9 +11,9 @@
     <div class="col">      
       <div class="d-flex justify-content-center row">
         <div class="notice-button-wrapper d-flex justify-content-evenly align-items-center" >
-          <el-button style="width: 22%; height: 50%; font-size: 120%">시간표</el-button>
-          <el-button style="width: 22%; height: 50%; font-size: 120%">알림장</el-button>
-          <el-button style="width: 22%; height: 50%; font-size: 120%">MVP</el-button>             
+          <el-button @click="clickSchedule" style="width: 22%; height: 50%; font-size: 120%">시간표</el-button>
+          <el-button @click="clickNote" style="width: 22%; height: 50%; font-size: 120%">알림장</el-button>
+          <el-button @click="clickMvp" style="width: 22%; height: 50%; font-size: 120%">MVP</el-button>             
         </div>
         <router-view class='notice-content'></router-view>
       </div>
@@ -22,44 +22,67 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
+
 export default {
-  name: 'section-home', 
+  name: 'section-home',
+  
+  setup(props, { emit }) {
+    const router = useRouter()
+
+    const clickSchedule = () => {
+      router.push({ name: 'schedule' })
+    }
+
+    const clickNote = () => {
+      router.push({ name: 'note' })
+    }
+
+    const clickMvp = () => {
+      router.push({ name: 'mvp' })
+    }
+    return { clickSchedule, clickNote, clickMvp }
+  }
+
 }
 </script>
 
 <style>
- .col {
-    background-color: #efeee9 ;
-    margin: 5px 5px;
-    height: 50vh;
-  }
-  .host-profile{
-    width: 200px;
-    height: 200px;
-    background-image: url('../../../assets/images/profile-picture.png'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 1px solid;
-    border-radius: 100px;
-  }
-  .meeting-preview{
-    height: 38vh;
-    width: 39vw;
-    background-color: #ffffff ;
-    margin: 25px 5px 0px 5px;   
-  }
-  .notice-content{
-    height: 41vh;
-    width: 32vw;
-    background-color: #ffffff ;
-    margin: 20px 5px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;    
-  }
-  .notice-button-wrapper{
-    height: 15%; 
-    margin-top: 20px;
-  }
+.section-home {
+  height: 100%;
+}
+.col {
+  background-color: #efeee9 ;
+  margin: 5px 5px;
+  height: 100%;
+}
+.host-profile{
+  width: 200px;
+  height: 200px;
+  background-image: url('../../../assets/images/profile-picture.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid;
+  border-radius: 100px;
+}
+.meeting-preview{
+  height: 42vh;
+  width: 39vw;
+  background-color: #ffffff ;
+  margin: 25px 5px 0px 5px;   
+}
+.notice-content{
+  height: 41vh;
+  width: 32vw;
+  background-color: #ffffff ;
+  margin: 20px 5px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;    
+}
+.notice-button-wrapper{
+  height: 15%; 
+  margin-top: 20px;
+}
 </style>

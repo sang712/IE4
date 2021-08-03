@@ -70,7 +70,4 @@ export default {
   width: 100%;
   background-color: #C4C4C4;
 }
-.myclass-profile-name {
-  
-}
 </style>

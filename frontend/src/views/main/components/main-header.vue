@@ -8,9 +8,9 @@
         <div class="logo-wrapper" @click="clickLogo"><div class="ic ic-logo"/></div>
         <div class="tool-wrapper">
           <div class="button-wrapper">
-            <el-button  type="default" @click="" style="width: 10vw; font-size: 120%">공지사항</el-button>
-            <el-button  type="default" @click="" style="width: 10vw; font-size: 120%">학습자료</el-button>
-            <el-button  type="default" @click="" style="width: 10vw; font-size: 120%">우리반</el-button>
+            <el-button  type="default" @click="clickNews" style="width: 10vw; font-size: 120%">공지사항</el-button>
+            <el-button  type="default" @click="clickMeterials" style="width: 10vw; font-size: 120%">학습자료</el-button>
+            <el-button  type="default" @click="clickMyclass" style="width: 10vw; font-size: 120%">우리반</el-button>
             <el-button  type="danger" @click="clickLogout" style="width: 10vw; font-size: 120%">로그아웃</el-button>
           </div>       
         </div>
@@ -46,16 +46,11 @@ export default {
   setup(props, { emit }) {
     const store = useStore()
     const router = useRouter()
-    // const jwt = ref(localStorage.getItem('jwt'))
     
     const state = reactive({
       isLogin: computed(() => {
         const jwt = localStorage.getItem('jwt')
-        if (jwt == null) {
-          return false
-        } else {
-          return true
-        }
+        return false ? jwt == null : true
       }),
       searchValue: null,
       isCollapse: true,
@@ -89,12 +84,19 @@ export default {
     }
 
     const clickLogo = () => {
-      store.commit('root/setMenuActive', 0)
-      const MenuItems = store.getters['root/getMenus']
-      let keys = Object.keys(MenuItems)
-      router.push({
-        name: keys[0]
-      })
+      router.push({ name: 'schedule' })
+    }
+
+    const clickNews = () => {
+      router.push({ name: 'news' })
+    }
+
+    const clickMeterials = () => {
+      router.push({ name: 'meterials' })
+    }
+
+    const clickMyclass = () => {
+      router.push({ name: 'myclass' })
     }
 
     const clickSignup = () => {
@@ -117,7 +119,7 @@ export default {
       state.isCollapse = !state.isCollapse
     }
 
-    return { state, menuSelect, clickLogo, clickSignup, clickLogin, clickLogout, changeCollapse }
+    return { state, menuSelect, clickLogo, clickNews, clickMeterials, clickMyclass, clickSignup, clickLogin, clickLogout, changeCollapse }
   }
 }
 </script>
