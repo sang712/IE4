@@ -4,7 +4,7 @@
 
   <!-- start 로 시작 -->
   <Main v-if="state.isLogin"/>
-  <Start style="width: 100vw; height: 100vh;" v-else/>
+  <Start v-else/>
 </template>
 
 <script>
@@ -25,11 +25,16 @@ export default {
   }),
   setup(props,{ emit }){
     const state = reactive({
-      // isLogin : true ? localStorage.getItem('jwt') : false,
-      isLogin : false
+      isLogin : localStorage.getItem('jwt') == null ? false : true,
     })
     return { state }
 
   }
 }
 </script>
+<style>
+Start {
+  width: 100vw; 
+  height: 100vh;
+}
+</style>

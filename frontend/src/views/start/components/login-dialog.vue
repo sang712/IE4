@@ -57,6 +57,7 @@
 <script>
 import { reactive, computed, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'login-dialog',
@@ -70,6 +71,7 @@ export default {
 
   setup(props, { emit }) {
     const store = useStore()
+    const router = useRouter()
     // 마운드 이후 바인딩 될 예정 - 컨텍스트에 노출시켜야함. <return>
     const loginForm = ref(null)
 
@@ -104,9 +106,11 @@ export default {
           store.dispatch('root/requestLogin', { loginId: state.form.loginId, password: state.form.password })
           .then(function (result) {
             localStorage.setItem('jwt', result.data.accessToken)
-            localStorage.setItem('userId', result.data.userId)
+            localStorage.setItem('userId', result.data.id)
+            localStorage.setItem('classId', result.data.classId)
+            localStorage.setItem('position', result.data.position == null ? '학생' : result.data.position)
             emit('closeLoginDialog')
-            router.push({ name: 'schedule' })
+            router.go();
           })
           .catch(function (err) {
             const status = err.response.request.status
