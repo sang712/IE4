@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 회원 본인 정보 조회 API ([GET] /users/id) 요청에 대한 응답값 정의.
+ * 회원(학생) 본인 정보 조회 API ([GET] /users/id) 요청에 대한 응답값 정의.
  */
 @Getter
 @Setter

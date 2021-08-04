@@ -1,9 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.TeacherUpdatePatchReq;
-import com.ssafy.api.response.StudentRes;
-import com.ssafy.api.response.TeacherRes;
-import com.ssafy.api.response.UserRes;
+import com.ssafy.api.response.*;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.entity.Student;
@@ -15,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.api.request.UserLoginPostReq;
-import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.JwtTokenUtil;
@@ -57,15 +54,22 @@ public class AuthController {
 			@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
 		String loginId = loginInfo.getLoginId();
 		String password = loginInfo.getPassword();
-		
+
 		User user = userService.getUserByLoginId(loginId);
 		// 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
 		if(passwordEncoder.matches(password, user.getPassword())) {
-			// 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
-			return ResponseEntity.ok(UserLoginPostRes.of(user.getId(), user.getClassId(), user.getPosition(), JwtTokenUtil.getToken(loginId)));
+			if(user.getPosition().equals("학생")){
+				Student student = userService.getStudentByUserId(user.getId());
+				return ResponseEntity.ok(StudentLoginPostRes.of(
+						user.getId(), user.getClassId(), user.getPosition(), user.getName(), student.getSnum(), user.getProfileImgUrl(), JwtTokenUtil.getToken(loginId)));
+			}else{ // 선생님
+				// 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
+				return ResponseEntity.ok(UserLoginPostRes.of(
+						user.getId(), user.getClassId(), user.getPosition(), user.getName(), user.getProfileImgUrl(), JwtTokenUtil.getToken(loginId)));
+			}
 		}
 		// 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-		return ResponseEntity.status(401).body(UserLoginPostRes.of(0,0, null, null));
+		return ResponseEntity.status(401).body(UserLoginPostRes.of(0,0, null, null, null, null));
 	}
 
 	@GetMapping("/findId")
