@@ -1,8 +1,11 @@
 <template>
   <div class="main-sidebar">
     <div class="profile-img"></div>
-    <h2>이름: 한상길</h2> 
-    <h2>2학년 7반 30번</h2>
+    <h2 v-if="position=='학생'">{{ nGrade }}학년 {{ nClass }}반 30번</h2>
+    <h2 v-else>{{ nGrade }}학년 {{ nClass }}반 담임</h2>
+    <h2 v-if="position=='학생'">한상길 학생</h2> 
+    <h2 v-else>한상길 선생님</h2> 
+
     <hr style="margin-top: 45px;">
     <div class="lower-sidebar d-flex justify-content-evenly align-items-center">
       <el-button class="mypage-button" @click="clickMypage">내 정보</el-button>   
@@ -16,6 +19,14 @@ import { useRouter } from 'vue-router'
 
 export default {
   name: 'main-sidebar',
+
+  data () {
+    return {
+      position : localStorage.getItem('position'),
+      nGrade : localStorage.getItem('classId')[0],
+      nClass : localStorage.getItem('classId')[2]
+    }
+  },
 
   setup(props, { emit }) {
     const store = useStore()
