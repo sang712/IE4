@@ -17,6 +17,19 @@
 <style>
 @import "https://unpkg.com/element-plus/lib/theme-chalk/index.css";
 
+.el-dialog {
+  background-size: fill !important;
+  background-color: #FFFFFF;
+  background-image: url('../../assets/images/signuppage1.png') !important;
+  background-position: center;
+  background-size: 100% !important;
+  width: 40vw;
+  min-width: 600px !important;
+  display: grid;
+  align-items: center;
+  justify-items: center; 
+  margin: 5px auto;}
+
 .start-page {
   width: 100%;
   height: 100%;

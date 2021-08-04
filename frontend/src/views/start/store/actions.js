@@ -16,8 +16,8 @@ export function requestSignup ({ state }, payload) {
 }
 
 export function requestCheckId ({ state }, payload) {
+  console.log(url, 'requestCheckId', state, payload)
   const url = `http://localhost:8080/sign-up/${payload.id}`
-  console.log(url, 'requestCheckId', state)
   return $axios.get(url)
 }
 

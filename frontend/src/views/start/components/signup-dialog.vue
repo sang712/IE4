@@ -1,6 +1,6 @@
 <template>
   <el-dialog custom-class="signup-dialog" title="회원가입" v-model="state.dialogVisible" @close="handleClose">
-    <el-form :model="state.form" :rules="state.rules" ref="signupForm" :label-position="state.form.align" style="width: 25vw;">
+    <el-form class="signup-form" :model="state.form" :rules="state.rules" ref="signupForm" :label-position="state.form.align">
       <el-scrollbar height="400px" style="display: flex; justify-content: center;">
         <div style="margin: 0px;">
           <el-button @click="clickCheckId" size="mini" style="margin: 0px 0px 0px 280px">중복확인</el-button>
@@ -71,17 +71,10 @@
   margin: 0;
   padding: 0; }
 
-.el-dialog {
-  background-size: fill !important;
-  background-color: #FFFFFF;
-  background-image: url('../../../assets/images/signuppage1.png') !important;
-  background-position: center;
-  background-size: 100% !important;
-  width: 100vw;
-  display: grid;
-  align-items: center;
-  justify-items: center; 
-  margin: 5px 0px;}
+.signup-form {
+  width: 25vw;
+  min-width: 420px;
+}
 
 .el-scrollbar__view {
   display: inline;
@@ -107,15 +100,7 @@ input:focus {
   border-bottom: 5px solid #ffa580; }
 
 button {
-  display: block;
-  margin: 0 auto;
-  line-height: 28pt;
-  padding: 0 20px;
-  background: #ffa580;
   letter-spacing: 2px;
-  transition: .2s all ease-in-out;
-  outline: none;
-  border: 1px solid black;
   box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px black; }
 button:hover {
   background: black;
@@ -187,9 +172,8 @@ export default {
     const signupForm = ref(null)
     
     const checkId = (rule, value, callback) => {
-      if (value.length > 20) {
-        callback(new Error('아이디는 20자 이내여야 합니다.'));
-      } 
+      if (value.length > 20) callback(new Error('아이디는 20자 이내여야 합니다.'))
+      callback()
     }
 
     const checkPassword = (rule, value, callback) => {
@@ -197,56 +181,43 @@ export default {
         callback(new Error('비밀번호는 8자 이상 16자 이하여야 합니다.'))
       }
       else if (!(/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).$/.test(value))) {
-        if (!/[a-z]/.test(value)) {
-          callback(new Error('비밀번호는 영문 소문자를 포함해야합니다.'))
-        }
-        else if (!(/[A-Z]/).test(value)) {
-          callback(new Error('비밀번호는 영문 대문자를 포함해야합니다.'))
-        }
-        else if (!(/[0-9]/).test(value)) {
-          callback(new Error('비밀번호는 숫자를 포함해야합니다.'))
-        }
-        else if (!(/[$`~!@$!%*#^?&\\(\\)\-_=+]/).test(value)) {
-          callback(new Error('비밀번호는 특수문자를 포함해야합니다.'))
-        }
-      }
+        // if (!/[a-z]/.test(value)) callback(new Error('비밀번호는 영문 소문자를 포함해야합니다.'))} 
+        // else if (!(/[A-Z]/).test(value)) callback(new Error('비밀번호는 영문 대문자를 포함해야합니다.'))
+        if (!(/[a-z]|[A-Z]/).test(value)) callback(new Error('비밀번호는 영문을 포함해야 합니다.'))
+        else if (!(/[0-9]/).test(value)) callback(new Error('비밀번호는 숫자를 포함해야합니다.'))
+        else if (!(/[$`~!@$!%*#^?&\\(\\)\-_=+]/).test(value)) callback(new Error('비밀번호는 특수문자를 포함해야합니다.'))
+      } 
+      callback()
     }
 
     const checkPasswordConfirmation = (rule, value, callback) => {
-      if (value != state.form.password) {
-        callback(new Error('비밀번호를 다시 입력해주세요.'))
-      }
+      if (value != state.form.password) callback(new Error('비밀번호를 다시 입력해주세요.'))
+      callback()
     }
     const checkName = (rule, value, callback) => {
-      if (value.length > 10) {
-        callback(new Error('이름은 10자 이내여야 합니다.'))
-      }
+      if (value.length > 10) callback(new Error('이름은 10자 이내여야 합니다.'))
+      callback()
     }
     const checkSnum = (rule, value, callback) => {
-      if (0 < value <= 99) {
-        callback(new Error('번호는 1이상의 숫자여야 합니다.'))
-      }
+      if (0 < value <= 99) callback(new Error('번호는 1이상의 숫자여야 합니다.'))
+      callback()
     }
+
     const checkPhone = (rule, value, callback) => {
       if (!(/^010\d{3,4}\d{4}$/.test(value))) {
-        if(!(/^010/.test(value))) {
-          callback(new Error('휴대전화번호는 010으로 시작해야 합니다.'))
-        } else if (/-/.test(value)) {
-          callback(new Error('-없이 입력해주세요.'))
-        } else {
-          callback(new Error('올바른 휴대전화번호를 입력해주세요.'))
-        }
-      }
+        if(!(/^010/.test(value))) callback(new Error('휴대전화번호는 010으로 시작해야 합니다.'))
+        else if (/-/.test(value)) callback(new Error('-없이 입력해주세요.'))
+        else callback(new Error('올바른 휴대전화번호를 입력해주세요.'))
+      } 
+      callback()
     }
     const checkAddress = (rule, value, callback) => {
-      if (value.length > 50) {
-        callback(new Error('주소를 50자 이내로 입력해주세요.'))
-      }
+      if (value.length > 50) callback(new Error('주소를 50자 이내로 입력해주세요.'))
+      callback()
     }
     const checkPassAnswer = (rule, value, callback) => {
-      if (value.length < 2) {
-        callback(new Error('비밀번호 답변은 2자 이상이어야 합니다.'))
-      }
+      if (value.length < 2) callback(new Error('비밀번호 답변은 2자 이상이어야 합니다.'))
+      callback()
     }
 
     // Element UI Validator
@@ -331,28 +302,32 @@ export default {
     })
 
     const clickSignup = function () {
-      console.log('폼', signupForm.value.model)
+      // console.log('폼', signupForm.value.model)
       // 가입하기 클릭 시 validate 체크 후 그 결과 값에 따라, 회원가입 API 호출 또는 경고창 표시
       signupForm.value.validate((valid, object) => {
-        console.log('유효성체크완료', signupForm.value.model)
+        // console.log('유효성체크완료', signupForm.value.model)
         if (valid) {
           console.log('submit')
           store.dispatch('root/requestSignup', { 
-            id: state.form.id, 
+            loginId: state.form.id, 
             password: state.form.password, 
             name: state.form.name,
-            grade: state.form.grade,
-            class_no: state.form.class_no,
+            classId: state.form.grade + state.form.class_no,
             snum: state.form.snum,
-            sex: state.form.sex,
-            phone: state.form.phone,
+            sex: state.form.sex + '자',
+            parentPhone: state.form.phone,
             address: state.form.address,
-            password_question: state.form.password_question,
-            password_answer: state.form.password_answer,
+            passwordQuestion: state.form.password_question,
+            passwordAnswer: state.form.password_answer,
           })
           .then(function (result) {
             console.log(result)
             emit('closeSignupDialog')
+            Swal.fire({
+              title: '성공!',
+              text: '회원가입이 완료되었습니다.',
+              icon: 'success',
+            })
           })
           .catch(function (err) {
             console.log('에러발생', err.response.request.status)

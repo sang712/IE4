@@ -39,8 +39,6 @@
   }
 </style>
 <script>
-import SignupDialog from './components/signup-dialog'
-import LoginDialog from './components/login-dialog'
 import MainHeader from './components/main-header'
 import MainFooter from './components/main-footer'
 import MainSidebar from './components/main-sidebar'
@@ -50,8 +48,6 @@ export default {
   components: {
     MainHeader,
     MainFooter,
-    SignupDialog,
-    LoginDialog,
     MainSidebar,
   },
   data () {
