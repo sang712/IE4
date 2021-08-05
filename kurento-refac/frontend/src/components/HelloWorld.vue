@@ -70,6 +70,8 @@ a {
   display: inline-block;
   width: 15%;
   max-height: 40%;
+	border: 1px solid;
+	border-radius: 10px;
 }
 .participant-name {
 	margin: 50px auto 0px auto;
