@@ -44,8 +44,6 @@ export default {
       router.push({ name: 'mypage' })
     }
 
-    console.log(store.state.rootMain.classInfo);
-
     return { clickMypage }
   }
 }

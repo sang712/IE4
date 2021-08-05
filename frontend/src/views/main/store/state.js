@@ -44,13 +44,13 @@ const mypageInfo = reactive({
   address: '',
 })
 
-const classInfo = {
+const classInfo = reactive({
   grade: '',
   classNo: '',
   timetable: '',
   classMotto: '',
   url: ''
-}
+})
 
 export default {
   isDesktopPlatform: IsDesktop,
