@@ -34,7 +34,7 @@ export function Participant(name) {
     rtcPeer;
 
 	container.appendChild(video);
-	// video.appendChild(span);
+	container.appendChild(span);
 	container.onclick = switchContainerClass;
 	document.getElementById('participants').appendChild(container);
 
