@@ -63,6 +63,8 @@ li {
 a {
   color: #42b983;
 }
+</style>
+<style>
 .participant {
 	margin: 1% 0% 5px 1.4%;
   display: inline-block;
