@@ -16,8 +16,21 @@ export function requestSignup ({ state }, payload) {
 }
 
 export function requestMyprofile ({ state }, token) {
-  console.log('requestMyprofile', state, token)
+  console.log('requestMyprofile')
   const url = 'http://localhost:8080/users'
   let header = { headers: { 'Authorization': `Bearer ${token}` } } 
   return $axios.get(url, header)
+}
+
+export function setMypageInfo ({ state }, response) {
+  state.mypageInfo.id = response.id
+  state.mypageInfo.loginId = response.loginId
+  state.mypageInfo.name = response.name
+  state.mypageInfo.parentPhone = response.parentPhone
+  state.mypageInfo.password = response.password
+  state.mypageInfo.passwordAnswer = response.passwordAnswer
+  state.mypageInfo.passwordQuestion = response.passwordQuestion
+  state.mypageInfo.phone = response.phone
+  state.mypageInfo.snum = response.snum
+  state.mypageInfo.address = response.address
 }

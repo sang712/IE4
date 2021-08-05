@@ -6,10 +6,16 @@
         <el-button style="width: 60%; height: 10%; font-size: 120% ;margin-left: 82px; ">프로필수정</el-button>     
       </div>
       <div class="mypage-second-background">
-
-<!-- ###### 여기에다가 회원정보값을 넣으면 됩니다.###### -->
-        <h2>아이디:</h2>
-        <h3>dddddddddd</h3>
+        <el-form class="mypage-form" >
+          <el-form-item label="아이디">
+            <div>{{ mypageInfo.loginId }}</div>
+          </el-form-item>
+          <el-form-item label="비밀번호">
+            <el-input v-model="mypageInfo.password" show-password></el-input>
+          </el-form-item>
+        </el-form>
+        <!-- <h2>아이디:</h2>
+        <h3>{{ mypageInfo.loginId }}</h3> -->
       </div>
     </div>
     <div class="d-flex justify-content-evenly">
@@ -20,8 +26,21 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
-  name: 'section-mypage'
+  name: 'section-mypage',
+
+  setup() {
+    const store = useStore()
+
+    let mypageInfo = computed(function () {
+      return store.state.rootMain.mypageInfo
+    })
+
+    return { mypageInfo, }
+  }
 }
 </script>
 

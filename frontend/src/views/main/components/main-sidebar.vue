@@ -35,7 +35,7 @@ export default {
     const clickMypage = () => {
       store.dispatch('rootMain/requestMyprofile', localStorage.getItem('jwt'))
       .then(function (result) {
-        console.log('다음 정보들을 store에 저장하기', result.data)
+        store.dispatch('rootMain/setMypageInfo', result.data)
       })
       .catch(function (err) {
         console.log('에러 정보', err.response)

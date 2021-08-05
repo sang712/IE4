@@ -1,3 +1,5 @@
+import { reactive } from 'vue';
+
 // ROOT STATE 변수 정의 및 기본값 대입
 const menuData = require('@/views/main/menu.json')
 
@@ -29,9 +31,22 @@ function getIsDesktop() {
 
 const IsDesktop = getIsDesktop()
 
+const mypageInfo = reactive({
+  id: '',
+  loginId: '',
+  name: '',
+  parentPhone: '',
+  password: '',
+  passwordAnswer: '',
+  passwordQuestion: '',
+  phone: '',
+  snum: '',
+  address: '',
+})
 
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
   menus: menuData,
+  mypageInfo,
 }
