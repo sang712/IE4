@@ -44,9 +44,18 @@ const mypageInfo = reactive({
   address: '',
 })
 
+const classInfo = {
+  grade: '',
+  classNo: '',
+  timetable: '',
+  classMotto: '',
+  url: ''
+}
+
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
   menus: menuData,
   mypageInfo,
+  classInfo,
 }

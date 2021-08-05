@@ -11,3 +11,7 @@ export function getActiveMenuIndex (state) {
 	const keys = Object.keys(state.menus)
 	return keys.findIndex(item => item === state.activeMenu)
 }
+// classInfo 가져오기
+export function getClassInfo (state) {
+	return state.classInfo
+}
