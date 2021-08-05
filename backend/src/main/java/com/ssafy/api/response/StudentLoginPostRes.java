@@ -6,11 +6,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 유저 로그인 API ([POST] /login) 요청에 대한 응답값 정의.
+ * 학생 로그인 API ([POST] /login) 요청에 대한 응답값 정의.
  */
 @Getter
 @Setter
-@ApiModel("UserLoginPostResponse")
+@ApiModel("StudentLoginPostResponse")
 public class StudentLoginPostRes extends UserLoginPostRes{
 	@ApiModelProperty(name="STUDENT SNUM", example="13")
 	int snum;
