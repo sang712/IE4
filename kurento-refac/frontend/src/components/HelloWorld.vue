@@ -2,7 +2,7 @@
   <div id="container">
 		<div id="wrapper">
 			<div id="join" class="animate join">
-				<h1>Join a Room</h1>
+				<h1>방으로 들어가세욧!</h1>
 				<form @submit.prevent="register" accept-charset="UTF-8">
 					<p>
 						<input type="text" name="name" value="" id="name"
@@ -62,5 +62,36 @@ li {
 }
 a {
   color: #42b983;
+}
+</style>
+<style>
+#participants {
+	max-height: 800px;
+}
+.participant {
+	margin: 1% 0% 5px 1.4%;
+  display: inline-block;
+  width: 16%;
+	min-width: 150px;
+	max-width: 300px;
+	min-height: 84px;
+  max-height: 168px;
+	border: 1px solid;
+	border-radius: 10px;
+}
+video {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+}
+.participant-name {
+	color: white;
+	font-weight: bold;
+	background: rgba(150,150,150, 0.8);
+	z-index: 2000;
+	bottom: 0;	
+	width: 100%;
+	float: left;
+	border-radius: 0 0 10px 10px;
 }
 </style>

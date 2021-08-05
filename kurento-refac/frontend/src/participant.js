@@ -27,6 +27,7 @@ export function Participant(name) {
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
 	container.id = name;
 	var span = document.createElement('span');
+	span.className = 'participant-name'
 	var video = document.createElement('video');
 	var rtcPeer;
 
@@ -95,7 +96,7 @@ export function Participant(name) {
 
 	Object.defineProperty(this, 'rtcPeer', { writable: true});
 
-	// 나간 참여자에 연결을 종료
+	// 나간 참여자의 연결을 종료
 	this.dispose = function() {
 		console.log('Disposing participant ' + this.name);
 		this.rtcPeer.dispose();
