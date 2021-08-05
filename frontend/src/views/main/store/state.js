@@ -29,19 +29,9 @@ function getIsDesktop() {
 
 const IsDesktop = getIsDesktop()
 
-function isLogin() {
-  const jwt = localStorage.getItem('jwt')
-  if (jwt != ''){
-    return true
-  } else {
-    return false
-  }
-
-}
 
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
   menus: menuData,
-  isLogin: isLogin()
 }
