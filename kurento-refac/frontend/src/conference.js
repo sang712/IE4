@@ -49,12 +49,12 @@ ws.onmessage = function(message) {
 		break;
 	case 'iceCandidate':
 		participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
-            if (error) {
-                console.error("Error adding candidate: " + error);
-                return;
-            }
-        });
-        break;
+			if (error) {
+				console.error("Error adding candidate: " + error);
+				return;
+			}
+		});
+		break;
 	default:
 		console.error('Unrecognized message', parsedMessage);
 	}
@@ -167,11 +167,11 @@ export function receiveVideo(sender) {
     }
 
 	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options,
-			function (error) {
-                if(error) {
-                    return console.error(error);
-                }
-            this.generateOffer (participant.offerToReceiveVideo.bind(participant));
+		function (error) {
+			if(error) {
+					return console.error(error);
+			}
+		this.generateOffer (participant.offerToReceiveVideo.bind(participant));
 	});
 }
 

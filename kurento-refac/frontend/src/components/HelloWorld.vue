@@ -2,7 +2,7 @@
   <div id="container">
 		<div id="wrapper">
 			<div id="join" class="animate join">
-				<h1>Join a Room</h1>
+				<h1>방으로 들어가세욧!</h1>
 				<form @submit.prevent="register" accept-charset="UTF-8">
 					<p>
 						<input type="text" name="name" value="" id="name"
@@ -62,5 +62,15 @@ li {
 }
 a {
   color: #42b983;
+}
+.participant {
+	margin: 1% 0% 5px 1.4%;
+  display: inline-block;
+  width: 15%;
+  max-height: 40%;
+}
+.participant-name {
+	margin: 50px auto 0px auto;
+	background-color: rgba(255, 255, 255, 0.80);
 }
 </style>

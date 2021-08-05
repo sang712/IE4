@@ -27,19 +27,20 @@ export function Participant(name) {
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
 	container.id = name;
 	var span = document.createElement('span');
+	span.className = 'participant-name'
 	var video = document.createElement('video');
 	var rtcPeer;
 
     rtcPeer;
 
 	container.appendChild(video);
-	container.appendChild(span);
+	video.appendChild(span);
 	container.onclick = switchContainerClass;
 	document.getElementById('participants').appendChild(container);
 
 	span.appendChild(document.createTextNode(name));
 
-	video.id = 'video-' + name;
+	video.id = 'video-' + name;W
 	video.autoplay = true;
 	video.controls = false;
 
