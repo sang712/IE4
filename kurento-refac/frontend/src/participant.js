@@ -40,7 +40,7 @@ export function Participant(name) {
 
 	span.appendChild(document.createTextNode(name));
 
-	video.id = 'video-' + name;W
+	video.id = 'video-' + name;
 	video.autoplay = true;
 	video.controls = false;
 
@@ -96,7 +96,7 @@ export function Participant(name) {
 
 	Object.defineProperty(this, 'rtcPeer', { writable: true});
 
-	// 나간 참여자에 연결을 종료
+	// 나간 참여자의 연결을 종료
 	this.dispose = function() {
 		console.log('Disposing participant ' + this.name);
 		this.rtcPeer.dispose();
