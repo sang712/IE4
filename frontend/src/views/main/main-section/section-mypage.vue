@@ -67,6 +67,9 @@ export default {
       }
     }
 
+    console.log(store.state.rootMain.classInfo);
+    console.log(store.state.rootMain.mypageInfo)
+
     let mypageInfo = computed(function () {
       return store.state.rootMain.mypageInfo
     })

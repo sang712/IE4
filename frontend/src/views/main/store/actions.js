@@ -35,3 +35,50 @@ export function requestMyprofile (context, token) {
   return
 }
 
+
+export function requestClass ({ state }, token) {
+  console.log('requestClass')
+  console.log(localStorage.getItem('classId'))
+  const url = 'http://localhost:8080/class/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.get(url, header)
+}
+
+export function requestClassMem ({ state }, token) {
+  console.log('requestClassMem')
+  console.log(localStorage.getItem('classId'))
+  const url = 'http://localhost:8080/class/myclass/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.get(url, header)
+}
+
+export function setMypageInfo ({ state }, response) {
+  state.mypageInfo.id = response.id
+  state.mypageInfo.loginId = response.loginId
+  state.mypageInfo.name = response.name
+  state.mypageInfo.parentPhone = response.parentPhone
+  state.mypageInfo.password = response.password
+  state.mypageInfo.passwordAnswer = response.passwordAnswer
+  state.mypageInfo.passwordQuestion = response.passwordQuestion
+  state.mypageInfo.phone = response.phone
+  state.mypageInfo.snum = response.snum
+  state.mypageInfo.address = response.address
+}
+
+export function setClassInfo ({ state }, response) {
+  console.log("이거 대나요?")
+
+  state.classInfo.grade = response.grade
+  state.classInfo.classNo = response.classNo
+  state.classInfo.timetable = response.timetable
+  state.classInfo.classMotto = response.classMotto
+  state.classInfo.url = response.conferenceUrl
+
+  console.log(response.grade + "     " + state.classInfo.grade)
+}
+
+export function setClassMemList ({ state }, response) {
+  console.log("데이터 넣으러 오나?")
+  console.log(response)
+  state.classMemList.list = response
+}

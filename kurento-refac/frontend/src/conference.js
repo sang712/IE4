@@ -64,9 +64,10 @@ export function register() {
 	name = document.getElementById('name').value;
 	var room = document.getElementById('roomName').value;
 
-	document.getElementById('room-header').innerText = 'ROOM ' + room;
+	document.getElementById('room-header').innerText = room + "번 방의 수업";
 	document.getElementById('join').style.display = 'none';
 	document.getElementById('room').style.display = 'block';
+	document.getElementById('footer').style.display = 'block';
 
 	var message = {
 		id : 'joinRoom',
@@ -148,6 +149,7 @@ export function leaveRoom() {
 
 	document.getElementById('join').style.display = 'block';
 	document.getElementById('room').style.display = 'none';
+	document.getElementById('footer').style.display = 'none';
 
 	// setTimeout(function() {
 	// 	console.log('ws closed');

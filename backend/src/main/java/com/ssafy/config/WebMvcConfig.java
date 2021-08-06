@@ -41,6 +41,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     		registry.addResourceHandler("/webjars/**")
     				.addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+    		// timetable에 업로드된 이미지 로드
+            registry.addResourceHandler("/timetable/**")
+                .addResourceLocations("classpath:/static/timetable/");
+
+            registry.addResourceHandler("/profileImg/**")
+                .addResourceLocations("classpath:/static/profileImg/");
     		
     		/*
     		 * 
@@ -57,6 +64,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.addResourceLocations("classpath:/dist/img/");
         registry.addResourceHandler("/js/**")
 				.addResourceLocations("classpath:/dist/js/");
+
     }
 
     public Filter requestLoggingFilter() {

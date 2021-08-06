@@ -20,7 +20,7 @@
     <el-row class="main-header" style="height: 14vh;">
       <div class="lower-header">
         <div class="class-motto">
-          <h1>급훈 : 갓상길을 찬양하라</h1>
+          <h1>급훈 : {{ state.classInfo.classMotto }}</h1>
         </div>
       </div>
     </el-row>
@@ -66,7 +66,8 @@ export default {
         }
         return menuArray
       }),
-      activeIndex: computed(() => store.getters['root/getActiveMenuIndex'])
+      activeIndex: computed(() => store.getters['root/getActiveMenuIndex']),
+      classInfo: computed(() => store.getters['rootMain/getClassInfo'])
     })
 
     if (state.activeIndex === -1) {
