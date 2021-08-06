@@ -3,8 +3,13 @@
     <div class="profile-img"></div>
     <h2 v-if="position=='학생'">{{ nGrade }}학년 {{ nClass }}반 {{nSnum}}번</h2>
     <h2 v-else>{{ nGrade }}학년 {{ nClass }}반 담임</h2>
+<<<<<<< HEAD
     <h2 v-if="position=='학생'">{{nName}} 학생</h2>
     <h2 v-else>{{nName}} 선생님</h2>
+=======
+    <h2 v-if="position=='학생'">한상길 학생</h2>
+    <h2 v-else>한상길 선생님</h2>
+>>>>>>> feature/class
 
     <hr style="margin-top: 45px;">
     <div class="lower-sidebar d-flex justify-content-evenly align-items-center">
@@ -16,6 +21,7 @@
 <script>
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+
 
 export default {
   name: 'main-sidebar',

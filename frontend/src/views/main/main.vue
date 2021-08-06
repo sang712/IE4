@@ -35,13 +35,14 @@
   }
   .main-content {
     width: 100%;
-    height: 66vh; 
+    height: 66vh;
   }
 </style>
 <script>
 import MainHeader from './components/main-header'
 import MainFooter from './components/main-footer'
 import MainSidebar from './components/main-sidebar'
+import { useStore } from 'vuex'
 
 export default {
   name: 'Main',
@@ -69,6 +70,19 @@ export default {
     onCloseLoginDialog () {
       this.loginDialogOpen = false
     }
-  }
+  },
+  created() {
+    const store = useStore()
+
+    store.dispatch('rootMain/requestClass', localStorage.getItem('jwt'))
+    .then(function (result) {
+      store.dispatch('rootMain/setClassInfo', result.data)
+      console.log(result.data)
+    })
+    .catch(function (err) {
+      console.log("error")
+    })
+  },
+
 }
 </script>

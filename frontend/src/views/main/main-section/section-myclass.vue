@@ -6,20 +6,24 @@
         <img class="myclass-profile-image" src="#" alt="선생님">
         <div class="myclass-profile-name">성함: OOO선생님</div>
       </div>
-      <div class="myclass-profile" v-for="item in items" :key="item.id">
-        <img class="myclass-profile-image" v-if="true" :src="item.image" alt="item.id">
-        <img class="myclass-profile-image" v-else src="#" alt="이미지 없음">
-        <div class="myclass-profile-name">이름: {{ item.id }}</div>
+      <div class="myclass-profile" v-for="(classMem, index) in classMemList" :key="index">
+        <img class="myclass-profile-image" v-if="classMem.profileImgUrl != null" :src="classMem.profileImgUrl" alt="item.name">
+        <img class="myclass-profile-image" v-else src="/profileImg/no_profile_img_girl.png" alt="이미지 없음">
+        <div class="myclass-profile-name">이름: {{ classMem.name }}</div>
       </div>
     </div>
   </div>
 </template>
 <script>
+
+import { useStore } from 'vuex'
+
 export default {
   name: 'section-myclass',
   data() {
     return {
-      items: [
+      items:
+      [
         { id:1, image: require('../../../assets/images/sample-image.png') },
         { id:2, image: require('../../../assets/images/sample-image.png') },
         { id:3, image: require('../../../assets/images/sample-image.png') },
@@ -37,8 +41,24 @@ export default {
         { id:15, image: require('../../../assets/images/sample-image.png') },
         { id:16, image: require('../../../assets/images/sample-image.png') },
       ],
+      classMemList: [],
     }
   },
+  created() {
+    const store = useStore()
+
+    store.dispatch('rootMain/requestClassMem', localStorage.getItem('jwt'))
+    .then(function (result) {
+      console.log("여기 안와?")
+      console.log(result.data)
+      store.dispatch('rootMain/setClassMemList', result.data)
+    })
+    .catch(function (err) {
+      console.log("requestClassMem error")
+    })
+
+    this.classMemList = store.getters['rootMain/getClassMemList'].list
+  }
 }
 </script>
 <style>

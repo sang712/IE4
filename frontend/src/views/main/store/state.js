@@ -45,9 +45,26 @@ const mypageInfo = reactive({
   classMotto: ''
 })
 
+const classInfo = reactive({
+  grade: '',
+  classNo: '',
+  timetable: '',
+  classMotto: '',
+  url: ''
+})
+
+const classMemList = reactive({
+  list: [],
+
+  name: '',
+  profileImgUrl: ''
+})
+
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
   menus: menuData,
   mypageInfo,
+  classInfo,
+  classMemList,
 }
