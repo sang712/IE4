@@ -23,19 +23,21 @@
 			</div>
 			<div id="footer">
 				<div class="button-wrapper">
-					<button class="button" type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
-					<div class="button" type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></div>
-					<span class="button" type="button" id="button-videoOn"><i class="fas fa-video"></i></span>
-					<a class="button" type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></a>
-					<input class="button" type="button" id="button-share" value="share">
-					<input class="button" type="button" id="button-session" value="session">
-					<input class="button" type="button" id="button-imoji" value="imoji">
-					<input class="button" type="button" id="button-more" value="more">
-					<input class="button" type="button" id="button-record" value="record">
-					<input class="button" type="button" id="button-leave" @mouseup="leaveRoom" value="Leave room">
+					<button class="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
+					<button class="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></button>
+					<button class="button" id="button-videoOn"><i class="fas fa-video"></i></button>
+					<button class="button" id="button-videoOff"><i class="fas fa-video-slash"></i></button>
+					<button class="button" id="button-share"><i class="far fa-share-square"></i></button>
+					<button class="button" id="button-session"><i class="fas fa-th-large"></i></button>
+					<button class="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button>
+					<button class="button" id="button-more"><i class="fas fa-ellipsis-h"></i></button>
+					<button class="button" id="button-record"><i class="far fa-dot-circle"></i></button>
+					<button class="button" id="button-leave" @mouseup="leaveRoom" value="Leave room"><i class="fas fa-door-open"></i></button>
 				</div>
 				<div class="button-wrapper2">
-
+					<button class="button" id="button-users"><i class="far fa-user"></i></button>
+					<button class="button" id="button-chatting"><i class="far fa-comment-dots"></i></button>
+					<button class="button" id="button-more"><i class="fas fa-ellipsis-h"/></button>
 				</div>
 			</div>
 		</div>
@@ -78,6 +80,34 @@ li {
 a {
   color: #42b983;
 }
+button {
+	height: 30px;
+	background: white;
+	border-radius: 12px;
+	border: 0px;
+	width: 60px;
+}
+#button-micOff, #button-videoOff, #button-leave {
+	color: red;
+}
+#button-micOn, #button-videoOn {
+	color: limegreen;
+}
+.button i {
+	font-size: 20px;
+}
+.button-wrapper2 {
+	margin: 0px;
+}
+#button-users {
+	border-radius: 12px 0px 0px 12px;
+}
+#button-chagtting {
+	border-radius: 0;
+}
+.button-wrapper2 #button-more {
+	border-radius: 0px 12px 12px 0px;
+}
 </style>
 <style>
 #participants {
@@ -96,7 +126,6 @@ a {
 video {
 	width: 100%;
 	height: 100%;
-	z-index: -1;
 	object-fit: cover;
 	position: absolute;
 	top: 50%;
@@ -117,11 +146,7 @@ video {
 	transform: translate(-50%, 0);
 }
 #footer {
-	height: 30px;
+	height: 40px;
     background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
-}
-#button-wrapper > .button {
-	height: 25px;
-	background: white;
 }
 </style>
