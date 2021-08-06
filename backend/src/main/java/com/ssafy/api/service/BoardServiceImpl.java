@@ -35,7 +35,7 @@ public class BoardServiceImpl implements BoardService{
     String uploadFolder = "boardfiles";
     String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
             + File.separator + "Documents"
-            + File.separator + "S05P12A601"
+            + File.separator + "S05P13A601"
             + File.separator + "backend"
             + File.separator + "src"
             + File.separator + "main"

@@ -42,6 +42,7 @@ const mypageInfo = reactive({
   phone: '',
   snum: '',
   address: '',
+  classMotto: ''
 })
 
 export default {

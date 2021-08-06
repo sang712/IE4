@@ -21,6 +21,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     boolean existsByLoginId(String loginId);
 
+    //class_id로 teacherName찾기 (그냥 name만 찾아오면 학생꺼랑 여러개 반환되서)
+    @Query("SELECT u.name FROM User u WHERE u.classId = :classId AND u.position = '교사'")
+    Optional<String> findTeacherNameByClassId(@Param("classId") int classId);
+
     //id로 profileImgUrl 찾기
     @Query("SELECT u.profileImgUrl FROM User u WHERE u.id = :id")
     Optional<String> findById(@Param("id")int id);

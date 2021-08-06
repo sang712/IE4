@@ -18,7 +18,7 @@ export function requestSignup ({ state }, payload) {
 export function requestMyprofile ({ state }, token) {
   console.log('requestMyprofile')
   const url = 'http://localhost:8080/users'
-  let header = { headers: { 'Authorization': `Bearer ${token}` } } 
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
   return $axios.get(url, header)
 }
 
