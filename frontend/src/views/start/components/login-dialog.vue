@@ -108,7 +108,13 @@ export default {
             localStorage.setItem('jwt', result.data.accessToken)
             localStorage.setItem('userId', result.data.id)
             localStorage.setItem('classId', result.data.classId)
+            localStorage.setItem('name', result.data.name)
+            localStorage.setItem('profileImgUrl', result.data.profileImgUrl)
             localStorage.setItem('position', result.data.position == null ? '학생' : result.data.position)
+            if(result.data.position == '학생') {
+              localStorage.setItem('snum', result.data.snum)
+              localStorage.setItem('teacherName', result.data.teacherName)
+            }
             emit('closeLoginDialog')
             router.go();
           })
