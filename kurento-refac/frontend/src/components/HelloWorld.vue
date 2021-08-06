@@ -23,16 +23,16 @@
 			</div>
 			<div id="footer">
 				<div class="button-wrapper">
-					<button type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
-					<div type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></div>
-					<span type="button" id="button-videoOn"><i class="fas fa-video"></i></span>
-					<a type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></a>
-					<input type="button" id="button-share" value="share">
-					<input type="button" id="button-session" value="session">
-					<input type="button" id="button-imoji" value="imoji">
-					<input type="button" id="button-more" value="more">
-					<input type="button" id="button-record" value="record">
-					<input type="button" id="button-leave" @mouseup="leaveRoom" value="Leave room">
+					<button class="button" type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
+					<div class="button" type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></div>
+					<span class="button" type="button" id="button-videoOn"><i class="fas fa-video"></i></span>
+					<a class="button" type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></a>
+					<input class="button" type="button" id="button-share" value="share">
+					<input class="button" type="button" id="button-session" value="session">
+					<input class="button" type="button" id="button-imoji" value="imoji">
+					<input class="button" type="button" id="button-more" value="more">
+					<input class="button" type="button" id="button-record" value="record">
+					<input class="button" type="button" id="button-leave" @mouseup="leaveRoom" value="Leave room">
 				</div>
 				<div class="button-wrapper2">
 
@@ -117,7 +117,11 @@ video {
 	transform: translate(-50%, 0);
 }
 #footer {
-	height: 30px;	
+	height: 30px;
+    background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
 }
-#footer > button
+#button-wrapper > .button {
+	height: 25px;
+	background: white;
+}
 </style>
