@@ -35,6 +35,7 @@ const mypageInfo = reactive({
   id: '',
   loginId: '',
   name: '',
+  position: '',
   parentPhone: '',
   password: '',
   passwordAnswer: '',
@@ -42,6 +43,7 @@ const mypageInfo = reactive({
   phone: '',
   snum: '',
   address: '',
+  sex: '',
   classMotto: ''
 })
 

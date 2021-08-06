@@ -16,7 +16,7 @@ public class StudentLoginPostRes extends UserLoginPostRes{
 	int snum;
 	String teacherName;
 
-	public static StudentLoginPostRes of(int id, int classId, String position, String name, int snum, String profileImgUrl, String teacherName, String accessToken) {
+	public static StudentLoginPostRes of(int id, int classId, String position, String name, int snum, String profileImgUrl, String sex, String teacherName, String accessToken) {
 		StudentLoginPostRes res = new StudentLoginPostRes();
 		res.setId(id);
 		res.setClassId(classId);
@@ -24,6 +24,7 @@ public class StudentLoginPostRes extends UserLoginPostRes{
 		res.setSnum(snum);
 		res.setName(name);
 		res.setProfileImgUrl(profileImgUrl);
+		res.setSex(sex);
 		res.setTeacherName(teacherName);
 		res.setAccessToken(accessToken);
 		return res;

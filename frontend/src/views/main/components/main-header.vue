@@ -12,21 +12,21 @@
             <el-button  type="default" @click="clickMeterials" style="width: 10vw; font-size: 120%">학습자료</el-button>
             <el-button  type="default" @click="clickMyclass" style="width: 10vw; font-size: 120%">우리반</el-button>
             <el-button  type="danger" @click="clickLogout" style="width: 10vw; font-size: 120%">로그아웃</el-button>
-          </div>       
+          </div>
         </div>
       </div>
     </el-row>
 <!--################        급     훈         #############-->
     <el-row class="main-header" style="height: 14vh;">
-      <div class="lower-header">  
+      <div class="lower-header">
         <div class="class-motto">
           <h1>급훈 : 갓상길을 찬양하라</h1>
         </div>
-      </div>  
+      </div>
     </el-row>
   </div>
 
-  
+
 </template>
 <script>
 import { reactive, computed, ref } from 'vue'
@@ -46,7 +46,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore()
     const router = useRouter()
-    
+
     const state = reactive({
       isLogin: computed(() => {
         const jwt = localStorage.getItem('jwt')
@@ -114,6 +114,10 @@ export default {
       localStorage.removeItem('userId')
       localStorage.removeItem('classId')
       localStorage.removeItem('position')
+      localStorage.removeItem('name')
+      localStorage.removeItem('profileImgUrl')
+      localStorage.removeItem('snum')
+      localStorage.removeItem('sex')
       router.go()
     }
 
@@ -127,9 +131,9 @@ export default {
 </script>
 <style>
   .main-headers{
-    background-image: url('../../../assets/images/main-header2.jpg');    
+    background-image: url('../../../assets/images/main-header2.jpg');
     background-position:center;
-    
+
   }
   .lower-header{
     height: 100%;
@@ -142,7 +146,7 @@ export default {
     margin: 10px auto;
     border-radius: 20px;
     text-align: center;
-    
+
     /* vertical-align: middle; */
   }
 
@@ -150,7 +154,7 @@ export default {
     padding: 10px 20px;
   }
   /*Mobile, Tablet*/
- 
+
   .main-header.upper-header{
     display: flex;
     justify-content: space-between;
@@ -161,7 +165,7 @@ export default {
     position: relative;
     top: 14px;
   }
-  
+
   .main-header .hide-on-big .logo-wrapper {
     display: inline-block;
     margin: 0 calc(50% - 51px)

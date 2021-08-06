@@ -69,6 +69,10 @@ public class UserController {
 		}
 	}
 
+	// 1. 로그인 할 때 기본 이미지 url 넣어주기 => 프로필 수정했다가 다시 아무것도 설정안하면? DB에 아무것도 저장이 안될텐데
+	// => 기본이미지 설정하기 버튼 필요?
+	// 2. 프론트에서 null일 때 기본이미지 넣어주기
+
 	@PatchMapping("/{id}")
 	@ApiOperation(value = "학생정보 수정", notes = "학생정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),

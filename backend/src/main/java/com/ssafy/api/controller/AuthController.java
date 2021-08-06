@@ -63,15 +63,15 @@ public class AuthController {
 				String teacherName = userService.getTeacherNameByClassId(user.getClassId());
 				System.out.println(teacherName);
 				return ResponseEntity.ok(StudentLoginPostRes.of(
-						user.getId(), user.getClassId(), user.getPosition(), user.getName(), student.getSnum(), user.getProfileImgUrl(), teacherName, JwtTokenUtil.getToken(loginId)));
+						user.getId(), user.getClassId(), user.getPosition(), user.getName(), student.getSnum(), user.getProfileImgUrl(), user.getSex(), teacherName, JwtTokenUtil.getToken(loginId)));
 			}else{ // 선생님
 				// 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
 				return ResponseEntity.ok(UserLoginPostRes.of(
-						user.getId(), user.getClassId(), user.getPosition(), user.getName(), user.getProfileImgUrl(), JwtTokenUtil.getToken(loginId)));
+						user.getId(), user.getClassId(), user.getPosition(), user.getName(), user.getProfileImgUrl(), user.getSex(), JwtTokenUtil.getToken(loginId)));
 			}
 		}
 		// 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-		return ResponseEntity.status(401).body(UserLoginPostRes.of(0,0, null, null, null, null));
+		return ResponseEntity.status(401).body(UserLoginPostRes.of(0,0, null, null, null, null, null));
 	}
 
 	@GetMapping("/findId")

@@ -111,6 +111,7 @@ export default {
             localStorage.setItem('name', result.data.name)
             localStorage.setItem('profileImgUrl', result.data.profileImgUrl)
             localStorage.setItem('position', result.data.position == null ? '학생' : result.data.position)
+            localStorage.setItem('sex', result.data.sex)
             if(result.data.position == '학생') {
               localStorage.setItem('snum', result.data.snum)
               localStorage.setItem('teacherName', result.data.teacherName)
