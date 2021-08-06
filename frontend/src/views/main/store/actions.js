@@ -17,14 +17,32 @@ export function requestSignup ({ state }, payload) {
   return $axios.post(url, body)
 }
 
-export function requestMyprofile ({ state }, token) {
+export function requestMyprofile (context, token) {
   console.log('requestMyprofile')
   const url = 'http://localhost:8080/users'
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   return $axios.get(url, header)
+=======
+  $axios.get(url, header)
+  .then(function (result) {
+    console.log(result.data)
+    if(result.data.position === '학생'){
+      context.commit('rootMain/setStudentMypageInfo', result.data, {root: true})
+      // store.dispatch('rootMain/setMypageInfo', result.data)
+    }else{
+      context.commit('rootMain/setTeacherMypageInfo', result.data, {root: true})
+    }
+  })
+  .catch(function (err) {
+    console.log('에러 정보', err.response)
+  })
+  return
+>>>>>>> 1f2c59d6ccf4972e79b8e6f198cc20e08db18b85
 }
+
 
 export function requestClass ({ state }, token) {
   console.log('requestClass')

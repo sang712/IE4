@@ -115,6 +115,10 @@ export default {
       localStorage.removeItem('userId')
       localStorage.removeItem('classId')
       localStorage.removeItem('position')
+      localStorage.removeItem('name')
+      localStorage.removeItem('profileImgUrl')
+      localStorage.removeItem('snum')
+      localStorage.removeItem('sex')
       router.go()
     }
 

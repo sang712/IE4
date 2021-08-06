@@ -69,7 +69,7 @@ export default {
 .host-profile{
   width: 200px;
   height: 200px;
-  background-image: url('../../../assets/images/profile-picture.png');
+  /* background-image: url('../../../assets/images/profile-picture.png'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -24,16 +24,19 @@ public class UserLoginPostRes {
 	String name;
 	@ApiModelProperty(name="USER ProfileImgUrl", example="~")
 	String profileImgUrl;
+	@ApiModelProperty(name="USER SEX", example="여")
+	String sex;
 	@ApiModelProperty(name="JWT 인증 토큰", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
 	String accessToken;
 	
-	public static UserLoginPostRes of(int id, int classId, String position, String name, String profileImgUrl, String accessToken) {
+	public static UserLoginPostRes of(int id, int classId, String position, String name, String profileImgUrl, String sex, String accessToken) {
 		UserLoginPostRes res = new UserLoginPostRes();
 		res.setId(id);
 		res.setClassId(classId);
 		res.setPosition(position);
 		res.setName(name);
 		res.setProfileImgUrl(profileImgUrl);
+		res.setSex(sex);
 		res.setAccessToken(accessToken);
 		return res;
 	}

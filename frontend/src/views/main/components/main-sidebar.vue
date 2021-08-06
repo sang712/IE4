@@ -1,15 +1,12 @@
 <template>
   <div class="main-sidebar">
-    <div class="profile-img"></div>
-    <h2 v-if="position=='학생'">{{ nGrade }}학년 {{ nClass }}반 {{nSnum}}번</h2>
+    <div class="profile-img">
+      <img :src="profileImgUrl" />
+    </div>
+    <h2 v-if="nPosition=='학생'">{{ nGrade }}학년 {{ nClass }}반 {{nSnum}}번</h2>
     <h2 v-else>{{ nGrade }}학년 {{ nClass }}반 담임</h2>
-<<<<<<< HEAD
-    <h2 v-if="position=='학생'">{{nName}} 학생</h2>
+    <h2 v-if="nPosition=='학생'">{{nName}} 학생</h2>
     <h2 v-else>{{nName}} 선생님</h2>
-=======
-    <h2 v-if="position=='학생'">한상길 학생</h2>
-    <h2 v-else>한상길 선생님</h2>
->>>>>>> feature/class
 
     <hr style="margin-top: 45px;">
     <div class="lower-sidebar d-flex justify-content-evenly align-items-center">
@@ -21,38 +18,71 @@
 <script>
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { reactive, computed, toRefs } from 'vue'
 
 
 export default {
   name: 'main-sidebar',
-
-  data () {
-    return {
-      position : localStorage.getItem('position'),
-      nGrade : localStorage.getItem('classId')[0],
-      nClass : localStorage.getItem('classId')[2],
-      nName: localStorage.getItem('name'),
-      nProfileImgUrl : localStorage.getItem('profileImgUrl'),
-      nSnum : localStorage.getItem('snum'),
-    }
-  },
+  // data () {
+  //   return {
+  //     position : localStorage.getItem('position'),
+  //     nGrade : localStorage.getItem('classId')[0],
+  //     nClass : localStorage.getItem('classId')[2],
+  //     nName: localStorage.getItem('name'),
+  //     nProfileImgUrl : localStorage.getItem('profileImgUrl'),
+  //     nSnum : localStorage.getItem('snum'),
+  //     nSex : localStorage.getItem('sex')
+  //   }
+  // },
 
   setup(props, { emit }) {
     const store = useStore()
     const router = useRouter()
 
+    const state = reactive({
+      jwt : localStorage.getItem('jwt'),
+      nPosition : localStorage.getItem('position'),
+      nGrade : localStorage.getItem('classId')[0],
+      nClass : localStorage.getItem('classId')[2],
+      nName : localStorage.getItem('name'),
+      nProfileImgUrl : localStorage.getItem('profileImgUrl'),
+      nSnum : localStorage.getItem('snum'),
+      nSex : localStorage.getItem('sex')
+    });
+
+    const profileImgUrl = computed(() => {
+      console.log(state.nProfileImgUrl + "<<이거임")
+      // console.log(state.nSex)
+      // console.log(state.nProfileImgUrl == null)
+      // console.log(state.nProfileImgUrl === null)
+      // console.log(state.nProfileImgUrl == undefined)
+      // console.log(state.nProfileImgUrl === undefined)
+      // console.log(state.nProfileImgUrl === '')
+      // console.log(state.nProfileImgUrl == '')
+      if(state.nProfileImgUrl == 'null') {
+        console.log("윤주 ㅎㅇ")
+        if(state.nSex == '남자' && state.nPosition == '교사') {
+          return '/profile/noProfile_t_m.png';
+        } else if(state.nSex == '여자' && state.nPosition == '교사') {
+            return '/profile/noProfile_t_w.png';
+        } else if(state.nSex == '남자' && state.nPosition == '학생') {
+            return '/profile/noProfile_s_m.png';
+        } else if(state.nSex == '여자' && state.nPosition == '학생') {
+            return '/profile/noProfile_s_w.png';
+        }
+      }else{
+        console.log("else문임 ㅎㅇ")
+        return '/' + state.nProfileImgUrl;
+      }
+
+    });
+
     const clickMypage = () => {
-      store.dispatch('rootMain/requestMyprofile', localStorage.getItem('jwt'))
-      .then(function (result) {
-        store.dispatch('rootMain/setMypageInfo', result.data)
-      })
-      .catch(function (err) {
-        console.log('에러 정보', err.response)
-      })
+      store.dispatch('rootMain/requestMyprofile', state.jwt)
       router.push({ name: 'mypage' })
     }
 
-    return { clickMypage }
+    return { clickMypage,  ...toRefs(state), profileImgUrl }
   }
 }
 </script>
@@ -61,7 +91,6 @@ export default {
 .main-sidebar .profile-img{
   margin: 35px auto;
   height: 300px;
-  background-image: url('../../../assets/images/profile-picture.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
