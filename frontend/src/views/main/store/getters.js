@@ -17,3 +17,11 @@ export function getBoardList(state) {
 export function getNewsBoardList(state) {
   return state.rootMain.newsboard.list;
 }
+// classInfo 가져오기
+export function getClassInfo (state) {
+	return state.classInfo
+}
+// classMemList 가져오기
+export function getClassMemList (state) {
+	return state.classMemList
+}

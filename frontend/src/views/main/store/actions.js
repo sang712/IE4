@@ -21,6 +21,25 @@ export function requestMyprofile ({ state }, token) {
   console.log('requestMyprofile')
   const url = 'http://localhost:8080/users'
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
+<<<<<<< HEAD
+=======
+  return $axios.get(url, header)
+}
+
+export function requestClass ({ state }, token) {
+  console.log('requestClass')
+  console.log(localStorage.getItem('classId'))
+  const url = 'http://localhost:8080/class/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.get(url, header)
+}
+
+export function requestClassMem ({ state }, token) {
+  console.log('requestClassMem')
+  console.log(localStorage.getItem('classId'))
+  const url = 'http://localhost:8080/class/myclass/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+>>>>>>> 89266b88cd22546031b0f6f686b9220061fbf45f
   return $axios.get(url, header)
 }
 
@@ -36,6 +55,7 @@ export function setMypageInfo ({ state }, response) {
   state.mypageInfo.snum = response.snum
   state.mypageInfo.address = response.address
 }
+<<<<<<< HEAD
 export function setBoardList({ state }, response){
   state.board.list = response.data.content
 }
@@ -43,3 +63,23 @@ export function setNewsBoardList({ state }, response){
   state.newsboard.list = response.data.content
 }
 
+=======
+
+export function setClassInfo ({ state }, response) {
+  console.log("이거 대나요?")
+
+  state.classInfo.grade = response.grade
+  state.classInfo.classNo = response.classNo
+  state.classInfo.timetable = response.timetable
+  state.classInfo.classMotto = response.classMotto
+  state.classInfo.url = response.conferenceUrl
+
+  console.log(response.grade + "     " + state.classInfo.grade)
+}
+
+export function setClassMemList ({ state }, response) {
+  console.log("데이터 넣으러 오나?")
+  console.log(response)
+  state.classMemList.list = response
+}
+>>>>>>> 89266b88cd22546031b0f6f686b9220061fbf45f

@@ -42,6 +42,22 @@ const mypageInfo = reactive({
   phone: '',
   snum: '',
   address: '',
+  classMotto: ''
+})
+
+const classInfo = reactive({
+  grade: '',
+  classNo: '',
+  timetable: '',
+  classMotto: '',
+  url: ''
+})
+
+const classMemList = reactive({
+  list: [],
+
+  name: '',
+  profileImgUrl: ''
 })
 
 const board={
@@ -81,6 +97,11 @@ export default {
   activeMenu: 'home',
   menus: menuData,
   mypageInfo,
+<<<<<<< HEAD
   board,
   newsboard,
+=======
+  classInfo,
+  classMemList,
+>>>>>>> 89266b88cd22546031b0f6f686b9220061fbf45f
 }

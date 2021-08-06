@@ -20,6 +20,7 @@ public interface UserService {
 
 	User getUserByLoginId(String loginId);
 	Student getStudentByUserId(int UserId);
+	String getTeacherNameByClassId(int classId);
 
 	String findLoginId(String name, int snum, String phone);
 	String findPassword(String loginId, String passwordQuestion, String passwordAnswer);
