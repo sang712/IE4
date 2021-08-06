@@ -84,9 +84,10 @@ public class UserServiceImpl implements UserService {
 		user.setAddress(studentUpdateInfo.getAddress());
 
 
-		String uploadFolder = "profile";
+		String uploadFolder = "profileImg";
 		String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
 				+ File.separator + "Documents"
+				+ File.separator + "dev"
 				+ File.separator + "S05P13A601"
 				+ File.separator + "backend"
 				+ File.separator + "src"
