@@ -11,3 +11,9 @@ export function getActiveMenuIndex (state) {
 	const keys = Object.keys(state.menus)
 	return keys.findIndex(item => item === state.activeMenu)
 }
+export function getBoardList(state) {
+  return state.rootMain.board.list;
+}
+export function getNewsBoardList(state) {
+  return state.rootMain.newsboard.list;
+}

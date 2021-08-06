@@ -8,30 +8,13 @@
         <div class="header-author">작성자</div>
         <div class="header-date">날짜</div>
       </li>
-      <li class="table-row">
-        <div class="row-number">4</div>
-        <div class="row-title">8월 13일 연구수업 안내</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.21</div>
+      <li v-for="(board, index) in getNewsBoardList()" v-bind:key="index" class="table-row" >
+        <div class="row-number">{{index}}</div>
+        <div class="row-title">{{board.title}}</div>
+        <div class="row-author">{{board.userName}}</div>
+        <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
-      <li class="table-row">
-        <div class="row-number number">3</div>
-        <div class="row-title">코로나 관련 학생 방역지침 안내</div>
-        <div class="row-author">관리자</div>
-        <div class="row-date">2021.07.20</div>
-      </li>
-      <li class="table-row">
-        <div class="row-number">2</div>
-        <div class="row-title">학기중 도서관 이용 안내</div>
-        <div class="row-author">관리자</div>
-        <div class="row-date">2021.07.05</div>
-      </li>
-      <li class="table-row">
-        <div class="row-number">1</div>
-        <div class="row-title">온라인 수업 안내</div>
-        <div class="row-author">관리자</div>
-        <div class="row-date">2021.07.05</div>
-      </li>
+
     </ul>
     <!-- 페이지네이션 기능 미구현 -->
     <!-- <el-pagination
@@ -44,8 +27,40 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import $axios from 'axios'
+import { useRouter } from 'vue-router'
+
 export default {
-  name: 'section-news'
+  name: 'section-news',
+
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+
+    const getNewsBoardList = () => {
+
+      $axios.get("http://localhost:8080/board", {params:{classId:103, boardType:"공지사항"}})
+    	.then((res)=>{
+    		console.log(res);
+        console.log("BoardMainVue: data : ");
+        console.log(res.data.content);
+        this.store.state.newsboard = res.data.content
+      })
+    	.then((err)=>{
+    		console.log(err);
+      })
+
+    }
+
+    let newsboard = computed(function () {
+      return store.state.rootMain.newsboard
+    })
+
+    return { newsboard, getNewsBoardList }
+
+  }
 }
 </script>
 

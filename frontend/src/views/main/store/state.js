@@ -44,9 +44,43 @@ const mypageInfo = reactive({
   address: '',
 })
 
+const board={
+  //list
+  list: [],
+  limit: 10,
+  offset: 0,
+  searchWord: "",
+
+  //detail
+  no: 0,
+  boardId: 0,
+  title: "",
+  content: "",
+  userName: "",
+  regDt: {}
+}
+
+const newsboard=reactive({
+  //list
+  list: [],
+  limit: 10,
+  offset: 0,
+  searchWord: "",
+
+  //detail
+  no: 0,
+  boardId: 0,
+  title: "",
+  content: "",
+  userName: "",
+  regDt: {}
+})
+
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
   menus: menuData,
   mypageInfo,
+  board,
+  newsboard,
 }

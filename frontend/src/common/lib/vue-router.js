@@ -13,7 +13,7 @@ import SectionMypage from '@/views/main/main-section/section-mypage'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
-  let routes = Object.keys(fullMenu).map((key) => { 
+  let routes = Object.keys(fullMenu).map((key) => {
     if (key === 'home') {
       return { path: fullMenu[key].path, name: key, component: Home  }
     } else if (key === 'history') {
@@ -64,8 +64,8 @@ function makeRoutesFromMenu () {
   })
 // 학습자료버튼 라우터
   routes.push({
-    path: '/meterials',
-    name: 'meterials',
+    path: '/board',
+    name: 'board',
     component: SectionMeterials,
   })
 // 우리반버튼 라우터

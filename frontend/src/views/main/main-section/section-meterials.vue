@@ -6,39 +6,47 @@
         <div class="header-number">No</div>
         <div class="header-title">제목</div>
         <div class="header-author">작성자</div>
-        <div class="header-date">날짜</div>
+        <div class="header-date">작성일</div>
       </li>
-      <li class="table-row">
-        <div class="row-number">4</div>
-        <div class="row-title">[사회] 8월 13일 연구수업 자료</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.24</div>
-      </li>
-      <li class="table-row">
-        <div class="row-number number">3</div>
-        <div class="row-title">[영어] 3주차 영단어</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.23</div>
-      </li>
-      <li class="table-row">
-        <div class="row-number">2</div>
-        <div class="row-title">[음악] 수행평가 참고 사이트</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.21</div>
-      </li>
-      <li class="table-row">
-        <div class="row-number">1</div>
-        <div class="row-title">[수학] 비례식 연습문제</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.21</div>
+      <li v-for="(board, index) in listGetters" v-bind:key="index" class="table-row" >
+        <div class="row-number">{{index}}</div>
+        <div class="row-title">{{board.title}}</div>
+        <div class="row-author">{{board.userName}}</div>
+        <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import $axios from 'axios'
+
 export default {
-  name: 'section-meterials'
+  name: 'section-meterials',
+  computed:{
+
+    listGetters(){
+      return this.$store.getters.getBoardList; // no getBoardList()
+    },
+  },
+  methods: {
+    boardList(){
+      //this.$store.dispatch('rootMain/boardList');
+      //JSON.parse( localStorage.getItem('vuex'))['content'].searchWord = '';
+    },
+    created(){
+      $axios.get("http://localhost:8080/board", {params:{classId:103, boardType:"학습자료"}})
+    	.then((res)=>{
+    		console.log(res);
+        console.log("BoardMainVue: data : ");
+        console.log(res.data.content);
+        this.$store.state.boardList = res.data.content
+      })
+    	.then((err)=>{
+    		console.log(err);
+      })
+    },
+  }
 }
 </script>
 

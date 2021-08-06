@@ -1,5 +1,7 @@
 // API
-import $axios from 'axios'
+
+import { toHandlers } from 'vue'
+import http from "@/common/lib/axios.js";
 
 export function requestLogin ({ state }, payload) {
   console.log('requestLogin', state, payload)
@@ -18,7 +20,7 @@ export function requestSignup ({ state }, payload) {
 export function requestMyprofile ({ state }, token) {
   console.log('requestMyprofile')
   const url = 'http://localhost:8080/users'
-  let header = { headers: { 'Authorization': `Bearer ${token}` } } 
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
   return $axios.get(url, header)
 }
 
@@ -34,3 +36,10 @@ export function setMypageInfo ({ state }, response) {
   state.mypageInfo.snum = response.snum
   state.mypageInfo.address = response.address
 }
+export function setBoardList({ state }, response){
+  state.board.list = response.data.content
+}
+export function setNewsBoardList({ state }, response){
+  state.newsboard.list = response.data.content
+}
+

@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 @Api(value = "게시판 API", tags = {"Board"})
 @RestController
-@RequestMapping("/api/v1/board")
+@RequestMapping("/board")
 public class BoardController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class BoardController {
     @Autowired
     BoardRepository boardRepository;
 
-    @PostMapping(value = "/insert", consumes = {"multipart/form-data"})
+    @PostMapping(value = "", consumes = {"multipart/form-data"})
     @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
     public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
             @RequestParam(value = "classId",required = true) int classId,
@@ -115,7 +115,7 @@ public class BoardController {
 
     //pageing 목록 불러오기
     @CrossOrigin
-    @GetMapping("/page")
+    @GetMapping("")
     public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt") Pageable pageRequest,
         @RequestParam(value = "classId") int classId,
         @RequestParam(value = "boardType") String boardType) {
