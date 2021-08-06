@@ -15,7 +15,7 @@
  *
  */
 
-import * as Conference  from './conference.js'
+import * as Conference from './conference.js'
 
 const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
@@ -31,7 +31,7 @@ export function Participant(name) {
 	var video = document.createElement('video');
 	var rtcPeer;
 
-    rtcPeer;
+	rtcPeer;
 
 	container.appendChild(video);
 	container.appendChild(span);
@@ -45,23 +45,23 @@ export function Participant(name) {
 	video.controls = false;
 
 
-	this.getElement = function() {
+	this.getElement = function () {
 		return container;
 	}
 
-	this.getVideoElement = function() {
+	this.getVideoElement = function () {
 		return video;
 	}
 
 	function switchContainerClass() {
 		if (container.className === PARTICIPANT_CLASS) {
 			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
-			elements.forEach(function(item) {
-					item.className = PARTICIPANT_CLASS;
-				});
+			elements.forEach(function (item) {
+				item.className = PARTICIPANT_CLASS;
+			});
 
-				container.className = PARTICIPANT_MAIN_CLASS;
-			} else {
+			container.className = PARTICIPANT_MAIN_CLASS;
+		} else {
 			container.className = PARTICIPANT_CLASS;
 		}
 	}
@@ -70,15 +70,16 @@ export function Participant(name) {
 		return ((document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)).length != 0);
 	}
 
-	this.offerToReceiveVideo = function(error, offerSdp, wp){
-		if (error) return console.error ("sdp offer error")
+	this.offerToReceiveVideo = function (error, offerSdp, wp) {
+		if (error) return console.error("sdp offer error")
 		console.log('Invoking SDP offer callback function');
-		var msg =  { id : "receiveVideoFrom",
-				sender : name,
-				sdpOffer : offerSdp
-			};
-        wp;
-        Conference.sendMessage(msg);
+		var msg = {
+			id: "receiveVideoFrom",
+			sender: name,
+			sdpOffer: offerSdp
+		};
+		wp;
+		Conference.sendMessage(msg);
 	}
 
 
@@ -86,18 +87,18 @@ export function Participant(name) {
 		console.log("Local candidate" + JSON.stringify(candidate));
 
 		var message = {
-            id: 'onIceCandidate',
-            candidate: candidate,
-            name: name
+			id: 'onIceCandidate',
+			candidate: candidate,
+			name: name
 		};
-        wp;
+		wp;
 		Conference.sendMessage(message);
 	}
 
-	Object.defineProperty(this, 'rtcPeer', { writable: true});
+	Object.defineProperty(this, 'rtcPeer', { writable: true });
 
 	// 나간 참여자의 연결을 종료
-	this.dispose = function() {
+	this.dispose = function () {
 		console.log('Disposing participant ' + this.name);
 		this.rtcPeer.dispose();
 		container.parentNode.removeChild(container);
