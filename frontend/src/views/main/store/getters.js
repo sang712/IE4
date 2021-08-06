@@ -15,3 +15,7 @@ export function getActiveMenuIndex (state) {
 export function getClassInfo (state) {
 	return state.classInfo
 }
+// classMemList 가져오기
+export function getClassMemList (state) {
+	return state.classMemList
+}

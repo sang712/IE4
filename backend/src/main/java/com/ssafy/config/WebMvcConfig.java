@@ -45,6 +45,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     		// timetable에 업로드된 이미지 로드
             registry.addResourceHandler("/timetable/**")
                 .addResourceLocations("classpath:/static/timetable/");
+
+            registry.addResourceHandler("/profileImg/**")
+                .addResourceLocations("classpath:/static/profileImg/");
     		
     		/*
     		 * 

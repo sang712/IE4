@@ -30,6 +30,14 @@ export function requestClass ({ state }, token) {
   return $axios.get(url, header)
 }
 
+export function requestClassMem ({ state }, token) {
+  console.log('requestClassMem')
+  console.log(localStorage.getItem('classId'))
+  const url = 'http://localhost:8080/class/myclass/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.get(url, header)
+}
+
 export function setMypageInfo ({ state }, response) {
   state.mypageInfo.id = response.id
   state.mypageInfo.loginId = response.loginId
@@ -53,4 +61,10 @@ export function setClassInfo ({ state }, response) {
   state.classInfo.url = response.conferenceUrl
 
   console.log(response.grade + "     " + state.classInfo.grade)
+}
+
+export function setClassMemList ({ state }, response) {
+  console.log("데이터 넣으러 오나?")
+  console.log(response)
+  state.classMemList.list = response
 }

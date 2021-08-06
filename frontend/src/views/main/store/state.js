@@ -52,10 +52,18 @@ const classInfo = reactive({
   url: ''
 })
 
+const classMemList = reactive({
+  list: [],
+
+  name: '',
+  profileImgUrl: ''
+})
+
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
   menus: menuData,
   mypageInfo,
   classInfo,
+  classMemList,
 }
