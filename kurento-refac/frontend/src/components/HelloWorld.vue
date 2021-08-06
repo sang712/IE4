@@ -83,10 +83,12 @@ a {
 button {
 	height: 30px;
 	background: white;
-	border-radius: 15px;
 	border: 0px;
 	width: 55px;
 	margin: auto 2px;
+}
+.button-wrapper button {
+		border-radius: 15px;
 }
 #button-micOff, #button-videoOff, #button-leave {
 	color: red;
@@ -156,6 +158,8 @@ video {
 .button-wrapper, .button-wrapper2 {
 	display: inline-block;
 	margin: 5px;
+}
+.button-wrapper2 {
 	position: absolute;
 	right: 0;
 }
