@@ -21,23 +21,23 @@
 				<h2 id="room-header" style="margin: 10px 0px;"></h2>
 				<div id="participants"></div>
 			</div>
-			<div id="footer">
+			<div id="footer" style="display: none;">
 				<div class="button-wrapper">
-					<button class="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
-					<button class="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></button>
-					<button class="button" id="button-videoOn"><i class="fas fa-video"></i></button>
-					<button class="button" id="button-videoOff"><i class="fas fa-video-slash"></i></button>
-					<button class="button" id="button-share"><i class="far fa-share-square"></i></button>
-					<button class="button" id="button-session"><i class="fas fa-th-large"></i></button>
-					<button class="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button>
-					<button class="button" id="button-more"><i class="fas fa-ellipsis-h"></i></button>
-					<button class="button" id="button-record"><i class="far fa-dot-circle"></i></button>
-					<button class="button" id="button-leave" @mouseup="leaveRoom" value="Leave room"><i class="fas fa-door-open"></i></button>
+					<button class="button" type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
+					<button class="button" type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></button>
+					<button class="button" type="button" id="button-videoOn"><i class="fas fa-video"></i></button>
+					<button class="button" type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></button>
+					<button class="button" type="button" id="button-share"><i class="far fa-share-square"></i></button>
+					<button class="button" type="button" id="button-session"><i class="fas fa-th-large"></i></button>
+					<button class="button" type="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button>
+					<button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"></i></button>
+					<button class="button" type="button" id="button-record"><i class="far fa-dot-circle"></i></button>
+					<button class="button" type="button" id="button-leave" @mouseup="leaveRoom" value="Leave room"><i class="fas fa-door-open"></i></button>
 				</div>
 				<div class="button-wrapper2">
-					<button class="button" id="button-users"><i class="far fa-user"></i></button>
-					<button class="button" id="button-chatting"><i class="far fa-comment-dots"></i></button>
-					<button class="button" id="button-more"><i class="fas fa-ellipsis-h"/></button>
+					<button class="button" type="button" id="button-users"><i class="far fa-user"></i></button>
+					<button class="button" type="button" id="button-chatting"><i class="far fa-comment-dots"></i></button>
+					<button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"/></button>
 				</div>
 			</div>
 		</div>
@@ -83,9 +83,10 @@ a {
 button {
 	height: 30px;
 	background: white;
-	border-radius: 12px;
+	border-radius: 15px;
 	border: 0px;
-	width: 60px;
+	width: 55px;
+	margin: auto 2px;
 }
 #button-micOff, #button-videoOff, #button-leave {
 	color: red;
@@ -100,13 +101,16 @@ button {
 	margin: 0px;
 }
 #button-users {
-	border-radius: 12px 0px 0px 12px;
+	border-radius: 12px 0px 0px 12px;	
+	margin: 0px;
 }
 #button-chagtting {
-	border-radius: 0;
+	border-radius: 0;	
+	margin: 0px;
 }
 .button-wrapper2 #button-more {
-	border-radius: 0px 12px 12px 0px;
+	border-radius: 0px 12px 12px 0px;	
+	margin: 0px;
 }
 </style>
 <style>
@@ -147,6 +151,12 @@ video {
 }
 #footer {
 	height: 40px;
-    background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
+	background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
+}
+.button-wrapper, .button-wrapper2 {
+	display: inline-block;
+	margin: 5px;
+	position: absolute;
+	right: 0;
 }
 </style>
