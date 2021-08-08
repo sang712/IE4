@@ -6,39 +6,46 @@
         <div class="header-number">No</div>
         <div class="header-title">제목</div>
         <div class="header-author">작성자</div>
-        <div class="header-date">날짜</div>
+        <div class="header-date">작성일</div>
       </li>
-      <li class="table-row">
-        <div class="row-number">4</div>
-        <div class="row-title">[사회] 8월 13일 연구수업 자료</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.24</div>
-      </li>
-      <li class="table-row">
-        <div class="row-number number">3</div>
-        <div class="row-title">[영어] 3주차 영단어</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.23</div>
-      </li>
-      <li class="table-row">
-        <div class="row-number">2</div>
-        <div class="row-title">[음악] 수행평가 참고 사이트</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.21</div>
-      </li>
-      <li class="table-row">
-        <div class="row-number">1</div>
-        <div class="row-title">[수학] 비례식 연습문제</div>
-        <div class="row-author">강싸피 선생님</div>
-        <div class="row-date">2021.07.21</div>
+      <li v-for="(board, index) in board" v-bind:key="index" class="table-row" >
+        <div class="row-number">{{index}}</div>
+        <div class="row-title">{{board.title}}</div>
+        <div class="row-author">{{board.userName}}</div>
+        <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import $axios from 'axios'
+import { useStore } from 'vuex'
+
 export default {
-  name: 'section-meterials'
+  name: 'section-meterials',
+  data(){
+    return{
+      board:[],
+    }
+  },
+  created() {
+    const store = useStore()
+
+    store.dispatch('rootMain/requestBoardList', localStorage.getItem('jwt'))
+    .then(function (result) {
+      console.log("갖고온 리스트는 말이지")
+      console.log(result.data.content)
+      store.dispatch('rootMain/setBoardList', result.data.content)
+    })
+    .catch(function (err) {
+      console.log("requestBoardList error")
+    })
+
+    this.board = store.getters['rootMain/getBoardList'].list
+    console.log(this.board)
+  },
+
 }
 </script>
 

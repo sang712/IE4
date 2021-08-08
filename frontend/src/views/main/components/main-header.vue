@@ -93,7 +93,7 @@ export default {
     }
 
     const clickMeterials = () => {
-      router.push({ name: 'meterials' })
+      router.push({ name: 'board', params:{classId:103, boardType:"학습자료"}})
     }
 
     const clickMyclass = () => {

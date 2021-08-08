@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 @Api(value = "게시판 API", tags = {"Board"})
 @RestController
-@RequestMapping("/api/v1/board")
+@RequestMapping("/board")
 public class BoardController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class BoardController {
     @Autowired
     BoardRepository boardRepository;
 
-    @PostMapping(value = "/insert", consumes = {"multipart/form-data"})
+    @PostMapping(value = "", consumes = {"multipart/form-data"})
     @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
     public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
             @RequestParam(value = "classId",required = true) int classId,
@@ -84,8 +84,11 @@ public class BoardController {
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "글 없음"), @ApiResponse(code = 500, message = "서버 오류") })
     public ResponseEntity<BoardDetailRes> detail(@ApiIgnore Authentication authentication, @PathVariable int boardId) {
+        System.out.println("게시물 상세내용 조회 시도------->"+ boardId);
         Board board = boardService.detailBoard(boardId);
+        System.out.print("board는------------> "+ board);
         BoardFile file = boardService.detailBoardFile(boardId);
+        System.out.print("board file은------------> "+ file);
         return ResponseEntity.status(200).body(BoardDetailRes.of(board, file));
     }
 // 일반 게시글
@@ -115,11 +118,12 @@ public class BoardController {
 
     //pageing 목록 불러오기
     @CrossOrigin
-    @GetMapping("/page")
+    @GetMapping("")
     public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt") Pageable pageRequest,
         @RequestParam(value = "classId") int classId,
         @RequestParam(value = "boardType") String boardType) {
         Page<Board> boardList = boardService.boardPage(classId, boardType, pageRequest);
+        int totalPage = boardList.getTotalPages();
 
         return boardList;
     }
