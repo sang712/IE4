@@ -11,6 +11,9 @@ import router from './common/lib/vue-router'
 
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
+
 // Element UI Components [시작]
 import {
   ElAlert,

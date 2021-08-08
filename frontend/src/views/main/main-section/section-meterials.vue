@@ -8,7 +8,7 @@
         <div class="header-author">작성자</div>
         <div class="header-date">작성일</div>
       </li>
-      <li v-for="(board, index) in listGetters" v-bind:key="index" class="table-row" >
+      <li v-for="(board, index) in board" v-bind:key="index" class="table-row" >
         <div class="row-number">{{index}}</div>
         <div class="row-title">{{board.title}}</div>
         <div class="row-author">{{board.userName}}</div>
@@ -20,33 +20,32 @@
 
 <script>
 import $axios from 'axios'
+import { useStore } from 'vuex'
 
 export default {
   name: 'section-meterials',
-  computed:{
-
-    listGetters(){
-      return this.$store.getters.getBoardList; // no getBoardList()
-    },
+  data(){
+    return{
+      board:[],
+    }
   },
-  methods: {
-    boardList(){
-      //this.$store.dispatch('rootMain/boardList');
-      //JSON.parse( localStorage.getItem('vuex'))['content'].searchWord = '';
-    },
-    created(){
-      $axios.get("http://localhost:8080/board", {params:{classId:103, boardType:"학습자료"}})
-    	.then((res)=>{
-    		console.log(res);
-        console.log("BoardMainVue: data : ");
-        console.log(res.data.content);
-        this.$store.state.boardList = res.data.content
-      })
-    	.then((err)=>{
-    		console.log(err);
-      })
-    },
-  }
+  created() {
+    const store = useStore()
+
+    store.dispatch('rootMain/requestBoardList', localStorage.getItem('jwt'))
+    .then(function (result) {
+      console.log("갖고온 리스트는 말이지")
+      console.log(result.data.content)
+      store.dispatch('rootMain/setBoardList', result.data.content)
+    })
+    .catch(function (err) {
+      console.log("requestBoardList error")
+    })
+
+    this.board = store.getters['rootMain/getBoardList'].list
+    console.log(this.board)
+  },
+
 }
 </script>
 
