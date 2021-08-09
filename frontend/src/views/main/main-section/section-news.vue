@@ -14,14 +14,17 @@
         <div class="row-author">{{board.userName}}</div>
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
-
     </ul>
-    <div class="lower-sidebar d-flex justify-content-evenly align-items-right">
+    <div class="lower-sidebar">
+      <el-pagination 
+        :page-size="newsboard.limit" 
+        :pager-count="5" 
+        layout="prev, pager, next" 
+        :total="newsboard.totalListItemCount"></el-pagination>
       <el-button class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
     </div>
     <detail-modal></detail-modal>
     <insert-modal></insert-modal>
-    <el-pagination :page-size="newsboard.limit" :pager-count="5" layout="prev, pager, next" :total="newsboard.totalListItemCount"></el-pagination>
   </div>
 </template>
 
@@ -47,6 +50,7 @@ export default {
       insertModal: null,
       newsboard: {},
       boardDetail: {},
+      currentPage: 1,
     }
   },
   created() {
@@ -119,6 +123,7 @@ export default {
   margin: 20px 0px;
 }
 .news-table {
+  min-height: 430px;
   padding: 0px;
 }
 .news-table li {
@@ -153,5 +158,26 @@ li .header-author, .row-author{
 li .header-date, .row-date{
   text-align: center;
   flex-basis: 15%;
+}
+.lower-sidebar {
+  position: relative;
+  width: 90%;
+  min-height: 60px;
+  margin: auto 5%;
+}
+.lower-sidebar .el-pagination {
+  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.lower-sidebar .el-button {
+  display: inline-block;
+  position: absolute;
+  width: 8vw;
+  height: 40px;
+  right: 5px;
+  padding: 0px;
 }
 </style>
