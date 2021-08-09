@@ -80,15 +80,15 @@ li {
 a {
   color: #42b983;
 }
-button {
+.button {
 	height: 30px;
 	background: white;
 	border: 0px;
 	width: 55px;
 	margin: auto 2px;
 }
-.button-wrapper button {
-		border-radius: 15px;
+.button-wrapper .button {
+	border-radius: 15px;
 }
 #button-micOff, #button-videoOff, #button-leave {
 	color: red;
@@ -99,8 +99,8 @@ button {
 .button i {
 	font-size: 20px;
 }
-.button-wrapper2 {
-	margin: 0px;
+.button-wrapper2 .button {
+	width: 45px;
 }
 #button-users {
 	border-radius: 12px 0px 0px 12px;	
@@ -113,6 +113,13 @@ button {
 .button-wrapper2 #button-more {
 	border-radius: 0px 12px 12px 0px;	
 	margin: 0px;
+}
+.button:hover {
+    background-color: whitesmoke;
+}
+.button:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
 </style>
 <style>
@@ -152,15 +159,18 @@ video {
 	transform: translate(-50%, 0);
 }
 #footer {
-	height: 40px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
 	background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
 }
 .button-wrapper, .button-wrapper2 {
 	display: inline-block;
-	margin: 5px;
+	margin: 10px;
 }
 .button-wrapper2 {
 	position: absolute;
-	right: 0;
+	right: 10px;
 }
 </style>
