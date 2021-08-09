@@ -8,7 +8,7 @@
         <div class="header-author">작성자</div>
         <div class="header-date">날짜</div>
       </li>
-      <li v-for="(board, index) in newsboard" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row">
+      <li v-for="(board, index) in newsboard.list" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row">
         <!-- <div class="row-number">{{board.id}}</div>-->
         <div class="row-title">{{board.title}}</div>
         <div class="row-author">{{board.userName}}</div>
@@ -21,7 +21,7 @@
     </div>
     <detail-modal></detail-modal>
     <insert-modal></insert-modal>
-    <!-- <sectionPagination v-on:call-parent="movePage" @click="window.location.reload()"></sectionPagination> -->
+    <el-pagination :page-size="newsboard.limit" :pager-count="5" layout="prev, pager, next" :total="newsboard.totalListItemCount"></el-pagination>
   </div>
 </template>
 
@@ -43,10 +43,10 @@ export default {
   },
   data(){
     return{
-      detailModal : null,
-      insertModal : null,
-      newsboard:[],
-      boardDetail:{}
+      detailModal: null,
+      insertModal: null,
+      newsboard: {},
+      boardDetail: {},
     }
   },
   created() {
@@ -64,8 +64,8 @@ export default {
       console.log("requestNewsBoardList error")
     })
 
-    this.newsboard = store.getters['rootMain/getNewsBoardList'].list
-    console.log(this.newsboard)
+    this.newsboard = store.getters['rootMain/getNewsBoardList']
+    console.log(">>>>> newboard:", this.newsboard)
 
   },
   movePage(pageIndex){
