@@ -25,6 +25,7 @@ export function setStudentMypageInfo (state, payload) {
   state.mypageInfo.snum = payload.snum
   state.mypageInfo.sex = payload.sex
   state.mypageInfo.address = payload.address
+  state.mypageInfo.profileImgUrl = payload.profileImgUrl
 }
 
 export function setTeacherMypageInfo (state, payload) {
@@ -37,4 +38,5 @@ export function setTeacherMypageInfo (state, payload) {
   state.mypageInfo.address = payload.address
   state.mypageInfo.sex = payload.sex
   state.mypageInfo.classMotto = payload.classMotto
+  state.mypageInfo.profileImgUrl = payload.profileImgUrl
 }

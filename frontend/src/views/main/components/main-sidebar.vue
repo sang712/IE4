@@ -1,7 +1,6 @@
 <template>
   <div class="main-sidebar">
-    <div class="profile-img">
-      <img :src="profileImgUrl" />
+    <div class="profile-img" :style="{backgroundImage:`url(${profileImgUrl})`}">
     </div>
     <h2 v-if="nPosition=='학생'">{{ nGrade }}학년 {{ nClass }}반 {{nSnum}}번</h2>
     <h2 v-else>{{ nGrade }}학년 {{ nClass }}반 담임</h2>
@@ -35,7 +34,7 @@ export default {
   //   }
   // },
 
-  setup(props, { emit }) {
+  setup() {
     const store = useStore()
     const router = useRouter()
 
@@ -60,15 +59,15 @@ export default {
       // console.log(state.nProfileImgUrl === '')
       // console.log(state.nProfileImgUrl == '')
       if(state.nProfileImgUrl == 'null') {
-        console.log("윤주 ㅎㅇ")
+        console.log("null로 잘 들어옴 ㅎㅇ")
         if(state.nSex == '남자' && state.nPosition == '교사') {
-          return '/profile/noProfile_t_m.png';
+          return '/profileImg/no_profile_img_man.png';
         } else if(state.nSex == '여자' && state.nPosition == '교사') {
-            return '/profile/noProfile_t_w.png';
+            return '/profileImg/no_profile_img_woman.png';
         } else if(state.nSex == '남자' && state.nPosition == '학생') {
-            return '/profile/noProfile_s_m.png';
+            return '/profileImg/no_profile_img_boy.png';
         } else if(state.nSex == '여자' && state.nPosition == '학생') {
-            return '/profile/noProfile_s_w.png';
+            return '/profileImg/no_profile_img_girl.png';
         }
       }else{
         console.log("else문임 ㅎㅇ")
@@ -94,6 +93,7 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  /* background-image: url('../../../assets/images/profile-picture.png'); */
   border: 1px solid;
   border-radius: 10px;
   min-width: 230px;

@@ -25,6 +25,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u.name FROM User u WHERE u.classId = :classId AND u.position = '교사'")
     Optional<String> findTeacherNameByClassId(@Param("classId") int classId);
 
+
+    //class_id로 teacherProfileImgUrl 찾기
+    @Query("SELECT u.profileImgUrl FROM User u WHERE u.classId = :classId AND u.position = '교사'")
+    Optional<String> findTeacherProfileImgUrlByClassId(@Param("classId")int classId);
+
+
     //id로 profileImgUrl 찾기
     @Query("SELECT u.profileImgUrl FROM User u WHERE u.id = :id")
     Optional<String> findById(@Param("id")int id);

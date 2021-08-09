@@ -6,14 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 유저 로그인 API ([POST] /login) 요청에 필요한 리퀘스트 바디 정의.
+ * 유저 로그인 API ([DELETE] /user) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter
-@ApiModel("UserLoginPostRequest")
-public class UserLoginPostReq {
-	@ApiModelProperty(name="유저 ID", example="ssafy_web")
-	String loginId;
+@ApiModel("UserDeleteRequest")
+public class UserDeleteReq {
 	@ApiModelProperty(name="유저 Password", example="your_password")
 	String password;
 }

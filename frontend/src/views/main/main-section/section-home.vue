@@ -2,7 +2,8 @@
   <div class="section-home d-flex align-items-stretch">
     <div class="col d-flex justify-content-center row">
       <div class="meeting-preview d-flex justify-content-center row" >
-        <div class="host-profile" style="margin-top: 5%"> </div>
+        <div class="host-profile" v-if="position=='학생'" :style="{backgroundImage:`url(${nTeacherProfileImgUrl})`}"></div>
+        <div class="conference-img" v-else style="margin-top: 5%"></div>
         <h1 class="text-center" v-if="position=='학생'">{{ nTeacherName }} 선생님</h1>
         <h1 class="text-center">{{ nGrade }}학년 {{ nClass }}반 수업을 시작합니다.</h1>
       </div>
@@ -33,7 +34,8 @@ export default {
       position : localStorage.getItem('position'),
       nGrade : localStorage.getItem('classId')[0],
       nClass : localStorage.getItem('classId')[2],
-      nTeacherName : localStorage.getItem('teacherName')
+      nTeacherName : localStorage.getItem('teacherName'),
+      nTeacherProfileImgUrl : localStorage.getItem('teacherProfileImgUrl')
     }
   },
 
@@ -69,12 +71,21 @@ export default {
 .host-profile{
   width: 200px;
   height: 200px;
-  /* background-image: url('../../../assets/images/profile-picture.png'); */
+  margin: 35px auto;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border: 1px solid;
   border-radius: 100px;
+}
+.conference-img{
+  width: 200px;
+  height: 200px;
+  margin: 35px auto;
+  background-image: url('../../../assets/images/conference-start.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .meeting-preview{
   height: 42vh;

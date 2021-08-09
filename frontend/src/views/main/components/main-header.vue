@@ -43,7 +43,7 @@ export default {
     }
   },
 
-  setup(props, { emit }) {
+  setup() {
     const store = useStore()
     const router = useRouter()
 
@@ -112,13 +112,18 @@ export default {
       const jwt = localStorage.getItem('jwt')
       console.log(jwt)
       localStorage.removeItem('jwt')
-      localStorage.removeItem('userId')
+      localStorage.removeItem('id')
       localStorage.removeItem('classId')
-      localStorage.removeItem('position')
       localStorage.removeItem('name')
       localStorage.removeItem('profileImgUrl')
-      localStorage.removeItem('snum')
+      localStorage.removeItem('teacherProfileImgUrl')
+      localStorage.removeItem('position')
       localStorage.removeItem('sex')
+      localStorage.removeItem('snum')
+      localStorage.removeItem('teacherName')
+      // router.push('/')
+      // location.reload()
+      // router.push({name:'home'})
       router.go()
     }
 
