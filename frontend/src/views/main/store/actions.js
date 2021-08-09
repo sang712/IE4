@@ -58,7 +58,7 @@ export function updateTimetable ({ state }, payload, token) {
   console.log(payload);
   const url = 'http://localhost:8080/class/timetable/' + localStorage.getItem('classId');
   // let header = { headers: { 'Authorization': `Bearer ${token}` } }
-  return $axios.patch(url, payload)
+  return $axios.post(url, payload)
 }
 
 export function setMypageInfo ({ state }, response) {
