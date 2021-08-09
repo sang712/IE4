@@ -41,70 +41,103 @@
     </div>
     <div class="d-flex justify-content-evenly">
       <el-button @click="updateUser" style="width: 13%; height: 70%; font-size: 120%" >수정</el-button>
-      <el-button @click="deleteUser" style="width: 13%; height: 70%; font-size: 120%" >탈퇴</el-button>
+      <el-button @click="clickSecession" style="width: 13%; height: 70%; font-size: 120%" >탈퇴</el-button>
     </div>
+    <secession-dialog
+      :open="secessionDialogOpen"
+      @closeSecessionDialog="onCloseSecessionDialog"/>
   </div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
-import { reactive, computed, toRefs } from 'vue'
+import { reactive, computed, toRefs, ref } from 'vue'
+import { secessionDialog } from './secession-dialog'
 
 export default {
   name: 'section-mypage',
 
+  components : { secessionDialog },
+
   setup() {
     const store = useStore()
 
-    console.log(store.state.rootMain.classInfo);
+    const secession = ref([
+      {secessionDialogOpen: false},
+    ]);
+
+    const clickSecession = () => {
+      secession.value.secessionDialogOpen = true
+    };
+
+    const onCloseSecessionDialog = () => {
+      secession.value.secessionDialogOpen = false
+    };
+
+    console.log(store.state.rootMain.classInfo)
     console.log(store.state.rootMain.mypageInfo)
 
     let mypageInfo = computed(function () {
       return store.state.rootMain.mypageInfo
-    })
+    });
 
     const state = reactive({
       file : mypageInfo.nProfileImgUrl,
       nSex : localStorage.getItem('sex')
-    })
+    });
 
     const changeFile = (fileEvent) => {
       if(fileEvent.target.files && fileEvent.target.files.length > 0){
         state.file = URL.createObjectURL(fileEvent.target.files[0]);
       }
-    }
+    };
 
     const updateUser = () => {
-      console.log(document.querySelector("#inputFileUploadInsert"))
+      console.log(document.querySelector("#inputFileUploadInsert").files[0])
       console.log(localStorage.getItem('position'))
       console.log(store.state.rootMain.mypageInfo.password)
       if(localStorage.getItem('position') == '학생'){
-        let updateStudentData = new FormData()
+        var updateStudentData = new FormData()
+        var attachFiles = document.querySelector("#inputFileUploadInsert")
         updateStudentData.append("password", store.state.rootMain.mypageInfo.password)
         updateStudentData.append("phone", store.state.rootMain.mypageInfo.phone)
         updateStudentData.append("address", store.state.rootMain.mypageInfo.address)
         updateStudentData.append("parentPhone", store.state.rootMain.mypageInfo.parentPhone)
         updateStudentData.append("passwordAnswer", store.state.rootMain.mypageInfo.passwordAnswer)
-        updateStudentData.append("file", document.querySelector("#inputFileUploadInsert").files[0])
+        updateStudentData.append("file", attachFiles.files[0])
         store.dispatch('rootMain/updateStudent', updateStudentData)
       }else{
-        let updateTeacherData = new FormData()
+        var updateTeacherData = new FormData()
+        var attachFiles = document.querySelector("#inputFileUploadInsert")
         updateTeacherData.append("password", store.state.rootMain.mypageInfo.password)
         updateTeacherData.append("phone", store.state.rootMain.mypageInfo.phone)
         updateTeacherData.append("address", store.state.rootMain.mypageInfo.address)
         updateTeacherData.append("classMotto", store.state.rootMain.mypageInfo.classMotto)
-        updateTeacherData.append("file", document.querySelector("#inputFileUploadInsert").files[0])
+        updateTeacherData.append("file", attachFiles.files[0])
         store.dispatch('rootMain/updateTeacher', updateTeacherData)
       }
-    }
+    };
 
 
-    return { ...toRefs(state), mypageInfo, changeFile, updateUser }
+    return { ...toRefs(state), mypageInfo, changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog }
   }
 }
 </script>
 
 <style>
+  .el-dialog {
+    background-size: fill !important;
+    background-color: #FFFFFF;
+    /* background-image: url('../../assets/images/signuppage1.png') !important; */
+    background-position: center;
+    background-size: 100% !important;
+    width: 40vw;
+    min-width: 600px !important;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    margin: 5px auto;
+  }
   .section-mypage {
     background-color: #efeee9 ;
     margin: 5px 5px;
@@ -138,4 +171,5 @@ export default {
     height: 430px;
     width: 55vw;
   }
+
 </style>

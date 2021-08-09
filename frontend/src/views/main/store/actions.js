@@ -71,7 +71,7 @@ export function updateStudent (context, payload){
 export function updateTeacher (context, payload){
   console.log('updateTeacher')
   const url = 'http://localhost:8080/users?id=' + localStorage.getItem('id') + '&classId=' + localStorage.getItem('classId')
-  let header = { headers: { 'Content-Type': 'multipart/form-data' } }
+  let header = { headers: { "Content-Type": "multipart/form-data" } }
 
   $axios.post(url, payload, header)
   .then(({ data }) => {
@@ -101,7 +101,15 @@ export function updateTeacher (context, payload){
   })
 }
 
+export function deleteUser({ state }, payload, token){
+  console.log('deleteUser', state, payload)
+  console.log(state)
 
+  const url = 'http://localhost:8080/users/'
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  let body = payload
+  return $axios.delete(url, body, header)
+}
 
 export function requestClass ({ state }, token) {
   console.log('requestClass')

@@ -99,9 +99,11 @@ public class UserServiceImpl implements UserService {
 
 		try {
 			MultipartFile file = request.getFile("file");
+			System.out.println("어디가 문제야 1");
 
 			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
 			if(!uploadDir.exists()) uploadDir.mkdir();
+			System.out.println("어디가 문제야 2");
 
 			String fileUrl = userRepository.findById(id).orElse(null);
 
@@ -111,6 +113,7 @@ public class UserServiceImpl implements UserService {
 				File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
 				if(deleteFile.exists()) deleteFile.delete();
 			}
+			System.out.println("어디가 문제야 3ㅊㅊ");
 
 			//
 			String fileName = file.getOriginalFilename();
@@ -118,6 +121,7 @@ public class UserServiceImpl implements UserService {
 			// Random File Id
 			UUID uuid = UUID.randomUUID();
 
+			System.out.println("어디가 문제야 4");
 			// file extension
 			String extension = FilenameUtils.getExtension(fileName);
 			String savingFileName = uuid + "." + extension;
@@ -217,17 +221,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int deleteUser(String loginId) {
+	public void deleteUser(User user) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		Optional<User> user = userRepositorySupport.findUserByLoginId(loginId);
 
-		int result = 0; // 0 : fail, 1 : success
-
-		if(user.isPresent()){
-			result = 1;
-			userRepository.delete(user.get());
-		}
-		return result;
+		userRepository.delete(user);
 	}
 
 	@Override
@@ -256,6 +253,13 @@ public class UserServiceImpl implements UserService {
 		String name = userRepository.findTeacherNameByClassId(classId).orElse(null);
 
 		return name;
+	}
+
+	@Override
+	public String getTeacherProfileImgUrl(int classId){
+		String profileImgUrl = userRepository.findTeacherProfileImgUrlByClassId(classId).orElse(null);
+
+		return profileImgUrl;
 	}
 
 	@Override

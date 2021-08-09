@@ -14,13 +14,14 @@ public interface UserService {
 	Student createStudent(StudentRegisterPostReq studentRegisterInfo);
 	Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id, MultipartHttpServletRequest request);
 	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId, MultipartHttpServletRequest request);
-	int deleteUser(String loginId);
+	void deleteUser(User user);
 
 	boolean checkIdDuplicate(String loginId);
 
 	User getUserByLoginId(String loginId);
 	Student getStudentByUserId(int UserId);
 	String getTeacherNameByClassId(int classId);
+	String getTeacherProfileImgUrl(int classId);
 
 	String findLoginId(String name, int snum, String phone);
 	String findPassword(String loginId, String passwordQuestion, String passwordAnswer);

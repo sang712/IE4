@@ -27,7 +27,7 @@
   min-width: 600px !important;
   display: grid;
   align-items: center;
-  justify-items: center; 
+  justify-items: center;
   margin: 5px auto;}
 
 .start-page {
@@ -80,7 +80,7 @@ export default {
       this.signupDialogOpen = false
     },
     clickLogin () {
-      this. loginDialogOpen = true
+      this.loginDialogOpen = true
     },
     onCloseLoginDialog () {
       this.loginDialogOpen = false

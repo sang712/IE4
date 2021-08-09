@@ -119,7 +119,11 @@ export default {
       localStorage.removeItem('profileImgUrl')
       localStorage.removeItem('snum')
       localStorage.removeItem('sex')
+      localStorage.removeItem('teacherName')
+      // router.push('/')
+      // router.go()
       router.go()
+      router.push({name:'home'})
     }
 
     const changeCollapse = () => {

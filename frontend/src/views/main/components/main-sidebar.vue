@@ -1,7 +1,6 @@
 <template>
   <div class="main-sidebar">
-    <div class="profile-img">
-      <img :src="profileImgUrl" />
+    <div class="profile-img" :style="{backgroundImage:`url(${profileImgUrl})`}">
     </div>
     <h2 v-if="nPosition=='학생'">{{ nGrade }}학년 {{ nClass }}반 {{nSnum}}번</h2>
     <h2 v-else>{{ nGrade }}학년 {{ nClass }}반 담임</h2>
@@ -94,6 +93,7 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  /* background-image: url('../../../assets/images/profile-picture.png'); */
   border: 1px solid;
   border-radius: 10px;
   min-width: 230px;
