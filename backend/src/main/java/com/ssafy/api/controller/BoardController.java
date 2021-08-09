@@ -11,6 +11,7 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -119,7 +120,7 @@ public class BoardController {
     //pageing 목록 불러오기
     @CrossOrigin
     @GetMapping("")
-    public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt") Pageable pageRequest,
+    public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt", direction = Sort.Direction.DESC) Pageable pageRequest,
         @RequestParam(value = "classId") int classId,
         @RequestParam(value = "boardType") String boardType) {
         Page<Board> boardList = boardService.boardPage(classId, boardType, pageRequest);

@@ -3,50 +3,99 @@
     <h1 class="meterials-title">학습자료</h1>
     <ul class="meterials-table">
       <li class="table-header">
-        <div class="header-number">No</div>
-        <div class="header-title">제목</div>
+        <!-- <div class="header-number">No</div> -->
+        <div class="header-title" style="text-align:center">제목</div>
         <div class="header-author">작성자</div>
         <div class="header-date">작성일</div>
       </li>
-      <li v-for="(board, index) in listGetters" v-bind:key="index" class="table-row" >
-        <div class="row-number">{{index}}</div>
+      <li v-for="(board, index) in board" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row" >
+        <!-- <div class="row-number">{{index}}</div> -->
         <div class="row-title">{{board.title}}</div>
         <div class="row-author">{{board.userName}}</div>
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
     </ul>
+    <div class="lower-sidebar d-flex justify-content-evenly align-items-right">
+      <el-button class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
+    </div>
+    <detail-modal></detail-modal>
+    <insert-modal></insert-modal>
   </div>
 </template>
 
 <script>
 import $axios from 'axios'
+import { useStore } from 'vuex'
+import sectionPagination from "./section-pagination.vue"
+import DetailModal from "../modals/DetailModal.vue"
+import InsertModal from "../modals/InsertModal.vue"
+
+import { Modal } from 'bootstrap';
 
 export default {
   name: 'section-meterials',
-  computed:{
+  components:{
+    sectionPagination,
+    DetailModal,
+    InsertModal,
+  },
+  data(){
+    return{
+      detailModal : null,
+      insertModal : null,
+      board:[],
+      boardDetail:{}
+    }
+  },
+  created() {
+    const store = useStore()
 
-    listGetters(){
-      return this.$store.getters.getBoardList; // no getBoardList()
+    store.dispatch('rootMain/requestBoardList', localStorage.getItem('jwt'))
+    .then(function (result) {
+      console.log("갖고온 데이터는 말이지")
+      console.log(result.data)
+      console.log("현재페이지 : ", result.data.pageable.pageNumber)
+      console.log("총 데이터 수 : ", result.data.totalElements, "총 페이지 : ", result.data.totalPages)
+      store.dispatch('rootMain/setBoardList', result.data)
+    })
+    .catch(function (err) {
+      console.log("requestBoardList error")
+    })
+
+    this.board = store.getters['rootMain/getBoardList'].list
+    console.log(this.board)
+
+  },
+   mounted() {
+    this.detailModal = new Modal(document.getElementById('detailModal'));
+    this.insertModal = new Modal(document.getElementById('insertModal'));
+  },
+  methods:{
+    getboardDetail(boardId){
+      console.log("접근은 한거니?", boardId)
+      this.$store.dispatch('rootMain/requestBoardDetail', {boardId:boardId})
+      .then( (result) => {
+        console.log("상세정보 : ", result.data)
+        this.$store.dispatch('rootMain/setBoardDetail', result.data)
+        .then( (res)=>{
+          this.boardDetail = this.$store.getters['rootMain/getBoardDetail']
+          console.log("boardDetail 정보는 : ", this.boardDetail)
+          this.detailModal.show();
+        })
+      })
+      .catch(function (err) {
+        console.log("requestNewsBoardList error")
+        console.log(err)
+      })
+    },
+    showInsertModal(){
+      this.insertModal.show();
+    },
+    closeAfterInsert(){
+      this.insertModal.hide();
+      //this.freeboardList();
     },
   },
-  methods: {
-    boardList(){
-      //this.$store.dispatch('rootMain/boardList');
-      //JSON.parse( localStorage.getItem('vuex'))['content'].searchWord = '';
-    },
-    created(){
-      $axios.get("http://localhost:8080/board", {params:{classId:103, boardType:"학습자료"}})
-    	.then((res)=>{
-    		console.log(res);
-        console.log("BoardMainVue: data : ");
-        console.log(res.data.content);
-        this.$store.state.boardList = res.data.content
-      })
-    	.then((err)=>{
-    		console.log(err);
-      })
-    },
-  }
 }
 </script>
 

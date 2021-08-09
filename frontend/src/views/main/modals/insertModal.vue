@@ -1,5 +1,5 @@
 <template>
-<div class="modal" tabindex="-1" id="insertModal">
+<div class="modal" tabindex="-1" id="insertModal" ref="insertModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -15,34 +15,30 @@
           <div id=divEditorInsert></div>
         </div>
         <div class="form-check mb-3">
-          <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert">
+          <!-- <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert"> -->
           <label class="form-check-label" for="chkFileUploadInsert">파일 업로드</label>
+          <input style="margin-left: 40px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
         </div>
-        <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
+        <!-- vue way img 를 만들어서 append 하지 않고, v-for 로 처리 -->
+        <!-- <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
           <input @change="changeFile" type="file" id="inputFileUploadInsert" multiple>
           <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
-            <!-- vue way img 를 만들어서 append 하지 않고, v-for 로 처리 -->
+
             <img v-for="(file, index) in fileList" v-bind:src="file" v-bind:key="index">
           </div>
-        </div>
+        </div>-->
       </div>
       <div class="modal-footer">
-        <button @click="boardInsert" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">등록</button>
+        <!--@click="boardInsert"-->
+        <button class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">등록</button>
       </div>
     </div>
   </div>
 </div>
 </template>
-
 <script>
-import Vue from 'vue';
-import CKEditor from '@ckeditor/ckeditor5-vue2';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import VueAlertify from 'vue-alertify';
-
-Vue.use(CKEditor).use(VueAlertify);
-
-import http from "@/common/axios.js";
+import { useStore } from 'vuex'
+import { reactive, computed, toRefs } from 'vue'
 
 export default {
   name: 'InsertModal',
@@ -55,84 +51,17 @@ export default {
           fileList: []
         }
     },
-  methods: {
-      // modal 초기화
-      initUI(){
-        this.title = '';
-        this.CKEditor.setData('');
-        this.attachFile = false;
-        this.fileList = [];
-        document.querySelector("#inputFileUploadInsert").value = '';
-      },
-      changeFile(fileEvent) {
-        if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
+    setup() {
+    const store = useStore()
 
-          for( var i=0; i<fileEvent.target.files.length; i++ ){
-            const file = fileEvent.target.files[i];
-            this.fileList.push(URL.createObjectURL(file));
-          }
-        }
-      },
-      boardInsert(){
-        var formData = new FormData();
-        formData.append("title", this.title);
-        formData.append("content", this.CKEditor.getData());
-
-        // file upload
-        var attachFiles = document.querySelector("#inputFileUploadInsert");
-        console.log("InsertModalVue: data 1 : ");
-        console.log(attachFiles);
-
-        var cnt = attachFiles.files.length;
-        for (var i = 0; i < cnt; i++) {
-          formData.append("file", attachFiles.files[i]);
-        }
-
-        http.post(
-          '/freeboards',
-          formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } })
-          .then(({ data }) => {
-            console.log("InsertModalVue: data : ");
-            console.log(data);
-            if( data.result == 'login' ){
-              this.$router.push("/login")
-            }else{
-              this.$alertify.success('글이 등록되었습니다.');
-              this.closeModal();
-            }
-          })
-          .catch((error) => {
-            console.log("InsertModalVue: error ");
-            console.log(error);
-          });
-      },
-      closeModal(){
-        this.$emit('call-parent-insert'); // no parameter
-      },
-
-  },
-  mounted() {
-    ClassicEditor
-    .create(document.querySelector('#divEditorInsert'))
-    .then(editor => {
-        this.CKEditor = editor;
+    const state = reactive({
+      attachFile : false
     })
-    .catch(err => {
-        console.error(err.stack);
-    });
 
-    // bootstrap modal show event hook
-    // InsertModal 이 보일 때 초기화
-    let $this = this;
-    this.$el.addEventListener('show.bs.modal', function () {
-      $this.initUI();
-    })
-  }
-
+    return { ...toRefs(state) }
+    }
 }
 </script>
-
 <style>
 /* CKEditor 는 vue 와 별개로 rendering 되어서 scope 를 넣으면 반영되지 않는다. */
 .ck-editor__editable {

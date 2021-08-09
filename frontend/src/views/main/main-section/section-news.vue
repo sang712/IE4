@@ -3,13 +3,13 @@
     <h1 class="news-title">공지사항</h1>
     <ul class="news-table">
       <li class="table-header">
-        <div class="header-number">No</div>
-        <div class="header-title">제목</div>
+        <!-- <div class="header-number">No</div> -->
+        <div class="header-title" style="text-align:center">제목</div>
         <div class="header-author">작성자</div>
         <div class="header-date">날짜</div>
       </li>
       <li v-for="(board, index) in newsboard" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row">
-        <div class="row-number">{{board.id}}</div>
+        <!-- <div class="row-number">{{board.id}}</div>-->
         <div class="row-title">{{board.title}}</div>
         <div class="row-author">{{board.userName}}</div>
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
@@ -17,18 +17,19 @@
 
     </ul>
     <div class="lower-sidebar d-flex justify-content-evenly align-items-right">
-      <el-button class="mypage-button">글 작성하기</el-button>
+      <el-button class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
     </div>
     <detail-modal></detail-modal>
+    <insert-modal></insert-modal>
     <!-- <sectionPagination v-on:call-parent="movePage" @click="window.location.reload()"></sectionPagination> -->
   </div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
-import $axios from 'axios'
 import sectionPagination from "./section-pagination.vue"
 import DetailModal from "../modals/DetailModal.vue"
+import InsertModal from "../modals/InsertModal.vue"
 //import VModal from 'vue-js-modal';
 
 import { Modal } from 'bootstrap';
@@ -38,10 +39,12 @@ export default {
   components:{
     sectionPagination,
     DetailModal,
+    InsertModal,
   },
   data(){
     return{
       detailModal : null,
+      insertModal : null,
       newsboard:[],
       boardDetail:{}
     }
@@ -72,6 +75,7 @@ export default {
   },
   mounted() {
     this.detailModal = new Modal(document.getElementById('detailModal'));
+    this.insertModal = new Modal(document.getElementById('insertModal'));
   },
   methods:{
     getboardDetail(boardId){
@@ -90,7 +94,14 @@ export default {
         console.log("requestNewsBoardList error")
         console.log(err)
       })
-    }
+    },
+    showInsertModal(){
+      this.insertModal.show();
+    },
+    closeAfterInsert(){
+      this.insertModal.hide();
+      //this.freeboardList();
+    },
   },
 }
 </script>

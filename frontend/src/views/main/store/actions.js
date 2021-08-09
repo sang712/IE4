@@ -73,18 +73,6 @@ export function setMypageInfo ({ state }, response) {
   state.mypageInfo.address = response.address
 }
 
-export function setBoardList({ state }, response){
-  state.board.list = response
-}
-
-export function requestBoardList ({ state }, response) {
-  console.log('requestBoardList')
-  console.log(localStorage.getItem('classId'))
-  const url = 'http://localhost:8080/board';
-
-  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"학습자료"}})
-}
-
 export function setNewsBoardList({ state }, response){
   state.newsboard.list = response.content
   state.newsboard.totalListItemCount = response.totalElements
@@ -94,6 +82,15 @@ export function setNewsBoardList({ state }, response){
   state.newsboard.offset = response.pageable.offset
 }
 
+export function setBoardList({ state }, response){
+  state.board.list = response.content
+  state.board.totalListItemCount = response.totalElements
+  state.board.currentPageIndex = response.pageable.pageNumber
+  state.board.pageLinkCount = response.totalPages
+  state.board.totalPageCount = response.totalPages
+  state.board.offset = response.pageable.offset
+}
+
 export function requestNewsBoardList ({ state }, response) {
   console.log('requestNewsBoardList')
   console.log(localStorage.getItem('classId'))
@@ -101,6 +98,15 @@ export function requestNewsBoardList ({ state }, response) {
 
   return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"공지사항", page:state.newsboard.currentPageIndex}})
 }
+
+export function requestBoardList ({ state }, response) {
+  console.log('requestBoardList')
+  console.log(localStorage.getItem('classId'))
+  const url = 'http://localhost:8080/board';
+
+  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"학습자료", page:state.board.currentPageIndex}})
+}
+
 export function requestBoardDetail ({state}, payload){
   console.log('requestBoardDetail')
   const url = 'http://localhost:8080/board/'+ payload.boardId;
