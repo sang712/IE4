@@ -114,16 +114,17 @@ export default {
       localStorage.removeItem('jwt')
       localStorage.removeItem('id')
       localStorage.removeItem('classId')
-      localStorage.removeItem('position')
       localStorage.removeItem('name')
       localStorage.removeItem('profileImgUrl')
-      localStorage.removeItem('snum')
+      localStorage.removeItem('teacherProfileImgUrl')
+      localStorage.removeItem('position')
       localStorage.removeItem('sex')
+      localStorage.removeItem('snum')
       localStorage.removeItem('teacherName')
       // router.push('/')
-      // router.go()
+      // location.reload()
+      // router.push({name:'home'})
       router.go()
-      router.push({name:'home'})
     }
 
     const changeCollapse = () => {

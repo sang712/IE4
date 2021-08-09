@@ -98,23 +98,25 @@ export default {
     const clickSecessionConfirm = function() {
       loginForm.value.validate((valid) => {
         if (valid){
-          store.dispatch('rootMain/deleteUser', { password: state.form.password}, localStorage.getItem('jwt'))
+          store.dispatch('rootMain/deleteUser', { password: state.form.password }, localStorage.getItem('jwt'))
           .then(function (result) {
             localStorage.removeItem('jwt')
             localStorage.removeItem('id')
             localStorage.removeItem('classId')
-            localStorage.removeItem('position')
             localStorage.removeItem('name')
             localStorage.removeItem('profileImgUrl')
-            localStorage.removeItem('snum')
+            localStorage.removeItem('teacherProfileImgUrl')
+            localStorage.removeItem('position')
             localStorage.removeItem('sex')
+            localStorage.removeItem('snum')
+            localStorage.removeItem('teacherName')
             emit('closeSecessionDialog')
             router.go()
             Swal.fire({
                   title: '성공!',
                   text: '계정이 삭제되었습니다..',
                   icon: 'error',
-          }) // 같이 쓸수있으려나,,
+            }) // 같이 쓸수있으려나,,
           })
           .catch(function (err) {
             const status = err.response.request.status

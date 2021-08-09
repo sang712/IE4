@@ -115,6 +115,7 @@ export default {
             if(result.data.position == '학생') {
               localStorage.setItem('snum', result.data.snum)
               localStorage.setItem('teacherName', result.data.teacherName)
+              localStorage.setItem('teacherProfileImgUrl', result.data.teacherProfileImgUrl)
             }
             emit('closeLoginDialog')
             router.go();
