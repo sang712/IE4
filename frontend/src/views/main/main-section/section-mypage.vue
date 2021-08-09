@@ -44,7 +44,7 @@
       <el-button @click="clickSecession" style="width: 13%; height: 70%; font-size: 120%" >탈퇴</el-button>
     </div>
     <secession-dialog
-      :open="secessionDialogOpen"
+      :open="secession.secessionDialogOpen"
       @closeSecessionDialog="onCloseSecessionDialog"/>
   </div>
 </template>
@@ -52,7 +52,7 @@
 <script>
 import { useStore } from 'vuex'
 import { reactive, computed, toRefs, ref } from 'vue'
-import { secessionDialog } from './secession-dialog'
+import secessionDialog from './secession-dialog'
 
 export default {
   name: 'section-mypage',
