@@ -17,17 +17,18 @@
 </template>
 <script>
 
+import { reactive, computed, toRefs } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
   name: 'section-myclass',
-  data() {
-    return {
-      classMemList: [],
-    }
-  },
-  created() {
-    const store = useStore()
+
+  setup(props, { emit }) {
+    const store = useStore();
+
+    const state = reactive({
+      classMemList: computed(() => store.getters['rootMain/getClassMemList'].list)
+    })
 
     store.dispatch('rootMain/requestClassMem', localStorage.getItem('jwt'))
     .then(function (result) {
@@ -39,9 +40,12 @@ export default {
       console.log("requestClassMem error")
     })
 
-    this.classMemList = store.getters['rootMain/getClassMemList'].list
-    // console.log(data.classMemList)
-  }
+    console.log("classMemList >>>> " + state.classMemList)
+
+    return {
+      ...toRefs(state)
+    }
+  },
 }
 </script>
 <style>
@@ -72,6 +76,12 @@ export default {
 }
 .myclass-profile-image {
   width: 100%;
+  background-color: #C4C4C4;
+}
+
+.myclass-profile img {
+  width: 100%;
+  height: 125%;
   background-color: #C4C4C4;
 }
 </style>
