@@ -62,12 +62,19 @@ const classMemList = reactive({
   profileImgUrl: ''
 })
 
-const board={
+const board = reactive({
   //list
   list: [],
-  limit: 10,
+  limit: 5,
   offset: 0,
   searchWord: "",
+
+  //pagination
+  listRowCount: 5,
+  pageLinkCount: 10,
+  currentPageIndex: 2,
+  totalListItemCount : 0,
+  totalPageCount : 5,
 
   //detail
   no: 0,
@@ -75,15 +82,23 @@ const board={
   title: "",
   content: "",
   userName: "",
-  regDt: {}
-}
+  regDt: {},
+  isOwner:true,
+})
 
-const newsboard=reactive({
+const newsboard = reactive({
   //list
   list: [],
-  limit: 10,
+  limit: 5,
   offset: 0,
   searchWord: "",
+
+  //pagination
+  listRowCount: 5,
+  pageLinkCount: 10,
+  currentPageIndex: 2,
+  totalListItemCount : 0,
+  totalPageCount : 5,
 
   //detail
   no: 0,
@@ -91,7 +106,22 @@ const newsboard=reactive({
   title: "",
   content: "",
   userName: "",
-  regDt: {}
+  regDt: {},
+  isOwner:true,
+})
+
+const boardDetail = reactive({
+    //detail
+    no: 0,
+    boardId: 0,
+    title: "",
+    content: "",
+    userName: "",
+    regDt: {},
+
+    fileName: "",
+    fileUrl:"",
+    isOwner:true,
 })
 
 export default {
@@ -103,4 +133,5 @@ export default {
   newsboard,
   classInfo,
   classMemList,
+  boardDetail,
 }

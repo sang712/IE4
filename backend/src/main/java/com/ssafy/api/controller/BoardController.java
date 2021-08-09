@@ -11,6 +11,7 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -84,8 +85,11 @@ public class BoardController {
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "글 없음"), @ApiResponse(code = 500, message = "서버 오류") })
     public ResponseEntity<BoardDetailRes> detail(@ApiIgnore Authentication authentication, @PathVariable int boardId) {
+        System.out.println("게시물 상세내용 조회 시도------->"+ boardId);
         Board board = boardService.detailBoard(boardId);
+        System.out.print("board는------------> "+ board);
         BoardFile file = boardService.detailBoardFile(boardId);
+        System.out.print("board file은------------> "+ file);
         return ResponseEntity.status(200).body(BoardDetailRes.of(board, file));
     }
 // 일반 게시글
@@ -116,7 +120,7 @@ public class BoardController {
     //pageing 목록 불러오기
     @CrossOrigin
     @GetMapping("")
-    public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt") Pageable pageRequest,
+    public Page<Board> pagingBoard(@PageableDefault(size=5, sort="regDt", direction = Sort.Direction.DESC) Pageable pageRequest,
         @RequestParam(value = "classId") int classId,
         @RequestParam(value = "boardType") String boardType) {
         Page<Board> boardList = boardService.boardPage(classId, boardType, pageRequest);
