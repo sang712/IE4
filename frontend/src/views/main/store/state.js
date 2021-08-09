@@ -99,11 +99,8 @@ export default {
   activeMenu: 'home',
   menus: menuData,
   mypageInfo,
-<<<<<<< HEAD
   board,
   newsboard,
-=======
   classInfo,
   classMemList,
->>>>>>> 89266b88cd22546031b0f6f686b9220061fbf45f
 }

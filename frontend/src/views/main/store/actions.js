@@ -2,6 +2,7 @@
 
 import { toHandlers } from 'vue'
 import http from "@/common/lib/axios.js";
+import $axios from 'axios'
 
 export function requestLogin ({ state }, payload) {
   console.log('requestLogin', state, payload)
@@ -21,11 +22,7 @@ export function requestMyprofile (context, token) {
   console.log('requestMyprofile')
   const url = 'http://localhost:8080/users'
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  return $axios.get(url, header)
-=======
+
   $axios.get(url, header)
   .then(function (result) {
     console.log(result.data)
@@ -40,7 +37,6 @@ export function requestMyprofile (context, token) {
     console.log('에러 정보', err.response)
   })
   return
->>>>>>> 1f2c59d6ccf4972e79b8e6f198cc20e08db18b85
 }
 
 
@@ -57,7 +53,6 @@ export function requestClassMem ({ state }, token) {
   console.log(localStorage.getItem('classId'))
   const url = 'http://localhost:8080/class/myclass/' + localStorage.getItem('classId');
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
->>>>>>> 89266b88cd22546031b0f6f686b9220061fbf45f
   return $axios.get(url, header)
 }
 
@@ -73,7 +68,6 @@ export function setMypageInfo ({ state }, response) {
   state.mypageInfo.snum = response.snum
   state.mypageInfo.address = response.address
 }
-<<<<<<< HEAD
 export function setBoardList({ state }, response){
   state.board.list = response.data.content
 }
@@ -81,7 +75,6 @@ export function setNewsBoardList({ state }, response){
   state.newsboard.list = response.data.content
 }
 
-=======
 
 export function setClassInfo ({ state }, response) {
   console.log("이거 대나요?")
@@ -100,4 +93,3 @@ export function setClassMemList ({ state }, response) {
   console.log(response)
   state.classMemList.list = response
 }
->>>>>>> 89266b88cd22546031b0f6f686b9220061fbf45f
