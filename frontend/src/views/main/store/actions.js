@@ -52,6 +52,15 @@ export function requestClassMem ({ state }, token) {
   return $axios.get(url, header)
 }
 
+export function updateTimetable ({ state }, payload, token) {
+  console.log('updateTimetable')
+  console.log(localStorage.getItem('classId'))
+  console.log(payload);
+  const url = 'http://localhost:8080/class/timetable/' + localStorage.getItem('classId');
+  // let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.patch(url, payload)
+}
+
 export function setMypageInfo ({ state }, response) {
   state.mypageInfo.id = response.id
   state.mypageInfo.loginId = response.loginId
