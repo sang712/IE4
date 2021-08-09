@@ -93,10 +93,15 @@ public class BoardServiceImpl implements BoardService{
         Board board = boardRepository.findById(boardId).get();
         return board;
     }
+
     @Override
     public BoardFile detailBoardFile(int boardId) {
-        BoardFile file = boardFileRepository.findByBoardId(boardId).get();
-        return file;
+        try {
+            BoardFile file = boardFileRepository.findByBoardId(boardId).get();
+            return file;
+        } catch (Exception e) {
+            return null;
+        }
     }
 //일반 게시글 목록
 //    @Override

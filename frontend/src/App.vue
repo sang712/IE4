@@ -32,9 +32,11 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss" >
 Start {
-  width: 100vw; 
+  width: 100vw;
   height: 100vh;
 }
+@import './node_modules/bootstrap/scss/bootstrap.scss';
+
 </style>

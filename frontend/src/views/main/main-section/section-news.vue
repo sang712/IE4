@@ -8,63 +8,94 @@
         <div class="header-author">작성자</div>
         <div class="header-date">날짜</div>
       </li>
-      <li v-for="(board, index) in getNewsBoardList()" v-bind:key="index" class="table-row" >
-        <div class="row-number">{{index}}</div>
+      <li v-for="(board, index) in newsboard" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row">
+        <div class="row-number">{{board.id}}</div>
         <div class="row-title">{{board.title}}</div>
         <div class="row-author">{{board.userName}}</div>
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
 
     </ul>
-    <!-- 페이지네이션 기능 미구현 -->
-    <!-- <el-pagination
-      :page-size="5"
-      :pager-count="5"
-      layout="prev, pager, next"
-      :total="4">
-    </el-pagination> -->
+    <div class="lower-sidebar d-flex justify-content-evenly align-items-right">
+      <el-button class="mypage-button">글 작성하기</el-button>
+    </div>
+    <detail-modal></detail-modal>
+    <!-- <sectionPagination v-on:call-parent="movePage" @click="window.location.reload()"></sectionPagination> -->
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
 import { useStore } from 'vuex'
 import $axios from 'axios'
-import { useRouter } from 'vue-router'
+import sectionPagination from "./section-pagination.vue"
+import DetailModal from "../modals/DetailModal.vue"
+//import VModal from 'vue-js-modal';
+
+import { Modal } from 'bootstrap';
 
 export default {
   name: 'section-news',
-
-  setup() {
-    const store = useStore()
-    const router = useRouter()
-
-    const getNewsBoardList = () => {
-
-      $axios.get("http://localhost:8080/board", {params:{classId:103, boardType:"공지사항"}})
-    	.then((res)=>{
-    		console.log(res);
-        console.log("BoardMainVue: data : ");
-        console.log(res.data.content);
-        this.store.state.newsboard = res.data.content
-      })
-    	.then((err)=>{
-    		console.log(err);
-      })
-
+  components:{
+    sectionPagination,
+    DetailModal,
+  },
+  data(){
+    return{
+      detailModal : null,
+      newsboard:[],
+      boardDetail:{}
     }
+  },
+  created() {
+    const store = useStore()
 
-    let newsboard = computed(function () {
-      return store.state.rootMain.newsboard
+    store.dispatch('rootMain/requestNewsBoardList', localStorage.getItem('jwt'))
+    .then(function (result) {
+      console.log("갖고온 데이터는 말이지")
+      console.log(result.data)
+      console.log("현재페이지 : ", result.data.pageable.pageNumber)
+      console.log("총 데이터 수 : ", result.data.totalElements, "총 페이지 : ", result.data.totalPages)
+      store.dispatch('rootMain/setNewsBoardList', result.data)
+    })
+    .catch(function (err) {
+      console.log("requestNewsBoardList error")
     })
 
-    return { newsboard, getNewsBoardList }
+    this.newsboard = store.getters['rootMain/getNewsBoardList'].list
+    console.log(this.newsboard)
 
-  }
+  },
+  movePage(pageIndex){
+      console.log("BoardMainVue : movePage : pageIndex : " + pageIndex );
+      store.dispatch('rootMain/setNewsMovePage', pageIndex.$ref.detailModal);
+    console.log("가져왔니? : " , this.detailModal)
+  },
+  mounted() {
+    this.detailModal = new Modal(document.getElementById('detailModal'));
+  },
+  methods:{
+    getboardDetail(boardId){
+      console.log("접근은 한거니?", boardId)
+      this.$store.dispatch('rootMain/requestBoardDetail', {boardId:boardId})
+      .then( (result) => {
+        console.log("상세정보 : ", result.data)
+        this.$store.dispatch('rootMain/setBoardDetail', result.data)
+        .then( (res)=>{
+          this.boardDetail = this.$store.getters['rootMain/getBoardDetail']
+          console.log("boardDetail 정보는 : ", this.boardDetail)
+          this.detailModal.show();
+        })
+      })
+      .catch(function (err) {
+        console.log("requestNewsBoardList error")
+        console.log(err)
+      })
+    }
+  },
 }
 </script>
 
-<style>
+<style scoped>
 .section-news {
   width: 99.8%;
   height: 100%;

@@ -34,10 +34,14 @@ public class BoardDetailRes {
         detailRes.setClassId(board.getClassId());
         detailRes.setTitle(board.getTitle());
         detailRes.setContent(board.getContent());
-        detailRes.setFileName(boardFile.getFileName());
-        detailRes.setFileUrl(boardFile.getFileUrl());
         detailRes.setRegDt(board.getRegDt());
-
+        if (boardFile == null){
+            detailRes.setFileName(null);
+            detailRes.setFileUrl(null);
+        }else{
+            detailRes.setFileName(boardFile.getFileName());
+            detailRes.setFileUrl(boardFile.getFileUrl());
+        }
         return detailRes;
     }
 }
