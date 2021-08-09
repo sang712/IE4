@@ -8,7 +8,6 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="state.dialogVisible = false">Cancel</el-button>
         <el-button type="primary" @click="clickSecessionConfirm">Confirm</el-button>
       </span>
     </template>
@@ -96,9 +95,10 @@ export default {
     })
 
     const clickSecessionConfirm = function() {
-      loginForm.value.validate((valid) => {
+      secessionForm.value.validate((valid) => {
         if (valid){
-          store.dispatch('rootMain/deleteUser', { password: state.form.password }, localStorage.getItem('jwt'))
+          console.log(state.form.password)
+          store.dispatch('rootMain/deleteUser', { "password" : state.form.password }, localStorage.getItem('jwt'))
           .then(function (result) {
             localStorage.removeItem('jwt')
             localStorage.removeItem('id')

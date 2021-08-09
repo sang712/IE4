@@ -36,6 +36,7 @@ export function requestMyprofile ({state}, token) {
   .catch(function (err) {
     console.log('에러 정보', err.response)
   })
+  return
 }
 
 export function updateStudent (context, payload){
@@ -70,6 +71,7 @@ export function updateStudent (context, payload){
       })
     }
   })
+  return
 }
 
 export function updateTeacher (context, payload){
