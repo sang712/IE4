@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public interface UserService {
 	Student createStudent(StudentRegisterPostReq studentRegisterInfo);
 	Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id, MultipartHttpServletRequest request);
-	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId);
+	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId, MultipartHttpServletRequest request);
 	int deleteUser(String loginId);
 
 	boolean checkIdDuplicate(String loginId);

@@ -46,8 +46,8 @@ repositories {
     maven { url "https://build.shibboleth.net/nexus/content/repositories/releases" }
 }
 
-group 'com.ssafy'
-version '1.0-SNAPSHOT'
+group = 'com.ssafy'
+version = '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 node {
@@ -184,6 +184,14 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+    // for file upload
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.7'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.7'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.7'
+    compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
+
 }
 
 test {

@@ -43,7 +43,7 @@ export default {
     }
   },
 
-  setup(props, { emit }) {
+  setup() {
     const store = useStore()
     const router = useRouter()
 
@@ -112,7 +112,7 @@ export default {
       const jwt = localStorage.getItem('jwt')
       console.log(jwt)
       localStorage.removeItem('jwt')
-      localStorage.removeItem('userId')
+      localStorage.removeItem('id')
       localStorage.removeItem('classId')
       localStorage.removeItem('position')
       localStorage.removeItem('name')

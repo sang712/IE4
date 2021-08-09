@@ -79,12 +79,12 @@ public class UserServiceImpl implements UserService {
 		Student student = studentRepository.findByUserId(id).get();
 		User user = userRepository.findUserById(id).get();
 
-		user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
+		if(studentUpdateInfo.getPassword() != null) user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
 		user.setPhone(studentUpdateInfo.getPhone());
 		user.setAddress(studentUpdateInfo.getAddress());
 
 
-		String uploadFolder = "profile";
+		String uploadFolder = "profileImg";
 		String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
 				+ File.separator + "Documents"
 				+ File.separator + "S05P13A601"
@@ -146,18 +146,72 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId) {
+	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId, MultipartHttpServletRequest request) {
 		User user = userRepository.findUserById(id).get();
-
-		user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
+		if(teacherUpdateInfo.getPassword() != null) user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
 		user.setPhone(teacherUpdateInfo.getPhone());
 		user.setAddress(teacherUpdateInfo.getAddress());
 		user.setProfileImgUrl(teacherUpdateInfo.getProfileImgUrl());
 
-		EduClass eduClass = eduClassRepository.findEduClassById(classId).get();
-		eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
+		String uploadFolder = "profileImg";
+		String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
+				+ File.separator + "Documents"
+				+ File.separator + "S05P13A601"
+				+ File.separator + "backend"
+				+ File.separator + "src"
+				+ File.separator + "main"
+				+ File.separator + "resources"
+				+ File.separator + "static";
 
-		if(eduClassRepository.save(eduClass) == null) return null;
+//		String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
+		String saveUrl = "";
+
+		try {
+			MultipartFile file = request.getFile("file");
+
+			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+			if(!uploadDir.exists()) uploadDir.mkdir();
+
+			String fileUrl = userRepository.findById(id).orElse(null);
+
+			// fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
+			// fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
+			if(fileUrl != null) {
+				File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+				if(deleteFile.exists()) deleteFile.delete();
+			}
+
+			//
+			String fileName = file.getOriginalFilename();
+
+			// Random File Id
+			UUID uuid = UUID.randomUUID();
+
+			// file extension
+			String extension = FilenameUtils.getExtension(fileName);
+			String savingFileName = uuid + "." + extension;
+			File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+
+			System.out.println("파일 경로!!!>>> " + destFile);
+
+			file.transferTo(destFile);
+
+			saveUrl = uploadFolder + "/" + savingFileName;
+
+		} catch(IOException e) {
+			e.printStackTrace();
+
+		}
+
+		user.setProfileImgUrl(saveUrl);
+
+		if(userRepository.save(user) != null) {
+			EduClass eduClass = eduClassRepository.findEduClassById(classId).get();
+			eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
+
+			if(eduClassRepository.save(eduClass) == null) return null;
+		}
+
 
 		return userRepository.save(user);
 	}

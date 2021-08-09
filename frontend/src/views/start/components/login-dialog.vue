@@ -106,7 +106,7 @@ export default {
           store.dispatch('root/requestLogin', { loginId: state.form.loginId, password: state.form.password })
           .then(function (result) {
             localStorage.setItem('jwt', result.data.accessToken)
-            localStorage.setItem('userId', result.data.id)
+            localStorage.setItem('id', result.data.id)
             localStorage.setItem('classId', result.data.classId)
             localStorage.setItem('name', result.data.name)
             localStorage.setItem('profileImgUrl', result.data.profileImgUrl)

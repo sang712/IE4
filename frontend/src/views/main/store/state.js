@@ -40,11 +40,16 @@ const mypageInfo = reactive({
   password: '',
   passwordAnswer: '',
   passwordQuestion: '',
+  profileImgUrl: '',
   phone: '',
   snum: '',
   address: '',
   sex: '',
   classMotto: ''
+})
+
+const studentInfo = reactive({
+
 })
 
 const classInfo = reactive({
