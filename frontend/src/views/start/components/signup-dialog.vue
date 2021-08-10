@@ -83,7 +83,7 @@ export default {
     const store = useStore()
     // 마운드 이후 바인딩 될 예정 - 컨텍스트에 노출시켜야함. <return>
     const signupForm = ref(null)
-    
+
     const checkId = (rule, value, callback) => {
       if (value.length > 20) callback(new Error('아이디는 20자 이내여야 합니다.'))
       callback()
@@ -94,12 +94,12 @@ export default {
         callback(new Error('비밀번호는 8자 이상 16자 이하여야 합니다.'))
       }
       else if (!(/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).$/.test(value))) {
-        // if (!/[a-z]/.test(value)) callback(new Error('비밀번호는 영문 소문자를 포함해야합니다.'))} 
+        // if (!/[a-z]/.test(value)) callback(new Error('비밀번호는 영문 소문자를 포함해야합니다.'))}
         // else if (!(/[A-Z]/).test(value)) callback(new Error('비밀번호는 영문 대문자를 포함해야합니다.'))
         if (!(/[a-z]|[A-Z]/).test(value)) callback(new Error('비밀번호는 영문을 포함해야 합니다.'))
         else if (!(/[0-9]/).test(value)) callback(new Error('비밀번호는 숫자를 포함해야합니다.'))
         else if (!(/[$`~!@$!%*#^?&\\(\\)\-_=+]/).test(value)) callback(new Error('비밀번호는 특수문자를 포함해야합니다.'))
-      } 
+      }
       callback()
     }
 
@@ -121,7 +121,7 @@ export default {
         if(!(/^010/.test(value))) callback(new Error('휴대전화번호는 010으로 시작해야 합니다.'))
         else if (/-/.test(value)) callback(new Error('-없이 입력해주세요.'))
         else callback(new Error('올바른 휴대전화번호를 입력해주세요.'))
-      } 
+      }
       callback()
     }
     const checkAddress = (rule, value, callback) => {
@@ -221,13 +221,13 @@ export default {
         // console.log('유효성체크완료', signupForm.value.model)
         if (valid) {
           console.log('submit')
-          store.dispatch('root/requestSignup', { 
-            loginId: state.form.id, 
-            password: state.form.password, 
+          store.dispatch('root/requestSignup', {
+            loginId: state.form.id,
+            password: state.form.password,
             name: state.form.name,
             classId: state.form.grade + state.form.class_no,
             snum: state.form.snum,
-            sex: state.form.sex + '자',
+            sex: state.form.sex,
             parentPhone: state.form.phone,
             address: state.form.address,
             passwordQuestion: state.form.password_question,

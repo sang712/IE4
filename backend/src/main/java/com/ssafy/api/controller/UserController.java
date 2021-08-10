@@ -91,7 +91,7 @@ public class UserController {
 			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Student Update Fail"));
 	}
 
-	@PostMapping()
+	@PostMapping("/{id}/{classId}")
 	@ApiOperation(value = "교사정보 수정", notes = "교사정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
@@ -108,17 +108,15 @@ public class UserController {
 			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Teacher Update Fail"));
 	}
 
-	@DeleteMapping()
+	@PostMapping()
 	@ApiOperation(value = "회원정보 삭제", notes = "회원정보를 삭제한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 204, message = "삭제 성공"),
 					@ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "사용자 없음"),
 					@ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseUserResponseBody> delete(
-			@RequestBody @ApiParam(value="학생 정보", required = true) UserDeleteReq deleteInfo, @ApiIgnore Authentication authentication) {
+			@RequestBody @ApiParam(value="학생 정보", required = true) UserDeleteReq deleteInfo) {
 
-		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
-		String loginId = userDetails.getUsername();
-		User user = userService.getUserByLoginId(loginId);
+		User user = userService.getUserById(deleteInfo.getId());
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if(encoder.matches(deleteInfo.getPassword(), user.getPassword())){

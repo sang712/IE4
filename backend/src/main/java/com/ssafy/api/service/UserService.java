@@ -18,6 +18,7 @@ public interface UserService {
 
 	boolean checkIdDuplicate(String loginId);
 
+	User getUserById(int id);
 	User getUserByLoginId(String loginId);
 	Student getStudentByUserId(int UserId);
 	String getTeacherNameByClassId(int classId);
