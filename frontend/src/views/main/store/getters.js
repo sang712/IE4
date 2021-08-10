@@ -32,3 +32,7 @@ export function getClassMemList (state) {
 export function getRankingList (state) {
 	return state.rankingList
 }
+// rankingList 가져오기
+export function getSchoolSchedule (state) {
+	return state.schoolSchedule
+}
