@@ -132,6 +132,23 @@ export function requestClassMem ({ state }, token) {
   return $axios.get(url, header)
 }
 
+export function updateTimetable ({ state }, payload, token) {
+  console.log('updateTimetable')
+  console.log(localStorage.getItem('classId'))
+  console.log(payload);
+  const url = 'http://localhost:8080/class/timetable/' + localStorage.getItem('classId');
+  // let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.post(url, payload)
+}
+
+export function getRanking ({ state }, token) {
+  console.log('getRanking')
+  console.log(localStorage.getItem('classId'))
+  const url = 'http://localhost:8080/class/ranking/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.get(url, header)
+}
+
 export function setMypageInfo ({ state }, response) {
   state.mypageInfo.id = response.id
   state.mypageInfo.loginId = response.loginId
@@ -200,8 +217,6 @@ export function setNewsMovePage ({state}, pageIndex ){
   state.newsboard.currentPageIndex = pageIsndex;
 }
 export function setClassInfo ({ state }, response) {
-  console.log("이거 대나요?")
-
   state.classInfo.grade = response.grade
   state.classInfo.classNo = response.classNo
   state.classInfo.timetable = response.timetable
@@ -212,7 +227,11 @@ export function setClassInfo ({ state }, response) {
 }
 
 export function setClassMemList ({ state }, response) {
-  console.log("데이터 넣으러 오나?")
   console.log(response)
   state.classMemList.list = response
+}
+
+export function setRankingList ({ state }, response) {
+  console.log(response)
+  state.rankingList = response
 }

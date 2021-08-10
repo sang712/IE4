@@ -1,16 +1,40 @@
 <template>
   <div class="section-mvp">
     <div class="d-flex justify-content-evenly text-center">
-      <h2 class="grade-silver col-3" >임아연</h2>
-      <h2 class="grade-gold col-3" >임징크</h2>
-      <h2 class="grade-bronze col-3" >임제트</h2>      
+      <h2 class="grade-silver col-3" >{{ ranking[1] }}</h2>
+      <h2 class="grade-gold col-3" >{{ ranking[0] }}</h2>
+      <h2 class="grade-bronze col-3" >{{ ranking[2] }}</h2>
     </div>
   </div>
 </template>
 
 <script>
+import { reactive, computed, toRefs } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
-  name: 'sectionmvp'
+  name: 'sectionmvp',
+  setup(props, { emit }) {
+    const store = useStore()
+
+    const state = reactive({
+      ranking: computed(() => store.getters['rootMain/getRankingList'])
+    })
+
+    store.dispatch('rootMain/getRanking', localStorage.getItem('jwt'))
+    .then(function (result) {
+      console.log("dispatch getRanking")
+      console.log(result.data)
+      store.dispatch('rootMain/setRankingList', result.data)
+    })
+    .catch(function (err) {
+      console.log("getRanking error")
+    })
+
+    return {
+      ...toRefs(state)
+    }
+  }
 }
 </script>
 

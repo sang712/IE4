@@ -129,6 +129,8 @@ const boardDetail = reactive({
     isOwner:true,
 })
 
+const rankingList = reactive({})
+
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
@@ -139,4 +141,5 @@ export default {
   classInfo,
   classMemList,
   boardDetail,
+  rankingList,
 }
