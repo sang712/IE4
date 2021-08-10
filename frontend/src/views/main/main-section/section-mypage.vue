@@ -2,7 +2,7 @@
   <div class="section-mypage d-flex justify-content-center row">
     <div class="mypage-in-background d-flex flex-row">
       <div style="margin-right:100px">
-        <div class="mt-3 mb-3" id="imgFileUploadInsertWrapper">
+        <div class="form-group mt-3 mb-3" id="imgFileUploadInsertWrapper">
           <img class="profile-img" :src="file" />
           <p style="width: 60%; height: 10%; font-size: 120% ;margin-left: 82px; ">프로필 사진 수정</p>
           <input style="margin-left: 40px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
@@ -15,7 +15,6 @@
             <div>{{ mypageInfo.loginId }}</div>
           </el-form-item>
           <el-form-item label="비밀번호">
-            <!-- 비밀번호 부분 아무것도 안표시 되게 바꿔야하는데.. -->
             <el-input v-model="mypageInfo.password" show-password></el-input>
           </el-form-item>
           <el-form-item label="주소">
@@ -41,47 +40,104 @@
       </div>
     </div>
     <div class="d-flex justify-content-evenly">
-      <el-button style="width: 13%; height: 70%; font-size: 120%">수정</el-button>
-      <el-button style="width: 13%; height: 70%; font-size: 120%">탈퇴</el-button>
+      <el-button @click="updateUser" style="width: 13%; height: 70%; font-size: 120%" >수정</el-button>
+      <el-button @click="clickSecession" style="width: 13%; height: 70%; font-size: 120%" >탈퇴</el-button>
     </div>
+    <secession-dialog
+      :open="secession.secessionDialogOpen"
+      @closeSecessionDialog="onCloseSecessionDialog"/>
   </div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
-import { reactive, computed, toRefs } from 'vue'
+import { reactive, computed, toRefs, ref } from 'vue'
+import secessionDialog from './secession-dialog'
 
 export default {
   name: 'section-mypage',
 
+  components : { secessionDialog },
+
   setup() {
     const store = useStore()
 
-    const state = reactive({
-      file : null
-    })
+    const secession = ref([
+      {secessionDialogOpen: false},
+    ]);
 
-    const changeFile = (fileEvent) => {
-      if(fileEvent.target.file && fileEvent.target.file.length > 0){
-        state.file = URL.createObjectURL(fileEvent.target.file);
-      }
-    }
+    const clickSecession = () => {
+      secession.value.secessionDialogOpen = true
+    };
 
-    console.log(store.state.rootMain.classInfo);
+    const onCloseSecessionDialog = () => {
+      secession.value.secessionDialogOpen = false
+    };
+
+    console.log(store.state.rootMain.classInfo)
     console.log(store.state.rootMain.mypageInfo)
 
     let mypageInfo = computed(function () {
       return store.state.rootMain.mypageInfo
-    })
+    });
+
+    const state = reactive({
+      file : mypageInfo.nProfileImgUrl,
+      nSex : localStorage.getItem('sex')
+    });
+
+    const changeFile = (fileEvent) => {
+      if(fileEvent.target.files && fileEvent.target.files.length > 0){
+        state.file = URL.createObjectURL(fileEvent.target.files[0]);
+      }
+    };
+
+    const updateUser = () => {
+      console.log(document.querySelector("#inputFileUploadInsert").files[0])
+      console.log(localStorage.getItem('position'))
+      console.log(store.state.rootMain.mypageInfo.password)
+      if(localStorage.getItem('position') == '학생'){
+        var updateStudentData = new FormData()
+        var attachFiles = document.querySelector("#inputFileUploadInsert")
+        updateStudentData.append("password", store.state.rootMain.mypageInfo.password)
+        updateStudentData.append("phone", store.state.rootMain.mypageInfo.phone)
+        updateStudentData.append("address", store.state.rootMain.mypageInfo.address)
+        updateStudentData.append("parentPhone", store.state.rootMain.mypageInfo.parentPhone)
+        updateStudentData.append("passwordAnswer", store.state.rootMain.mypageInfo.passwordAnswer)
+        updateStudentData.append("file", attachFiles.files[0])
+        store.dispatch('rootMain/updateStudent', updateStudentData)
+      }else{
+        var updateTeacherData = new FormData()
+        var attachFiles = document.querySelector("#inputFileUploadInsert")
+        updateTeacherData.append("password", store.state.rootMain.mypageInfo.password)
+        updateTeacherData.append("phone", store.state.rootMain.mypageInfo.phone)
+        updateTeacherData.append("address", store.state.rootMain.mypageInfo.address)
+        updateTeacherData.append("classMotto", store.state.rootMain.mypageInfo.classMotto)
+        updateTeacherData.append("file", attachFiles.files[0])
+        store.dispatch('rootMain/updateTeacher', updateTeacherData)
+      }
+    };
 
 
-
-    return { ...toRefs(state), mypageInfo, changeFile }
+    return { ...toRefs(state), mypageInfo, changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog }
   }
 }
 </script>
 
 <style>
+  .el-dialog {
+    background-size: fill !important;
+    background-color: #FFFFFF;
+    /* background-image: url('../../assets/images/signuppage1.png') !important; */
+    background-position: center;
+    background-size: 100% !important;
+    width: 40vw;
+    min-width: 600px !important;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    margin: 5px auto;
+  }
   .section-mypage {
     background-color: #efeee9 ;
     margin: 5px 5px;
@@ -115,4 +171,5 @@ export default {
     height: 430px;
     width: 55vw;
   }
+
 </style>

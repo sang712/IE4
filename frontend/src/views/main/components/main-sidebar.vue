@@ -1,7 +1,6 @@
 <template>
   <div class="main-sidebar">
-    <div class="profile-img">
-      <img :src="profileImgUrl" />
+    <div class="profile-img" :style="{backgroundImage:`url(${profileImgUrl})`}">
     </div>
     <h2 v-if="nPosition=='학생'">{{ nGrade }}학년 {{ nClass }}반 {{nSnum}}번</h2>
     <h2 v-else>{{ nGrade }}학년 {{ nClass }}반 담임</h2>
@@ -23,19 +22,8 @@ import { reactive, computed, toRefs } from 'vue'
 
 export default {
   name: 'main-sidebar',
-  // data () {
-  //   return {
-  //     position : localStorage.getItem('position'),
-  //     nGrade : localStorage.getItem('classId')[0],
-  //     nClass : localStorage.getItem('classId')[2],
-  //     nName: localStorage.getItem('name'),
-  //     nProfileImgUrl : localStorage.getItem('profileImgUrl'),
-  //     nSnum : localStorage.getItem('snum'),
-  //     nSex : localStorage.getItem('sex')
-  //   }
-  // },
 
-  setup(props, { emit }) {
+  setup() {
     const store = useStore()
     const router = useRouter()
 
@@ -51,27 +39,15 @@ export default {
     });
 
     const profileImgUrl = computed(() => {
-      console.log(state.nProfileImgUrl + "<<이거임")
-      // console.log(state.nSex)
-      // console.log(state.nProfileImgUrl == null)
-      // console.log(state.nProfileImgUrl === null)
-      // console.log(state.nProfileImgUrl == undefined)
-      // console.log(state.nProfileImgUrl === undefined)
-      // console.log(state.nProfileImgUrl === '')
-      // console.log(state.nProfileImgUrl == '')
       if(state.nProfileImgUrl == 'null') {
-        console.log("윤주 ㅎㅇ")
         if(state.nSex == '남자' && state.nPosition == '교사') {
-          return '/profile/noProfile_t_m.png';
+          return '/profileImg/no_profile_img_man.png';
         } else if(state.nSex == '여자' && state.nPosition == '교사') {
-            return '/profile/noProfile_t_w.png';
-        } else if(state.nSex == '남자' && state.nPosition == '학생') {
-            return '/profile/noProfile_s_m.png';
-        } else if(state.nSex == '여자' && state.nPosition == '학생') {
-            return '/profile/noProfile_s_w.png';
+            return '/profileImg/no_profile_img_woman.png';
+        } else if(state.nPosition == '학생') {
+            return state.nName.charCodeAt([1])%2 ? '/profileImg/no_profile_img_student1.jpg' : '/profileImg/no_profile_img_student0.jpg'
         }
       }else{
-        console.log("else문임 ㅎㅇ")
         return '/' + state.nProfileImgUrl;
       }
 

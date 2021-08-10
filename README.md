@@ -130,3 +130,13 @@ headers에 이리 저리 넣어 봐도 500 에러가 발생하여 응답을 전�
 
 ### 백엔드
 
+#. user delete Required request body is missing 오류
+
+@DeleteMapping에서 payload body를 실어서 @RequestBody로 받아올시 요청이 거절될 수 있다. <br>
+
+참고 사이트 : http://blog.leekyoungil.com/?p=390
+
+=> @PostMapping으로 고쳐주었다.
+
+#. 탈퇴시 user와 관련된 user_point 테이블과 student table에 있는 user 정보들도 모두 없애줘야 한다. 
+

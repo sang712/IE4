@@ -59,3 +59,4 @@ build
 
 # Tracked gradle-wrapper
 !/backend/gradle/wrapper/gradle-wrapper.jar
+backend/src/main/resources/static/

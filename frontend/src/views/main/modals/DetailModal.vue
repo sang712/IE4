@@ -72,14 +72,6 @@ export default {
 
     return { ...toRefs(state), boardDetail, changeToUpdate, changeToDelete }
   },
-    methods: {
-        // changeToUpdate(){
-        //   this.$emit( 'call-parent-change-to-update' );
-        // },
-        // changeToDelete(){
-        //   this.$emit( 'call-parent-change-to-delete' );
-        // }
-    },
 }
 </script>
 

@@ -31,3 +31,7 @@ export function getClassMemList (state) {
 export function getBoardType (state) {
   return state.boardType
 }
+// rankingList 가져오기
+export function getRankingList (state) {
+	return state.rankingList
+}

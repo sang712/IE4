@@ -40,11 +40,16 @@ const mypageInfo = reactive({
   password: '',
   passwordAnswer: '',
   passwordQuestion: '',
+  profileImgUrl: '',
   phone: '',
   snum: '',
   address: '',
   sex: '',
   classMotto: ''
+})
+
+const studentInfo = reactive({
+
 })
 
 const classInfo = reactive({
@@ -128,6 +133,8 @@ const boardDetail = reactive({
     isOwner:true,
 })
 
+const rankingList = reactive({})
+
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
@@ -139,4 +146,5 @@ export default {
   classMemList,
   boardDetail,
   boardType,
+  rankingList,
 }

@@ -33,7 +33,7 @@ public class EduClassController {
 
     }
 
-    @PatchMapping("/timetable/{classId}")
+    @PostMapping("/timetable/{classId}")
     @ApiOperation(value = "시간표 수정", notes = "수정된 시간표 이미지의 url을 반환한다.")
     public ResponseEntity<Map<String, String>> updateTimeTable(@PathVariable int classId, MultipartHttpServletRequest request) {
         String url = eduClassService.updateTimetable(classId, request);

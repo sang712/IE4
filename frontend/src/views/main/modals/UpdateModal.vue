@@ -58,7 +58,6 @@ export default {
       file: null,
       editor: ClassicEditor,
       boardType: '',
-      content: ``,
       editorData: ``,
       editorData2: computed(() => store.getters['rootMain/getBoardDetail'].content),
       boardDetail : {},

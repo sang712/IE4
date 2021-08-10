@@ -3,12 +3,13 @@
     <h1 class="myclass-title">우리반 정보</h1>
     <div class="myclass-content">
       <div class="myclass-profile">
-        <img class="myclass-profile-image" src="#" alt="선생님">
-        <div class="myclass-profile-name">성함: OOO선생님</div>
+        <img class="myclass-profile-image" :src="classMemList[0].profileImgUrl" :alt="classMemList[0].name+'선생님의 프로필 사진'">
+        <div class="myclass-profile-name">교사: {{ classMemList[0].name }}</div>
       </div>
-      <div class="myclass-profile" v-for="(classMem, index) in classMemList" :key="index">
-        <img class="myclass-profile-image" v-if="classMem.profileImgUrl != null" :src="classMem.profileImgUrl" alt="item.name">
-        <img class="myclass-profile-image" v-else src="/profileImg/no_profile_img_girl.png" alt="이미지 없음">
+      <br>
+      <div class="myclass-profile" v-for="(classMem, index) in classMemList.slice(1)" :key="index">
+        <img class="myclass-profile-image" v-if="classMem.profileImgUrl != null" :src="classMem.profileImgUrl" :alt="classMem.name+'의 프로필 사진'">
+        <img class="myclass-profile-image" v-else :src="'/profileImg/no_profile_img_student'+classMem.name.charCodeAt([1])%2+'.jpg'" :alt="classMem.name+'의 프로필 사진'">
         <div class="myclass-profile-name">이름: {{ classMem.name }}</div>
       </div>
     </div>
@@ -16,36 +17,18 @@
 </template>
 <script>
 
+import { reactive, computed, toRefs } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
   name: 'section-myclass',
-  data() {
-    return {
-      items:
-      [
-        { id:1, image: require('../../../assets/images/sample-image.png') },
-        { id:2, image: require('../../../assets/images/sample-image.png') },
-        { id:3, image: require('../../../assets/images/sample-image.png') },
-        { id:4, image: require('../../../assets/images/sample-image.png') },
-        { id:5, image: require('../../../assets/images/sample-image.png') },
-        { id:6, image: require('../../../assets/images/sample-image.png') },
-        { id:7, image: require('../../../assets/images/sample-image.png') },
-        { id:8, image: require('../../../assets/images/sample-image.png') },
-        { id:9, image: require('../../../assets/images/sample-image.png') },
-        { id:10, image: require('../../../assets/images/sample-image.png') },
-        { id:11, image: require('../../../assets/images/sample-image.png') },
-        { id:12, image: require('../../../assets/images/sample-image.png') },
-        { id:13, image: require('../../../assets/images/sample-image.png') },
-        { id:14, image: require('../../../assets/images/sample-image.png') },
-        { id:15, image: require('../../../assets/images/sample-image.png') },
-        { id:16, image: require('../../../assets/images/sample-image.png') },
-      ],
-      classMemList: [],
-    }
-  },
-  created() {
-    const store = useStore()
+
+  setup(props, { emit }) {
+    const store = useStore();
+
+    const state = reactive({
+      classMemList: computed(() => store.getters['rootMain/getClassMemList'].list)
+    })
 
     store.dispatch('rootMain/requestClassMem', localStorage.getItem('jwt'))
     .then(function (result) {
@@ -57,8 +40,12 @@ export default {
       console.log("requestClassMem error")
     })
 
-    this.classMemList = store.getters['rootMain/getClassMemList'].list
-  }
+    console.log("classMemList >>>> " + state.classMemList)
+
+    return {
+      ...toRefs(state)
+    }
+  },
 }
 </script>
 <style>
@@ -79,6 +66,7 @@ export default {
   width: 90%;
   height: 85%;
   overflow-y: scroll;
+  text-align: center;
 }
 .myclass-profile {
   margin: 1% 0% 5px 1.4%;
@@ -88,6 +76,9 @@ export default {
 }
 .myclass-profile-image {
   width: 100%;
-  background-color: #C4C4C4;
+  height: 15vw;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+  background-color: #c4c4c4;
 }
 </style>

@@ -132,17 +132,14 @@ export function setBoardDetail({ state }, response){
 }
 export function setBoardType({state}, payload){
   console.log("setBoardType")
-  state.boardType.type = payload
+  state.boardType.type = payload;
 }
 export function requestBoardInsert({state}, payload){
   console.log('requestBoardInsert')
-
   const url = 'http://localhost:8080/board/';
   return $axios.post(url, payload)
-  } //, {headers: { 'Content-Type': 'multipart/form-data' }}
-export function setNewsMovePage ({state},pageIndex ){
-  state.newsboard.currentPageIndex = pageIsndex;
 }
+
 export function setClassInfo ({ state }, response) {
   console.log("이거 대나요?")
 
