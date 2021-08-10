@@ -107,14 +107,14 @@ export function updateTeacher (context, payload){
   })
 }
 
-export function deleteUser({ state }, payload, token){
+export function deleteUser({ state }, payload){
   console.log('deleteUser', state, payload)
   console.log(state)
+  console.log(jwt)
 
   const url = 'http://localhost:8080/users/'
-  let header = { headers: { 'Authorization': `Bearer ${token}` } }
   let body = payload
-  return $axios.delete(url, body, header)
+  return $axios.delete(url, body)
 }
 
 export function requestClass ({ state }, token) {

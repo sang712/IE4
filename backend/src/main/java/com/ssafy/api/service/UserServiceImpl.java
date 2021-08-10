@@ -241,6 +241,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public User getUserById(int id){
+		User user = userRepository.findUserById(id).orElse(null);
+
+		return user;
+	}
+
+	@Override
 	public Student getStudentByUserId(int userId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
 		Student student = studentRepository.findByUserId(userId).orElse(null);
