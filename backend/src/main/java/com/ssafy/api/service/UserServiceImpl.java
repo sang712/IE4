@@ -5,8 +5,8 @@ import com.ssafy.api.request.TeacherUpdatePatchReq;
 import com.ssafy.api.response.EduClassMem;
 import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.entity.Student;
-import com.ssafy.db.repository.EduClassRepository;
-import com.ssafy.db.repository.StudentRepository;
+import com.ssafy.db.entity.UserPoint;
+import com.ssafy.db.repository.*;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,8 +21,6 @@ import java.util.UUID;
 
 import com.ssafy.api.request.StudentRegisterPostReq;
 import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.UserRepository;
-import com.ssafy.db.repository.UserRepositorySupport;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -39,7 +37,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	EduClassRepository eduClassRepository;
-	
+
+	@Autowired
+	UserPointRepository userPointRepository;
+
 	@Autowired
 	UserRepositorySupport userRepositorySupport;
 	
@@ -221,13 +222,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(User user) {
-		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-
-		userRepository.delete(user);
-	}
-
-	@Override
 	public boolean checkIdDuplicate( String loginId) {
 		return userRepository.existsByLoginId(loginId);
 	}
@@ -279,6 +273,19 @@ public class UserServiceImpl implements UserService {
 
 		return loginId;
 	}
+
+	@Override
+	public void deleteUser(User user) {
+		// 디비에 유저 정보 조회 (userId 를 통한 조회).
+		List<Integer> userPointIdList = userPointRepository.findIdByUserId(user.getId()).orElse(null);
+		if(userPointIdList != null)userPointRepository.deleteAllByIds(userPointIdList);
+
+		Student student = studentRepository.findByUserId(user.getId()).orElse(null);
+		if(student != null) studentRepository.delete(student);
+
+		userRepository.delete(user);
+	}
+
 
 	@Override
 	public String findPassword(String loginId, String passwordQuestion, String passwordAnswer){
