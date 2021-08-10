@@ -13,21 +13,28 @@
         </div>
         <div class="mb-3">
           <div id=divEditorInsert>
-            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+            <ckeditor :editor="editor" v-model="editorData" @ready="onEditorReady"></ckeditor>
+             <!-- v-model="editorData" :config="editorConfig" -->
           </div>
         </div>
         <div class="form-check mb-3">
-          <label class="form-check-label" for="chkFileUploadInsert">파일 업로드</label>
-          <input style="margin-left: 40px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
-          <!-- <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert"> -->
+          <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
+          <label class="form-check-label" for="chkFileUploadInsert">파일 추가</label>
+        </div>
+        <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
+          <input @change="changeFile" type="file" id="inputFileUploadInsert">
+          <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
+            <!-- vue way img 를 만들어서 append 하지 않고, v-for 로 처리 -->
+            <img v-bind:src="file">
+          </div>
         </div>
         <!-- vue way img 를 만들어서 append 하지 않고, v-for 로 처리 -->
          <!-- <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper"> -->
           <!-- <input @change="changeFile" type="file" id="inputFileUploadInsert" multiple> -->
-          <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
+          <!-- <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper"> -->
 
-            <img v-bind:src="file" v-bind:key="index">
-          </div>
+            <!-- <img v-bind:src="file" v-bind:key="index"> -->
+          <!-- </div> -->
         </div>
 
       <div class="modal-footer">
@@ -41,105 +48,87 @@
 <script>
 import { useStore } from 'vuex'
 import { reactive, computed, toRefs } from 'vue'
-import { createApp } from 'vue';
+import { useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-vue'
-
+var editorData;
 export default {
   name: 'InsertModal',
   components: {
-    ckeditor: CKEditor.component
-    },
-  // data 가 최초 발생하는 곳이므로 store 를 사용하지 않아도 됨.
-  data() {
-        return {
-          title: '',
-          attachFile: false,
-          file: '',
-          editor: ClassicEditor,
-                editorData: `위의 Tip을 참고, 작성해주세요`,
-                editorConfig: {
-                    // The configuration of the editor.
-                }
-        }
-    },
-    created() {
-      this.title = '';
-      this.editor.editorData='';
-      console.log(">>>> 내용 ", this.editor)
-      this.attachFile= false;
-      this.file = '';
-      //document.querySelector("#inputFileUploadInsert").value = '';
-      const store = useStore()
-
-    },
-    changeFile(fileEvent) {
-        if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
-
-          for( var i=0; i<fileEvent.target.files.length; i++ ){
-            const file = fileEvent.target.files[i];
-            this.file=URL.createObjectURL(file);
-          }
-        }
-    },
-    mounted() {
-      ClassicEditor
-        .create(document.querySelector('#divEditorInsert'))
-        .then(editor => {
-            this.CKEditor = editor;
-            console.log("여기서 되나? >> ", this.CKEditor)
-        })
-        .catch(err => {
-            console.error(err.stack);
-        });
-
-        // bootstrap modal show event hook
-        // InsertModal 이 보일 때 초기화
-
-        this.$el.addEventListener('show.bs.modal', function () {
-        //location.reload();
-        this.created;
-      })
+    ckeditor: CKEditor.component,
   },
-  methods:{
-    boardInsert(){
-        var formData = new FormData();
-        formData.append("title", this.title);
-        formData.append("content", this.CKEditor.getData());
-        console.log("form >>>> ", formData);
-        // file upload
-        var attachFiles = document.querySelector("#inputFileUploadInsert");
-        console.log("InsertModalVue: data 1 : ");
-        console.log(attachFiles);
+  setup(props, { emit }){
+    const store = useStore()
+    const router = useRouter()
+    const state = reactive({
+      title: '',
+      attachFile: false,
+      file: null,
+      editor: ClassicEditor,
+      editorData: '',
+    })
 
-        var cnt = attachFiles.files.length;
-        for (var i = 0; i < cnt; i++) {
-          formData.append("file", attachFiles.files[i]);
-        }
+    const onMounted = () => {
+      ClassicEditor
+      .create(document.querySelector('#divEditorInsert'))
+      .then(editor => {
+          console.log("여기서 되나? >> ", editor.getData())
+          editorData = editor
+          //this.editorData = editor
+      })
+      .catch(err => {
+          console.error(err.stack);
+      });
 
-        http.post(
-          '/freeboards',
-          formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } })
-          .then(({ data }) => {
-            console.log("InsertModalVue: data : ");
-            console.log(data);
-            if( data.result == 'login' ){
-              this.$router.push("/login")
-            }else{
-              this.$alertify.success('글이 등록되었습니다.');
-              this.closeModal();
-            }
-          })
-          .catch((error) => {
-            console.log("InsertModalVue: error ");
-            console.log(error);
-          });
-      },
-      closeModal(){
-        this.$emit('call-parent-insert'); // no parameter
-      },
-  }
+      // bootstrap modal show event hook
+      // InsertModal 이 보일 때 초기화
+
+      //this.$el.addEventListener('show.bs.modal', function () {
+      //location.reload();
+      setup;
+      //})
+    }
+
+    const changeFile = (fileEvent) => {
+      console.log("fileEvent >>>> ", fileEvent)
+      if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
+        state.file = URL.createObjectURL(fileEvent.target.files[0]);
+        console.log("file >>>> ", state.file)
+      }
+    }
+
+    const onEditorReady = (editor) => {
+      editorData = editor;
+      console.log("onEditor Ready>>", editorData.getData());
+    }
+
+    const boardInsert = () => {
+      var formData = new FormData();
+      formData.append("title", state.title);
+      console.log("title : ", state.title)
+      formData.append("content", editorData.getData());
+      console.log("form >>>> ", editorData.getData());
+      console.log("file >>>> ", state.file)
+      const params = {
+        title: state.title,
+        content: editorData.getData(),
+        file: state.file,
+        boardType: '공지사항',
+      }
+      store.dispatch('rootMain/requestBoardInsert', params)
+      .then(function (result){
+        console.log("성공")
+      })
+      .catch(function (err) {
+        console.log("requestBoardInsert erre :", err)
+      })
+    }
+
+    const closeModal = () => {
+      emit('call-parent-insert'); // no parameter
+    }
+    return { ...toRefs(state),changeFile, boardInsert, closeModal, onEditorReady,onMounted }
+  },
 }
 </script>
 <style>

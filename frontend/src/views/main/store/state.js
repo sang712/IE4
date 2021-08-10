@@ -72,7 +72,7 @@ const board = reactive({
   //pagination
   listRowCount: 5,
   pageLinkCount: 10,
-  currentPageIndex: 2,
+  currentPageIndex: 1,
   totalListItemCount : 0,
   totalPageCount : 5,
 
@@ -96,7 +96,7 @@ const newsboard = reactive({
   //pagination
   listRowCount: 5,
   pageLinkCount: 10,
-  currentPageIndex: 2,
+  currentPageIndex: 1,
   totalListItemCount : 0,
   totalPageCount : 5,
 

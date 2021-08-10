@@ -8,24 +8,34 @@
         <div class="header-author">작성자</div>
         <div class="header-date">작성일</div>
       </li>
-      <li v-for="(board, index) in board" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row" >
+      <li v-for="(board, index) in board.list" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row" >
         <!-- <div class="row-number">{{index}}</div> -->
         <div class="row-title">{{board.title}}</div>
         <div class="row-author">{{board.userName}}</div>
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
     </ul>
-    <div class="lower-sidebar d-flex justify-content-evenly align-items-right">
+    <div class="lower-sidebar">
+      <el-pagination
+        :pager-count="5"
+        :page-size="board.limit"
+        layout="prev, pager, next"
+        :total="board.totalListItemCount" @current-change="pageUpdated"></el-pagination>
       <el-button class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
     </div>
-    <detail-modal></detail-modal>
-    <insert-modal></insert-modal>
+    <div>
+    </div>
+    <!-- v-on:call-parent-change-to-update="changeToUpdate" -->
+    <detail-modal v-on:call-parent-change-to-delete="changeToDelete(boardDetail.boardId)"></detail-modal>
+    <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
   </div>
 </template>
 
 <script>
-import $axios from 'axios'
 import { useStore } from 'vuex'
+import { reactive, computed, toRefs } from 'vue'
+import { useRouter } from 'vue-router'
+
 import sectionPagination from "./section-pagination.vue"
 import DetailModal from "../modals/DetailModal.vue"
 import InsertModal from "../modals/InsertModal.vue"
@@ -39,62 +49,97 @@ export default {
     DetailModal,
     InsertModal,
   },
-  data(){
-    return{
-      detailModal : null,
-      insertModal : null,
-      board:[],
-      boardDetail:{}
-    }
-  },
-  created() {
+  setup() {
     const store = useStore()
+    const router = useRouter()
+    const state = reactive({
+      detailModal: null,
+      insertModal: null,
+      board: {},
+      boardDetail: {},
+      currentPage: 2,
+      page : 1,
+    });
 
     store.dispatch('rootMain/requestBoardList', localStorage.getItem('jwt'))
     .then(function (result) {
       console.log("갖고온 데이터는 말이지")
       console.log(result.data)
-      console.log("현재페이지 : ", result.data.pageable.pageNumber)
       console.log("총 데이터 수 : ", result.data.totalElements, "총 페이지 : ", result.data.totalPages)
       store.dispatch('rootMain/setBoardList', result.data)
+
+      state.board = store.getters['rootMain/getBoardList']
     })
     .catch(function (err) {
       console.log("requestBoardList error")
     })
 
-    this.board = store.getters['rootMain/getBoardList'].list
-    console.log(this.board)
+    const onMounted = () => {
+      state.detailModal = new Modal(document.getElementById('detailModal'));
+      state.insertModal = new Modal(document.getElementById('insertModal'));
+    }
 
-  },
-   mounted() {
-    this.detailModal = new Modal(document.getElementById('detailModal'));
-    this.insertModal = new Modal(document.getElementById('insertModal'));
-  },
-  methods:{
-    getboardDetail(boardId){
+    const getboardDetail = (boardId) => {
       console.log("접근은 한거니?", boardId)
-      this.$store.dispatch('rootMain/requestBoardDetail', {boardId:boardId})
+      store.dispatch('rootMain/requestBoardDetail', {boardId:boardId})
       .then( (result) => {
         console.log("상세정보 : ", result.data)
-        this.$store.dispatch('rootMain/setBoardDetail', result.data)
+        store.dispatch('rootMain/setBoardDetail', result.data)
         .then( (res)=>{
-          this.boardDetail = this.$store.getters['rootMain/getBoardDetail']
-          console.log("boardDetail 정보는 : ", this.boardDetail)
-          this.detailModal.show();
+          state.boardDetail = store.getters['rootMain/getBoardDetail']
+          console.log("boardDetail 정보는 : ", state.boardDetail)
+          state.detailModal = new Modal(document.getElementById('detailModal'));
+          state.detailModal.show()
         })
       })
       .catch(function (err) {
-        console.log("requestNewsBoardList error")
+        console.log("requestBoardDetail error")
         console.log(err)
       })
-    },
-    showInsertModal(){
-      this.insertModal.show();
-    },
-    closeAfterInsert(){
-      this.insertModal.hide();
+    }
+
+    const pageUpdated = (val) => {
+      state.page = val
+      console.log("업데이트 페이지 : page", state.page)
+      store.dispatch('rootMain/requestBoardList', {currentPageIndex : state.page})
+      .then(function (result) {
+        console.log("갖고온 데이터는 말이지")
+        console.log(result.data)
+        console.log("현재페이지 : ", result.data.pageable.pageNumber)
+        console.log("총 데이터 수 : ", result.data.totalElements, "총 페이지 : ", result.data.totalPages)
+        store.dispatch('rootMain/setBoardList', result.data)
+        state.board = store.getters['rootMain/getBoardList']
+
+      })
+      .catch(function (err) {
+        console.log("requestBoardList error")
+        console.log(err)
+      })
+    }
+    const showInsertModal = () => {
+      state.insertModal = new Modal(document.getElementById('insertModal'));
+      state.insertModal.show();
+    }
+    const closeAfterInsert = () => {
+      state.insertModal.hide();
       //this.freeboardList();
-    },
+    }
+    const changeToDelete = (boardId) => {
+      console.log('삭제시도!')
+      store.dispatch('rootMain/deleteDetail', {boardId : boardId})
+      .then(function (result) {
+        console.log("삭제성공")
+        console.log(result.data)
+        state.detailModal.hide()
+        router.go()
+      })
+      .catch(function (err) {
+        console.log("deleteDetail error")
+        console.log(err)
+      })
+    }
+
+    return { ...toRefs(state), onMounted, getboardDetail, pageUpdated, showInsertModal, closeAfterInsert, changeToDelete }
   },
 }
 </script>
@@ -150,5 +195,26 @@ li .header-author, .row-author{
 li .header-date, .row-date{
   text-align: center;
   flex-basis: 15%;
+}
+.lower-sidebar {
+  position: relative;
+  width: 90%;
+  min-height: 60px;
+  margin: auto 5%;
+}
+.lower-sidebar .el-pagination {
+  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.lower-sidebar .el-button {
+  display: inline-block;
+  position: absolute;
+  width: 8vw;
+  height: 40px;
+  right: 5px;
+  padding: 0px;
 }
 </style>

@@ -45,10 +45,15 @@ public class BoardController {
             @RequestParam(value = "userName", required = true) String userName,
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "content",required = false) String content,
-            @RequestParam("file") MultipartFile files) throws IOException {
+            @RequestParam(value ="file", required = false) MultipartFile files) throws IOException {
 
         Board board = new Board(boardType, userId, userName, classId, title,content);
-        BoardFile boardfile = boardService.insertBoard(files, board);
+        System.out.println("boardfile 이 있나요? >>>>>" + files);
+        if (files != null){
+            BoardFile boardfile = boardService.insertBoard(files, board);
+        }else{
+            Board boardfile = boardService.insertBoard(board);
+        }
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -73,11 +78,11 @@ public class BoardController {
             @PathVariable @ApiParam(value = "게시물 정보", required = true) int boardId) {
 
         int deleteResult = boardService.deleteBoard(boardId);
-
+        int deletefileResult = boardService.deleteBoardFile(boardId);
         if(deleteResult == 1)
             return ResponseEntity.status(204).body(BaseResponseBody.of(204, "삭제 성공"));
         else
-            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "사용자가 존재하지 않습니다."));
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "존재하지 않습니다."));
     }
 
     @GetMapping("/{boardId}")

@@ -28,13 +28,9 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button v-show="boardDetail.isOwner" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">글 수정하기</button>
-        <button v-show="boardDetail.isOwner" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button">글 삭제하기</button>
+        <button v-show="isOwner" @click="changeToUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">글 수정하기</button>
+        <button v-show="isOwner" @click="changeToDelete" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button">글 삭제하기</button>
       </div>
-      <!-- <div class="modal-footer">
-        <button v-show="$store.state.newsboard.isOwner" @click="changeToUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">글 수정하기</button>
-        <button v-show="$store.state.newsboard.isOwner" @click="changeToDelete" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button">글 삭제하기</button>
-      </div> -->
     </div>
   </div>
 </div>
@@ -46,12 +42,19 @@ import { reactive, computed, toRefs } from 'vue'
 
 export default {
   name: 'DetailModal',
-    setup() {
+    setup(props, { emit }) {
     const store = useStore()
 
     const state = reactive({
-      file : null
+      file: null,
+      isOwner: true,
     })
+    const changeToUpdate = () => {
+      emit( 'call-parent-change-to-update' );
+    }
+    const changeToDelete = () =>{
+      emit( 'call-parent-change-to-delete' );
+    }
 
     // const changeFile = (fileEvent) => {
     //   if(fileEvent.target.file && fileEvent.target.file.length > 0){
@@ -67,7 +70,7 @@ export default {
 
 
 
-    return { ...toRefs(state), boardDetail }
+    return { ...toRefs(state), boardDetail, changeToUpdate, changeToDelete }
   },
     methods: {
         // changeToUpdate(){

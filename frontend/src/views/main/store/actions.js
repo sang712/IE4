@@ -76,7 +76,7 @@ export function setMypageInfo ({ state }, response) {
 export function setNewsBoardList({ state }, response){
   state.newsboard.list = response.content
   state.newsboard.totalListItemCount = response.totalElements
-  state.newsboard.currentPageIndex = response.pageable.pageNumber
+  state.newsboard.currentPageIndex = response.pageNumber+1
   state.newsboard.pageLinkCount = response.totalPages
   state.newsboard.totalPageCount = response.totalPages
   state.newsboard.offset = response.pageable.offset
@@ -91,20 +91,20 @@ export function setBoardList({ state }, response){
   state.board.offset = response.pageable.offset
 }
 
-export function requestNewsBoardList ({ state }, response) {
+export function requestNewsBoardList ({ state }, payload) {
   console.log('requestNewsBoardList')
   console.log(localStorage.getItem('classId'))
   const url = 'http://localhost:8080/board';
 
-  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"공지사항", page:state.newsboard.currentPageIndex}})
+  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"공지사항", page:payload.currentPageIndex}})
 }
 
-export function requestBoardList ({ state }, response) {
+export function requestBoardList ({ state }, payload) {
   console.log('requestBoardList')
   console.log(localStorage.getItem('classId'))
   const url = 'http://localhost:8080/board';
 
-  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"학습자료", page:state.board.currentPageIndex}})
+  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"학습자료", page:payload.currentPageIndex}})
 }
 
 export function requestBoardDetail ({state}, payload){
@@ -112,6 +112,13 @@ export function requestBoardDetail ({state}, payload){
   const url = 'http://localhost:8080/board/'+ payload.boardId;
   console.log("get : ", url)
   return $axios.get(url)
+}
+export function deleteDetail ({state}, payload){
+  console.log('deleteDetail')
+  console.log(">>>",payload, "// ", payload.boardId)
+  const url = 'http://localhost:8080/board/'+ payload.boardId;
+  console.log("delete : ", url)
+  return $axios.delete(url)
 }
 export function setBoardDetail({ state }, response){
   console.log('setBoardDetail')
@@ -123,7 +130,21 @@ export function setBoardDetail({ state }, response){
   state.boardDetail.fileName = response.fileName
   state.boardDetail.fileUrl = response.fileUrl
 }
+export function requestBoardInsert({state}, payload){
+  console.log('requestBoardInsert')
 
+  const url = 'http://localhost:8080/board/';
+  return $axios.post(url,
+    {params:{
+              classId:localStorage.getItem('classId'),
+              userId:localStorage.getItem('userId'),
+              userName:localStorage.getItem('name'),
+              boardType:payload.boardType,
+              title:payload.title,
+              content:payload.content,
+              files: payload.file}
+    }, {headers: { 'Content-Type': 'multipart/form-data' }})
+  }
 export function setNewsMovePage ({state},pageIndex ){
   state.newsboard.currentPageIndex = pageIsndex;
 }
