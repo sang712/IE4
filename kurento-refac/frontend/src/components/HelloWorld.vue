@@ -21,7 +21,7 @@
 				<h2 id="room-header" style="margin: 10px 0px;"></h2>
 				<div id="participants"></div>
 			</div>
-			<div class="chat-box" style="display: none;">
+			<div id="chatbox" class="chat-box" style="display: none;">
 				<div class="main-wrapper">
 					<div class="cgl-live-chat">
 						<div class="chat-wrapper">
@@ -120,10 +120,10 @@ export default {
 			location.reload();
     },
 		openChatBox(){
-			if (document.getElementById('join').style.display == 'none')
-				document.getElementById('room').style.display = 'block'
+			if (document.getElementById('chatbox').style.display == 'none')
+				document.getElementById('chatbox').style.display = 'block'
 			else
-				document.getElementById('join').style.display = 'none'
+				document.getElementById('chatbox').style.display = 'none'
 		}
   }
 }
