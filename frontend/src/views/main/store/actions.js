@@ -18,7 +18,7 @@ export function requestSignup ({ state }, payload) {
   return $axios.post(url, body)
 }
 
-export function requestMyprofile ({state}, token) {
+export function requestMyprofile (context, token) {
   console.log('requestMyprofile')
   const url = 'http://localhost:8080/users'
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
@@ -36,6 +36,7 @@ export function requestMyprofile ({state}, token) {
   .catch(function (err) {
     console.log('에러 정보', err.response)
   })
+  return
 }
 
 export function updateStudent (context, payload){
@@ -70,11 +71,12 @@ export function updateStudent (context, payload){
       })
     }
   })
+  return
 }
 
 export function updateTeacher (context, payload){
   console.log('updateTeacher')
-  const url = 'http://localhost:8080/users?id=' + localStorage.getItem('id') + '&classId=' + localStorage.getItem('classId')
+  const url = 'http://localhost:8080/users/' + localStorage.getItem('id') + '/' + localStorage.getItem('classId')
   let header = { headers: { "Content-Type": "multipart/form-data" } }
 
   $axios.post(url, payload, header)
@@ -105,14 +107,13 @@ export function updateTeacher (context, payload){
   })
 }
 
-export function deleteUser({ state }, payload, token){
+export function deleteUser({ state }, payload){
   console.log('deleteUser', state, payload)
   console.log(state)
 
-  const url = 'http://localhost:8080/users/'
-  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  const url = 'http://localhost:8080/users'
   let body = payload
-  return $axios.delete(url, body, header)
+  return $axios.post(url, body)
 }
 
 export function requestClass ({ state }, token) {
