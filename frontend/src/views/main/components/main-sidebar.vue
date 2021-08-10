@@ -22,17 +22,6 @@ import { reactive, computed, toRefs } from 'vue'
 
 export default {
   name: 'main-sidebar',
-  // data () {
-  //   return {
-  //     position : localStorage.getItem('position'),
-  //     nGrade : localStorage.getItem('classId')[0],
-  //     nClass : localStorage.getItem('classId')[2],
-  //     nName: localStorage.getItem('name'),
-  //     nProfileImgUrl : localStorage.getItem('profileImgUrl'),
-  //     nSnum : localStorage.getItem('snum'),
-  //     nSex : localStorage.getItem('sex')
-  //   }
-  // },
 
   setup() {
     const store = useStore()
@@ -50,27 +39,15 @@ export default {
     });
 
     const profileImgUrl = computed(() => {
-      console.log(state.nProfileImgUrl + "<<이거임")
-      // console.log(state.nSex)
-      // console.log(state.nProfileImgUrl == null)
-      // console.log(state.nProfileImgUrl === null)
-      // console.log(state.nProfileImgUrl == undefined)
-      // console.log(state.nProfileImgUrl === undefined)
-      // console.log(state.nProfileImgUrl === '')
-      // console.log(state.nProfileImgUrl == '')
       if(state.nProfileImgUrl == 'null') {
-        console.log("null로 잘 들어옴 ㅎㅇ")
         if(state.nSex == '남자' && state.nPosition == '교사') {
           return '/profileImg/no_profile_img_man.png';
         } else if(state.nSex == '여자' && state.nPosition == '교사') {
             return '/profileImg/no_profile_img_woman.png';
-        } else if(state.nSex == '남자' && state.nPosition == '학생') {
-            return '/profileImg/no_profile_img_boy.png';
-        } else if(state.nSex == '여자' && state.nPosition == '학생') {
-            return '/profileImg/no_profile_img_girl.png';
+        } else if(state.nPosition == '학생') {
+            return state.nName.charCodeAt([1])%2 ? '/profileImg/no_profile_img_student1.jpg' : '/profileImg/no_profile_img_student0.jpg'
         }
       }else{
-        console.log("else문임 ㅎㅇ")
         return '/' + state.nProfileImgUrl;
       }
 
@@ -93,7 +70,6 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* background-image: url('../../../assets/images/profile-picture.png'); */
   border: 1px solid;
   border-radius: 10px;
   min-width: 230px;

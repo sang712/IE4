@@ -3,13 +3,13 @@
     <h1 class="myclass-title">우리반 정보</h1>
     <div class="myclass-content">
       <div class="myclass-profile">
-        <img class="myclass-profile-image" :src="classMemList[0].profileImgUrl" alt="선생님">
+        <img class="myclass-profile-image" :src="classMemList[0].profileImgUrl" :alt="classMemList[0].name+'선생님의 프로필 사진'">
         <div class="myclass-profile-name">교사: {{ classMemList[0].name }}</div>
       </div>
       <br>
       <div class="myclass-profile" v-for="(classMem, index) in classMemList.slice(1)" :key="index">
-        <img class="myclass-profile-image" v-if="classMem.profileImgUrl != null" :src="classMem.profileImgUrl" alt="item.name">
-        <img class="myclass-profile-image" v-else src="/profileImg/no_profile_img_girl.png" alt="이미지 없음">
+        <img class="myclass-profile-image" v-if="classMem.profileImgUrl != null" :src="classMem.profileImgUrl" :alt="classMem.name+'의 프로필 사진'">
+        <img class="myclass-profile-image" v-else :src="'/profileImg/no_profile_img_student'+classMem.name.charCodeAt([1])%2+'.jpg'" :alt="classMem.name+'의 프로필 사진'">
         <div class="myclass-profile-name">이름: {{ classMem.name }}</div>
       </div>
     </div>
@@ -76,12 +76,9 @@ export default {
 }
 .myclass-profile-image {
   width: 100%;
-  background-color: #C4C4C4;
-}
-
-.myclass-profile img {
-  width: 100%;
-  height: 125%;
-  background-color: #C4C4C4;
+  height: 15vw;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+  background-color: #c4c4c4;
 }
 </style>
