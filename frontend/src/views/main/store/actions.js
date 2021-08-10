@@ -130,21 +130,16 @@ export function setBoardDetail({ state }, response){
   state.boardDetail.fileName = response.fileName
   state.boardDetail.fileUrl = response.fileUrl
 }
+export function setBoardType({state}, payload){
+  console.log("setBoardType")
+  state.boardType.type = payload
+}
 export function requestBoardInsert({state}, payload){
   console.log('requestBoardInsert')
 
   const url = 'http://localhost:8080/board/';
-  return $axios.post(url,
-    {params:{
-              classId:localStorage.getItem('classId'),
-              userId:localStorage.getItem('userId'),
-              userName:localStorage.getItem('name'),
-              boardType:payload.boardType,
-              title:payload.title,
-              content:payload.content,
-              files: payload.file}
-    }, {headers: { 'Content-Type': 'multipart/form-data' }})
-  }
+  return $axios.post(url, payload)
+  } //, {headers: { 'Content-Type': 'multipart/form-data' }}
 export function setNewsMovePage ({state},pageIndex ){
   state.newsboard.currentPageIndex = pageIsndex;
 }

@@ -64,6 +64,13 @@ export default {
       page : 1,
       boardType: '공지사항'
     });
+    store.dispatch('rootMain/setBoardType', state.boardType)
+    .then(function (result) {
+      console.log("boardType 저장 >> ", state.boardType)
+    })
+    .catch(function (err) {
+      console.log("setBoardType error")
+    })
 
     store.dispatch('rootMain/requestNewsBoardList', localStorage.getItem('jwt'))
     .then(function (result) {

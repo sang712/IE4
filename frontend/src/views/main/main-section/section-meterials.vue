@@ -58,8 +58,17 @@ export default {
       board: {},
       boardDetail: {},
       currentPage: 2,
-      page : 1,
+      page: 1,
+      boardType: '학습자료',
     });
+
+    store.dispatch('rootMain/setBoardType', state.boardType)
+    .then(function (result) {
+      console.log("boardType 저장 >> ", state.boardType)
+    })
+    .catch(function (err) {
+      console.log("setBoardType error")
+    })
 
     store.dispatch('rootMain/requestBoardList', localStorage.getItem('jwt'))
     .then(function (result) {

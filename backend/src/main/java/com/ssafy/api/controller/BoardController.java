@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.BoardInsertPostReq;
 import com.ssafy.api.request.BoardUpdatePatchReq;
 import com.ssafy.api.response.BoardDetailRes;
 import com.ssafy.api.service.BoardService;
@@ -38,16 +39,8 @@ public class BoardController {
 
     @PostMapping(value = "", consumes = {"multipart/form-data"})
     @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
-    public ResponseEntity<? extends BaseResponseBody> insertBoardFile(
-            @RequestParam(value = "classId",required = true) int classId,
-            @RequestParam(value = "boardType", required = true) String boardType,
-            @RequestParam(value = "userId", required = true) int userId,
-            @RequestParam(value = "userName", required = true) String userName,
-            @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "content",required = false) String content,
-            @RequestParam(value ="file", required = false) MultipartFile files) throws IOException {
+    public ResponseEntity<? extends BaseResponseBody> insertBoardFile(Board board, MultipartFile files) throws IOException {
 
-        Board board = new Board(boardType, userId, userName, classId, title,content);
         System.out.println("boardfile 이 있나요? >>>>>" + files);
         if (files != null){
             BoardFile boardfile = boardService.insertBoard(files, board);

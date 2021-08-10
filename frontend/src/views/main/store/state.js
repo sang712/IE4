@@ -86,6 +86,10 @@ const board = reactive({
   isOwner:true,
 })
 
+const boardType = reactive({
+  type: ''
+})
+
 const newsboard = reactive({
   //list
   list: [],
@@ -134,4 +138,5 @@ export default {
   classInfo,
   classMemList,
   boardDetail,
+  boardType,
 }

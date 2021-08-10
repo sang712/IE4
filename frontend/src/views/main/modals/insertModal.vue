@@ -66,6 +66,7 @@ export default {
       file: null,
       editor: ClassicEditor,
       editorData: '',
+      boardType: '',
     })
 
     const onMounted = () => {
@@ -105,19 +106,23 @@ export default {
     const boardInsert = () => {
       var formData = new FormData();
       formData.append("title", state.title);
-      console.log("title : ", state.title)
       formData.append("content", editorData.getData());
-      console.log("form >>>> ", editorData.getData());
-      console.log("file >>>> ", state.file)
-      const params = {
-        title: state.title,
-        content: editorData.getData(),
-        file: state.file,
-        boardType: '공지사항',
-      }
-      store.dispatch('rootMain/requestBoardInsert', params)
+      formData.append("classId",localStorage.getItem('classId'))
+      formData.append("userId",localStorage.getItem('userId'))
+      formData.append("userName",localStorage.getItem('name'))
+
+      var attachFiles = document.querySelector("#inputFileUploadInsert");
+      formData.append("files", attachFiles.files[0])
+
+      state.boardType = store.getters['rootMain/getBoardType'].type
+      console.log("boardType >>> ", state.boardType)
+      formData.append("boardType",state.boardType)
+
+      store.dispatch('rootMain/requestBoardInsert', formData)
       .then(function (result){
         console.log("성공")
+        closeModal();
+        router.go()
       })
       .catch(function (err) {
         console.log("requestBoardInsert erre :", err)
