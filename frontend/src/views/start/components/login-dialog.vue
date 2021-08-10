@@ -68,7 +68,7 @@ export default {
       default: false
     }
   },
-
+  emits: ['closeLoginDialog'],
   setup(props, { emit }) {
     const store = useStore()
     const router = useRouter()

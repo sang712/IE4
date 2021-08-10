@@ -165,7 +165,7 @@ export default {
       default: false
     }
   },
-
+  emits: ['closeSignupDialog'],
   setup(props, { emit }) {
     const store = useStore()
     // 마운드 이후 바인딩 될 예정 - 컨텍스트에 노출시켜야함. <return>

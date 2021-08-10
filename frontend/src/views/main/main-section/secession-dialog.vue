@@ -68,7 +68,7 @@ export default {
       default: false
     }
   },
-
+  emits: ['closeSecessionDialog'],
   setup(props, { emit }){
     const store = useStore()
     const router = useRouter()
