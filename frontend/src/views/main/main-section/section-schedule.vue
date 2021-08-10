@@ -7,10 +7,10 @@
       <!-- <img src="/timetable/450f82b7-49d7-4ddb-8680-edc0f5e8e1dc.jpg" alt="이미지..2."> -->
     <img :src="timetableUrl" alt="이미지..2." style="width:100%; height:100%">
     <!-- </div> -->
-    <div v-if="position=='교사'" class="form-group mt-3 mb-3" id="imgFileUploadInsertWrapper">
-      <span style="width: 20%; height: 20%; font-size: 120% ;margin-left: 82px;">시간표 수정</span>
-      <input style="margin-left: 40px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
-      <button style="width: 10%" @click="updateTimetable()">수정</button>
+    <div v-if="position=='교사'" class="form-group mt-3 mb-3" id="imgFileUploadInsertWrapper" style="margin: 0px auto; text-align: center">
+      <span style="width: 20%; font-size: 120%;"><b>시간표 수정 |</b></span>
+      <input style="width:40%; margin-left: 20px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
+      <button style="width: 13%" @click="updateTimetable()">수정</button>
     </div>
   </div>
 </template>
