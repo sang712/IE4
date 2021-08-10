@@ -110,13 +110,14 @@ export default {
             localStorage.removeItem('sex')
             localStorage.removeItem('snum')
             localStorage.removeItem('teacherName')
+
+            Swal.fire({
+              title: '성공!',
+              text: '계정이 삭제되었습니다..',
+              icon: 'error',
+            }) // 같이 쓸수있으려나,,
             emit('closeSecessionDialog')
             router.go()
-            Swal.fire({
-                  title: '성공!',
-                  text: '계정이 삭제되었습니다..',
-                  icon: 'error',
-            }) // 같이 쓸수있으려나,,
           })
           .catch(function (err) {
             const status = err.response.request.status
