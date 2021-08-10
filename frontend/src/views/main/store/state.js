@@ -62,6 +62,10 @@ const classMemList = reactive({
   profileImgUrl: ''
 })
 
+const rankingList = reactive({
+
+})
+
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
@@ -69,4 +73,5 @@ export default {
   mypageInfo,
   classInfo,
   classMemList,
+  rankingList,
 }

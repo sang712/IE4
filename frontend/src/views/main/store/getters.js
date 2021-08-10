@@ -19,3 +19,7 @@ export function getClassInfo (state) {
 export function getClassMemList (state) {
 	return state.classMemList
 }
+// rankingList 가져오기
+export function getRankingList (state) {
+	return state.rankingList
+}
