@@ -15,45 +15,6 @@
     </template>
   </el-dialog>
 </template>
-<style>
-
-.login-dialog {
-  width: 400px;
-  height: 300px;
-}
-.login-dialog .el-dialog__headerbtn {
-  float: right;
-}
-.login-dialog .el-form-item__content {
-  margin-left: 0 !important;
-  float: right;
-  width: 200px;
-  display: inline-block;
-}
-.login-dialog .el-form-item {
-  margin-bottom: 20px;
-}
-.login-dialog .el-form-item__error {
-  margin-top: 5px;
-  font-size: 12px;
-  color: red;
-}
-.login-dialog .el-input__suffix {
-  display: none;
-}
-.login-dialog .el-dialog__footer {
-  margin: 0 calc(50% - 80px);
-  padding-top: 0;
-  display: inline-block;
-}
-.login-dialog .dialog-footer .el-button {
-  width: 120px;
-}
-/* 얼럿창 화면 맨 앞으로 */
-.swal2-container {
-  z-index: 5000;
-}
-</style>
 <script>
 import { reactive, computed, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
@@ -162,3 +123,42 @@ export default {
   }
 }
 </script>
+<style>
+
+.login-dialog {
+  width: 400px;
+  height: 300px;
+}
+.login-dialog .el-dialog__headerbtn {
+  float: right;
+}
+.login-dialog .el-form-item__content {
+  margin-left: 0 !important;
+  float: right;
+  width: 200px;
+  display: inline-block;
+}
+.login-dialog .el-form-item {
+  margin-bottom: 20px;
+}
+.login-dialog .el-form-item__error {
+  margin-top: 5px;
+  font-size: 12px;
+  color: red;
+}
+.login-dialog .el-input__suffix {
+  display: none;
+}
+.login-dialog .el-dialog__footer {
+  margin: 0 calc(50% - 80px);
+  padding-top: 0;
+  display: inline-block;
+}
+.login-dialog .dialog-footer .el-button {
+  width: 120px;
+}
+/* 얼럿창 화면 맨 앞으로 */
+.swal2-container {
+  z-index: 5000;
+}
+</style>
