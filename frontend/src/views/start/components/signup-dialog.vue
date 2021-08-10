@@ -65,93 +65,6 @@
     </template>
   </el-dialog>
 </template>
-<style>
-@import url("https://fonts.googleapis.com/css?family=Fjalla+One&display=swap");
-* {
-  margin: 0;
-  padding: 0; }
-
-.signup-form {
-  width: 25vw;
-  min-width: 420px;
-}
-
-.el-scrollbar__view {
-  display: inline;
-  align-items: center;
-}
-
-.el-form-item {
-  display: block;
-  width: 100%;
-  font-size: 14pt;
-  line-height: 28pt;
-  font-family: "Fjalla One";
-  margin-bottom: 28pt;
-  border: none;
-  border-bottom: 2px solid black;
-  border-radius: 5px;
-  background: #f8f4e5;
-  min-width: 250px;
-  outline: none;
-  color: black; }
-
-input:focus {
-  border-bottom: 5px solid #ffa580; }
-
-button {
-  letter-spacing: 2px;
-  box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px black; }
-button:hover {
-  background: black;
-  color: white;
-  border: 1px solid black; }
-
-::selection {
-  background: #ffc8ff; }
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-  border-bottom: 5px solid #95a4ff;
-  -webkit-text-fill-color: #2A293E;
-  -webkit-box-shadow: 0 0 0px 1000px #f8f4e5 inset;
-  transition: background-color 5000s ease-in-out 0s; }
-
-.el-dialog__header {
-  background: rgba(255, 255, 255, 0.80);
-  padding: 10px 20px !important;
-  margin: 10px;
-  border-radius: 10px;
-}
-.el-dialog__body {
-  background: rgba(255, 255, 255, 0.80);
-  padding: 20px !important;
-  margin-bottom: 10px;
-  border-radius: 20px;
-}
-.el-dialog__body form{
-  opacity: 1.0;
-}
-.signup-dialog .el-form-item__error {
-  margin-top: 5px;
-  font-size: 12px;
-  color: red;
-}
-
-.signup-dialog .el-dialog__footer {
-  margin: 0 calc(50% - 80px);
-  padding-top: 0;
-  display: inline-block;
-}
-.signup-dialog .dialog-footer .el-button {
-  width: 120px;
-}
-/* 얼럿창 화면 맨 앞으로 */
-.swal2-container {
-  z-index: 5000;
-}
-</style>
 <script>
 import { reactive, computed, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
@@ -165,7 +78,7 @@ export default {
       default: false
     }
   },
-
+  emits: ['closeSignupDialog'],
   setup(props, { emit }) {
     const store = useStore()
     // 마운드 이후 바인딩 될 예정 - 컨텍스트에 노출시켜야함. <return>
@@ -402,3 +315,91 @@ export default {
   }
 }
 </script>
+<style>
+@import url("https://fonts.googleapis.com/css?family=Fjalla+One&display=swap");
+* {
+  margin: 0;
+  padding: 0; }
+
+.signup-form {
+  width: 25vw;
+  min-width: 420px;
+}
+
+.el-scrollbar__view {
+  display: inline;
+  align-items: center;
+}
+
+.el-form-item {
+  display: flex;
+  width: 100%;
+  font-size: 14pt;
+  line-height: 28pt;
+  font-family: "Fjalla One";
+  margin-bottom: 28pt;
+  border: none;
+  border-bottom: 2px solid black;
+  border-radius: 5px;
+  background: #f8f4e5;
+  min-width: 250px;
+  outline: none;
+  color: black; 
+}
+
+input:focus {
+  border-bottom: 5px solid #ffa580; }
+
+button {
+  letter-spacing: 2px;
+  box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px black; }
+button:hover {
+  background: black;
+  color: white;
+  border: 1px solid black; }
+
+::selection {
+  background: #ffc8ff; }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  border-bottom: 5px solid #95a4ff;
+  -webkit-text-fill-color: #2A293E;
+  -webkit-box-shadow: 0 0 0px 1000px #f8f4e5 inset;
+  transition: background-color 5000s ease-in-out 0s; }
+
+.el-dialog__header {
+  background: rgba(255, 255, 255, 0.80);
+  padding: 10px 20px !important;
+  margin: 10px;
+  border-radius: 10px;
+}
+.el-dialog__body {
+  background: rgba(255, 255, 255, 0.80);
+  padding: 20px !important;
+  margin-bottom: 10px;
+  border-radius: 20px;
+}
+.el-dialog__body form{
+  opacity: 1.0;
+}
+.signup-dialog .el-form-item__error {
+  margin-top: 5px;
+  font-size: 12px;
+  color: red;
+}
+
+.signup-dialog .el-dialog__footer {
+  margin: 0 calc(50% - 80px);
+  padding-top: 0;
+  display: inline-block;
+}
+.signup-dialog .dialog-footer .el-button {
+  width: 120px;
+}
+/* 얼럿창 화면 맨 앞으로 */
+.swal2-container {
+  z-index: 5000;
+}
+</style>
