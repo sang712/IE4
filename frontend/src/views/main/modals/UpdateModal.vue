@@ -1,36 +1,36 @@
 <template>
-<div class="modal" tabindex="-1" id="insertModal" ref="insertModal">
+<div class="modal" tabindex="-1" id="updateModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">글 쓰기</h5>
+        <h5 class="modal-title">글 수정</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
         <div class="mb-3">
-          <input v-model="title" type="text" class="form-control" placeholder="제목">
+          <input v-model="boardDetail.title" type="text" class="form-control" placeholder="제목">
         </div>
         <div class="mb-3">
-          <div id=divEditorInsert>
-            <ckeditor :editor="editor" v-model="editorData" @ready="onEditorReady"></ckeditor>
-             <!-- v-model="editorData" :config="editorConfig" -->
+          <div id=divEditorUpdate>
+            <ckeditor :editor="editor" v-model="editorData2" @ready="onEditorReady"></ckeditor>
           </div>
         </div>
-        <div class="form-check mb-3">
-          <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
-          <label class="form-check-label" for="chkFileUploadInsert">파일 추가</label>
-        </div>
-        <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
-          <input @change="changeFile" type="file" id="inputFileUploadInsert">
-          <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
-            <img v-bind:src="file">
-          </div>
-        </div>
-        </div>
+        <!-- 기존 파일 내용 보여줌  -->
+        <!-- 새로운 첨부파일은 data-fileList 로 -->
+        <div v-if="file != null" class="mb-3">
+          <img class="profile-img" :src="file" />
+          첨부파일 : <span><div file class="fileName" :key="index">{{file.fileName}}</div></span>
 
+        </div>
+        <div class="mt-3 mb-3" id="imgFileUploadInsertWrapper">
+          <img class="profile-img" :src="file" />
+          <p style="width: 60%; height: 10%; font-size: 120% ;margin-left: 82px; ">파일 변경</p>
+          <input style="margin-left: 40px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
+        </div>
+      </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary btn-outline" @click="boardInsert" data-dismiss="modal" type="button">등록</button>
+        <button @click="boardUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">수정</button>
       </div>
     </div>
   </div>
@@ -43,8 +43,9 @@ import { useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-vue'
 var editorData;
+
 export default {
-  name: 'InsertModal',
+  name: 'UpdateModal',
   components: {
     ckeditor: CKEditor.component,
   },
@@ -56,31 +57,39 @@ export default {
       attachFile: false,
       file: null,
       editor: ClassicEditor,
-      editorData: '',
       boardType: '',
+      content: ``,
+      editorData: ``,
+      editorData2: computed(() => store.getters['rootMain/getBoardDetail'].content),
+      boardDetail : {},
     })
+
+    state.boardDetail = store.getters['rootMain/getBoardDetail']
 
     const onMounted = () => {
       ClassicEditor
-      .create(document.querySelector('#divEditorInsert'))
+      .create(document.querySelector('#divEditorUpdate'))
       .then(editor => {
-          console.log("여기서 되나? >> ", editor.getData())
           editorData = editor
-          //this.editorData = editor
       })
       .catch(err => {
-          console.error(err.stack);
+          console.error("querySelector" , err);
       });
 
       // bootstrap modal show event hook
-      // InsertModal 이 보일 때 초기화
+      // UpdateModal 이 보일 때 초기화
+      //let $this = this;
+      // this.$el.addEventListener('show.bs.modal', function () {
 
-      //this.$el.addEventListener('show.bs.modal', function () {
-      //location.reload();
+      //   // $this.CKEditor.setData( $this.$store.state.freeboard.content );
+      //   // 첨부 파일 관련 초기화
+      //   // 수정 또는 수정 전 첨부 파일을 선택하면 그대로 남아 있다.
+      //   // this.attachFile = false;
+      //   // this.fileList = [];
+      //   // document.querySelector("#inputFileUploadUpdate").value = '';
+      // })
       setup;
-      //})
     }
-
     const changeFile = (fileEvent) => {
       console.log("fileEvent >>>> ", fileEvent)
       if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
@@ -90,11 +99,11 @@ export default {
     }
 
     const onEditorReady = (editor) => {
-      editorData = editor;
-      console.log("onEditor Ready>>", editorData.getData());
+      state.editorData = state.boardDetail.content
+      console.log("onEditor Ready>>", state.editorData);
     }
 
-    const boardInsert = () => {
+    const boardUpdate = () => {
       var formData = new FormData();
       formData.append("title", state.title);
       formData.append("content", editorData.getData());
@@ -121,25 +130,11 @@ export default {
     }
 
     const closeModal = () => {
-      emit('call-parent-insert'); // no parameter
+      emit('call-parent-update'); // no parameter
     }
-    return { ...toRefs(state),changeFile, boardInsert, closeModal, onEditorReady,onMounted }
+
+    return { ...toRefs(state), onMounted, changeFile, boardUpdate ,onEditorReady   ,closeModal,}
+
   },
 }
 </script>
-<style>
-/* CKEditor 는 vue 와 별개로 rendering 되어서 scope 를 넣으면 반영되지 않는다. */
-.ck-editor__editable {
-    min-height: 300px !important;
-}
-
-.thumbnail-wrapper{
-	margin-top: 5px;
-}
-
-.thumbnail-wrapper img {
-	width: 100px !important;
-	margin-right: 5px;
-	max-width: 100%;
-}
-</style>
