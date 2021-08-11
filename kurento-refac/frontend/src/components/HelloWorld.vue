@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-		<div id="wrapper">
+		<div id="wrapper" class="d-flex">
 			<div id="join" class="animate join">
 				<h1>수업에 입장하세요!</h1>
 				<form @submit.prevent="register" accept-charset="UTF-8">
@@ -17,7 +17,7 @@
 					</p>
 				</form>
 			</div>
-			<div id="room" style="display: none;">
+			<div id="room"  style="display: none;">
 				<h2 id="room-header" style="margin: 10px 0px;"></h2>
 				<div id="participants"></div>
 			</div>
@@ -121,9 +121,16 @@ export default {
     },
 		openChatBox(){
 			if (document.getElementById('chatbox').style.display == 'none')
-				document.getElementById('chatbox').style.display = 'block'
-			else
+			{
+				document.getElementById('room').class = 'col-9'
+				document.getElementById('chatbox').class = 'col-3'
+				document.getElementById('chatbox').style.display = 'flex'
+				}
+			else{
 				document.getElementById('chatbox').style.display = 'none'
+				document.getElementById('room').class = 'col-12'
+				document.getElementById('chatbox').class = ''
+			}
 		}
   }
 }
@@ -196,9 +203,9 @@ a {
   margin: 0;
 }
 .main-wrapper{
-	background-color: #080A0D;
+	/* background-color: #080A0D;
 	height: 100vh;
-	width: 100%;
+	width: 100%; */
 	display: grid;
 	place-items:center;
 }
