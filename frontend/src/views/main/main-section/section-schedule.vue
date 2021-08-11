@@ -37,14 +37,14 @@ export default {
 
     const getImg = () => {
       // console.log('../../../../' + state.timetableUrl)
-      console.log(store.getters['rootMain/getClassInfo'].timetable)
+      console.log('imgUrl', store.getters['rootMain/getClassInfo'].timetable)
       // return require(store.getters['rootMain/getClassInfo'].timetable)
       this.imgUrl = store.getters['rootMain/getClassInfo'].timetable;
       return store.getters['rootMain/getClassInfo'].timetable
     }
 
     const changeFile = (fileEvent) => {
-      console.log(fileEvent.target.files)
+      console.log('fileEvent.target.files: ', fileEvent.target.files)
       if(fileEvent.target.files && fileEvent.target.files.length > 0){
         state.newFile = URL.createObjectURL(fileEvent.target.files[0]);
       }
@@ -54,16 +54,17 @@ export default {
       var formData = new FormData();
       var attachFiles = document.querySelector("#inputFileUploadInsert");
       formData.append("file", attachFiles.files[0]);
-      console.log(attachFiles.files[0])
+      console.log('files[0]:', attachFiles.files[0])
 
       store.dispatch('rootMain/updateTimetable', formData, localStorage.getItem('jwt'))
       .then(function (result) {
-        console.log("시간표 수정 완ㅋ")
-        console.log(result.data)
+        console.log("시간표 수정 완료", result.data)
         store.state.classInfo.timetable = result.data
+        Swal.fire({ title: '성공!', text: '시간표가 수정되었습니다.', icon: 'success', })
       })
       .catch(function (err) {
         console.log("updateTimetable error", err)
+        Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
       })
     }
 
