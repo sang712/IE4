@@ -84,31 +84,15 @@ export default {
           .catch(function (err) {
             const status = err.response.request.status
             if (status == 500) {
-              Swal.fire({
-                title: '이런!',
-                text: '서버 오류가 발생했습니다..',
-                icon: 'error',
-              })
+              Swal.fire({ title: '이런!', text: '서버 오류가 발생했습니다..', icon: 'error', })
             } else if (status == 404) {
-              Swal.fire({
-                title: '이런!',
-                text: '존재하지 않는 계정입니다.',
-                icon: 'error',
-              })
+              Swal.fire({ title: '이런!', text: '존재하지 않는 계정입니다.', icon: 'error', })
             } else if (status == 401) {
-              Swal.fire({
-                title: '이런!',
-                text: '잘못된 비밀번호 입니다.',
-                icon: 'error',
-              })
+              Swal.fire({ title: '이런!', text: '잘못된 비밀번호 입니다.', icon: 'error', })
             }
           })
         } else {
-          Swal.fire({
-            title: '이런!',
-            text: '로그인에 실패했습니다.',
-            icon: 'error',
-          })
+          Swal.fire({ title: '이런!', text: '로그인에 실패했습니다.', icon: 'error', })
         }
       });
     }

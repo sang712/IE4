@@ -3,6 +3,10 @@
 import { toHandlers } from 'vue'
 import http from "@/common/lib/axios.js";
 import $axios from 'axios'
+import { routerKey } from 'vue-router';
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 export function requestLogin ({ state }, payload) {
   console.log('requestLogin', state, payload)
@@ -40,19 +44,23 @@ export function requestMyprofile ({state}, token) {
 
 export function updateStudent (context, payload){
   console.log('updateStudent')
-  const url = 'http://localhost:8080/users/' + localStorage.getItem('id')
-  let header = { headers: { 'Content-Type': 'multipart/form-data' } }
+  console.log(context.state)
+  console.log(typeof(payload.password))
+  const url = 'http://localhost:8080/users/student'
+  // let header = { headers: { 'Content-Type': 'multipart/form-data' } }
 
-  $axios.post(url, payload, header)
+  $axios.post(url, payload)
   .then(({ data }) => {
     console.log('성공하면 출력해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     console.log(data)
-    // if(data.position === '학생'){
-    //   context.commit('rootMain/setStudentMypageInfo', data, {root: true})
-    //   // store.dispatch('rootMain/setMypageInfo', result.data)
-    // }else{
-    //   context.commit('rootMain/setTeacherMypageInfo', data, {root: true})
-    // }
+
+    Swal.fire({
+      title: '성공!',
+      text: '수정되었습니다!',
+      icon: 'success',
+    })
+    router.go()
+
   })
   .catch(function (err) {
     const status = err.response.request.status
@@ -74,18 +82,20 @@ export function updateStudent (context, payload){
 
 export function updateTeacher (context, payload){
   console.log('updateTeacher')
-  const url = 'http://localhost:8080/users?id=' + localStorage.getItem('id') + '&classId=' + localStorage.getItem('classId')
-  let header = { headers: { "Content-Type": "multipart/form-data" } }
+  console.log(context.state)
+  const url = 'http://localhost:8080/users/teacher'
+  // let header = { headers: { "Content-Type": "multipart/form-data" } }
 
-  $axios.post(url, payload, header)
+  $axios.post(url, payload)
   .then(({ data }) => {
     console.log(data)
-    // if(data.position === '학생'){
-    //   context.commit('rootMain/setStudentMypageInfo', data, {root: true})
-    //   // store.dispatch('rootMain/setMypageInfo', result.data)
-    // }else{
-    //   context.commit('rootMain/setTeacherMypageInfo', data, {root: true})
-    // }
+
+    Swal.fire({
+      title: '성공!',
+      text: '수정되었습니다!',
+      icon: 'success',
+    })
+
   })
   .catch(function (err) {
     const status = err.response.request.status
@@ -147,19 +157,6 @@ export function getRanking ({ state }, token) {
   const url = 'http://localhost:8080/class/ranking/' + localStorage.getItem('classId');
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   return $axios.get(url, header)
-}
-
-export function setMypageInfo ({ state }, response) {
-  state.mypageInfo.id = response.id
-  state.mypageInfo.loginId = response.loginId
-  state.mypageInfo.name = response.name
-  state.mypageInfo.parentPhone = response.parentPhone
-  state.mypageInfo.password = response.password
-  state.mypageInfo.passwordAnswer = response.passwordAnswer
-  state.mypageInfo.passwordQuestion = response.passwordQuestion
-  state.mypageInfo.phone = response.phone
-  state.mypageInfo.snum = response.snum
-  state.mypageInfo.address = response.address
 }
 
 export function setNewsBoardList({ state }, response){

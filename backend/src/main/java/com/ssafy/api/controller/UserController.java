@@ -75,15 +75,14 @@ public class UserController {
 	// => 기본이미지 설정하기 버튼 필요?
 	// 2. 프론트에서 null일 때 기본이미지 넣어주기
 
-	@PostMapping("/{id}")
+	@PostMapping("/student")
 	@ApiOperation(value = "학생정보 수정", notes = "학생정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseUserResponseBody> update(
-			@PathVariable @ApiParam(value="회원 아이디", required = true) int id,
-			@RequestBody @ApiParam(value="학생 정보", required = true) StudentUpdatePatchReq updateInfo, MultipartHttpServletRequest request) {
+			@ApiParam(value="회원 정보", required = true) StudentUpdatePatchReq updateInfo, MultipartHttpServletRequest request) {
 
-		Student student = userService.updateStudent(updateInfo, id, request);
+		Student student = userService.updateStudent(updateInfo, request);
 
 		if(student != null)
 			return ResponseEntity.status(200).body(BaseUserResponseBody.of(student.getUser().getId()));
@@ -91,16 +90,14 @@ public class UserController {
 			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Student Update Fail"));
 	}
 
-	@PostMapping("/{id}/{classId}")
+	@PostMapping("/teacher")
 	@ApiOperation(value = "교사정보 수정", notes = "교사정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseUserResponseBody> update(
-			@RequestParam @ApiParam(value="회원 아이디", required = true) int id,
-			@RequestParam @ApiParam(value="배정 반", required = true) int classId,
-			@RequestBody @ApiParam(value="회원 정보", required = true) TeacherUpdatePatchReq updateInfo, MultipartHttpServletRequest request) {
+			@ApiParam(value="회원 정보", required = true) TeacherUpdatePatchReq updateInfo, MultipartHttpServletRequest request) {
 
-		User user = userService.updateTeacher(updateInfo, id, classId, request);
+		User user = userService.updateTeacher(updateInfo, request);
 
 		if(user != null)
 			return ResponseEntity.status(200).body(BaseUserResponseBody.of(user.getId()));
