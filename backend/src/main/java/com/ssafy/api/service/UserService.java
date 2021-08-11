@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
  */
 public interface UserService {
 	Student createStudent(StudentRegisterPostReq studentRegisterInfo);
-	Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id, MultipartHttpServletRequest request);
-	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId, MultipartHttpServletRequest request);
+	Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, MultipartHttpServletRequest request);
+	User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, MultipartHttpServletRequest request);
 	void deleteUser(User user);
 
 	boolean checkIdDuplicate(String loginId);

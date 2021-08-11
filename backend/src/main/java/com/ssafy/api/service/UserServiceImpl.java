@@ -76,74 +76,73 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, int id, MultipartHttpServletRequest request) {
-		Student student = studentRepository.findByUserId(id).get();
-		User user = userRepository.findUserById(id).get();
+	public Student updateStudent(StudentUpdatePatchReq studentUpdateInfo, MultipartHttpServletRequest request) {
+		Student student = studentRepository.findByUserId(studentUpdateInfo.getId()).get();
+		User user = userRepository.findUserById(studentUpdateInfo.getId()).get();
 
-		if(studentUpdateInfo.getPassword() != null) user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
-		user.setPhone(studentUpdateInfo.getPhone());
-		user.setAddress(studentUpdateInfo.getAddress());
+		System.out.println(studentUpdateInfo.getPassword() + "type" + studentUpdateInfo.getPassword().getClass().getName());
 
+		if(!studentUpdateInfo.getPassword().equals("null")) {
+			System.out.println("if문 안으로 들어옴");
+			user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
+		}
+		if(studentUpdateInfo.getPhone() != null) user.setPhone(studentUpdateInfo.getPhone());
+		if(studentUpdateInfo.getAddress() != null) user.setAddress(studentUpdateInfo.getAddress());
 
-		String uploadFolder = "profileImg";
-		String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
-				+ File.separator + "Documents"
-				+ File.separator + "dev"
-				+ File.separator + "S05P13A601"
-				+ File.separator + "backend"
-				+ File.separator + "src"
-				+ File.separator + "main"
-				+ File.separator + "resources"
-				+ File.separator + "static";
+		if(request.getFile("profileImgUrl") != null) {
+			String uploadFolder = "profileImg";
+			String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
+					+ File.separator + "Documents"
+					+ File.separator + "S05P13A601"
+					+ File.separator + "backend"
+					+ File.separator + "src"
+					+ File.separator + "main"
+					+ File.separator + "resources"
+					+ File.separator + "static";
 
 //		String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
-		String saveUrl = "";
+			String saveUrl = "";
 
-		try {
-			MultipartFile file = request.getFile("file");
-			System.out.println("어디가 문제야 1");
+			try {
+				MultipartFile file = request.getFile("profileImgUrl");
 
-			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
-			if(!uploadDir.exists()) uploadDir.mkdir();
-			System.out.println("어디가 문제야 2");
+				File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+				if(!uploadDir.exists()) uploadDir.mkdir();
 
-			String fileUrl = userRepository.findById(id).orElse(null);
+				String fileUrl = userRepository.findById(studentUpdateInfo.getId()).orElse(null);
 
-			// fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
-			// fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
-			if(fileUrl != null) {
-				File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
-				if(deleteFile.exists()) deleteFile.delete();
+				// fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
+				// fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
+				if(fileUrl != null) {
+					File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+					if(deleteFile.exists()) deleteFile.delete();
+				}
+				String fileName = file.getOriginalFilename();
+
+				// Random File Id
+				UUID uuid = UUID.randomUUID();
+
+				// file extension
+				String extension = FilenameUtils.getExtension(fileName);
+				String savingFileName = uuid + "." + extension;
+				File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+
+				System.out.println("파일 경로!!!>>> " + destFile);
+
+				file.transferTo(destFile);
+
+				saveUrl = uploadFolder + "/" + savingFileName;
+
+			} catch(IOException e) {
+				e.printStackTrace();
 			}
-			System.out.println("어디가 문제야 3ㅊㅊ");
 
-			//
-			String fileName = file.getOriginalFilename();
-
-			// Random File Id
-			UUID uuid = UUID.randomUUID();
-
-			System.out.println("어디가 문제야 4");
-			// file extension
-			String extension = FilenameUtils.getExtension(fileName);
-			String savingFileName = uuid + "." + extension;
-			File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
-
-			System.out.println("파일 경로!!!>>> " + destFile);
-
-			file.transferTo(destFile);
-
-			saveUrl = uploadFolder + "/" + savingFileName;
-
-		} catch(IOException e) {
-			e.printStackTrace();
-
+			user.setProfileImgUrl(saveUrl);
 		}
 
-		user.setProfileImgUrl(saveUrl);
+		User saveUser = userRepository.save(user);
 
-
-		if(userRepository.save(user) != null) {
+		if(saveUser != null) {
 			student.setParentPhone(studentUpdateInfo.getParentPhone());
 			student.setPasswordAnswer(studentUpdateInfo.getPasswordAnswer());
 			return studentRepository.save(student);
@@ -152,67 +151,68 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, int id, int classId, MultipartHttpServletRequest request) {
-		User user = userRepository.findUserById(id).get();
-		if(teacherUpdateInfo.getPassword() != null) user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
+	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, MultipartHttpServletRequest request) {
+		User user = userRepository.findUserById(teacherUpdateInfo.getId()).get();
+
+		if(teacherUpdateInfo.getPassword().equals("null")) user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
 		user.setPhone(teacherUpdateInfo.getPhone());
 		user.setAddress(teacherUpdateInfo.getAddress());
-		user.setProfileImgUrl(teacherUpdateInfo.getProfileImgUrl());
 
-		String uploadFolder = "profileImg";
-		String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
-				+ File.separator + "Documents"
-				+ File.separator + "S05P13A601"
-				+ File.separator + "backend"
-				+ File.separator + "src"
-				+ File.separator + "main"
-				+ File.separator + "resources"
-				+ File.separator + "static";
+		if(request.getFile("profileImgUrl") != null) {
+			String uploadFolder = "profileImg";
+			String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
+					+ File.separator + "Documents"
+					+ File.separator + "S05P13A601"
+					+ File.separator + "backend"
+					+ File.separator + "src"
+					+ File.separator + "main"
+					+ File.separator + "resources"
+					+ File.separator + "static";
 
 //		String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
-		String saveUrl = "";
+			String saveUrl = "";
 
-		try {
-			MultipartFile file = request.getFile("file");
+			try {
+				MultipartFile file = request.getFile("profileImgUrl");
 
-			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
-			if(!uploadDir.exists()) uploadDir.mkdir();
+				File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+				if(!uploadDir.exists()) uploadDir.mkdir();
 
-			String fileUrl = userRepository.findById(id).orElse(null);
+				String fileUrl = userRepository.findById(teacherUpdateInfo.getId()).orElse(null);
 
-			// fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
-			// fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
-			if(fileUrl != null) {
-				File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
-				if(deleteFile.exists()) deleteFile.delete();
+				// fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
+				// fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
+				if(fileUrl != null) {
+					File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+					if(deleteFile.exists()) deleteFile.delete();
+				}
+
+				//
+				String fileName = file.getOriginalFilename();
+
+				// Random File Id
+				UUID uuid = UUID.randomUUID();
+
+				// file extension
+				String extension = FilenameUtils.getExtension(fileName);
+				String savingFileName = uuid + "." + extension;
+				File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+
+				System.out.println("파일 경로!!!>>> " + destFile);
+
+				file.transferTo(destFile);
+
+				saveUrl = uploadFolder + "/" + savingFileName;
+
+			} catch(IOException e) {
+				e.printStackTrace();
 			}
 
-			//
-			String fileName = file.getOriginalFilename();
-
-			// Random File Id
-			UUID uuid = UUID.randomUUID();
-
-			// file extension
-			String extension = FilenameUtils.getExtension(fileName);
-			String savingFileName = uuid + "." + extension;
-			File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
-
-			System.out.println("파일 경로!!!>>> " + destFile);
-
-			file.transferTo(destFile);
-
-			saveUrl = uploadFolder + "/" + savingFileName;
-
-		} catch(IOException e) {
-			e.printStackTrace();
-
+			user.setProfileImgUrl(saveUrl);
 		}
 
-		user.setProfileImgUrl(saveUrl);
-
 		if(userRepository.save(user) != null) {
-			EduClass eduClass = eduClassRepository.findEduClassById(classId).get();
+			EduClass eduClass = eduClassRepository.findEduClassById(teacherUpdateInfo.getClassId()).get();
 			eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
 
 			if(eduClassRepository.save(eduClass) == null) return null;
@@ -220,6 +220,18 @@ public class UserServiceImpl implements UserService {
 
 
 		return userRepository.save(user);
+	}
+
+	@Override
+	public void deleteUser(User user) {
+		// 디비에 유저 정보 조회 (userId 를 통한 조회).
+		List<Integer> userPointIdList = userPointRepository.findIdByUserId(user.getId()).orElse(null);
+		if(userPointIdList != null)userPointRepository.deleteAllByIds(userPointIdList);
+
+		Student student = studentRepository.findByUserId(user.getId()).orElse(null);
+		if(student != null) studentRepository.delete(student);
+
+		userRepository.delete(user);
 	}
 
 	@Override
@@ -273,18 +285,6 @@ public class UserServiceImpl implements UserService {
 		String loginId = userRepository.findByIdsAndNameAndPhone(userIdList, name, phone).orElse(null);
 
 		return loginId;
-	}
-
-	@Override
-	public void deleteUser(User user) {
-		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		List<Integer> userPointIdList = userPointRepository.findIdByUserId(user.getId()).orElse(null);
-		if(userPointIdList != null)userPointRepository.deleteAllByIds(userPointIdList);
-
-		Student student = studentRepository.findByUserId(user.getId()).orElse(null);
-		if(student != null) studentRepository.delete(student);
-
-		userRepository.delete(user);
 	}
 
 
