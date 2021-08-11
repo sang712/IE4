@@ -230,7 +230,7 @@ a {
 	border: 8px solid #141921;
 	box-sizing: border-box;
 	height: 937px;
-	width: 350px;
+	width: 385px;
 }
 
 .cgl-live-chat .chat-wrapper .chat-title {
