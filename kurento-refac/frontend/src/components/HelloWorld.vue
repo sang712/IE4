@@ -21,7 +21,7 @@
 				<h2 id="room-header" style="margin: 10px 0px;"></h2>
 				<div id="participants"></div>
 			</div>
-			<div id="chatbox" class="chat-box col-3" style="display: none;">
+			<div id="chatbox" class="col-3" style="display: none;">
 				<div class="main-wrapper">
 					<div class="cgl-live-chat">
 						<div class="chat-wrapper">
@@ -50,24 +50,22 @@
 											<div class="chat-text">애들아 반가워 ~ !</div>
 										</div>
 									</div>
-								</div>											
-								<div class="chat-item">
-									<div class="d-flex">
-										<img src="http://www.sisaweek.com/news/photo/201801/101675_82604_3521.jpg" alt="">
-										<div class="p-1">
-											<div class="d-flex align-items-end">
-												<div class="sender-name"><a href="#">강호동</a></div>
-												<div class="chat-time">09:54<i class="fas fa-thumbtack"></i></div>
-											</div>																		
-											<div class="chat-text">안녕하십니까</div>
-										</div>
-									</div>
+								</div>									
+								<div class="chat-item d-flex">									
+									<img class="chat-profile-img" src="http://www.sisaweek.com/news/photo/201801/101675_82604_3521.jpg" alt="">
+									<div class="chat-text-wrapper p-1">
+										<div class="chat-name-tag d-flex align-items-end">
+											<div class="sender-name"><a href="#">강호동</a></div>
+											<div class="chat-time">09:54<i class="fas fa-thumbtack"></i></div>
+										</div>																		
+										<div class="chat-text">안녕하십니까</div>
+									</div>									
 								</div>
 							</div>												
 							<div class="chat-message">
 								<form action="#">
 									<div class="input-group align-items-center">
-										<input type="text" class="form-control" placeholder="Type something...">
+										<input type="text" class="form-control" placeholder="여기에 메시지를 입력하세요">
 										<div class="input-group-append">
 											<button class="" type="button" id="button-addon2">
 												<img src="https://github.com/suryavmds/Live-chat-HTML-design--like-YT-chat-/blob/master/assets/img/send-btn.svg?raw=true" alt="">
@@ -122,14 +120,14 @@ export default {
 		openChatBox(){
 			if (document.getElementById('chatbox').style.display == 'none')
 			{
-				document.getElementById('room').class = 'col-9'
-				document.getElementById('chatbox').class = 'col-3'
+				document.getElementById('room').className = 'col-9'
+				document.getElementById('chatbox').className = 'col-3'
 				document.getElementById('chatbox').style.display = 'block'
 				}
 			else{
 				document.getElementById('chatbox').style.display = 'none'
-				document.getElementById('room').class = 'col-12'
-				document.getElementById('chatbox').class = ''
+				document.getElementById('room').className = 'col-12'
+				document.getElementById('chatbox').className = ''
 			}
 		}
   }
@@ -195,20 +193,36 @@ a {
 }
 </style>
 <style scoped>
+#room{
+	min-width: 310px;
+}
 /* chatting */
 
-.chat-box{
+#chatbox{
   background-color: #ffffff;
 	padding: 0;
   margin: 0;
-	height: 100%;
+	height: 100vh;
 }
+ .chat-profile-img{
+
+} 
+
+.chat-text-wrapper{
+
+}
+
+.chat-name-tag{
+
+}
+
 .main-wrapper{
 	/* background-color: #080A0D;
 	height: 100vh;
 	width: 100%; */
 	display: grid;
 	place-items:center;
+	height: 100%;
 }
 ::-webkit-scrollbar {
   width: 6px;
@@ -223,14 +237,16 @@ a {
 }
 /*-----------------------라이브 채팅-------------------------*/
 .cgl-live-chat{
-	max-width: 550px;
+	width: 100%;
+	height: 100%;
 }
 .cgl-live-chat .chat-wrapper {
 	background-color: #141921;
-	border: 8px solid #141921;
+	border: 0px solid #141921;
 	box-sizing: border-box;
-	height: 937px;
-	width: 385px;
+	height: 100%;
+	width: 100%;
+	position: relative;
 }
 
 .cgl-live-chat .chat-wrapper .chat-title {
@@ -331,6 +347,9 @@ a {
 .cgl-live-chat .chat-wrapper .chat-message {
 	background-color: #23272D;
 	padding: 6px;
+	position: absolute;
+	width: 100%;
+	bottom: 50px;
 }
 
 .cgl-live-chat .chat-wrapper .chat-message input {
@@ -401,9 +420,7 @@ a {
 
 </style>
 <style>
-#participants {
-	
-}
+
 .participant {
 	margin: 0px 2px;
   display: inline-block;
