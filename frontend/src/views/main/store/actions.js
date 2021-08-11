@@ -23,8 +23,6 @@ export function requestMyprofile ({state}, token) {
   const url = 'http://localhost:8080/users'
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
 
-  return $axios.get(url, header)
-
   $axios.get(url, header)
   .then(function (result) {
     console.log(result.data)
@@ -38,10 +36,84 @@ export function requestMyprofile ({state}, token) {
   .catch(function (err) {
     console.log('에러 정보', err.response)
   })
-  return
-
 }
 
+export function updateStudent (context, payload){
+  console.log('updateStudent')
+  const url = 'http://localhost:8080/users/' + localStorage.getItem('id')
+  let header = { headers: { 'Content-Type': 'multipart/form-data' } }
+
+  $axios.post(url, payload, header)
+  .then(({ data }) => {
+    console.log('성공하면 출력해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    console.log(data)
+    // if(data.position === '학생'){
+    //   context.commit('rootMain/setStudentMypageInfo', data, {root: true})
+    //   // store.dispatch('rootMain/setMypageInfo', result.data)
+    // }else{
+    //   context.commit('rootMain/setTeacherMypageInfo', data, {root: true})
+    // }
+  })
+  .catch(function (err) {
+    const status = err.response.request.status
+    if (status == 500) {
+      Swal.fire({
+        title: '이런!',
+        text: '서버 오류가 발생했습니다..',
+        icon: 'error',
+      })
+    } else{
+      Swal.fire({
+        title: '이런!',
+        text: '수정에 실패했습니다..',
+        icon: 'error',
+      })
+    }
+  })
+}
+
+export function updateTeacher (context, payload){
+  console.log('updateTeacher')
+  const url = 'http://localhost:8080/users?id=' + localStorage.getItem('id') + '&classId=' + localStorage.getItem('classId')
+  let header = { headers: { "Content-Type": "multipart/form-data" } }
+
+  $axios.post(url, payload, header)
+  .then(({ data }) => {
+    console.log(data)
+    // if(data.position === '학생'){
+    //   context.commit('rootMain/setStudentMypageInfo', data, {root: true})
+    //   // store.dispatch('rootMain/setMypageInfo', result.data)
+    // }else{
+    //   context.commit('rootMain/setTeacherMypageInfo', data, {root: true})
+    // }
+  })
+  .catch(function (err) {
+    const status = err.response.request.status
+    if (status == 500) {
+      Swal.fire({
+        title: '이런!',
+        text: '서버 오류가 발생했습니다..',
+        icon: 'error',
+      })
+    } else{
+      Swal.fire({
+        title: '이런!',
+        text: '수정에 실패했습니다..',
+        icon: 'error',
+      })
+    }
+  })
+}
+
+export function deleteUser({ state }, payload, token){
+  console.log('deleteUser', state, payload)
+  console.log(state)
+
+  const url = 'http://localhost:8080/users/'
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  let body = payload
+  return $axios.delete(url, body, header)
+}
 
 export function requestClass ({ state }, token) {
   console.log('requestClass')
@@ -57,6 +129,23 @@ export function requestClassMem ({ state }, token) {
   const url = 'http://localhost:8080/class/myclass/' + localStorage.getItem('classId');
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
 
+  return $axios.get(url, header)
+}
+
+export function updateTimetable ({ state }, payload, token) {
+  console.log('updateTimetable')
+  console.log(localStorage.getItem('classId'))
+  console.log(payload);
+  const url = 'http://localhost:8080/class/timetable/' + localStorage.getItem('classId');
+  //let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.post(url, payload)
+}
+
+export function getRanking ({ state }, token) {
+  console.log('getRanking')
+  console.log(localStorage.getItem('classId'))
+  const url = 'http://localhost:8080/class/ranking/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
   return $axios.get(url, header)
 }
 
@@ -121,8 +210,9 @@ export function deleteDetail ({state}, payload){
   return $axios.delete(url)
 }
 export function setBoardDetail({ state }, response){
-  console.log('setBoardDetail')
+  console.log('setBoardDetail response: ', response)
   state.boardDetail.boardId = response.boardId
+  state.boardDetail.userId = response.userId
   state.boardDetail.title = response.title
   state.boardDetail.content = response.content
   state.boardDetail.userName = response.writer
@@ -139,10 +229,13 @@ export function requestBoardInsert({state}, payload){
   const url = 'http://localhost:8080/board/';
   return $axios.post(url, payload)
 }
+export function requestBoardUpdate({state}, payload){
+  console.log('requestBoardUpdate')
+  const url = 'http://localhost:8080/board/';
+  return $axios.patch(url, payload)
+}
 
 export function setClassInfo ({ state }, response) {
-  console.log("이거 대나요?")
-
   state.classInfo.grade = response.grade
   state.classInfo.classNo = response.classNo
   state.classInfo.timetable = response.timetable
@@ -153,7 +246,11 @@ export function setClassInfo ({ state }, response) {
 }
 
 export function setClassMemList ({ state }, response) {
-  console.log("데이터 넣으러 오나?")
   console.log(response)
   state.classMemList.list = response
+}
+
+export function setRankingList ({ state }, response) {
+  console.log(response)
+  state.rankingList = response
 }

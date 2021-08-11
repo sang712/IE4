@@ -63,7 +63,7 @@ export default {
         store.state.classInfo.timetable = result.data
       })
       .catch(function (err) {
-        console.log("updateTimetable error")
+        console.log("updateTimetable error", err)
       })
     }
 

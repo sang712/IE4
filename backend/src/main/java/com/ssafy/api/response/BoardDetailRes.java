@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @ApiModel("BoardDetailResponse")
 public class BoardDetailRes {
     int boardId;
+    int userId;
     String boardType;
     String writer;
     String title;
@@ -29,6 +30,7 @@ public class BoardDetailRes {
     public static BoardDetailRes of(Board board, BoardFile boardFile) {
         BoardDetailRes detailRes = new BoardDetailRes();
         detailRes.setBoardId(board.getId());
+        detailRes.setUserId(board.getUserId());
         detailRes.setBoardType(board.getBoardType());
         detailRes.setWriter(board.getUserName());
         detailRes.setClassId(board.getClassId());

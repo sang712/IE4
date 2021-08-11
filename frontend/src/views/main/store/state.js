@@ -121,8 +121,8 @@ const newsboard = reactive({
 
 const boardDetail = reactive({
     //detail
-    no: 0,
     boardId: 0,
+    userId:"",
     title: "",
     content: "",
     userName: "",

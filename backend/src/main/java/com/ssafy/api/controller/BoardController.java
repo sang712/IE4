@@ -51,17 +51,31 @@ public class BoardController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @PatchMapping("/{boardId}")
-    @ApiOperation(value = "게시판 글 수정", notes = "글의 제목 및 내용을 수정한다.")
-    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<? extends BaseResponseBody> update(
-            @PathVariable @ApiParam(value="게시판 정보", required = true) Integer boardId, @RequestBody @ApiParam(value="게시판 아이디", required = true) BoardUpdatePatchReq boardUpdateInfo) {
+    @PatchMapping(value = "", consumes = {"multipart/form-data"})
+    @ApiOperation(value = "게시판 글과 파일 수정", notes = "게시판에 글 및 파일업로드 수정한다.")
+    public ResponseEntity<? extends BaseResponseBody> update(Board board, MultipartFile files) throws IOException {
 
-        Board board = boardService.updateBoard(boardUpdateInfo, boardId);
+        System.out.println("boardfile 이 있나요? >>>>>" + files);
+        if (files != null){
+            BoardFile boardfile = boardService.updateBoard(files, board);
+        }else{
+            Board boardfile = boardService.updateBoard(board);
+        }
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
+
+//    @PatchMapping("/{boardId}")
+//    @ApiOperation(value = "게시판 글 수정", notes = "글의 제목 및 내용을 수정한다.")
+//    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
+//    public ResponseEntity<? extends BaseResponseBody> update(
+//            @PathVariable @ApiParam(value="게시판 정보", required = true) Integer boardId, @RequestBody @ApiParam(value="게시판 아이디", required = true) BoardUpdatePatchReq boardUpdateInfo) {
+//
+//        Board board = boardService.updateBoard(boardUpdateInfo, boardId);
+//
+//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//    }
 
     @DeleteMapping("/{boardId}")
     @ApiOperation(value = "게시물 삭제", notes = "해당 게시물을 삭제한다..")
