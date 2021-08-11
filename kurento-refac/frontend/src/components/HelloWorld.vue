@@ -17,7 +17,7 @@
 					</p>
 				</form>
 			</div>
-			<div id="room"  style="display: none;">
+			<div id="room"  style="display: none;" class="d-flex justify-content-center">
 				<h2 id="room-header" style="margin: 10px 0px;"></h2>
 				<div id="participants"></div>
 			</div>
@@ -124,7 +124,7 @@ export default {
 			{
 				document.getElementById('room').class = 'col-9'
 				document.getElementById('chatbox').class = 'col-3'
-				document.getElementById('chatbox').style.display = 'flex'
+				document.getElementById('chatbox').style.display = 'block'
 				}
 			else{
 				document.getElementById('chatbox').style.display = 'none'
