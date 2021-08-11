@@ -78,12 +78,48 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId) {
-        Board board = boardRepository.findById(boardId).get();
+    public Board updateBoard(Board board) throws IOException {
+        System.out.println("업데이트 할 board >>>>>> " + board.toEntity());
+        int boardId = board.getId();
+        System.out.println("업데이트 할 board Id >>>>>> " + boardId);
+        Board updateboard = boardRepository.findById(boardId).get();
+        updateboard.setTitle(board.getTitle());
+        updateboard.setContent(board.getContent());
+       return boardRepository.save(updateboard);
+    }
 
-        board.setTitle(boardUpdateInfo.getTitle());
-        board.setContent(boardUpdateInfo.getContent());
-        return boardRepository.save(board);
+    @Override
+    public BoardFile updateBoard(MultipartFile files, Board board) throws IOException {
+        int boardId = board.getId();
+        Board updateboard = boardRepository.findById(boardId).get();
+        updateboard.setTitle(board.getTitle());
+        updateboard.setContent(board.getContent());
+        boardRepository.save(updateboard);
+
+        Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
+        if (boardfile.isPresent()){
+            System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
+            boardFileRepository.delete(boardfile.get());
+        }
+        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
+        File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+
+        String fileName = files.getOriginalFilename();
+        UUID uuid = UUID.randomUUID();
+        //file extension
+        String extension = FilenameUtils.getExtension(fileName); // vs FilenameUtils.getBaseName()
+        String savingFileName = uuid + "." + extension;
+        File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+
+        System.out.println("파일 경로" + destFile);
+        files.transferTo(destFile);
+
+        // Table Insert
+        String boardFileUrl = uploadFolder + "/" + savingFileName;
+        BoardFile boardFile = new BoardFile(boardId,fileName,files.getSize(),boardFileUrl );
+        System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
+
+        return boardFileRepository.save(boardFile.toEntity());
     }
 
     @Override
@@ -121,48 +157,6 @@ public class BoardServiceImpl implements BoardService{
             return null;
         }
     }
-//일반 게시글 목록
-//    @Override
-//    public List<Board> getBoardList(int classId, String boardType) {
-//        List<Board> boards = boardRepository.findByClassIdAndBoardType(classId, boardType);
-//        List<Board> boardList = new ArrayList<>();
-//
-//        for(Board boardEl : boards) {
-//            Board board = new Board();
-//            board.setId(boardEl.getId());
-//            board.setUserId(boardEl.getUserId());
-//            board.setClassId(boardEl.getClassId());
-//            board.setUserName(boardEl.getUserName());
-//            board.setTitle(boardEl.getTitle());
-//            board.setContent(boardEl.getContent());
-//            board.setBoardType(boardEl.getBoardType());
-//            board.setRegDt(boardEl.getRegDt());
-//
-//            boardList.add(board);
-//        }
-//        return boardList;
-//    }
-//
-//    @Override
-//    public List<Board> searchBoard(int classId, String boardType, String keyword) {
-//        List<Board> boards = boardRepository.findByClassIdAndBoardTypeAndTitleContaining(classId, boardType, keyword);
-//        List<Board> boardList = new ArrayList<>();
-//
-//        for(Board boardEl : boards) {
-//            Board board = new Board();
-//            board.setId(boardEl.getId());
-//            board.setUserId(boardEl.getUserId());
-//            board.setClassId(boardEl.getClassId());
-//            board.setUserName(boardEl.getUserName());
-//            board.setTitle(boardEl.getTitle());
-//            board.setContent(boardEl.getContent());
-//            board.setBoardType(boardEl.getBoardType());
-//            board.setRegDt(boardEl.getRegDt());
-//
-//            boardList.add(board);
-//        }
-//        return boardList;
-//    }
 
     @Override
     public Page<Board> boardPage(int classId, String boardType, Pageable pageRequest) {

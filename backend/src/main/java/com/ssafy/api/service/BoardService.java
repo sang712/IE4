@@ -12,7 +12,8 @@ import java.io.IOException;
 public interface BoardService {
     BoardFile insertBoard(MultipartFile files, Board board) throws IOException;
     Board insertBoard(Board board) throws IOException;
-    Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId);
+    Board updateBoard(Board board)throws IOException;
+    BoardFile updateBoard(MultipartFile files, Board board) throws IOException;
     int deleteBoard(int boardId);
     int deleteBoardFile(int boardId);
     BoardFile detailBoardFile(int boardId);
