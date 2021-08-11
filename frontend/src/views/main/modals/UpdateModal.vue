@@ -70,9 +70,11 @@ export default {
       .create(document.querySelector('#divEditorUpdate'))
       .then(editor => {
           editorData = editor
+          Swal.fire({ title: '성공!', text: '수정이 완료되었습니다.', icon: 'success', })
       })
       .catch(err => {
-          console.error("querySelector" , err);
+          console.error("querySelector" , err)
+          Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
       });
 
       // bootstrap modal show event hook

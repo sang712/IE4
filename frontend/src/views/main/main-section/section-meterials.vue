@@ -6,7 +6,7 @@
         <!-- <div class="header-number">No</div> -->
         <div class="header-title" style="text-align:center">제목</div>
         <div class="header-author">작성자</div>
-        <div class="header-date">작성일</div>
+        <div class="header-date">작성 날짜</div>
       </li>
       <li v-for="(board, index) in board.list" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row" >
         <!-- <div class="row-number">{{index}}</div> -->
@@ -112,8 +112,7 @@ export default {
       console.log("업데이트 페이지 : page", state.page)
       store.dispatch('rootMain/requestBoardList', {currentPageIndex : state.page})
       .then(function (result) {
-        console.log("갖고온 데이터는 말이지")
-        console.log(result.data)
+        console.log("갖고온 데이터: ", result.data)
         console.log("현재페이지 : ", result.data.pageable.pageNumber)
         console.log("총 데이터 수 : ", result.data.totalElements, "총 페이지 : ", result.data.totalPages)
         store.dispatch('rootMain/setBoardList', result.data)
@@ -121,8 +120,7 @@ export default {
 
       })
       .catch(function (err) {
-        console.log("requestBoardList error")
-        console.log(err)
+        console.log("requestBoardList error: ", err)
       })
     }
     const showInsertModal = () => {
@@ -137,14 +135,12 @@ export default {
       console.log('삭제시도!')
       store.dispatch('rootMain/deleteDetail', {boardId : boardId})
       .then(function (result) {
-        console.log("삭제성공")
-        console.log(result.data)
+        console.log("삭제성공", result.data)
         state.detailModal.hide()
         router.go()
       })
       .catch(function (err) {
-        console.log("deleteDetail error")
-        console.log(err)
+        console.log("deleteDetail error", err)
       })
     }
 
@@ -170,6 +166,7 @@ export default {
   margin: 20px 0px;
 }
 .meterials-table {
+  min-height: 430px;
   padding: 0px;
 }
 .meterials-table li {
