@@ -82,7 +82,8 @@ export default {
     });
 
     const state = reactive({
-      file : mypageInfo.nProfileImgUrl,
+      // mypageInfo : computed(() => store.state.rootMain.mypageInfo),
+      file : store.state.rootMain.mypageInfo.profileImgUrl,
       nSex : localStorage.getItem('sex')
     });
 
@@ -99,21 +100,24 @@ export default {
       if(localStorage.getItem('position') == '학생'){
         var updateStudentData = new FormData()
         var attachFiles = document.querySelector("#inputFileUploadInsert")
+        updateStudentData.append("id", localStorage.getItem('id'))
         updateStudentData.append("password", store.state.rootMain.mypageInfo.password)
         updateStudentData.append("phone", store.state.rootMain.mypageInfo.phone)
         updateStudentData.append("address", store.state.rootMain.mypageInfo.address)
         updateStudentData.append("parentPhone", store.state.rootMain.mypageInfo.parentPhone)
         updateStudentData.append("passwordAnswer", store.state.rootMain.mypageInfo.passwordAnswer)
-        updateStudentData.append("file", attachFiles.files[0])
+        updateStudentData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateStudent', updateStudentData)
       }else{
         var updateTeacherData = new FormData()
         var attachFiles = document.querySelector("#inputFileUploadInsert")
+        updateTeacherData.append("id", localStorage.getItem('id'))
+        updateTeacherData.append("classId", localStorage.getItem('classId'))
         updateTeacherData.append("password", store.state.rootMain.mypageInfo.password)
         updateTeacherData.append("phone", store.state.rootMain.mypageInfo.phone)
         updateTeacherData.append("address", store.state.rootMain.mypageInfo.address)
         updateTeacherData.append("classMotto", store.state.rootMain.mypageInfo.classMotto)
-        updateTeacherData.append("file", attachFiles.files[0])
+        updateTeacherData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateTeacher', updateTeacherData)
       }
     };
