@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-		<div id="wrapper" class="d-flex">
+		<div id="wrapper" class="d-flex justify-content-center">
 			<div id="join" class="animate join">
 				<h1>수업에 입장하세요!</h1>
 				<form @submit.prevent="register" accept-charset="UTF-8">
@@ -17,11 +17,11 @@
 					</p>
 				</form>
 			</div>
-			<div id="room"  style="display: none;" class="d-flex justify-content-center">
+			<div id="room"  style="display: none;" class="col-9">
 				<h2 id="room-header" style="margin: 10px 0px;"></h2>
 				<div id="participants"></div>
 			</div>
-			<div id="chatbox" class="chat-box" style="display: none;">
+			<div id="chatbox" class="chat-box col-3" style="display: none;">
 				<div class="main-wrapper">
 					<div class="cgl-live-chat">
 						<div class="chat-wrapper">
@@ -201,6 +201,7 @@ a {
   background-color: #ffffff;
 	padding: 0;
   margin: 0;
+	height: 100%;
 }
 .main-wrapper{
 	/* background-color: #080A0D;
@@ -228,6 +229,8 @@ a {
 	background-color: #141921;
 	border: 8px solid #141921;
 	box-sizing: border-box;
+	height: 937px;
+	width: 350px;
 }
 
 .cgl-live-chat .chat-wrapper .chat-title {
@@ -244,8 +247,8 @@ a {
 	background-color: #11151A;
 	display: flex;
 	flex-direction: column;
-	min-height: 400px;
-	max-height: 400px;
+	min-height: 77vh;
+	max-height: 77vh;
 	overflow-y: auto;
 	/*    justify-content: flex-end;*/
 }
