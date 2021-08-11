@@ -160,8 +160,13 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Page<Board> boardPage(int classId, String boardType, Pageable pageRequest) {
-        Page<Board> boardList = boardRepository.findByClassIdAndBoardType(classId, boardType, pageRequest);
-        return boardList;
+        if (classId == 100){
+            Page<Board> boardList = boardRepository.findByBoardType(boardType, pageRequest);
+            return boardList;
+        }else{
+            Page<Board> boardList = boardRepository.findByClassIdAndBoardType(classId, boardType, pageRequest);
+            return boardList;
+        }
     }
 
     @Override

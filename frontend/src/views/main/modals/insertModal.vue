@@ -99,7 +99,7 @@ export default {
       formData.append("title", state.title);
       formData.append("content", editorData.getData());
       formData.append("classId",localStorage.getItem('classId'))
-      formData.append("userId",localStorage.getItem('userId'))
+      formData.append("userId",localStorage.getItem('id'))
       formData.append("userName",localStorage.getItem('name'))
 
       var attachFiles = document.querySelector("#inputFileUploadInsert");
@@ -113,11 +113,13 @@ export default {
 
       store.dispatch('rootMain/requestBoardInsert', formData)
       .then(function (result){
+        Swal.fire({ title: '성공', text: '게시글 작성이 완료되었습니다! ', icon: 'success', })
         console.log("성공")
         closeModal();
         router.go();
       })
       .catch(function (err) {
+        Swal.fire({ title: '이런!', text: '작성 실패했습니다.', icon: 'error', })
         console.log("requestBoardInsert erre :", err)
       })
     }

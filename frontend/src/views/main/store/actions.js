@@ -179,10 +179,9 @@ export function setBoardList({ state }, response){
 
 export function requestNewsBoardList ({ state }, payload) {
   console.log('requestNewsBoardList')
-  console.log(localStorage.getItem('classId'))
   const url = 'http://localhost:8080/board';
 
-  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"공지사항", page:payload.currentPageIndex}})
+  return $axios.get(url,  {params:{classId:100, boardType:"공지사항", page:payload.currentPageIndex}})
 }
 
 export function requestBoardList ({ state }, payload) {
@@ -216,6 +215,12 @@ export function setBoardDetail({ state }, response){
   state.boardDetail.regDt = response.regDt
   state.boardDetail.fileName = response.fileName
   state.boardDetail.fileUrl = response.fileUrl
+  if (response.userId == localStorage.getItem('id')){
+    console.log("본인이 작성한 글? ",state.boardDetail.userId , " 현재 유저:",localStorage.getItem('userId')  )
+    state.boardDetail.isOwner = true;
+  }else{
+    state.boardDetail.isOwner = false;
+  }
 }
 export function setBoardType({state}, payload){
   console.log("setBoardType")

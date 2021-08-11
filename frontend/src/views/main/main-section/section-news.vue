@@ -22,7 +22,7 @@
         :page-size="newsboard.limit"
         layout="prev, pager, next"
         :total="newsboard.totalListItemCount" @current-change="pageUpdated"></el-pagination>
-      <el-button class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
+      <el-button v-if="position" class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
     </div>
     <div>
     </div>
@@ -46,7 +46,6 @@ import UpdateModal from '../modals/UpdateModal.vue'
 //import VModal from 'vue-js-modal';
 
 import { Modal } from 'bootstrap';
-
 export default {
   name: 'section-news',
   components:{
@@ -66,8 +65,10 @@ export default {
       boardDetail: {},
       currentPage: 2,
       page : 1,
-      boardType: '공지사항'
+      boardType: '공지사항',
+      position : localStorage.getItem('position')=='교사' ? true : false,
     });
+
     store.dispatch('rootMain/setBoardType', state.boardType)
     .then(function (result) {
       console.log("boardType 저장 >> ", state.boardType)

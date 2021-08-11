@@ -116,7 +116,7 @@ const newsboard = reactive({
   content: "",
   userName: "",
   regDt: {},
-  isOwner:true,
+  isOwner:false,
 })
 
 const boardDetail = reactive({
@@ -130,7 +130,7 @@ const boardDetail = reactive({
 
     fileName: "",
     fileUrl:"",
-    isOwner:true,
+    isOwner:false,
 })
 
 const rankingList = reactive({})

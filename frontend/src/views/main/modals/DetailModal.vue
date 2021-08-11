@@ -29,8 +29,8 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button v-show="isOwner" @click="changeToUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">글 수정하기</button>
-        <button v-show="isOwner" @click="changeToDelete" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button">글 삭제하기</button>
+        <button v-show="boardDetail.isOwner" @click="changeToUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">글 수정하기</button>
+        <button v-show="boardDetail.isOwner" @click="changeToDelete" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button">글 삭제하기</button>
       </div>
     </div>
   </div>
@@ -49,7 +49,6 @@ export default {
     const state = reactive({
       fileUrl: computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
       file: null,
-      isOwner: true,
       boardDetail : computed(() => store.getters['rootMain/getBoardDetail']),
     })
     const changeToUpdate = () => {
@@ -58,7 +57,6 @@ export default {
     const changeToDelete = () =>{
       emit( 'call-parent-change-to-delete' );
     }
-
     // const changeFile = (fileEvent) => {
     //   if(fileEvent.target.file && fileEvent.target.file.length > 0){
     //     state.file = URL.createObjectURL(fileEvent.target.file);

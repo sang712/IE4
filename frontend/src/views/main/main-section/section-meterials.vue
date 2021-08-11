@@ -21,7 +21,7 @@
         :page-size="board.limit"
         layout="prev, pager, next"
         :total="board.totalListItemCount" @current-change="pageUpdated"></el-pagination>
-      <el-button class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
+      <el-button v-if="position" class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
     </div>
     <div>
     </div>
@@ -64,6 +64,7 @@ export default {
       currentPage: 2,
       page: 1,
       boardType: '학습자료',
+      position : localStorage.getItem('position')=='교사' ? true : false,
     });
 
     store.dispatch('rootMain/setBoardType', state.boardType)

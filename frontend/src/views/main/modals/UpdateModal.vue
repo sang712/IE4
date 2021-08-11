@@ -121,11 +121,13 @@ export default {
 
        store.dispatch('rootMain/requestBoardUpdate', formData)
        .then(function (result){
+         Swal.fire({ title: '성공', text: '게시글 수정 완료되었습니다! ', icon: 'success', })
          console.log("성공")
          closeModal();
          router.go();
        })
        .catch(function (err) {
+         Swal.fire({ title: '실패', text: '게시글 수정 실패했습니다.', icon: 'error', })
          console.log("requestBoardInsert erre :", err)
        })
     }
