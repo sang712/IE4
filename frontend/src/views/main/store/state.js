@@ -77,7 +77,7 @@ const board = reactive({
   //pagination
   listRowCount: 5,
   pageLinkCount: 10,
-  currentPageIndex: 2,
+  currentPageIndex: 1,
   totalListItemCount : 0,
   totalPageCount : 5,
 
@@ -91,6 +91,10 @@ const board = reactive({
   isOwner:true,
 })
 
+const boardType = reactive({
+  type: ''
+})
+
 const newsboard = reactive({
   //list
   list: [],
@@ -101,7 +105,7 @@ const newsboard = reactive({
   //pagination
   listRowCount: 5,
   pageLinkCount: 10,
-  currentPageIndex: 2,
+  currentPageIndex: 1,
   totalListItemCount : 0,
   totalPageCount : 5,
 
@@ -141,5 +145,6 @@ export default {
   classInfo,
   classMemList,
   boardDetail,
+  boardType,
   rankingList,
 }

@@ -11,8 +11,10 @@ import java.io.IOException;
 
 public interface BoardService {
     BoardFile insertBoard(MultipartFile files, Board board) throws IOException;
+    Board insertBoard(Board board) throws IOException;
     Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId);
     int deleteBoard(int boardId);
+    int deleteBoardFile(int boardId);
     BoardFile detailBoardFile(int boardId);
     Board detailBoard(int boardId);
 
@@ -20,4 +22,5 @@ public interface BoardService {
     //List<Board> searchBoard(int classId, String boardType, String keyword);
     Page<Board> boardPage(int classId, String boardType, Pageable pageRequest);
     Page<Board> searchBoardPage(int classId, String boardType, Pageable pageRequest, String keyword);
+
 }

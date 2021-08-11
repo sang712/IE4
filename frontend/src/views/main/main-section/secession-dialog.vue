@@ -1,6 +1,6 @@
 <template>
   <el-dialog custom-class="secession-dialog" title="계정 탈퇴" v-model="state.dialogVisible" @close="handleClose">
-    <span>진심으로 탈퇴를 원하신다면 비밀번호를 다시 한번 입력해주세요.</span>
+    <span>탈퇴를 원하신다면 비밀번호를 다시 한번 입력해주세요.</span>
     <el-form :model="state.form" :rules="state.rules" ref="secessionForm" :label-position="state.form.align">
       <el-form-item prop="password" label="비밀번호" :label-width="state.formLabelWidth">
         <el-input v-model="state.form.password" autocomplete="off" show-password></el-input>
@@ -8,7 +8,6 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="state.dialogVisible = false">Cancel</el-button>
         <el-button type="primary" @click="clickSecessionConfirm">Confirm</el-button>
       </span>
     </template>
@@ -57,9 +56,10 @@ export default {
     })
 
     const clickSecessionConfirm = function() {
-      loginForm.value.validate((valid) => {
+      secessionForm.value.validate((valid) => {
         if (valid){
-          store.dispatch('rootMain/deleteUser', { password: state.form.password }, localStorage.getItem('jwt'))
+          console.log(state.form.password)
+          store.dispatch('rootMain/deleteUser', { id : localStorage.getItem('id'), password : state.form.password })
           .then(function (result) {
             localStorage.removeItem('jwt')
             localStorage.removeItem('id')
@@ -71,13 +71,14 @@ export default {
             localStorage.removeItem('sex')
             localStorage.removeItem('snum')
             localStorage.removeItem('teacherName')
+
+            Swal.fire({
+              title: '성공!',
+              text: '계정이 삭제되었습니다..',
+              icon: 'error',
+            }) // 같이 쓸수있으려나,,
             emit('closeSecessionDialog')
             router.go()
-            Swal.fire({
-                  title: '성공!',
-                  text: '계정이 삭제되었습니다..',
-                  icon: 'error',
-            }) // 같이 쓸수있으려나,,
           })
           .catch(function (err) {
             const status = err.response.request.status

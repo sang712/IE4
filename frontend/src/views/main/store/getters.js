@@ -28,6 +28,9 @@ export function getClassInfo (state) {
 export function getClassMemList (state) {
 	return state.classMemList
 }
+export function getBoardType (state) {
+  return state.boardType
+}
 // rankingList 가져오기
 export function getRankingList (state) {
 	return state.rankingList

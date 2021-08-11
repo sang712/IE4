@@ -73,6 +73,11 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public Board insertBoard(Board board) throws IOException {
+        return boardRepository.save(board);
+    }
+
+    @Override
     public Board updateBoard(BoardUpdatePatchReq boardUpdateInfo, int boardId) {
         Board board = boardRepository.findById(boardId).get();
 
@@ -86,6 +91,19 @@ public class BoardServiceImpl implements BoardService{
         Optional<Board> board = boardRepository.findById(boardId);
         boardRepository.delete(board.get());
         return 1;
+    }
+
+    @Override
+    public int deleteBoardFile(int boardId) {
+        System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
+        Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
+        System.out.println("boardfile >>>> " + boardfile);
+        try {
+            boardFileRepository.delete(boardfile.get());
+            return 1;
+        } catch (Exception e) {
+            return 2;
+        }
     }
 
     @Override

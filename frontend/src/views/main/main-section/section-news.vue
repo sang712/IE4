@@ -15,24 +15,34 @@
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
     </ul>
+    <!-- :page-size="newsboard.limit" :current-page="currentPage" -->
     <div class="lower-sidebar">
-      <el-pagination 
-        :page-size="newsboard.limit" 
-        :pager-count="5" 
-        layout="prev, pager, next" 
-        :total="newsboard.totalListItemCount"></el-pagination>
+      <el-pagination
+        :pager-count="5"
+        :page-size="newsboard.limit"
+        layout="prev, pager, next"
+        :total="newsboard.totalListItemCount" @current-change="pageUpdated"></el-pagination>
       <el-button class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
     </div>
-    <detail-modal></detail-modal>
-    <insert-modal></insert-modal>
+    <div>
+    </div>
+    <!-- v-on:call-parent-change-to-update="changeToUpdate" -->
+    <detail-modal v-on:call-parent-change-to-update="changeToUpdate" v-on:call-parent-change-to-delete="changeToDelete(boardDetail.boardId)"></detail-modal>
+    <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
+    <update-modal v-on:call-parent-update="closeAfterUpdate"></update-modal>
   </div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
+import { reactive, computed, toRefs } from 'vue'
+import { useRouter } from 'vue-router'
+
 import sectionPagination from "./section-pagination.vue"
 import DetailModal from "../modals/DetailModal.vue"
 import InsertModal from "../modals/InsertModal.vue"
+import UpdateModal from '../modals/UpdateModal.vue';
+
 //import VModal from 'vue-js-modal';
 
 import { Modal } from 'bootstrap';
@@ -43,69 +53,118 @@ export default {
     sectionPagination,
     DetailModal,
     InsertModal,
+    UpdateModal,
   },
-  data(){
-    return{
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+    const state = reactive({
       detailModal: null,
       insertModal: null,
+      updateMadal : null,
       newsboard: {},
       boardDetail: {},
-      currentPage: 1,
-    }
-  },
-  created() {
-    const store = useStore()
+      currentPage: 2,
+      page : 1,
+      boardType: '공지사항'
+    });
+    store.dispatch('rootMain/setBoardType', state.boardType)
+    .then(function (result) {
+      console.log("boardType 저장 >> ", state.boardType)
+    })
+    .catch(function (err) {
+      console.log("setBoardType error")
+    })
 
     store.dispatch('rootMain/requestNewsBoardList', localStorage.getItem('jwt'))
     .then(function (result) {
       console.log("갖고온 데이터는 말이지")
       console.log(result.data)
-      console.log("현재페이지 : ", result.data.pageable.pageNumber)
       console.log("총 데이터 수 : ", result.data.totalElements, "총 페이지 : ", result.data.totalPages)
       store.dispatch('rootMain/setNewsBoardList', result.data)
+
+      state.newsboard = store.getters['rootMain/getNewsBoardList']
     })
     .catch(function (err) {
       console.log("requestNewsBoardList error")
     })
 
-    this.newsboard = store.getters['rootMain/getNewsBoardList']
-    console.log(">>>>> newboard:", this.newsboard)
+    const onMounted = () => {
+      state.detailModal = new Modal(document.getElementById('detailModal'));
+      state.insertModal = new Modal(document.getElementById('insertModal'));
+      state.updateModal = new Modal(document.getElementById('updateModal'));
+    }
 
-  },
-  movePage(pageIndex){
-      console.log("BoardMainVue : movePage : pageIndex : " + pageIndex );
-      store.dispatch('rootMain/setNewsMovePage', pageIndex.$ref.detailModal);
-    console.log("가져왔니? : " , this.detailModal)
-  },
-  mounted() {
-    this.detailModal = new Modal(document.getElementById('detailModal'));
-    this.insertModal = new Modal(document.getElementById('insertModal'));
-  },
-  methods:{
-    getboardDetail(boardId){
+    const getboardDetail = (boardId) => {
       console.log("접근은 한거니?", boardId)
-      this.$store.dispatch('rootMain/requestBoardDetail', {boardId:boardId})
+      store.dispatch('rootMain/requestBoardDetail', {boardId:boardId})
       .then( (result) => {
         console.log("상세정보 : ", result.data)
-        this.$store.dispatch('rootMain/setBoardDetail', result.data)
+        store.dispatch('rootMain/setBoardDetail', result.data)
         .then( (res)=>{
-          this.boardDetail = this.$store.getters['rootMain/getBoardDetail']
-          console.log("boardDetail 정보는 : ", this.boardDetail)
-          this.detailModal.show();
+          state.boardDetail = store.getters['rootMain/getBoardDetail']
+          console.log("boardDetail 정보는 : ", state.boardDetail)
+          state.detailModal = new Modal(document.getElementById('detailModal'));
+          state.detailModal.show()
         })
+      })
+      .catch(function (err) {
+        console.log("requestBoardDetail error")
+        console.log(err)
+      })
+    }
+
+    const pageUpdated = (val) => {
+      state.page = val
+      console.log("업데이트 페이지 : page", state.page)
+      store.dispatch('rootMain/requestNewsBoardList', {currentPageIndex : state.page})
+      .then(function (result) {
+        console.log("갖고온 데이터는 말이지")
+        console.log(result.data)
+        console.log("현재페이지 : ", result.data.pageable.pageNumber)
+        console.log("총 데이터 수 : ", result.data.totalElements, "총 페이지 : ", result.data.totalPages)
+        store.dispatch('rootMain/setNewsBoardList', result.data)
+        state.newsboard = store.getters['rootMain/getNewsBoardList']
+
       })
       .catch(function (err) {
         console.log("requestNewsBoardList error")
         console.log(err)
       })
-    },
-    showInsertModal(){
-      this.insertModal.show();
-    },
-    closeAfterInsert(){
-      this.insertModal.hide();
+    }
+    const showInsertModal = () => {
+      state.insertModal = new Modal(document.getElementById('insertModal'));
+      state.insertModal.show();
+    }
+    const closeAfterInsert = () => {
+      state.insertModal.hide();
       //this.freeboardList();
-    },
+    }
+    const changeToDelete = (boardId) => {
+      console.log('삭제시도!')
+      store.dispatch('rootMain/deleteDetail', {boardId : boardId})
+      .then(function (result) {
+        console.log("삭제성공")
+        console.log(result.data)
+        state.detailModal.hide()
+        router.go()
+      })
+      .catch(function (err) {
+        console.log("deleteDetail error")
+        console.log(err)
+      })
+    }
+    const changeToUpdate = () => {
+      state.detailModal.hide();
+      state.updateModal = new Modal(document.getElementById('updateModal'));
+      state.updateModal.show();
+    }
+    const closeAfterUpdate = () => {
+      state.updateModal.hide();
+      router.go()
+    }
+
+    return { ...toRefs(state), onMounted, getboardDetail, pageUpdated, showInsertModal, closeAfterInsert, changeToDelete, changeToUpdate, closeAfterUpdate }
   },
 }
 </script>
