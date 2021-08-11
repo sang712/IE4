@@ -16,11 +16,16 @@
             <ckeditor :editor="editor" v-model="boardDetail.content"></ckeditor>
           </div>
         </div>
-
-        <div class="mt-3 mb-3" id="imgFileUploadInsertWrapper">
+        <div>
+          <p style="text-align:left">첨부 파일</p>
           <img style="width: 60%; height: 10%;" v-bind:src="fileUrl">
-          <p style="width: 60%; height: 10%; font-size: 120% ;margin-left: 82px; ">파일 변경</p>
-          <input style="margin-left: 40px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
+        </div>
+        <div class="form-check mb-3">
+          <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
+          <label class="form-check-label" for="chkFileUploadInsert">파일 변경</label>
+        </div>
+        <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
+          <input @change="changeFile" type="file" id="inputFileUploadInsert">
           <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
             <img v-bind:src="file">
           </div>
@@ -52,7 +57,7 @@ export default {
       title: '',
       attachFile: false,
       fileUrl: computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
-      file : computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
+      file : null,
       editor: ClassicEditor,
       fileName: computed(() => store.getters['rootMain/getBoardDetail'].fileName),
       boardType: computed(() => store.getters['rootMain/getBoardType'].type),
@@ -104,22 +109,23 @@ export default {
       formData.append("userName",localStorage.getItem('name'))
 
       var attachFiles = document.querySelector("#inputFileUploadInsert");
-      console.log("attachFiles >>> ", attachFiles)
       if (attachFiles != null){
+        console.log("attachFiles >>> ",  attachFiles)
+        console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
+        console.log("attachFiles >>> ",  attachFiles.files[0])
         formData.append("files", attachFiles.files[0])
       }
-      console.log("boardType >>> ", state.boardType)
       formData.append("boardType",state.boardType)
 
-      store.dispatch('rootMain/requestBoardUpdate', formData)
-      .then(function (result){
-        console.log("성공")
-        closeModal();
-        router.go();
-      })
-      .catch(function (err) {
-        console.log("requestBoardInsert erre :", err)
-      })
+       store.dispatch('rootMain/requestBoardUpdate', formData)
+       .then(function (result){
+         console.log("성공")
+         closeModal();
+         router.go();
+       })
+       .catch(function (err) {
+         console.log("requestBoardInsert erre :", err)
+       })
     }
 
     const closeModal = () => {
@@ -131,3 +137,19 @@ export default {
   },
 }
 </script>
+<style>
+/* CKEditor 는 vue 와 별개로 rendering 되어서 scope 를 넣으면 반영되지 않는다. */
+.ck-editor__editable {
+    min-height: 300px !important;
+}
+
+.thumbnail-wrapper{
+	margin-top: 5px;
+}
+
+.thumbnail-wrapper img {
+	width: 100px !important;
+	margin-right: 5px;
+	max-width: 100%;
+}
+</style>

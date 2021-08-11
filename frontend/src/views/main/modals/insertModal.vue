@@ -103,6 +103,8 @@ export default {
       formData.append("userName",localStorage.getItem('name'))
 
       var attachFiles = document.querySelector("#inputFileUploadInsert");
+      // console.log("attachFiles >>> ",  attachFiles)
+      // console.log("attachFiles.files[0] >>> ",  attachFiles.files)
       formData.append("files", attachFiles.files[0])
 
       state.boardType = store.getters['rootMain/getBoardType'].type

@@ -41,7 +41,7 @@ import { useRouter } from 'vue-router'
 import sectionPagination from "./section-pagination.vue"
 import DetailModal from "../modals/DetailModal.vue"
 import InsertModal from "../modals/InsertModal.vue"
-import UpdateModal from '../modals/UpdateModal.vue';
+import UpdateModal from '../modals/UpdateModal.vue'
 
 //import VModal from 'vue-js-modal';
 

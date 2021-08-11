@@ -26,8 +26,9 @@
     <div>
     </div>
     <!-- v-on:call-parent-change-to-update="changeToUpdate" -->
-    <detail-modal v-on:call-parent-change-to-delete="changeToDelete(boardDetail.boardId)"></detail-modal>
+    <detail-modal v-on:call-parent-change-to-update="changeToUpdate"  v-on:call-parent-change-to-delete="changeToDelete(boardDetail.boardId)"></detail-modal>
     <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
+    <update-modal v-on:call-parent-update="closeAfterUpdate"></update-modal>
   </div>
 </template>
 
@@ -39,6 +40,7 @@ import { useRouter } from 'vue-router'
 import sectionPagination from "./section-pagination.vue"
 import DetailModal from "../modals/DetailModal.vue"
 import InsertModal from "../modals/InsertModal.vue"
+import UpdateModal from '../modals/UpdateModal.vue'
 
 import { Modal } from 'bootstrap';
 
@@ -48,6 +50,7 @@ export default {
     sectionPagination,
     DetailModal,
     InsertModal,
+    UpdateModal,
   },
   setup() {
     const store = useStore()
@@ -55,6 +58,7 @@ export default {
     const state = reactive({
       detailModal: null,
       insertModal: null,
+      UpdateModal : null,
       board: {},
       boardDetail: {},
       currentPage: 2,
@@ -86,6 +90,7 @@ export default {
     const onMounted = () => {
       state.detailModal = new Modal(document.getElementById('detailModal'));
       state.insertModal = new Modal(document.getElementById('insertModal'));
+      state.updateModal = new Modal(document.getElementById('updateModal'));
     }
 
     const getboardDetail = (boardId) => {
@@ -147,8 +152,17 @@ export default {
         console.log(err)
       })
     }
+    const changeToUpdate = () => {
+      state.detailModal.hide();
+      state.updateModal = new Modal(document.getElementById('updateModal'));
+      state.updateModal.show();
+    }
+    const closeAfterUpdate = () => {
+      state.updateModal.hide();
+      router.go()
+    }
 
-    return { ...toRefs(state), onMounted, getboardDetail, pageUpdated, showInsertModal, closeAfterInsert, changeToDelete }
+    return { ...toRefs(state), onMounted, getboardDetail, pageUpdated, showInsertModal, closeAfterInsert, changeToDelete, changeToUpdate, closeAfterUpdate }
   },
 }
 </script>
