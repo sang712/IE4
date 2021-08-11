@@ -16,6 +16,7 @@
             <tr><td>작성일시</td><td>{{  boardDetail.regDt}}</td></tr>
             <!-- New for FileUpload -->
             <tr><td colspan="2">첨부파일</td></tr>
+            <img style="width: 60%; height: 10%;" v-bind:src="fileUrl">
              <tr>
               <td colspan="2">
                 <span class="fileName">{{ boardDetail.fileName }}</span>
@@ -28,8 +29,8 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button v-show="isOwner" @click="changeToUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">글 수정하기</button>
-        <button v-show="isOwner" @click="changeToDelete" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button">글 삭제하기</button>
+        <button v-show="boardDetail.isOwner" @click="changeToUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">글 수정하기</button>
+        <button v-show="boardDetail.isOwner" @click="changeToDelete" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button">글 삭제하기</button>
       </div>
     </div>
   </div>
@@ -46,8 +47,9 @@ export default {
     const store = useStore()
 
     const state = reactive({
+      fileUrl: computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
       file: null,
-      isOwner: true,
+      boardDetail : computed(() => store.getters['rootMain/getBoardDetail']),
     })
     const changeToUpdate = () => {
       emit( 'call-parent-change-to-update' );
@@ -55,22 +57,21 @@ export default {
     const changeToDelete = () =>{
       emit( 'call-parent-change-to-delete' );
     }
-
     // const changeFile = (fileEvent) => {
     //   if(fileEvent.target.file && fileEvent.target.file.length > 0){
     //     state.file = URL.createObjectURL(fileEvent.target.file);
     //   }
     // }
 
-    console.log(store.state.rootMain.boardDetail);
+    console.log(">" , store.state.rootMain.boardDetail);
 
-    let boardDetail = computed(function () {
-      return store.state.rootMain.boardDetail
-    })
+    // let boardDetail = computed(function () {
+    //   return store.state.rootMain.boardDetail
+    // })
 
 
 
-    return { ...toRefs(state), boardDetail, changeToUpdate, changeToDelete }
+    return { ...toRefs(state), changeToUpdate, changeToDelete }
   },
 }
 </script>

@@ -13,20 +13,22 @@
         </div>
         <div class="mb-3">
           <div id=divEditorUpdate>
-            <ckeditor :editor="editor" v-model="editorData2" @ready="onEditorReady"></ckeditor>
+            <ckeditor :editor="editor" v-model="boardDetail.content"></ckeditor>
           </div>
         </div>
-        <!-- 기존 파일 내용 보여줌  -->
-        <!-- 새로운 첨부파일은 data-fileList 로 -->
-        <div v-if="file != null" class="mb-3">
-          <img class="profile-img" :src="file" />
-          첨부파일 : <span><div file class="fileName" :key="index">{{file.fileName}}</div></span>
-
+        <div>
+          <p style="text-align:left">첨부 파일</p>
+          <img style="width: 60%; height: 10%;" v-bind:src="fileUrl">
         </div>
-        <div class="mt-3 mb-3" id="imgFileUploadInsertWrapper">
-          <img class="profile-img" :src="file" />
-          <p style="width: 60%; height: 10%; font-size: 120% ;margin-left: 82px; ">파일 변경</p>
-          <input style="margin-left: 40px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
+        <div class="form-check mb-3">
+          <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
+          <label class="form-check-label" for="chkFileUploadInsert">파일 변경</label>
+        </div>
+        <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
+          <input @change="changeFile" type="file" id="inputFileUploadInsert">
+          <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
+            <img v-bind:src="file">
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -42,7 +44,6 @@ import { reactive, computed, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-vue'
-var editorData;
 
 export default {
   name: 'UpdateModal',
@@ -55,13 +56,24 @@ export default {
     const state = reactive({
       title: '',
       attachFile: false,
-      file: null,
+      fileUrl: computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
+      file : null,
       editor: ClassicEditor,
-      boardType: '',
-      editorData: ``,
-      editorData2: computed(() => store.getters['rootMain/getBoardDetail'].content),
-      boardDetail : {},
+      fileName: computed(() => store.getters['rootMain/getBoardDetail'].fileName),
+      boardType: computed(() => store.getters['rootMain/getBoardType'].type),
+      editorData: computed(() => store.getters['rootMain/getBoardDetail'].content),
+      boardDetail : computed(() => store.getters['rootMain/getBoardDetail']),
     })
+    console.log("fileUrl >>> ", store.getters['rootMain/getBoardDetail'].fileUrl)
+    // const createFile = async() =>{
+    //   let response = await fetch('http://localhost:8080/'+state.fileUrl);
+    //   let data = await response.blob();
+    //   let metadata = {
+    //     type: 'image/jpeg'
+    //   };
+    //   state.file = new File([data], state.fileName, metadata);
+    // }
+    // createFile();
 
     state.boardDetail = store.getters['rootMain/getBoardDetail']
 
@@ -69,24 +81,14 @@ export default {
       ClassicEditor
       .create(document.querySelector('#divEditorUpdate'))
       .then(editor => {
-          editorData = editor
+        console.log("created >>> ", editor)
+        editorData = editor
+        Swal.fire({ title: '성공!', text: '수정이 완료되었습니다.', icon: 'success', })
       })
       .catch(err => {
-          console.error("querySelector" , err);
+          console.error("querySelector" , err)
+          Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
       });
-
-      // bootstrap modal show event hook
-      // UpdateModal 이 보일 때 초기화
-      //let $this = this;
-      // this.$el.addEventListener('show.bs.modal', function () {
-
-      //   // $this.CKEditor.setData( $this.$store.state.freeboard.content );
-      //   // 첨부 파일 관련 초기화
-      //   // 수정 또는 수정 전 첨부 파일을 선택하면 그대로 남아 있다.
-      //   // this.attachFile = false;
-      //   // this.fileList = [];
-      //   // document.querySelector("#inputFileUploadUpdate").value = '';
-      // })
       setup;
     }
     const changeFile = (fileEvent) => {
@@ -97,43 +99,61 @@ export default {
       }
     }
 
-    const onEditorReady = (editor) => {
-      state.editorData = state.boardDetail.content
-      console.log("onEditor Ready>>", state.editorData);
-    }
 
     const boardUpdate = () => {
       var formData = new FormData();
-      formData.append("title", state.title);
-      formData.append("content", editorData.getData());
+      formData.append("id", state.boardDetail.boardId)
+      formData.append("title", state.boardDetail.title)
+      formData.append("content", state.editorData);
+      console.log("new content >>>> ", state.editorData)
       formData.append("classId",localStorage.getItem('classId'))
       formData.append("userId",localStorage.getItem('userId'))
       formData.append("userName",localStorage.getItem('name'))
 
       var attachFiles = document.querySelector("#inputFileUploadInsert");
-      formData.append("files", attachFiles.files[0])
-
-      state.boardType = store.getters['rootMain/getBoardType'].type
-      console.log("boardType >>> ", state.boardType)
+      if (attachFiles != null){
+        console.log("attachFiles >>> ",  attachFiles)
+        console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
+        console.log("attachFiles >>> ",  attachFiles.files[0])
+        formData.append("files", attachFiles.files[0])
+      }
       formData.append("boardType",state.boardType)
 
-      store.dispatch('rootMain/requestBoardInsert', formData)
-      .then(function (result){
-        console.log("성공")
-        closeModal();
-        router.go();
-      })
-      .catch(function (err) {
-        console.log("requestBoardInsert erre :", err)
-      })
+       store.dispatch('rootMain/requestBoardUpdate', formData)
+       .then(function (result){
+         Swal.fire({ title: '성공', text: '게시글 수정 완료되었습니다! ', icon: 'success', })
+         console.log("성공")
+         closeModal();
+         router.go();
+       })
+       .catch(function (err) {
+         Swal.fire({ title: '실패', text: '게시글 수정 실패했습니다.', icon: 'error', })
+         console.log("requestBoardInsert erre :", err)
+       })
     }
 
     const closeModal = () => {
       emit('call-parent-update'); // no parameter
     }
 
-    return { ...toRefs(state), onMounted, changeFile, boardUpdate ,onEditorReady   ,closeModal,}
+    return { ...toRefs(state), onMounted, changeFile, boardUpdate, closeModal, }
 
   },
 }
 </script>
+<style>
+/* CKEditor 는 vue 와 별개로 rendering 되어서 scope 를 넣으면 반영되지 않는다. */
+.ck-editor__editable {
+    min-height: 300px !important;
+}
+
+.thumbnail-wrapper{
+	margin-top: 5px;
+}
+
+.thumbnail-wrapper img {
+	width: 100px !important;
+	margin-right: 5px;
+	max-width: 100%;
+}
+</style>

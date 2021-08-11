@@ -236,35 +236,19 @@ export default {
           .then(function (result) {
             console.log(result)
             emit('closeSignupDialog')
-            Swal.fire({
-              title: '성공!',
-              text: '회원가입이 완료되었습니다.',
-              icon: 'success',
-            })
+            Swal.fire({ title: '성공!', text: '회원가입이 완료되었습니다.', icon: 'success', })
           })
           .catch(function (err) {
             console.log('에러발생', err.response.request.status)
             if (err.response.request.status == 500) {
-              Swal.fire({
-                title: '이런!',
-                text: '서버 오류가 발생했습니다..',
-                icon: 'error',
-              })
+              Swal.fire({ title: '이런!', text: '서버 오류가 발생했습니다..', icon: 'error', })
             } else {
-              Swal.fire({
-                title: '이런!',
-                text: '알 수 없는 이유로 회원가입에 실패 했습니다.',
-                icon: 'error',
-              })
+              Swal.fire({ title: '이런!', text: '알 수 없는 이유로 회원가입에 실패 했습니다.', icon: 'error', })
             }
           })
         } else {
           console.log(valid)
-          Swal.fire({
-            title: '이런!',
-            text: '유효한 정보를 입력해주세요.',
-            icon: 'error',
-          })
+          Swal.fire({ title: '이런!', text: '유효한 정보를 입력해주세요.', icon: 'error', })
         }
       });
     }
@@ -272,25 +256,13 @@ export default {
     const clickCheckId = function () {
       store.dispatch('root/requestCheckId', { id: state.form.id })
       .then(function (result) {
-        Swal.fire({
-          title: '성공!',
-          text: '사용가능한 아이디입니다.',
-          icon: 'success',
-        })
+        Swal.fire({ title: '성공!', text: '사용가능한 아이디입니다.', icon: 'success', })
       })
       .catch(function (err) {
         if (err.response.request.status == 409) {
-          Swal.fire({
-            title: '아이고!',
-            text: '중복된 아이디가 있습니다.',
-            icon: 'error',
-          })
+          Swal.fire({ title: '아이고!', text: '중복된 아이디가 있습니다.', icon: 'error', })
         } else {
-          Swal.fire({
-            title: '이런!',
-            text: '서버 오류가 발생했습니다..',
-            icon: 'error',
-          })
+          Swal.fire({ title: '이런!', text: '서버 오류가 발생했습니다..', icon: 'error', })
         }
       })
     }
@@ -337,7 +309,7 @@ export default {
   font-size: 14pt;
   line-height: 28pt;
   font-family: "Fjalla One";
-  margin-bottom: 28pt;
+  margin-bottom: 22pt;
   border: none;
   border-bottom: 2px solid black;
   border-radius: 5px;

@@ -6,7 +6,7 @@
         <!-- <div class="header-number">No</div> -->
         <div class="header-title" style="text-align:center">제목</div>
         <div class="header-author">작성자</div>
-        <div class="header-date">날짜</div>
+        <div class="header-date">작성 날짜</div>
       </li>
       <li v-for="(board, index) in newsboard.list" @click="getboardDetail(board.id)" v-bind:key="index" class="table-row">
         <!-- <div class="row-number">{{board.id}}</div>-->
@@ -22,7 +22,7 @@
         :page-size="newsboard.limit"
         layout="prev, pager, next"
         :total="newsboard.totalListItemCount" @current-change="pageUpdated"></el-pagination>
-      <el-button class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
+      <el-button v-if="position" class="mypage-button" @click="showInsertModal">글 작성하기</el-button>
     </div>
     <div>
     </div>
@@ -41,12 +41,11 @@ import { useRouter } from 'vue-router'
 import sectionPagination from "./section-pagination.vue"
 import DetailModal from "../modals/DetailModal.vue"
 import InsertModal from "../modals/InsertModal.vue"
-import UpdateModal from '../modals/UpdateModal.vue';
+import UpdateModal from '../modals/UpdateModal.vue'
 
 //import VModal from 'vue-js-modal';
 
 import { Modal } from 'bootstrap';
-
 export default {
   name: 'section-news',
   components:{
@@ -66,8 +65,10 @@ export default {
       boardDetail: {},
       currentPage: 2,
       page : 1,
-      boardType: '공지사항'
+      boardType: '공지사항',
+      position : localStorage.getItem('position')=='교사' ? true : false,
     });
+
     store.dispatch('rootMain/setBoardType', state.boardType)
     .then(function (result) {
       console.log("boardType 저장 >> ", state.boardType)
@@ -119,8 +120,7 @@ export default {
       console.log("업데이트 페이지 : page", state.page)
       store.dispatch('rootMain/requestNewsBoardList', {currentPageIndex : state.page})
       .then(function (result) {
-        console.log("갖고온 데이터는 말이지")
-        console.log(result.data)
+        console.log("갖고온 데이터: ", result.data)
         console.log("현재페이지 : ", result.data.pageable.pageNumber)
         console.log("총 데이터 수 : ", result.data.totalElements, "총 페이지 : ", result.data.totalPages)
         store.dispatch('rootMain/setNewsBoardList', result.data)
@@ -128,8 +128,7 @@ export default {
 
       })
       .catch(function (err) {
-        console.log("requestNewsBoardList error")
-        console.log(err)
+        console.log("requestNewsBoardList error: ", err)
       })
     }
     const showInsertModal = () => {
@@ -144,14 +143,12 @@ export default {
       console.log('삭제시도!')
       store.dispatch('rootMain/deleteDetail', {boardId : boardId})
       .then(function (result) {
-        console.log("삭제성공")
-        console.log(result.data)
+        console.log("삭제성공", result.data)
         state.detailModal.hide()
         router.go()
       })
       .catch(function (err) {
-        console.log("deleteDetail error")
-        console.log(err)
+        console.log("deleteDetail error", err)
       })
     }
     const changeToUpdate = () => {

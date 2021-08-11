@@ -19,6 +19,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findByClassIdAndBoardType(int classId, String boardType);
     List<Board> findByClassIdAndBoardTypeAndTitleContaining(int classId, String boardType, String keyword);
 
+    Page<Board> findByBoardType(String boardType, Pageable pageable);
     Page<Board> findByClassIdAndBoardType(int classId, String boardType, Pageable pageable);
     Page<Board> findByClassIdAndBoardTypeAndTitleContaining(int classId, String boardType, String keyword,  Pageable pageable);
 
