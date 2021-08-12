@@ -17,7 +17,7 @@
 					</p>
 				</form>
 			</div>
-			<div id="room"  style="display: none;" class="col-9">
+			<div id="room"  style="display: none;" >
 				<h2 id="room-header" style="margin: 10px 0px;"></h2>
 				<div id="participants"></div>
 			</div>
@@ -27,8 +27,7 @@
 						<div class="chat-wrapper">
 							<div class="chat-title">우리반 채팅</div>
 							<div class="chat-view">		 
-								<div class="chat-item">
-									<div class="d-flex">
+								<div class="chat-item d-flex">								
 										<img src="https://img6.yna.co.kr/photo/cms/2020/12/03/41/PCM20201203000041990_P2.jpg" alt="">
 										<div class="p-1">
 											<div class="d-flex align-items-end">
@@ -36,20 +35,17 @@
 												<div class="chat-time">09:54</div>
 											</div>																
 											<div class="chat-text">안녕하세요</div>
-										</div>
-									</div>
+										</div>							
 								</div>			
-								<div class="chat-item">
-									<div class="d-flex">
-										<img src="http://www.nbnnews.co.kr/news/photo/201904/253101_305383_2748.jpg" alt="">
-										<div class="p-1">
-											<div class="d-flex align-items-end">
-												<div class="sender-name admin-tag">박민영 선생님</div>
-												<div class="chat-time">09:54<i class="fas fa-thumbtack"></i></div>
-											</div>																	
-											<div class="chat-text">애들아 반가워 ~ !</div>
-										</div>
-									</div>
+								<div class="chat-item d-flex">									
+									<img src="http://www.nbnnews.co.kr/news/photo/201904/253101_305383_2748.jpg" alt="">
+									<div class="p-1">
+										<div class="d-flex align-items-end">
+											<div class="sender-name admin-tag">박민영 선생님</div>
+											<div class="chat-time">09:54<i class="fas fa-thumbtack"></i></div>
+										</div>																	
+										<div class="chat-text">애들아 반가워 ~ !</div>
+									</div>		
 								</div>									
 								<div class="chat-item d-flex">									
 									<img class="chat-profile-img" src="http://www.sisaweek.com/news/photo/201801/101675_82604_3521.jpg" alt="">
