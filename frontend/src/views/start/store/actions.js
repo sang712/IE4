@@ -4,21 +4,21 @@ import $axios from 'axios'
 export function requestLogin ({ state }, payload) {
   console.log('requestLogin', state, payload)
   console.log(state)
-  const url = 'http://localhost:8080/login'
+  const url = '/api/login'
   let body = payload
   return $axios.post(url, body)
 }
 
 export function requestSignup ({ state }, payload) {
   console.log('requestSignup', state, payload)
-  const url = 'http://localhost:8080/sign-up'
+  const url = '/api/sign-up'
   let body = payload
   return $axios.post(url, body)
 }
 
 export function requestCheckId ({ state }, payload) {
   console.log(url, 'requestCheckId', state, payload)
-  const url = `http://localhost:8080/sign-up/${payload.id}`
+  const url = `/api/sign-up/${payload.id}`
   return $axios.get(url)
 }
 

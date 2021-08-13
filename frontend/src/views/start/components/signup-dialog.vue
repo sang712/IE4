@@ -228,7 +228,7 @@ export default {
             classId: state.form.grade + state.form.class_no,
             snum: state.form.snum,
             sex: state.form.sex,
-            parentPhone: state.form.phone,
+            phone: state.form.phone,
             address: state.form.address,
             passwordQuestion: state.form.password_question,
             passwordAnswer: state.form.password_answer,
@@ -316,7 +316,7 @@ export default {
   background: #f8f4e5;
   min-width: 250px;
   outline: none;
-  color: black; 
+  color: black;
 }
 
 input:focus {

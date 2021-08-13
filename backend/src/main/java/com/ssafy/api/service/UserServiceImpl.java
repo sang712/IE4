@@ -83,22 +83,17 @@ public class UserServiceImpl implements UserService {
 		System.out.println(studentUpdateInfo.getPassword() + "type" + studentUpdateInfo.getPassword().getClass().getName());
 
 		if(!studentUpdateInfo.getPassword().equals("null")) {
-			System.out.println("if문 안으로 들어옴");
+			System.out.println("if not null here");
+			System.out.println("password > " + studentUpdateInfo.getPassword());
 			user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
 		}
+
 		if(studentUpdateInfo.getPhone() != null) user.setPhone(studentUpdateInfo.getPhone());
 		if(studentUpdateInfo.getAddress() != null) user.setAddress(studentUpdateInfo.getAddress());
 
 		if(request.getFile("profileImgUrl") != null) {
 			String uploadFolder = "profileImg";
-			String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
-					+ File.separator + "Documents"
-					+ File.separator + "S05P13A601"
-					+ File.separator + "backend"
-					+ File.separator + "src"
-					+ File.separator + "main"
-					+ File.separator + "resources"
-					+ File.separator + "static";
+			String uploadPath = "/home/ubuntu/ie4_upload";
 
 //		String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
 			String saveUrl = "";
@@ -131,7 +126,7 @@ public class UserServiceImpl implements UserService {
 
 				file.transferTo(destFile);
 
-				saveUrl = uploadFolder + "/" + savingFileName;
+				saveUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
 
 			} catch(IOException e) {
 				e.printStackTrace();
@@ -154,20 +149,13 @@ public class UserServiceImpl implements UserService {
 	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, MultipartHttpServletRequest request) {
 		User user = userRepository.findUserById(teacherUpdateInfo.getId()).get();
 
-		if(teacherUpdateInfo.getPassword().equals("null")) user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
+		if(!teacherUpdateInfo.getPassword().equals("null")) user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
 		user.setPhone(teacherUpdateInfo.getPhone());
 		user.setAddress(teacherUpdateInfo.getAddress());
 
 		if(request.getFile("profileImgUrl") != null) {
 			String uploadFolder = "profileImg";
-			String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
-					+ File.separator + "Documents"
-					+ File.separator + "S05P13A601"
-					+ File.separator + "backend"
-					+ File.separator + "src"
-					+ File.separator + "main"
-					+ File.separator + "resources"
-					+ File.separator + "static";
+			String uploadPath = "/home/ubuntu/ie4_upload";
 
 //		String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
 			String saveUrl = "";
@@ -202,7 +190,7 @@ public class UserServiceImpl implements UserService {
 
 				file.transferTo(destFile);
 
-				saveUrl = uploadFolder + "/" + savingFileName;
+				saveUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
 
 			} catch(IOException e) {
 				e.printStackTrace();

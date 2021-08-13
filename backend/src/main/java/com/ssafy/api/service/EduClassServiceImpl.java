@@ -49,15 +49,7 @@ public class EduClassServiceImpl implements EduClassService {
 
         String uploadFolder = "timetable";
 //        String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
-        String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
-                + File.separator + "Documents"
-                //+ File.separator + "dev"
-                + File.separator + "S05P13A601"
-                + File.separator + "backend"
-                + File.separator + "src"
-                + File.separator + "main"
-                + File.separator + "resources"
-                + File.separator + "static";
+        String uploadPath = "/home/ubuntu/ie4_upload";
         String saveUrl = "";
 
         try {
@@ -91,7 +83,7 @@ public class EduClassServiceImpl implements EduClassService {
             file.transferTo(destFile);
 
             EduClass c = eduClassRepository.findEduClassById(eduClassId).get();
-            saveUrl = uploadFolder + "/" + savingFileName;
+            saveUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
             c.setTimetable(saveUrl);
             eduClassRepository.save(c);
 

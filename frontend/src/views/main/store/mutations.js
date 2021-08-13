@@ -12,6 +12,10 @@ export function setMenuActiveMenuName (state, menuName) {
 	state.activeMenu = menuName
 }
 
+export function setTimeTable(state, payload){
+  state.classInfo.timetable = payload
+}
+
 export function setStudentMypageInfo (state, payload) {
   state.mypageInfo.id = payload.id
   state.mypageInfo.loginId = payload.loginId

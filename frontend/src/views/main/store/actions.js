@@ -22,9 +22,9 @@ export function requestSignup ({ state }, payload) {
   return $axios.post(url, body)
 }
 
-export function requestMyprofile ({state}, token) {
+export function requestMyprofile (context, token) {
   console.log('requestMyprofile')
-  const url = 'http://localhost:8080/users'
+  const url = '/api/users'
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
 
   $axios.get(url, header)
@@ -46,7 +46,7 @@ export function updateStudent (context, payload){
   console.log('updateStudent')
   console.log(context.state)
   console.log(typeof(payload.password))
-  const url = 'http://localhost:8080/users/student'
+  const url = '/api/users/student'
   // let header = { headers: { 'Content-Type': 'multipart/form-data' } }
 
   $axios.post(url, payload)
@@ -83,7 +83,7 @@ export function updateStudent (context, payload){
 export function updateTeacher (context, payload){
   console.log('updateTeacher')
   console.log(context.state)
-  const url = 'http://localhost:8080/users/teacher'
+  const url = '/api/users/teacher'
   // let header = { headers: { "Content-Type": "multipart/form-data" } }
 
   $axios.post(url, payload)
@@ -119,7 +119,7 @@ export function deleteUser({ state }, payload, token){
   console.log('deleteUser', state, payload)
   console.log(state)
 
-  const url = 'http://localhost:8080/users/'
+  const url = '/api/users/'
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   let body = payload
   return $axios.delete(url, body, header)
@@ -128,7 +128,7 @@ export function deleteUser({ state }, payload, token){
 export function requestClass ({ state }, token) {
   console.log('requestClass')
   console.log(localStorage.getItem('classId'))
-  const url = 'http://localhost:8080/class/' + localStorage.getItem('classId');
+  const url = '/api/class/' + localStorage.getItem('classId');
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   return $axios.get(url, header)
 }
@@ -136,7 +136,7 @@ export function requestClass ({ state }, token) {
 export function requestClassMem ({ state }, token) {
   console.log('requestClassMem')
   console.log(localStorage.getItem('classId'))
-  const url = 'http://localhost:8080/class/myclass/' + localStorage.getItem('classId');
+  const url = '/api/class/myclass/' + localStorage.getItem('classId');
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
 
   return $axios.get(url, header)
@@ -146,7 +146,7 @@ export function updateTimetable ({ state }, payload, token) {
   console.log('updateTimetable')
   console.log(localStorage.getItem('classId'))
   console.log(payload);
-  const url = 'http://localhost:8080/class/timetable/' + localStorage.getItem('classId');
+  const url = '/api/class/timetable/' + localStorage.getItem('classId');
   //let header = { headers: { 'Authorization': `Bearer ${token}` } }
   return $axios.post(url, payload)
 }
@@ -154,7 +154,7 @@ export function updateTimetable ({ state }, payload, token) {
 export function getRanking ({ state }, token) {
   console.log('getRanking')
   console.log(localStorage.getItem('classId'))
-  const url = 'http://localhost:8080/class/ranking/' + localStorage.getItem('classId');
+  const url = '/api/class/ranking/' + localStorage.getItem('classId');
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   return $axios.get(url, header)
 }
@@ -179,7 +179,7 @@ export function setBoardList({ state }, response){
 
 export function requestNewsBoardList ({ state }, payload) {
   console.log('requestNewsBoardList')
-  const url = 'http://localhost:8080/board';
+  const url = '/api/board';
 
   return $axios.get(url,  {params:{classId:100, boardType:"공지사항", page:payload.currentPageIndex}})
 }
@@ -187,21 +187,21 @@ export function requestNewsBoardList ({ state }, payload) {
 export function requestBoardList ({ state }, payload) {
   console.log('requestBoardList')
   console.log(localStorage.getItem('classId'))
-  const url = 'http://localhost:8080/board';
+  const url = '/api/board';
 
   return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"학습자료", page:payload.currentPageIndex}})
 }
 
 export function requestBoardDetail ({state}, payload){
   console.log('requestBoardDetail')
-  const url = 'http://localhost:8080/board/'+ payload.boardId;
+  const url = '/api/board/'+ payload.boardId;
   console.log("get : ", url)
   return $axios.get(url)
 }
 export function deleteDetail ({state}, payload){
   console.log('deleteDetail')
   console.log(">>>",payload, "// ", payload.boardId)
-  const url = 'http://localhost:8080/board/'+ payload.boardId;
+  const url = '/api/board/'+ payload.boardId;
   console.log("delete : ", url)
   return $axios.delete(url)
 }
@@ -228,12 +228,12 @@ export function setBoardType({state}, payload){
 }
 export function requestBoardInsert({state}, payload){
   console.log('requestBoardInsert')
-  const url = 'http://localhost:8080/board/';
+  const url = '/api/board/';
   return $axios.post(url, payload)
 }
 export function requestBoardUpdate({state}, payload){
   console.log('requestBoardUpdate')
-  const url = 'http://localhost:8080/board/';
+  const url = '/api/board/';
   return $axios.patch(url, payload)
 }
 
