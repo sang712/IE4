@@ -82,14 +82,12 @@ public class UserServiceImpl implements UserService {
 
 		System.out.println(studentUpdateInfo.getPassword() + "type" + studentUpdateInfo.getPassword().getClass().getName());
 
-		if(!studentUpdateInfo.getPassword().equals(null)) {
-			System.out.println("if null here");
+		if(!studentUpdateInfo.getPassword().equals("null")) {
+			System.out.println("if not null here");
 			System.out.println("password > " + studentUpdateInfo.getPassword());
 			user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
-		}else{
-			System.out.println("hoxy here?");
-			System.out.println("password > " + studentUpdateInfo.getPassword());
 		}
+
 		if(studentUpdateInfo.getPhone() != null) user.setPhone(studentUpdateInfo.getPhone());
 		if(studentUpdateInfo.getAddress() != null) user.setAddress(studentUpdateInfo.getAddress());
 
@@ -151,7 +149,7 @@ public class UserServiceImpl implements UserService {
 	public User updateTeacher(TeacherUpdatePatchReq teacherUpdateInfo, MultipartHttpServletRequest request) {
 		User user = userRepository.findUserById(teacherUpdateInfo.getId()).get();
 
-		if(teacherUpdateInfo.getPassword().equals("null")) user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
+		if(!teacherUpdateInfo.getPassword().equals("null")) user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
 		user.setPhone(teacherUpdateInfo.getPhone());
 		user.setAddress(teacherUpdateInfo.getAddress());
 
