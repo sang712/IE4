@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { reactive, computed, toRefs } from 'vue'
+import { reactive, computed, toRefs, watch } from 'vue'
 import * as conference from '../conference.js'
 
 export default {

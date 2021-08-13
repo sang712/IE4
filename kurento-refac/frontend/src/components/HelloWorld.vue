@@ -125,7 +125,7 @@ export default {
 				document.getElementById('chatbox').className = 'col-3'
 				document.getElementById('chatbox').style.display = 'block'
 				document.getElementById('participants-list').className = 'col-3'
-				document.getElementById('chatbox').style.display = 'none'
+				document.getElementById('participants-list').style.display = 'none'
 				}
 			else{
 				document.getElementById('chatbox').style.display = 'none'
