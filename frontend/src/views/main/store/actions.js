@@ -49,7 +49,7 @@ export function updateStudent (context, payload){
   const url = '/api/users/student'
   // let header = { headers: { 'Content-Type': 'multipart/form-data' } }
 
-  $axios.post(url, payload)
+  $axios.patch(url, payload)
   .then(({ data }) => {
     console.log('성공하면 출력해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     console.log(data)
@@ -86,7 +86,7 @@ export function updateTeacher (context, payload){
   const url = '/api/users/teacher'
   // let header = { headers: { "Content-Type": "multipart/form-data" } }
 
-  $axios.post(url, payload)
+  $axios.patch(url, payload)
   .then(({ data }) => {
     console.log(data)
 
