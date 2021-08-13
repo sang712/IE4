@@ -124,7 +124,7 @@ export default {
 				document.getElementById('room').className = 'col-9'
 				document.getElementById('chatbox').className = 'col-3'
 				document.getElementById('chatbox').style.display = 'block'
-				document.getElementById('prticipants-list').className = 'col-3'
+				document.getElementById('participants-list').className = 'col-3'
 				document.getElementById('chatbox').style.display = 'none'
 				}
 			else{
@@ -134,18 +134,18 @@ export default {
 			}
 		},
 		openParticipantsList() {
-			if (document.getElementById('prticipants-list').style.display == 'none')
+			if (document.getElementById('participants-list').style.display == 'none')
 			{
 				document.getElementById('room').className = 'col-9'
-				document.getElementById('prticipants-list').className = 'col-3'
-				document.getElementById('prticipants-list').style.display = 'block'
+				document.getElementById('participants-list').className = 'col-3'
+				document.getElementById('participants-list').style.display = 'block'
 				document.getElementById('chatbox').className = 'col-3'
 				document.getElementById('chatbox').style.display = 'none'
 				}
 			else{
 				document.getElementById('room').className = 'col-12'
-				document.getElementById('prticipants-list').style.display = 'none'
-				document.getElementById('prticipants-list').className = ''
+				document.getElementById('participants-list').style.display = 'none'
+				document.getElementById('participants-list').className = ''
 			}
 		}
   }
