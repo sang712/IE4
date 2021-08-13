@@ -66,7 +66,7 @@ export default {
     })
     console.log("fileUrl >>> ", store.getters['rootMain/getBoardDetail'].fileUrl)
     // const createFile = async() =>{
-    //   let response = await fetch('http://localhost:8080/'+state.fileUrl);
+    //   let response = await fetch('/api/'+state.fileUrl);
     //   let data = await response.blob();
     //   let metadata = {
     //     type: 'image/jpeg'
