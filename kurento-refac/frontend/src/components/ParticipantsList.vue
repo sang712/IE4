@@ -28,10 +28,9 @@ export default {
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
-        for (const participant of participants) {
-          console.log(child);
+        for (i=0; i < participants.length; i++) {
+          createParticipant(participants[i])
         }
-        Array.prototype.forEach(participants, createParticipant(el));
       }
     )
     const getParticipant = () => {
