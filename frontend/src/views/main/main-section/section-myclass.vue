@@ -9,7 +9,7 @@
       <br>
       <div class="myclass-profile" v-for="(classMem, index) in classMemList.slice(1)" :key="index">
         <img class="myclass-profile-image" v-if="classMem.profileImgUrl != null" :src="classMem.profileImgUrl" :alt="classMem.name+'의 프로필 사진'">
-        <img class="myclass-profile-image" v-else :src="'/profileImg/no_profile_img_student'+classMem.name.charCodeAt([1])%2+'.jpg'" :alt="classMem.name+'의 프로필 사진'">
+        <img class="myclass-profile-image" v-else :src="'../../../assets/images/no_profile_img_student'+classMem.name.charCodeAt([1])%2+'.jpg'" :alt="classMem.name+'의 프로필 사진'">
         <div class="myclass-profile-name">이름: {{ classMem.name }}</div>
       </div>
     </div>
