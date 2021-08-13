@@ -5,7 +5,7 @@
       <!-- <img src="require(`../../../../`${state.timetableUrl}`)" alt="이미지..."> -->
       <!-- <img :src="getImg()" alt="이미지..2."> -->
       <!-- <img src="/timetable/450f82b7-49d7-4ddb-8680-edc0f5e8e1dc.jpg" alt="이미지..2."> -->
-    <img :src="timetableUrl" alt="이미지..2." style="width:100%; height:100%">
+    <img :src="imgUrl" alt="이미지..2." style="width:100%; height:100%">
     <!-- </div> -->
     <div v-if="position=='교사'" class="form-group mt-3 mb-3" id="imgFileUploadInsertWrapper" style="margin: 0px auto; text-align: center">
       <span style="width: 20%; font-size: 120%;"><b>시간표 수정 |</b></span>
@@ -24,7 +24,8 @@ export default {
   name: 'section-schedule',
   data () {
     return {
-      position : localStorage.getItem('position')
+      position : localStorage.getItem('position'),
+      imgUrl : '',
     }
   },
   setup(props, { emit }) {
@@ -36,6 +37,8 @@ export default {
       newFile: ''
       // realImg: computed(() => "../../../../" + timetableUrl)
     })
+
+    this.imgUrl = store.getters['rootMain/getClassInfo'].timetable
 
     const getImg = () => {
       // console.log('../../../../' + state.timetableUrl)
@@ -63,10 +66,8 @@ export default {
         console.log("시간표 수정 완료", result.data)
         store.commit('rootMain/setTimeTable', result.data)
         // store.state.classInfo.timetable = result.data
+        this.imgUrl = result.data
         Swal.fire({ title: '성공!', text: '시간표가 수정되었습니다.', icon: 'success', })
-        setTimeout(function() {
-          console.log('Works!');
-        }, 3000);
         router.go()
       })
       .catch(function (err) {
