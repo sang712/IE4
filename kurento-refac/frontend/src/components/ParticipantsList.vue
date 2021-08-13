@@ -15,7 +15,7 @@ export default {
 
   setup() {
     const state = reactive({
-      participants: {},
+      participants: conference.getParticipants(),
     })
 
     watch(
@@ -28,7 +28,10 @@ export default {
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
-        participants.forEach(participant => createParticipant(participant));
+        for (const participant of participants) {
+          console.log(child);
+        }
+        Array.prototype.forEach(participants, createParticipant(el));
       }
     )
     const getParticipant = () => {
