@@ -107,7 +107,7 @@ export default {
       formData.append("content", state.editorData);
       console.log("new content >>>> ", state.editorData)
       formData.append("classId",localStorage.getItem('classId'))
-      formData.append("userId",localStorage.getItem('userId'))
+      formData.append("userId",localStorage.getItem('id'))
       formData.append("userName",localStorage.getItem('name'))
 
       var attachFiles = document.querySelector("#inputFileUploadInsert");
