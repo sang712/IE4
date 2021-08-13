@@ -18,6 +18,7 @@
 <script>
 import { reactive, computed, toRefs } from 'vue'
 import { useStore } from 'vuex'
+import { userRouter } from 'vue-router'
 
 export default {
   name: 'section-schedule',
@@ -28,6 +29,7 @@ export default {
   },
   setup(props, { emit }) {
     const store = useStore()
+    const router = userRouter()
 
     const state = reactive({
       timetableUrl: computed(() => store.getters['rootMain/getClassInfo'].timetable),
@@ -62,6 +64,7 @@ export default {
         store.commit('rootMain/setTimeTable', result.data)
         // store.state.classInfo.timetable = result.data
         Swal.fire({ title: '성공!', text: '시간표가 수정되었습니다.', icon: 'success', })
+        router.go()
       })
       .catch(function (err) {
         console.log("updateTimetable error", err)

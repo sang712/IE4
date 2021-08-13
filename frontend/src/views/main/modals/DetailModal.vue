@@ -16,7 +16,7 @@
             <tr><td>작성일시</td><td>{{  boardDetail.regDt}}</td></tr>
             <!-- New for FileUpload -->
             <tr><td colspan="2">첨부파일</td></tr>
-            <img style="width: 60%; height: 10%;" v-bind:src="fileUrl">
+            <img v-if="fileUrl != null" style="width: 60%; height: 10%;" v-bind:src="fileUrl">
              <tr>
               <td colspan="2">
                 <span class="fileName">{{ boardDetail.fileName }}</span>

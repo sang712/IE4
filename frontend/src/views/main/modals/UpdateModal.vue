@@ -18,7 +18,7 @@
         </div>
         <div>
           <p style="text-align:left">첨부 파일</p>
-          <img style="width: 60%; height: 10%;" v-bind:src="fileUrl">
+          <img v-if="fileUrl != null" style="width: 60%; height: 10%;" v-bind:src="fileUrl">
         </div>
         <div class="form-check mb-3">
           <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
