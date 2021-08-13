@@ -50,7 +50,7 @@ export default {
       }
     }
 
-    const updateTimetable = () => {
+    const updateTimetable = (context) => {
       var formData = new FormData();
       var attachFiles = document.querySelector("#inputFileUploadInsert");
       formData.append("file", attachFiles.files[0]);
@@ -59,7 +59,8 @@ export default {
       store.dispatch('rootMain/updateTimetable', formData, localStorage.getItem('jwt'))
       .then(function (result) {
         console.log("시간표 수정 완료", result.data)
-        store.state.classInfo.timetable = result.data
+        store.commit('rootMain/setTimeTable', result.data)
+        // store.state.classInfo.timetable = result.data
         Swal.fire({ title: '성공!', text: '시간표가 수정되었습니다.', icon: 'success', })
       })
       .catch(function (err) {
