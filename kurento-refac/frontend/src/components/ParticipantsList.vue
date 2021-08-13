@@ -19,15 +19,15 @@ export default {
 
     watch(
       () => state.participants,
-      () => {
-        console.log("참석자 명단", state.participants)
+      (participants, prevParticipants) => {
+        console.log("참석자 명단", participants)
 
         let participantsViews = document.getElementById('participants-views')
         participantsViews.remove
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
-        state.participants.forEach(createParticipant);
+        participants.forEach(createParticipant);
       }
     )
 
