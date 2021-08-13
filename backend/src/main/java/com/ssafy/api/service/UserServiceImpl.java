@@ -82,9 +82,13 @@ public class UserServiceImpl implements UserService {
 
 		System.out.println(studentUpdateInfo.getPassword() + "type" + studentUpdateInfo.getPassword().getClass().getName());
 
-		if(!studentUpdateInfo.getPassword().equals("null")) {
-			System.out.println("if문 안으로 들어옴");
+		if(!studentUpdateInfo.getPassword().equals(null)) {
+			System.out.println("if null here");
+			System.out.println("password > " + studentUpdateInfo.getPassword());
 			user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
+		}else{
+			System.out.println("hoxy here?");
+			System.out.println("password > " + studentUpdateInfo.getPassword());
 		}
 		if(studentUpdateInfo.getPhone() != null) user.setPhone(studentUpdateInfo.getPhone());
 		if(studentUpdateInfo.getAddress() != null) user.setAddress(studentUpdateInfo.getAddress());
