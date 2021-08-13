@@ -191,3 +191,7 @@ export function sendMessage(message) {
 	console.log('Sending message: ' + jsonMessage);
 	ws.send(jsonMessage);
 }
+
+export function getParticipants() {
+	return participants
+}

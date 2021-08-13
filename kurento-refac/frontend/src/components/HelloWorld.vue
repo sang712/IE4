@@ -74,6 +74,7 @@
 					</div>
 				</div>
 			</div>
+			<ParticipantsList />
 			<div id="footer" style="display: none;">
 				<div class="button-wrapper">
 					<button class="button" type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
@@ -88,7 +89,7 @@
 					<button class="button" type="button" id="button-leave" @mouseup="leaveRoom" value="Leave room"><i class="fas fa-door-open"></i></button>
 				</div>
 				<div class="button-wrapper2">
-					<button class="button" type="button" id="button-users"><i class="far fa-user"></i></button>
+					<button class="button" @click="openParticipantsList" type="button" id="button-users"><i class="far fa-user"></i></button>
 					<button class="button" @click="openChatBox" type="button" id="button-chatting"><i class="far fa-comment-dots"></i></button>
 					<button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"/></button>
 				</div>
@@ -99,9 +100,13 @@
 
 <script>
 import * as conference from '../conference.js'
+import ParticipantsList from './ParticipantsList.vue'
 
 export default {
   name: 'HelloWorld',
+	components: {
+		ParticipantsList,
+	},
   props: {
     msg: String
   },
@@ -119,11 +124,28 @@ export default {
 				document.getElementById('room').className = 'col-9'
 				document.getElementById('chatbox').className = 'col-3'
 				document.getElementById('chatbox').style.display = 'block'
+				document.getElementById('prticipants-list').className = 'col-3'
+				document.getElementById('chatbox').style.display = 'none'
 				}
 			else{
 				document.getElementById('chatbox').style.display = 'none'
 				document.getElementById('room').className = 'col-12'
 				document.getElementById('chatbox').className = ''
+			}
+		},
+		openParticipantsList() {
+			if (document.getElementById('prticipants-list').style.display == 'none')
+			{
+				document.getElementById('room').className = 'col-9'
+				document.getElementById('prticipants-list').className = 'col-3'
+				document.getElementById('prticipants-list').style.display = 'block'
+				document.getElementById('chatbox').className = 'col-3'
+				document.getElementById('chatbox').style.display = 'none'
+				}
+			else{
+				document.getElementById('room').className = 'col-12'
+				document.getElementById('prticipants-list').style.display = 'none'
+				document.getElementById('prticipants-list').className = ''
 			}
 		}
   }
