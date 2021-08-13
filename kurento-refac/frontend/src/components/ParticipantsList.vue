@@ -2,6 +2,7 @@
   <div id="participants-list" class="col-3" style="display: none;">
     <div id="participants-title">참석자 명단</div>
     <div id="participants-views"></div>
+    <button class="button" type="button" @click="getParticipant" value="참석자 가져오기"></button>
   </div>
 </template>
 
@@ -14,7 +15,7 @@ export default {
 
   setup() {
     const state = reactive({
-      participants: conference.getParticipants(),
+      participants: {},
     })
 
     watch(
@@ -30,6 +31,9 @@ export default {
         participants.forEach(createParticipant);
       }
     )
+    const getParticipant = () => {
+      state.participants = conference.getParticipants()
+    }
 
     const createParticipant = (participant) => {
       const participantsViews = document.getElementById('participants-views')
@@ -45,6 +49,8 @@ export default {
       container.appendChild(nameTag)
       participantsViews.appendChild(container)
     }
+
+    return { state, watch, getParticipant, createParticipant }
   }
 }
 </script>
