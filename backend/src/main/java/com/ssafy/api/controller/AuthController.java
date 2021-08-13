@@ -34,7 +34,7 @@ import java.util.Map;
  */
 @Api(value = "인증 API", tags = {"Auth."})
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/api/login")
 public class AuthController {
 	@Autowired
 	UserService userService;

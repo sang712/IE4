@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 @Api(value = "게시판 API", tags = {"Board"})
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/api/board")
 public class BoardController {
 
     @Autowired

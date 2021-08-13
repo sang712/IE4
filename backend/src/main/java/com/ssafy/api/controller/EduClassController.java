@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Api(value = "반 정보 API", tags = {"Class"})
 @RestController
-@RequestMapping("/class")
+@RequestMapping("/api/class")
 public class EduClassController {
 
     @Autowired

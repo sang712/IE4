@@ -33,21 +33,14 @@ public class BoardServiceImpl implements BoardService{
     BoardFileRepository boardFileRepository;
 
     String uploadFolder = "boardfiles";
-    String uploadPath = "C:" + File.separator + "Users" + File.separator + "multicampus"
-            + File.separator + "Documents"
-            + File.separator + "S05P13A601"
-            + File.separator + "backend"
-            + File.separator + "src"
-            + File.separator + "main"
-            + File.separator + "resources"
-            + File.separator + "static";
+    String uploadPath = "/home/ubuntu/ie4_upload";
 
     @Override
     public BoardFile insertBoard(MultipartFile files, Board board) throws IOException {
         System.out.println("------------------게시판 글 등록 시도-----------------" );
         Board newboard = boardRepository.save(board);
 
-        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
+//        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
         File uploadDir = new File(uploadPath + File.separator + uploadFolder);
         if (!uploadDir.exists()) uploadDir.mkdir();
 
@@ -65,7 +58,7 @@ public class BoardServiceImpl implements BoardService{
         files.transferTo(destFile);
 
         // Table Insert
-        String boardFileUrl = uploadFolder + "/" + savingFileName;
+        String boardFileUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
         BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
         System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
 
@@ -101,8 +94,8 @@ public class BoardServiceImpl implements BoardService{
             System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
             boardFileRepository.delete(boardfile.get());
         }
-        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
-        File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+//        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
+//        File uploadDir = new File(uploadPath + File.separator + uploadFolder);
 
         String fileName = files.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
@@ -115,7 +108,7 @@ public class BoardServiceImpl implements BoardService{
         files.transferTo(destFile);
 
         // Table Insert
-        String boardFileUrl = uploadFolder + "/" + savingFileName;
+        String boardFileUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
         BoardFile boardFile = new BoardFile(boardId,fileName,files.getSize(),boardFileUrl );
         System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
 
