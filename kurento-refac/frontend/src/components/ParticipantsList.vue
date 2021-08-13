@@ -1,8 +1,8 @@
 <template>
   <div id="participants-list" class="col-3" style="display: none;">
     <div id="participants-title">참석자 명단</div>
+    <button class="button" type="button" @click="getParticipant">참석자 가져오기</button>
     <div id="participants-views"></div>
-    <button class="button" type="button" @click="getParticipant" value="참석자 가져오기"></button>
   </div>
 </template>
 
@@ -28,10 +28,11 @@ export default {
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
-        participants.forEach(createParticipant);
+        participants.forEach(participant => createParticipant(participant));
       }
     )
     const getParticipant = () => {
+      console.log('버튼 클릭')
       state.participants = conference.getParticipants()
     }
 
