@@ -77,12 +77,12 @@ export default {
     console.log(store.state.rootMain.classInfo)
     console.log(store.state.rootMain.mypageInfo)
 
-    let mypageInfo = computed(function () {
-      return store.state.rootMain.mypageInfo
-    });
+    // let mypageInfo = computed(function () {
+    //   return store.state.rootMain.mypageInfo
+    // });
 
     const state = reactive({
-      // mypageInfo : computed(() => store.state.rootMain.mypageInfo),
+      mypageInfo : store.state.rootMain.mypageInfo,
       file : store.state.rootMain.mypageInfo.profileImgUrl,
       nSex : localStorage.getItem('sex')
     });
@@ -123,7 +123,7 @@ export default {
     };
 
 
-    return { ...toRefs(state), mypageInfo, changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog }
+    return { ...toRefs(state), changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog }
   }
 }
 </script>
