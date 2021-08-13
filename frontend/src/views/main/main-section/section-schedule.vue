@@ -64,6 +64,9 @@ export default {
         store.commit('rootMain/setTimeTable', result.data)
         // store.state.classInfo.timetable = result.data
         Swal.fire({ title: '성공!', text: '시간표가 수정되었습니다.', icon: 'success', })
+        setTimeout(function() {
+          console.log('Works!');
+        }, 3000);
         router.go()
       })
       .catch(function (err) {

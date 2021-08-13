@@ -64,6 +64,7 @@ export default {
     // }
 
     console.log(">" , store.state.rootMain.boardDetail);
+    console.log("imgUrl >", state.fileUrl);
 
     // let boardDetail = computed(function () {
     //   return store.state.rootMain.boardDetail
