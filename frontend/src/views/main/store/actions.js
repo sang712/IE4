@@ -147,8 +147,8 @@ export function updateTimetable ({ state }, payload, token) {
   console.log(localStorage.getItem('classId'))
   console.log(payload);
   const url = '/api/class/timetable/' + localStorage.getItem('classId');
-  //let header = { headers: { 'Authorization': `Bearer ${token}` } }
-  return $axios.post(url, payload)
+  let header = { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
+  return $axios.post(url, header, payload)
 }
 
 export function getRanking ({ state }, token) {

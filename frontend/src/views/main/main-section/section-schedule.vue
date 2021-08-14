@@ -9,7 +9,7 @@
     <!-- </div> -->
     <div v-if="position=='교사'" class="form-group mt-3 mb-3" id="imgFileUploadInsertWrapper" style="margin: 0px auto; text-align: center">
       <span style="width: 20%; font-size: 120%;"><b>시간표 수정 |</b></span>
-      <input style="width:40%; margin-left: 20px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
+      <input style="width:50%; margin-left: 20px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
       <button style="width: 13%" @click="updateTimetable()">수정</button>
     </div>
   </div>
@@ -37,14 +37,6 @@ export default {
       // realImg: computed(() => "../../../../" + timetableUrl)
     })
 
-    const getImg = () => {
-      // console.log('../../../../' + state.timetableUrl)
-      console.log('imgUrl', store.getters['rootMain/getClassInfo'].timetable)
-      // return require(store.getters['rootMain/getClassInfo'].timetable)
-      this.imgUrl = store.getters['rootMain/getClassInfo'].timetable;
-      return store.getters['rootMain/getClassInfo'].timetable
-    }
-
     const changeFile = (fileEvent) => {
       console.log('fileEvent.target.files: ', fileEvent.target.files)
       if(fileEvent.target.files && fileEvent.target.files.length > 0){
@@ -64,6 +56,7 @@ export default {
         store.commit('rootMain/setTimeTable', result.data)
         // store.state.classInfo.timetable = result.data
         Swal.fire({ title: '성공!', text: '시간표가 수정되었습니다.', icon: 'success', })
+        // document.getElementsByClassName('time-table').style.backgroundImg = this.timetableUrl
         router.go()
       })
       .catch(function (err) {
@@ -72,8 +65,10 @@ export default {
       })
     }
 
+    document.getElementsByClassName('time-table').style.backgroundImg = this.timetableUrl!='' ? this.timetableUrl : '../../../assets/images/no_schedule.png'
+
     return {
-      getImg, changeFile, updateTimetable, ...toRefs(state)
+      changeFile, updateTimetable, ...toRefs(state)
     }
 
   }
