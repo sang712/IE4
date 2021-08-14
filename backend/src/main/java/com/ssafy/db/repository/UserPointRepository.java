@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface UserPointRepository extends JpaRepository<UserPoint, Integer> {
     @Query(value = "SELECT u.name " +
-            "FROM User_point up left outer join User u on up.user_id = u.id " +
+            "FROM user_point up left outer join user u on up.user_id = u.id " +
             "where u.class_id = :classId " +
             "group by up.user_id " +
             "order by sum(up.point) desc limit 3", nativeQuery = true)
