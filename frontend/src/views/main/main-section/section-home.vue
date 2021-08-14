@@ -14,7 +14,7 @@
       <div class="d-flex justify-content-center row">
         <div class="notice-button-wrapper d-flex justify-content-evenly align-items-center" >
           <el-button @click="clickSchedule" style="width: 22%; height: 50%; font-size: 120%">시간표</el-button>
-          <el-button @click="clickNote" style="width: 22%; height: 50%; font-size: 120%">알림장</el-button>
+          <el-button @click="clickNote" style="width: 22%; height: 50%; font-size: 120%">학사일정</el-button>
           <el-button @click="clickMvp" style="width: 22%; height: 50%; font-size: 120%">MVP</el-button>
         </div>
         <router-view class='notice-content'></router-view>

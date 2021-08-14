@@ -135,6 +135,18 @@ const boardDetail = reactive({
 
 const rankingList = reactive({})
 
+const schoolSchedule = reactive({
+  list: [],
+
+  event_nm: "",                     // 행사명
+  one_grade_event_yn: "",           // 1학년행사여부
+  tw_grade_event_yn: "",            // 2학년행사여부
+  three_grade_event_yn: "",         // 3학년행사여부
+  fr_grade_event_yn: "",            // 4학년행사여부
+  fiv_grade_event_yn: "",           // 5학년행사여부
+  six_grade_event_yn: "",           // 6학년행사여부
+})
+
 export default {
   isDesktopPlatform: IsDesktop,
   activeMenu: 'home',
@@ -147,4 +159,5 @@ export default {
   boardDetail,
   boardType,
   rankingList,
+  schoolSchedule,
 }

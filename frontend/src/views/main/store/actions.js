@@ -159,6 +159,70 @@ export function getRanking ({ state }, token) {
   return $axios.get(url, header)
 }
 
+export function requestSchoolSchedule ({ state }) {
+  console.log('requestSchoolSchedule')
+  const url = 'https://open.neis.go.kr/hub/SchoolSchedule';
+  const today = new Date();
+  const tYear = today.getFullYear();
+  const tMonth = today.getMonth();
+  const tDate = today.getDate();
+  const theDayOfWeek = today.getDay();  // 요일
+  console.log("theDayOfWeek " + theDayOfWeek);
+
+  // 해당일 기준 n일 전후 구하기
+  // https://falsy.me/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C-%EC%9D%B4%EB%B2%88%EC%A3%BC-7%EC%9D%BC-%EA%B5%AC%ED%95%98%EA%B8%B0/
+
+  // 월요일
+  var resultDay = new Date(tYear, tMonth, tDate + (1 - theDayOfWeek));
+  var yyyy = resultDay.getFullYear();
+  var mm = Number(resultDay.getMonth()) + 1;
+  var dd = resultDay.getDate();
+
+  mm = String(mm).length === 1 ? '0' + mm : mm;
+  dd = String(dd).length === 1 ? '0' + dd : dd;
+
+  const startDay = yyyy + '' + mm + '' + dd;
+
+  // 금요일
+  var resultDay = new Date(tYear, tMonth, tDate + (5 - theDayOfWeek));
+  var yyyy = resultDay.getFullYear();
+  var mm = Number(resultDay.getMonth()) + 1;
+  var dd = resultDay.getDate();
+
+  mm = String(mm).length === 1 ? '0' + mm : mm;
+  dd = String(dd).length === 1 ? '0' + dd : dd;
+
+  const endDay = yyyy + '' + mm + '' + dd;
+
+  console.log(startDay + "   " + endDay)
+
+  const params = {
+    KEY: '45b841d402874577b4ed221dee0ebd3a',
+    Type: 'json',
+    // pindex: 1,
+    // pSize: 1,
+    ATPT_OFCDC_SC_CODE: 'B10',   // 시도교육청코드
+    SD_SCHUL_CODE: '7051125',    // 표준학교코드
+    AA_FROM_YMD: startDay,       // 학사시작일자
+    AA_TO_YMD: endDay,           // 학사종료일자
+  };
+
+  return $axios.get(url, {params})
+}
+
+export function setMypageInfo ({ state }, response) {
+  state.mypageInfo.id = response.id
+  state.mypageInfo.loginId = response.loginId
+  state.mypageInfo.name = response.name
+  state.mypageInfo.parentPhone = response.parentPhone
+  state.mypageInfo.password = response.password
+  state.mypageInfo.passwordAnswer = response.passwordAnswer
+  state.mypageInfo.passwordQuestion = response.passwordQuestion
+  state.mypageInfo.phone = response.phone
+  state.mypageInfo.snum = response.snum
+  state.mypageInfo.address = response.address
+}
+
 export function setNewsBoardList({ state }, response){
   state.newsboard.list = response.content
   state.newsboard.totalListItemCount = response.totalElements
@@ -255,4 +319,18 @@ export function setClassMemList ({ state }, response) {
 export function setRankingList ({ state }, response) {
   console.log(response)
   state.rankingList = response
+}
+
+export function setSchoolSchedule ({ state }, response) {
+  console.log(response)
+  state.schoolSchedule.list = response
+
+  // state.schoolSchedule.event_nm = response.event_nm
+  // state.schoolSchedule.one_grade_event_yn = response.one_grade_event_yn
+  // state.schoolSchedule.tw_grade_event_yn = response.tw_grade_event_yn
+  // state.schoolSchedule.three_grade_event_yn = response.three_grade_event_yn
+  // state.schoolSchedule.fr_grade_event_yn = response.fr_grade_event_yn
+  // state.schoolSchedule.fiv_grade_event_yn = response.fiv_grade_event_yn
+  // state.schoolSchedule.six_grade_event_yn = response.six_grade_event_yn
+
 }
