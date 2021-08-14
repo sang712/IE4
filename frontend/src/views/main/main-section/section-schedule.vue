@@ -65,7 +65,7 @@ export default {
       })
     }
 
-    document.getElementsByClassName('time-table').style.backgroundImg = this.timetableUrl!='' ? this.timetableUrl : '../../../assets/images/no_schedule.png'
+    document.getElementsByClassName('time-table').style.backgroundImg = state.timetableUrl!='' ? state.timetableUrl : '../../../assets/images/no_schedule.png'
 
     return {
       changeFile, updateTimetable, ...toRefs(state)
