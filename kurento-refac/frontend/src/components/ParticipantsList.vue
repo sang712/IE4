@@ -21,8 +21,7 @@ export default {
     watch(
       () => state.participants,
       (participants, prevParticipants) => {
-        console.log("참석자 명단", participants)
-
+        console.log('참석자 받았음', participants)
         let participantsViews = document.getElementById('participants-views')
         participantsViews.remove
         participantsViews = document.createElement('div')
@@ -30,7 +29,6 @@ export default {
 
         Object.getOwnPropertyNames(participants).forEach(
           function (val, idx, array) {
-            console.log("forEach 시도", participants[val])
             createParticipant(participants[val])
           }
         )
@@ -38,6 +36,7 @@ export default {
     )
     const getParticipant = () => {
       console.log('버튼 클릭')
+      state.participants = ''
       state.participants = conference.getParticipants()
     }
 
