@@ -28,11 +28,12 @@ export default {
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
-        for (let participant in Object.getOwnPropertyNames(participants)) {
-          console.log("for문:", participant)
-          console.log("전달 인자", participants, participants[participant], participants.participant)
-          createParticipant(participants[participant])
-        }
+        Object.getOwnPropertyNames(participants).forEach(
+          function (val, idx, array) {
+            console.log("forEach 시도", participants[val])
+            createParticipant(participants[val])
+          }
+        )
       }
     )
     const getParticipant = () => {
