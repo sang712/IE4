@@ -29,7 +29,7 @@ export default {
         participantsViews.id = 'participants-views'
 
         for (let participant in Object.getOwnPropertyNames(participants)) {
-          createParticipant(participant)
+          createParticipant(participants.participant)
         }
       }
     )
