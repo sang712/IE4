@@ -28,7 +28,7 @@ export default {
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
-        for (i=0; i < participants.length; i++) {
+        for (let i=0; i < participants.length; i++) {
           createParticipant(participants[i])
         }
       }
