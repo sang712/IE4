@@ -21,7 +21,7 @@ export default {
     watch(
       () => state.participants,
       (participants, prevParticipants) => {
-        console.log("참석자 명단", participants)
+        console.log("참석자 명단", participants.length)
 
         let participantsViews = document.getElementById('participants-views')
         participantsViews.remove
@@ -39,6 +39,7 @@ export default {
     }
 
     const createParticipant = (participant) => {
+      console.log("추가 되나요")
       const participantsViews = document.getElementById('participants-views')
 
       const container = document.createElement('div')
@@ -47,7 +48,7 @@ export default {
 
       const nameTag = document.createElement('div')
       nameTag.id = 'name-tag'
-      nameTag.value = participant.name
+      nameTag.innerText = participant.name
 
       container.appendChild(nameTag)
       participantsViews.appendChild(container)
