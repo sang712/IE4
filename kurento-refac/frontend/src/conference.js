@@ -193,6 +193,6 @@ export function sendMessage(message) {
 }
 
 export function getParticipants() {
-	console.log('참석자 명단 보내기', participants)
+	console.log('참석자 명단 보내기', participants, typeof(participants), typeof(participants.사람), typeof(participants.tkfka))
 	return participants
 }
