@@ -42,13 +42,16 @@ export function requestMyprofile (context, token) {
   })
 }
 
-export function updateStudent (context, payload, token){
+export function updateStudent (context, payload){
   console.log('updateStudent')
   console.log(context.state)
   console.log(typeof(payload.password))
   const url = '/api/users/student'
+
+  let token = localStorage.getItem('jwt')
   let header = { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
   let body = payload
+
   $axios.post(url, body, header)
   .then(({ data }) => {
     console.log('updateStudent complete')
@@ -80,13 +83,15 @@ export function updateStudent (context, payload, token){
   })
 }
 
-export function updateTeacher (context, payload, token){
+export function updateTeacher (context, payload){
   console.log('updateTeacher')
   console.log(context.state)
   const url = '/api/users/teacher'
 
+  let token = localStorage.getItem('jwt')
   let header = { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
   let body = payload
+
   $axios.post(url, body, header)
   .then(({ data }) => {
     console.log('updateTeacher complete')
@@ -149,8 +154,8 @@ export function updateTimetable ({ state }, payload, token) {
   console.log(localStorage.getItem('classId'))
   console.log(payload);
   const url = '/api/class/timetable/' + localStorage.getItem('classId');
-  let header = { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
-  return $axios.post(url, header, payload)
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  return $axios.post(url, payload, header)
 }
 
 export function getRanking ({ state }, token) {

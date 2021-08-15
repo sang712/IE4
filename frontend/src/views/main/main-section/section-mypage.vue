@@ -112,7 +112,7 @@ export default {
         updateStudentData.append("parentPhone", store.state.rootMain.mypageInfo.parentPhone)
         updateStudentData.append("passwordAnswer", store.state.rootMain.mypageInfo.passwordAnswer)
         updateStudentData.append("profileImgUrl", attachFiles.files[0])
-        store.dispatch('rootMain/updateStudent', updateStudentData, localStorage.getItem('jwt'))
+        store.dispatch('rootMain/updateStudent', updateStudentData)
       }else{
         var updateTeacherData = new FormData()
         var attachFiles = document.querySelector("#inputFileUploadInsert")
@@ -123,7 +123,7 @@ export default {
         updateTeacherData.append("address", store.state.rootMain.mypageInfo.address)
         updateTeacherData.append("classMotto", store.state.rootMain.mypageInfo.classMotto)
         updateTeacherData.append("profileImgUrl", attachFiles.files[0])
-        store.dispatch('rootMain/updateTeacher', updateTeacherData, localStorage.getItem('jwt'))
+        store.dispatch('rootMain/updateTeacher', updateTeacherData)
       }
     };
 
