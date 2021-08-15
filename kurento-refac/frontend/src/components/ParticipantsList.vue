@@ -29,7 +29,7 @@ export default {
         participantsViews.id = 'participants-views'
 
         for (let participant in Object.getOwnPropertyNames(participants)) {
-          createParticipant(participants.participant)
+          createParticipant(participants[participant])
         }
       }
     )
@@ -39,7 +39,7 @@ export default {
     }
 
     const createParticipant = (participant) => {
-      console.log("추가 되나요")
+      console.log("추가 되나요", participant)
       const participantsViews = document.getElementById('participants-views')
 
       const container = document.createElement('div')
