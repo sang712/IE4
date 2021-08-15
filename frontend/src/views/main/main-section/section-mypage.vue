@@ -34,6 +34,11 @@
               <el-input v-model="mypageInfo.passwordAnswer"></el-input>
             </el-form-item>
           </template>
+          <template v-else>
+            <el-form-item label="우리반 급훈">
+              <el-input v-model="mypageInfo.classMotto"></el-input>
+            </el-form-item>
+          </template>
         </el-form>
         <!-- <h2>아이디:</h2>
         <h3>{{ mypageInfo.loginId }}</h3> -->
@@ -107,7 +112,7 @@ export default {
         updateStudentData.append("parentPhone", store.state.rootMain.mypageInfo.parentPhone)
         updateStudentData.append("passwordAnswer", store.state.rootMain.mypageInfo.passwordAnswer)
         updateStudentData.append("profileImgUrl", attachFiles.files[0])
-        store.dispatch('rootMain/updateStudent', updateStudentData)
+        store.dispatch('rootMain/updateStudent', updateStudentData, localStorage.getItem('jwt'))
       }else{
         var updateTeacherData = new FormData()
         var attachFiles = document.querySelector("#inputFileUploadInsert")
@@ -118,7 +123,7 @@ export default {
         updateTeacherData.append("address", store.state.rootMain.mypageInfo.address)
         updateTeacherData.append("classMotto", store.state.rootMain.mypageInfo.classMotto)
         updateTeacherData.append("profileImgUrl", attachFiles.files[0])
-        store.dispatch('rootMain/updateTeacher', updateTeacherData)
+        store.dispatch('rootMain/updateTeacher', updateTeacherData, localStorage.getItem('jwt'))
       }
     };
 

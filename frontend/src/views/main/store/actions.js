@@ -42,18 +42,18 @@ export function requestMyprofile (context, token) {
   })
 }
 
-export function updateStudent (context, payload){
+export function updateStudent (context, payload, token){
   console.log('updateStudent')
   console.log(context.state)
   console.log(typeof(payload.password))
   const url = '/api/users/student'
-  // let header = { headers: { 'Content-Type': 'multipart/form-data' } }
-
-  $axios.post(url, payload)
+  let header = { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
+  let body = payload
+  $axios.post(url, body, header)
   .then(({ data }) => {
-    console.log('성공하면 출력해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    console.log(data)
-
+    console.log('updateStudent complete')
+    console.log("data: " + data)
+    context.commit('rootMain/setStudentMypageInfo', result.data, {root: true})
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',
@@ -80,16 +80,18 @@ export function updateStudent (context, payload){
   })
 }
 
-export function updateTeacher (context, payload){
+export function updateTeacher (context, payload, token){
   console.log('updateTeacher')
   console.log(context.state)
   const url = '/api/users/teacher'
-  // let header = { headers: { "Content-Type": "multipart/form-data" } }
 
-  $axios.post(url, payload)
+  let header = { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
+  let body = payload
+  $axios.post(url, body, header)
   .then(({ data }) => {
-    console.log(data)
-
+    console.log('updateTeacher complete')
+    console.log("data: " + data)
+    context.commit('rootMain/setTeacherMypageInfo', result.data, {root: true})
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',
@@ -208,19 +210,6 @@ export function requestSchoolSchedule ({ state }) {
   };
 
   return $axios.get(url, {params})
-}
-
-export function setMypageInfo ({ state }, response) {
-  state.mypageInfo.id = response.id
-  state.mypageInfo.loginId = response.loginId
-  state.mypageInfo.name = response.name
-  state.mypageInfo.parentPhone = response.parentPhone
-  state.mypageInfo.password = response.password
-  state.mypageInfo.passwordAnswer = response.passwordAnswer
-  state.mypageInfo.passwordQuestion = response.passwordQuestion
-  state.mypageInfo.phone = response.phone
-  state.mypageInfo.snum = response.snum
-  state.mypageInfo.address = response.address
 }
 
 export function setNewsBoardList({ state }, response){
