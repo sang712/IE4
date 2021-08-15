@@ -15,30 +15,33 @@ export default {
 
   setup() {
     const state = reactive({
-      participants: conference.getParticipants(),
+      participants: '',
     })
 
     watch(
       () => state.participants,
       (participants, prevParticipants) => {
-        console.log("참석자 명단", participants)
-
+        console.log('참석자 받았음', participants)
         let participantsViews = document.getElementById('participants-views')
         participantsViews.remove
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
-        for (i=0; i < participants.length; i++) {
-          createParticipant(participants[i])
-        }
+        Object.getOwnPropertyNames(participants).forEach(
+          function (val, idx, array) {
+            createParticipant(participants[val])
+          }
+        )
       }
     )
     const getParticipant = () => {
       console.log('버튼 클릭')
+      state.participants = ''
       state.participants = conference.getParticipants()
     }
 
     const createParticipant = (participant) => {
+      console.log("추가 되나요", participant, "참석자 이름", participant.name)
       const participantsViews = document.getElementById('participants-views')
 
       const container = document.createElement('div')
@@ -47,7 +50,7 @@ export default {
 
       const nameTag = document.createElement('div')
       nameTag.id = 'name-tag'
-      nameTag.value = participant.name
+      nameTag.innerText = participant.name
 
       container.appendChild(nameTag)
       participantsViews.appendChild(container)

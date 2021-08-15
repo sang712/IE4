@@ -34,6 +34,11 @@
               <el-input v-model="mypageInfo.passwordAnswer"></el-input>
             </el-form-item>
           </template>
+          <template v-else>
+            <el-form-item label="우리반 급훈">
+              <el-input v-model="mypageInfo.classMotto"></el-input>
+            </el-form-item>
+          </template>
         </el-form>
         <!-- <h2>아이디:</h2>
         <h3>{{ mypageInfo.loginId }}</h3> -->

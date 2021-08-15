@@ -111,9 +111,11 @@ public class UserController {
 					@ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "사용자 없음"),
 					@ApiResponse(code = 500, message = "서버 오류") })
 	public ResponseEntity<? extends BaseUserResponseBody> delete(
-			@RequestBody @ApiParam(value="학생 정보", required = true) UserDeleteReq deleteInfo) {
+			@RequestBody @ApiParam(value="학생 정보", required = true) UserDeleteReq deleteInfo, @ApiIgnore Authentication authentication) {
 
-		User user = userService.getUserById(deleteInfo.getId());
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String loginId = userDetails.getUsername();
+		User user = userService.getUserByLoginId(loginId);
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if(encoder.matches(deleteInfo.getPassword(), user.getPassword())){
