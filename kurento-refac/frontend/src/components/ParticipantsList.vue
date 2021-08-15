@@ -15,7 +15,7 @@ export default {
 
   setup() {
     const state = reactive({
-      participants: conference.getParticipants(),
+      participants: '',
     })
 
     watch(
