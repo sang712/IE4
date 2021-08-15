@@ -21,7 +21,7 @@ export default {
     watch(
       () => state.participants,
       (participants, prevParticipants) => {
-        console.log("참석자 명단", participants.length)
+        console.log("참석자 명단", participants)
 
         let participantsViews = document.getElementById('participants-views')
         participantsViews.remove
@@ -29,6 +29,8 @@ export default {
         participantsViews.id = 'participants-views'
 
         for (let participant in Object.getOwnPropertyNames(participants)) {
+          console.log("for문:", participant)
+          console.log("전달 인자", participants, participants[participant], participants.participant)
           createParticipant(participants[participant])
         }
       }
@@ -39,7 +41,7 @@ export default {
     }
 
     const createParticipant = (participant) => {
-      console.log("추가 되나요", participant)
+      console.log("추가 되나요", participant, "참석자 이름", participant.name)
       const participantsViews = document.getElementById('participants-views')
 
       const container = document.createElement('div')
