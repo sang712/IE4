@@ -5,7 +5,7 @@
       <!-- <img src="require(`../../../../`${state.timetableUrl}`)" alt="이미지..."> -->
       <!-- <img :src="getImg()" alt="이미지..2."> -->
       <!-- <img src="/timetable/450f82b7-49d7-4ddb-8680-edc0f5e8e1dc.jpg" alt="이미지..2."> -->
-    <img :src="timetableUrl!='' ? timetableUrl : 'ie4_upload/timetable/no-schedule.png'" alt="이미지..2." style="width:100%; height:100%">
+    <img :src="timetableUrl!=null ? timetableUrl : 'ie4_upload/timetable/no-schedule.png'" alt="이미지..2." style="width:100%; height:100%">
     <!-- </div> -->
     <div v-if="position=='교사'" class="form-group mt-3 mb-3" id="imgFileUploadInsertWrapper" style="margin: 0px auto; text-align: center">
       <span style="width: 20%; font-size: 120%;"><b>시간표 수정 |</b></span>
