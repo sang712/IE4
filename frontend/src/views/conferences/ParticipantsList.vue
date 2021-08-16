@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { reactive, computed, toRefs, watch } from 'vue'
+import { reactive, computed, toRefs, watch, ref } from 'vue'
 import * as conference from '../main/conference.js'
 
 export default {
@@ -53,12 +53,12 @@ export default {
   //   }
   // },
   setup() {
-    const state = reactive({
-      participants: '',
-    })
+    const participants = ref('');
+    // const state = reactive({
+    //   participants: '',
+    // })
 
-    watch(
-      () => state.participants,
+    watch(participants,
       (participants, prevParticipants) => {
         console.log('참석자 받았음', participants)
         let participantsViews = document.getElementById('participants-views')
@@ -90,9 +90,7 @@ export default {
     const getParticipant = () => {
       console.log('버튼 클릭')
       // state.participants = ''
-      state.participants = conference.getParticipants()
-
-      createParticipant(conference.getParticipants())
+      participants = conference.getParticipants()
     }
 
     const createParticipant = (participant) => {
@@ -111,7 +109,7 @@ export default {
       participantsViews.appendChild(container)
     }
 
-    return { state, watch, getParticipant, createParticipant }
+    return { participants, watch, getParticipant, createParticipant }
   }
 }
 </script>
