@@ -17,7 +17,7 @@
           </div>
         </div>
         <div>
-          <p style="text-align:left">첨부 파일 : {{fileName}}</p>
+          <p style="text-align:left">첨부 파일  {{fileUrl}}</p>
 
           <!-- <img style="width: 60%; height: 10%;" v-bind:src="fileUrl"> -->
         </div>
@@ -135,10 +135,10 @@ export default {
 
     const closeModal = () => {
       document.getElementById("inputFileUploadInsert").value = "";
-      emit('call-parent-update'); // no parameter
+      emit('call-parent-update'); // no parameters
     }
 
-    return { ...toRefs(state), onMounted, changeFile, boardUpdate, changeFile2 }
+    return { ...toRefs(state), onMounted, boardUpdate, closeModal , changeFile2 }
 
   },
 }
