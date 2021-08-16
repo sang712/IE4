@@ -151,12 +151,13 @@ export function requestClassMem ({ state }, token) {
   return $axios.get(url, header)
 }
 
-export function updateTimetable ({ state }, payload, token) {
+export function updateTimetable ({ state }, payload) {
   console.log('updateTimetable')
   console.log(localStorage.getItem('classId'))
   console.log(payload);
+  const token = localStorage.getItem('jwt')
   const url = '/api/class/timetable/' + localStorage.getItem('classId');
-  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+  let header = { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
   return $axios.post(url, payload, header)
 }
 
