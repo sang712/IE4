@@ -223,7 +223,7 @@ export function requestNewsBoardList ({ state }, payload) {
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   const url = '/api/board';
 
-  return $axios.get(url, header, {params:{classId:100, boardType:"공지사항", page:payload.currentPageIndex}})
+  return $axios.get(url, {params:{classId:100, boardType:"공지사항", page:payload.currentPageIndex}},header)
 }
 
 export function requestBoardList ({ state }, payload) {
@@ -233,7 +233,7 @@ export function requestBoardList ({ state }, payload) {
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   const url = '/api/board';
 
-  return $axios.get(url,header,  {params:{classId:localStorage.getItem('classId'), boardType:"학습자료", page:payload.currentPageIndex}})
+  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"학습자료", page:payload.currentPageIndex}},header)
 }
 
 export function requestBoardDetail ({state}, payload){
@@ -279,14 +279,14 @@ export function requestBoardInsert({state}, payload){
   const url = '/api/board/';
   let token = localStorage.getItem('jwt')
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
-  return $axios.post(url,header, payload)
+  return $axios.post(url, payload,header)
 }
 export function requestBoardUpdate({state}, payload){
   console.log('requestBoardUpdate')
   const url = '/api/board/';
   let token = localStorage.getItem('jwt')
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
-  return $axios.patch(url, header, payload)
+  return $axios.patch(url, payload,header)
 }
 
 export function setClassInfo ({ state }, response) {
