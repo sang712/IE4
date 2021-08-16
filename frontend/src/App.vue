@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity'
+import { reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default {
