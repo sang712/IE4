@@ -55,8 +55,8 @@ export function updateStudent (context, payload){
   $axios.post(url, body, header)
   .then(({ data }) => {
     console.log('updateStudent complete')
-    console.log("data: " + data)
-    context.commit('rootMain/setStudentMypageInfo', result.data, {root: true})
+    console.log(data)
+    context.commit('rootMain/setStudentMypageInfo', data, {root: true})
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',
@@ -95,8 +95,8 @@ export function updateTeacher (context, payload){
   $axios.post(url, body, header)
   .then(({ data }) => {
     console.log('updateTeacher complete')
-    console.log("data: " + data)
-    context.commit('rootMain/setTeacherMypageInfo', result.data, {root: true})
+    console.log(data)
+    context.commit('rootMain/setTeacherMypageInfo', data, {root: true})
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',
@@ -122,13 +122,15 @@ export function updateTeacher (context, payload){
   })
 }
 
-export function deleteUser({ state }, payload, token){
+export function deleteUser({ state }, payload){
   console.log('deleteUser', state, payload)
   console.log(state)
 
   const url = '/api/users/'
+  let token = localStorage.getItem('jwt')
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   let body = payload
+
   return $axios.delete(url, body, header)
 }
 
