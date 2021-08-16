@@ -16,7 +16,7 @@
             <tr><td>작성일시</td><td>{{  boardDetail.regDt}}</td></tr>
             <!-- New for FileUpload -->
             <tr><td colspan="2">첨부파일</td></tr>
-            <img v-if="fileUrl != ''" style="width: 60%; height: 10%;" v-bind:src="fileUrl">
+            <img v-if="existFileUrl" style="width: 60%; height: 10%;" v-bind:src="fileUrl">
              <tr>
               <td colspan="2">
                 <span class="fileName">{{ boardDetail.fileName }}</span>
@@ -48,6 +48,7 @@ export default {
 
     const state = reactive({
       fileUrl: computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
+      existFileUrl : computed(() => store.getters['rootMain/getBoardDetail'].fileUrl) !="" ? true:false,
       file: null,
       boardDetail : computed(() => store.getters['rootMain/getBoardDetail']),
     })

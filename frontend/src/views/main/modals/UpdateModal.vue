@@ -98,12 +98,9 @@ export default {
         console.log("file >>>> ", state.file)
       }
       var attachFiles = document.querySelector("inputFileUploadInsert");
-      console.log("attachFiles[0] >>> ",  attachFiles[0])
-      console.log("attachFiles[0].files[0] >>> ",  attachFiles[0].files[0])
       console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
-      console.log("inputFileUploadInsert >>> ",  document.getElementById("inputFileUploadInsert"))
       console.log("inputFileUploadInsert.files >>> ",  document.getElementById("inputFileUploadInsert").files)
-      console.log("inputFileUploadInsert[0] >>> ",  document.getElementById("inputFileUploadInsert")[0])
+      console.log("querySelector inputFileUploadInsert.files >>> ",  document.querySelector("inputFileUploadInsert").files)
       if (document.getElementById("inputFileUploadInsert").files.length > 0 )
         {
           console.log("length 크면 여기로... attachFiles.files[0] >>> ",  attachFiles.files[0])
