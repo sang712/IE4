@@ -112,12 +112,6 @@ public class BoardServiceImpl implements BoardService{
         if (boardfile.isPresent()){
             System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
             BoardFile updateBoardFile = boardfile.get();
-
-            if(updateBoardFile.getFileUrl() != null) {
-                File deleteFile = new File(uploadPath + File.separator, updateBoardFile.getFileUrl());       // fileUrl <- 지울 파일의 url 가져오기 respository!!
-                if(deleteFile.exists()) deleteFile.delete();
-            }
-
             updateBoardFile.setFileName(files.getOriginalFilename());
             updateBoardFile.setFileSize(files.getSize());
             updateBoardFile.setFileUrl(boardFileUrl);
@@ -135,16 +129,15 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public int deleteBoardFile(int boardId) {
         System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
-        Optional<BoardFile> optional = boardFileRepository.findById(boardId);
-        BoardFile boardFile = optional.get();
-        if(boardFile.getFileUrl() != null) {
-            File deleteFile = new File(uploadPath + File.separator, boardFile.getFileUrl());       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+        Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
+        String fileUrl = boardfile.get().getFileUrl();
+        if(fileUrl != null) {
+            File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
             if(deleteFile.exists()) deleteFile.delete();
         }
-
-        System.out.println("boardfile >>>> " + boardFile);
+        System.out.println("boardfile >>>> " + boardfile);
         try {
-            boardFileRepository.delete(boardFile);
+            boardFileRepository.delete(boardfile.get());
             return 1;
         } catch (Exception e) {
             return 2;
