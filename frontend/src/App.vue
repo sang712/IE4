@@ -1,24 +1,14 @@
 <template>
-  <!-- main 으로 시작 -->
-  <!-- <Main/> -->
-
-  <!-- start 로 시작 -->
-  <Main v-if="state.isLogin"/>
-  <Start v-else/>
+  <!-- main, start, conference 로 시작 -->
+  <router-view></router-view>
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity'
-import Main from './views/main/main.vue'
-import Start from './views/start/start.vue'
+import { reactive, watch, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'App',
-
-  components: {
-    Main,
-    Start,
-  },
 
   data: () => ({
     //
@@ -27,6 +17,21 @@ export default {
     const state = reactive({
       isLogin : localStorage.getItem('jwt') == null ? false : true,
     })
+
+    const router = useRouter()
+
+    onBeforeMount(() =>{
+      console.log(state.isLogin)
+      if (state.isLogin) router.push('/main')
+      else router.push('/')
+    })
+
+    // watch(state, (val, oldVal) => {
+    //   console.log(val.isLogin)
+    //   if (val.isLogin) router.push({ name: start })
+    //   else router.push({ name: main })
+    // })
+
     return { state }
 
   }
