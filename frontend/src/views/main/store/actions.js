@@ -66,7 +66,7 @@ export function updateStudent (context, payload){
 
   })
   .catch(function (err) {
-    const status = err.response.request.status
+    const status = err.response.status
     if (status == 500) {
       Swal.fire({
         title: '이런!',
@@ -105,7 +105,7 @@ export function updateTeacher (context, payload){
 
   })
   .catch(function (err) {
-    const status = err.response.request.status
+    const status = err.response.status
     if (status == 500) {
       Swal.fire({
         title: '이런!',
