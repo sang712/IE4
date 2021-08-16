@@ -22,17 +22,6 @@
         </div>
         <div class="form-check mb-3">
           <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
-          <label class="form-check-label" for="chkFileUploadInsert">파일 변경</label>
-        </div>
-        <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
-          <input @change="changeFile" type="file" id="inputFileUploadInsert" />
-          <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
-            <img v-bind:src="file">
-          </div>
-        </div>
-        <br>
-        <div class="form-check mb-3">
-          <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
           <label class="form-check-label" for="chkFileUploadInsert">파일 추가</label>
         </div>
         <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
@@ -69,7 +58,6 @@ export default {
       title: '',
       attachFile: false,
       fileUrl: computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
-      file : null,
       file2: null,
       editor: ClassicEditor,
       fileName: computed(() => store.getters['rootMain/getBoardDetail'].fileName),
@@ -104,21 +92,6 @@ export default {
       });
       setup;
     }
-    const changeFile = (fileEvent) => {
-      console.log("fileEvent >>>> ", fileEvent)
-      if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
-        state.file = URL.createObjectURL(fileEvent.target.files[0]);
-        console.log("file >>>> ", state.file)
-      }
-      var attachFiles = document.querySelector("#inputFileUploadInsert");
-      console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
-      console.log("inputFileUploadInsert >>> ",  document.getElementById("inputFileUploadInsert").files)
-      console.log("querySelector inputFileUploadInsert.files >>> ",  document.querySelector("inputFileUploadInsert").files)
-      if (document.getElementById("inputFileUploadInsert").files.length > 0 )
-        {
-          console.log("length 크면 여기로... attachFiles.files[0] >>> ",  attachFiles.files[0])
-        }
-    }
 
     const changeFile2 = (fileEvent) => {
       console.log("fileEvent >>>> ", fileEvent)
@@ -126,8 +99,6 @@ export default {
         state.file2 = URL.createObjectURL(fileEvent.target.files[0]);
         console.log("file2 >>>> ", state.file2)
       }
-      var attachFiles = document.querySelector("#inputFileUploadInsert2");
-      console.log("insert 2 attachFiles >>> ",  attachFiles.files[0])
     }
 
 
@@ -141,11 +112,9 @@ export default {
       formData.append("userId",localStorage.getItem('id'))
       formData.append("userName",localStorage.getItem('name'))
 
-      var attachFiles = document.querySelector("#inputFileUploadInsert");
+      var attachFiles = document.querySelector("#inputFileUploadInsert2");
+      console.log("insert 2 attachFiles >>> ",  attachFiles.files[0])
       if (attachFiles != null){
-        console.log("attachFiles >>> ",  attachFiles)
-        console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
-        console.log("attachFiles >>> ",  attachFiles.files[0])
         formData.append("files", attachFiles.files[0])
       }
       formData.append("boardType",state.boardType)
