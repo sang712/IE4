@@ -60,13 +60,13 @@ function makeRoutesFromMenu () {
           },
           {
             // 알림장버튼 라우터
-            path: 'note',
+            path: '',
             name: 'note',
             component: SectionNote,
           },
           {
             // MVP버튼 라우터
-            path: 'mvp',
+            path: '',
             name: 'mvp',
             component: SectionMvp,
           }
