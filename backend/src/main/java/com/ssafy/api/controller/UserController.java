@@ -79,30 +79,25 @@ public class UserController {
 	@ApiOperation(value = "학생정보 수정", notes = "학생정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
-	public ResponseEntity<? extends BaseUserResponseBody> update(
+	public ResponseEntity<UserRes> update(
 			@ApiParam(value="회원 정보", required = true) StudentUpdatePatchReq updateInfo, MultipartHttpServletRequest request) {
 
 		Student student = userService.updateStudent(updateInfo, request);
 
-		if(student != null)
-			return ResponseEntity.status(200).body(BaseUserResponseBody.of(student.getUser().getId()));
-		else
-			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Student Update Fail"));
+		return ResponseEntity.status(200).body(StudentRes.of(student.getUser(), student));
 	}
 
 	@PostMapping("/teacher")
 	@ApiOperation(value = "교사정보 수정", notes = "교사정보를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
-	public ResponseEntity<? extends BaseUserResponseBody> update(
+	public ResponseEntity<UserRes> update(
 			@ApiParam(value="회원 정보", required = true) TeacherUpdatePatchReq updateInfo, MultipartHttpServletRequest request) {
 
 		User user = userService.updateTeacher(updateInfo, request);
+		EduClass eduClass = eduClassService.getEduClassByEduClassId(user.getClassId());
 
-		if(user != null)
-			return ResponseEntity.status(200).body(BaseUserResponseBody.of(user.getId()));
-		else
-			return ResponseEntity.status(400).body(BaseUserResponseBody.of("Teacher Update Fail"));
+		return ResponseEntity.status(200).body(TeacherRes.of(user,eduClass));
 	}
 
 	@PostMapping()
