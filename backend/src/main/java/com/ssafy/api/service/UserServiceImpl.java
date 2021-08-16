@@ -138,8 +138,8 @@ public class UserServiceImpl implements UserService {
 		User saveUser = userRepository.save(user);
 
 		if(saveUser != null) {
-			student.setParentPhone(studentUpdateInfo.getParentPhone());
-			student.setPasswordAnswer(studentUpdateInfo.getPasswordAnswer());
+			if(studentUpdateInfo.getParentPhone() != null) student.setParentPhone(studentUpdateInfo.getParentPhone());
+			if(studentUpdateInfo.getPasswordAnswer() != null) student.setPasswordAnswer(studentUpdateInfo.getPasswordAnswer());
 			return studentRepository.save(student);
 		}
 		else return null;
@@ -150,8 +150,8 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findUserById(teacherUpdateInfo.getId()).get();
 
 		if(!teacherUpdateInfo.getPassword().equals("null")) user.setPassword(passwordEncoder.encode(teacherUpdateInfo.getPassword()));
-		user.setPhone(teacherUpdateInfo.getPhone());
-		user.setAddress(teacherUpdateInfo.getAddress());
+		if(teacherUpdateInfo.getPhone() != null) user.setPhone(teacherUpdateInfo.getPhone());
+		if(teacherUpdateInfo.getAddress() != null) user.setAddress(teacherUpdateInfo.getAddress());
 
 		if(request.getFile("profileImgUrl") != null) {
 			String uploadFolder = "profileImg";
@@ -201,7 +201,7 @@ public class UserServiceImpl implements UserService {
 
 		if(userRepository.save(user) != null) {
 			EduClass eduClass = eduClassRepository.findEduClassById(teacherUpdateInfo.getClassId()).get();
-			eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
+			if(teacherUpdateInfo.getClassMotto() != null) eduClass.setClassMotto(teacherUpdateInfo.getClassMotto());
 
 			if(eduClassRepository.save(eduClass) == null) return null;
 		}
