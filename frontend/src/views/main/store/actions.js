@@ -41,7 +41,8 @@ export function requestMyprofile (context, token) {
 
 export function updateStudent (context, payload){
   console.log('updateStudent')
-  console.log(context.state)
+  console.log('context.state:', context.state)
+  console.log('context:', context)
   console.log(typeof(payload.password))
   const url = '/api/users/student'
 

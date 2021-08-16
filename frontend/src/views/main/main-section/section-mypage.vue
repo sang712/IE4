@@ -92,7 +92,7 @@ export default {
 
     const state = reactive({
       mypageInfo : computed(() => store.getters['rootMain/getMypageInfo']),
-      file : computed(() => store.getters['rootMain/getMypageInfo'].profileImgUrl),
+      file : store.getters['rootMain/getMypageInfo'].profileImgUrl,
       nSex : localStorage.getItem('sex')
     });
 
