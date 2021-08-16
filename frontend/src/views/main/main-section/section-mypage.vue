@@ -69,6 +69,8 @@ export default {
     const store = useStore()
     const router = useRouter()
 
+    store.dispatch('rootMain/requestMyprofile', localStorage.getItem('jwt'))
+
     const secession = ref([
       {secessionDialogOpen: false},
     ]);
