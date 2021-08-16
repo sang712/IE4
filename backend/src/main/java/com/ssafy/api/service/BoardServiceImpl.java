@@ -90,11 +90,7 @@ public class BoardServiceImpl implements BoardService{
         boardRepository.save(updateboard);
 
         Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
-        if (boardfile.isPresent()){
-            System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
-            boardFileRepository.delete(boardfile.get());
-            System.out.println("boardfile >>>> 삭제완료!!!!!!!!! ");
-        }
+
 //        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
 //        File uploadDir = new File(uploadPath + File.separator + uploadFolder);
 
@@ -113,6 +109,19 @@ public class BoardServiceImpl implements BoardService{
         BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
         System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
 
+        if (boardfile.isPresent()){
+            System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
+            BoardFile updateBoardFile = boardfile.get();
+
+            if(updateBoardFile.getFileUrl() != null) {
+                File deleteFile = new File(uploadPath + File.separator, updateBoardFile.getFileUrl());       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+                if(deleteFile.exists()) deleteFile.delete();
+            }
+
+            updateBoardFile.setFileName(files.getOriginalFilename());
+            updateBoardFile.setFileSize(files.getSize());
+            updateBoardFile.setFileUrl(boardFileUrl);
+        }
         return boardFileRepository.save(boardFile.toEntity());
     }
 
@@ -126,10 +135,16 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public int deleteBoardFile(int boardId) {
         System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
-        Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
-        System.out.println("boardfile >>>> " + boardfile);
+        Optional<BoardFile> optional = boardFileRepository.findById(boardId);
+        BoardFile boardFile = optional.get();
+        if(boardFile.getFileUrl() != null) {
+            File deleteFile = new File(uploadPath + File.separator, boardFile.getFileUrl());       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+            if(deleteFile.exists()) deleteFile.delete();
+        }
+
+        System.out.println("boardfile >>>> " + boardFile);
         try {
-            boardFileRepository.delete(boardfile.get());
+            boardFileRepository.delete(boardFile);
             return 1;
         } catch (Exception e) {
             return 2;
