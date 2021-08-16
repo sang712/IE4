@@ -97,9 +97,9 @@ export default {
         state.file = URL.createObjectURL(fileEvent.target.files[0]);
         console.log("file >>>> ", state.file)
       }
-      var attachFiles = document.querySelector("inputFileUploadInsert");
+      var attachFiles = document.querySelector("#inputFileUploadInsert");
       console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
-      console.log("inputFileUploadInsert.files >>> ",  document.getElementById("inputFileUploadInsert").files)
+      console.log("inputFileUploadInsert >>> ",  document.getElementById("inputFileUploadInsert").files)
       console.log("querySelector inputFileUploadInsert.files >>> ",  document.querySelector("inputFileUploadInsert").files)
       if (document.getElementById("inputFileUploadInsert").files.length > 0 )
         {
