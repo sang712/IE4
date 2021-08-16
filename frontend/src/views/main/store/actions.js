@@ -66,20 +66,8 @@ export function updateStudent (context, payload){
 
   })
   .catch(function (err) {
-    const status = err.response.status
-    if (status == 500) {
-      Swal.fire({
-        title: '이런!',
-        text: '서버 오류가 발생했습니다..',
-        icon: 'error',
-      })
-    } else{
-      Swal.fire({
-        title: '이런!',
-        text: '수정에 실패했습니다..',
-        icon: 'error',
-      })
-    }
+    console.log("updateStudent error", err)
+    Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
   })
 }
 
@@ -102,23 +90,10 @@ export function updateTeacher (context, payload){
       text: '수정되었습니다!',
       icon: 'success',
     })
-
   })
   .catch(function (err) {
-    const status = err.response.status
-    if (status == 500) {
-      Swal.fire({
-        title: '이런!',
-        text: '서버 오류가 발생했습니다..',
-        icon: 'error',
-      })
-    } else{
-      Swal.fire({
-        title: '이런!',
-        text: '수정에 실패했습니다..',
-        icon: 'error',
-      })
-    }
+    console.log("updateTeacher error", err)
+    Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
   })
 }
 
