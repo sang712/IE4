@@ -220,17 +220,17 @@ export function setBoardList({ state }, response){
 export function requestNewsBoardList ({ state }, payload) {
   console.log('requestNewsBoardList')
   let token = localStorage.getItem('jwt')
-  let header = { headers: { 'Authorization': `Bearer ${token}` } }
   const url = '/api/board';
-  let params = {params : {classId:100, boardType:"공지사항", page:payload.currentPageIndex}}
-  return $axios.get(url, {params, header})
+  return $axios.get(url, {
+    params: { classId:100, boardType:"공지사항", page:payload.currentPageIndex },
+    headers: { 'Authorization': `Bearer ${token}`  }
+   })
 }
 
 export function requestBoardList ({ state }, payload) {
   console.log('requestBoardList')
   console.log(localStorage.getItem('classId'))
   let token = localStorage.getItem('jwt')
-  let header = { headers: { 'Authorization': `Bearer ${token}` } }
   const url = '/api/board';
   return $axios.get(url,  {
     params: { classId:localStorage.getItem('classId'), boardType:"학습자료", page:payload.currentPageIndex },
