@@ -93,6 +93,7 @@ public class BoardServiceImpl implements BoardService{
         if (boardfile.isPresent()){
             System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
             boardFileRepository.delete(boardfile.get());
+            System.out.println("boardfile >>>> 삭제완료!!!!!!!!! ");
         }
 //        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
 //        File uploadDir = new File(uploadPath + File.separator + uploadFolder);
@@ -104,12 +105,12 @@ public class BoardServiceImpl implements BoardService{
         String savingFileName = uuid + "." + extension;
         File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
 
-        System.out.println("파일 경로" + destFile);
+        System.out.println("새로운 파일 경로" + destFile);
         files.transferTo(destFile);
 
         // Table Insert
         String boardFileUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
-        BoardFile boardFile = new BoardFile(boardId,fileName,files.getSize(),boardFileUrl );
+        BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
         System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
 
         return boardFileRepository.save(boardFile.toEntity());
