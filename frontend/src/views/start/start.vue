@@ -61,7 +61,7 @@ import SignupDialog from './components/signup-dialog'
 import LoginDialog from './components/login-dialog'
 
 export default {
-  name: 'Start',
+  name: 'start',
   components: {
     SignupDialog,
     LoginDialog,
