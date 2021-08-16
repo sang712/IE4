@@ -84,7 +84,7 @@ function makeRoutesFromMenu () {
 // 회의 참가
   routes.push({
     // path: 'wss://' + location.host + '/groupcall',
-    path: 'wss://' + location.host + '/groupcall',
+    path: '/conference',
     name: 'conference',
     component: Conference,
   })
