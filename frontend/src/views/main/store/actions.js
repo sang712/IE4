@@ -222,8 +222,8 @@ export function requestNewsBoardList ({ state }, payload) {
   let token = localStorage.getItem('jwt')
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   const url = '/api/board';
-
-  return $axios.get(url, {params:{classId:100, boardType:"공지사항", page:payload.currentPageIndex}},header)
+  let params = {params : {classId:100, boardType:"공지사항", page:payload.currentPageIndex}}
+  return $axios.get(url, {params, header})
 }
 
 export function requestBoardList ({ state }, payload) {
@@ -232,8 +232,10 @@ export function requestBoardList ({ state }, payload) {
   let token = localStorage.getItem('jwt')
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   const url = '/api/board';
-
-  return $axios.get(url,  {params:{classId:localStorage.getItem('classId'), boardType:"학습자료", page:payload.currentPageIndex}},header)
+  return $axios.get(url,  {
+    params: { classId:localStorage.getItem('classId'), boardType:"학습자료", page:payload.currentPageIndex },
+    headers: { 'Authorization': `Bearer ${token}`  }
+   })
 }
 
 export function requestBoardDetail ({state}, payload){
