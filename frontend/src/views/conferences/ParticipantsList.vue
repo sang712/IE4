@@ -8,7 +8,7 @@
 
 <script>
 import { reactive, computed, toRefs, watch } from 'vue'
-import * as conference from '../conference.js'
+import * as conference from '../main/conference.js'
 
 export default {
   name: 'ParticipantsList',
