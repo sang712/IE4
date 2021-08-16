@@ -18,7 +18,7 @@
         </div>
         <div>
           <p style="text-align:left">첨부 파일</p>
-          <!-- <img v-if="fileUrl != null" style="width: 60%; height: 10%;" v-bind:src="fileUrl"> -->
+          <!-- <img style="width: 60%; height: 10%;" v-bind:src="fileUrl"> -->
         </div>
         <div class="form-check mb-3">
           <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
@@ -66,7 +66,7 @@ export default {
     })
     console.log("fileUrl >>> ", store.getters['rootMain/getBoardDetail'].fileUrl)
     // const createFile = async() =>{
-    //   let response = await fetch('/api/'+state.fileUrl);
+    //   let response = await fetch('http://localhost:8080/'+state.fileUrl);
     //   let data = await response.blob();
     //   let metadata = {
     //     type: 'image/jpeg'
