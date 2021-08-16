@@ -106,8 +106,8 @@ public class BoardServiceImpl implements BoardService{
 
         // Table Insert
         String boardFileUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
-        BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
-        System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
+        //BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
+        //System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
 
         if (boardfile.isPresent()){
             System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
@@ -115,8 +115,11 @@ public class BoardServiceImpl implements BoardService{
             updateBoardFile.setFileName(files.getOriginalFilename());
             updateBoardFile.setFileSize(files.getSize());
             updateBoardFile.setFileUrl(boardFileUrl);
+            return boardFileRepository.save(updateBoardFile);
+        }else{
+            BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
+            return boardFileRepository.save(boardFile);
         }
-        return boardFileRepository.save(boardFile.toEntity());
     }
 
     @Override
@@ -131,11 +134,13 @@ public class BoardServiceImpl implements BoardService{
         System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
         Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
         String fileUrl = boardfile.get().getFileUrl();
-        if(fileUrl != null) {
-            File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
-            if(deleteFile.exists()) deleteFile.delete();
-        }
+        System.out.println("삭제할 fileURL >>>> " + fileUrl);
+//        if(fileUrl != null) {
+//            File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+//            if(deleteFile.exists()) deleteFile.delete();
+//        }
         System.out.println("boardfile >>>> " + boardfile);
+
         try {
             boardFileRepository.delete(boardfile.get());
             return 1;
