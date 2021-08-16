@@ -58,6 +58,7 @@
 import { useStore } from 'vuex'
 import { reactive, computed, toRefs, ref } from 'vue'
 import secessionDialog from './secession-dialog'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'section-mypage',
@@ -66,6 +67,7 @@ export default {
 
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     const secession = ref([
       {secessionDialogOpen: false},
@@ -113,6 +115,9 @@ export default {
         updateStudentData.append("passwordAnswer", store.state.rootMain.mypageInfo.passwordAnswer)
         updateStudentData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateStudent', updateStudentData)
+        .then(() => {
+          router.go()
+        })
       }else{
         var updateTeacherData = new FormData()
         var attachFiles = document.querySelector("#inputFileUploadInsert")
@@ -124,6 +129,9 @@ export default {
         updateTeacherData.append("classMotto", store.state.rootMain.mypageInfo.classMotto)
         updateTeacherData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateTeacher', updateTeacherData)
+        .then(() => {
+          router.go()
+        })
       }
     };
 
