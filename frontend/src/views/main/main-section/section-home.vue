@@ -7,7 +7,7 @@
         <h1 class="text-center" v-if="position=='학생'">{{ nTeacherName }} 선생님</h1>
         <h1 class="text-center">{{ nGrade }}학년 {{ nClass }}반 수업을 시작합니다.</h1>
       </div>
-      <el-button v-if="position=='학생'" style="width: 25%; height: 10%; font-size: 140% ">참여하기</el-button>
+      <el-button v-if="position=='학생'" style="width: 25%; height: 10%; font-size: 140% " @click="joinCon()">참여하기</el-button>
       <el-button v-else style="width: 25%; height: 10%; font-size: 140% ">방만들기</el-button>
     </div>
     <div class="col">
@@ -53,7 +53,12 @@ export default {
     const clickMvp = () => {
       router.push({ name: 'mvp' })
     }
-    return { clickSchedule, clickNote, clickMvp }
+
+    const joinCon = () => {
+      router.push({ name : 'conference' })
+    }
+
+    return { clickSchedule, clickNote, clickMvp, joinCon }
   }
 
 }

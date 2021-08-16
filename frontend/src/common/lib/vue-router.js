@@ -10,6 +10,7 @@ import SectionNews from '@/views/main/main-section/section-news'
 import SectionMeterials from '@/views/main/main-section/section-meterials'
 import SectionMyclass from '@/views/main/main-section/section-myclass'
 import SectionMypage from '@/views/main/main-section/section-mypage'
+import Conference from '@/views/conferences/conference.vue'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -79,6 +80,13 @@ function makeRoutesFromMenu () {
     path: '/mypage',
     name: 'mypage',
     component: SectionMypage,
+  })
+// 회의 참가
+  routes.push({
+    // path: 'wss://' + location.host + '/groupcall',
+    path: 'wss://' + location.host + '/groupcall',
+    name: 'conference',
+    component: Conference,
   })
   return routes
 }
