@@ -19,7 +19,7 @@ import WebRTC from 'vue-webrtc'
 import kurentoUtils from 'kurento-utils'
 import * as Participant from './participant.js'
 
-var ws = new WebSocket('wss://' + location.host + '/groupcall');
+var ws = new WebSocket('wss://' + location.host + '/api/groupcall');
 var participants = {};
 var name;
 
@@ -123,8 +123,8 @@ export function onExistingParticipants(msg) {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant)
 	}
-    
-	// 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성    
+
+	// 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
 	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
 		function (error) {
             if(error) {
