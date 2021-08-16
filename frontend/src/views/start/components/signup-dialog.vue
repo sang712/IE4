@@ -45,6 +45,9 @@
         <el-form-item prop="phone" label="휴대전화" :label-width="state.formLabelWidth">
           <el-input v-model="state.form.phone"></el-input>
         </el-form-item>
+        <el-form-item prop="Parents_phone" label="부모님번호" :label-width="state.formLabelWidth">
+          <el-input v-model="state.form.parents_phone"></el-input>
+        </el-form-item>
         <el-form-item prop="address" label="주소" :label-width="state.formLabelWidth">
           <el-input v-model="state.form.address"></el-input>
         </el-form-item>
@@ -124,6 +127,15 @@ export default {
       }
       callback()
     }
+    const checkParentsPhone = (rule, value, callback) => {
+      if (!(/^010\d{3,4}\d{4}$/.test(value))) {
+        if(!(/^010/.test(value))) callback(new Error('휴대전화번호는 010으로 시작해야 합니다.'))
+        else if (/-/.test(value)) callback(new Error('-없이 입력해주세요.'))
+        else callback(new Error('올바른 휴대전화번호를 입력해주세요.'))
+      }
+      callback()
+    }
+
     const checkAddress = (rule, value, callback) => {
       if (value.length > 50) callback(new Error('주소를 50자 이내로 입력해주세요.'))
       callback()
@@ -140,10 +152,9 @@ export default {
         { question: "가장 좋아하는 색깔은?" },
         { question: "키우고 있는 애완동물의 이름은?" },
         { question: "가장 친한 친구의 이름은?" },
-        { question: "이효진의 별명은?" },
-        { question: "김윤주의 별명은?" },
-        { question: "임아연의 별명은?" },
-        { question: "강현구의 별명은?" },
+        { question: "본인의 별명은?" },
+        { question: "장례희망은?" },
+        { question: "가장 좋아하는 음식은?" },
       ],
       form: {
         id: '',
@@ -155,6 +166,7 @@ export default {
         snum: '',
         sex: '',
         phone: '',
+        parents_phone:'',
         address: '',
         password_question: '',
         password_answer: '',
@@ -194,6 +206,10 @@ export default {
           { required: true, message: '연락처를 입력하세요.', trigger: 'blur'},
           { validator: checkPhone, trigger: 'blur'}
         ],
+        parents_phone: [
+          { required: true, message: '연락처를 입력하세요.', trigger: 'blur'},
+          { validator: checkParentsPhone, trigger: 'blur'}
+        ],
         address: [
           { required: true, message: '주소를 입력해주세요.', trigger: 'blur'},
           { validator: checkAddress, trigger: 'blur'}
@@ -229,6 +245,7 @@ export default {
             snum: state.form.snum,
             sex: state.form.sex,
             phone: state.form.phone,
+            parents_phone: state.form.parents_phone,
             address: state.form.address,
             passwordQuestion: state.form.password_question,
             passwordAnswer: state.form.password_answer,
@@ -277,6 +294,7 @@ export default {
       state.form.snum = ''
       state.form.sex = ''
       state.form.phone = ''
+      state.form.parents_phone = ''
       state.form.address = ''
       state.form.password_question = ''
       state.form.password_answer = ''
