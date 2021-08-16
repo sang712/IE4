@@ -1,13 +1,10 @@
 <template>
   <!-- main, start, conference 로 시작 -->
   <router-view></router-view>
-  
-  <!-- <Main v-if="state.isLogin"/>
-  <Start v-else/> -->
 </template>
 
 <script>
-import { reactive, watch } from 'vue'
+import { reactive, watch, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default {
@@ -23,10 +20,17 @@ export default {
 
     const router = useRouter()
 
-    watch(state.isLogin, (val, oldVal) => {
-      if (val) router.push({ name: main })
-      else router.push({ name: start })
+    onBeforeMount(() =>{
+      console.log(state.isLogin)
+      if (state.isLogin) router.push('/main')
+      else router.push('/')
     })
+
+    // watch(state, (val, oldVal) => {
+    //   console.log(val.isLogin)
+    //   if (val.isLogin) router.push({ name: start })
+    //   else router.push({ name: main })
+    // })
 
     return { state }
 

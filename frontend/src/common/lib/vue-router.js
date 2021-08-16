@@ -29,7 +29,7 @@ function makeRoutesFromMenu () {
   routes = routes.filter(item => item)
   // menu 자체에는 나오지 않는 페이지 라우터에 추가(방 상세보기)
   routes.push({
-    path: '/conferences/:conferenceId',
+    path: '/conference/:conferenceId',
     name: 'conference-detail',
     component: ConferencesDetail
   })
@@ -38,7 +38,7 @@ function makeRoutesFromMenu () {
   routes.push({
     path: '/',
     name: 'start',
-    conponent: Start,
+    component: Start,
   })
 
   // 메인 화면 라우터
@@ -48,12 +48,12 @@ function makeRoutesFromMenu () {
     component: Main,
     children: [
       {
-        path: '/',
+        path: '',
         name: 'home',
         component: SectionHome,
         children: [
-          {
-            // 시간표버튼 라우터
+            {
+              // 시간표버튼 라우터
             path: '',
             name: 'schedule',
             component: SectionSchedule,
