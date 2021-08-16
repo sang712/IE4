@@ -117,9 +117,9 @@ export default {
         updateStudentData.append("passwordAnswer", state.passwordAnswer)
         updateStudentData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateStudent', updateStudentData)
-        .then(() => {
-          router.go()
-        })
+        // .then(() => {
+        //   router.go()
+        // })
       }else{
         var updateTeacherData = new FormData()
         var attachFiles = document.querySelector("#inputFileUploadInsert")
@@ -131,9 +131,9 @@ export default {
         updateTeacherData.append("classMotto", state.mypageInfo.classMotto)
         updateTeacherData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateTeacher', updateTeacherData)
-        .then(() => {
-          router.go()
-        })
+        // .then(() => {
+        //   router.go()
+        // })
       }
     };
 
