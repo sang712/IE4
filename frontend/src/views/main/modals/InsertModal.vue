@@ -84,9 +84,11 @@ export default {
     const changeFile = (fileEvent) => {
       console.log("fileEvent >>>> ", fileEvent)
       if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
-        state.file = URL.createObjectURL(fileEvent.target.files[0]);
+        state.file = URL.createObjectURL(fileEvent.target.files[0]);s
         console.log("file >>>> ", state.file)
       }
+      var attachFiles = document.querySelector("#inputFileUploadInsert");
+      console.log("insert attachFiles >>> ",  attachFiles.files[0])
     }
 
     const onEditorReady = (editor) => {

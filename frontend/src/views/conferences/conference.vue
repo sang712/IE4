@@ -108,7 +108,10 @@ export default {
 		ParticipantsList,
 	},
   props: {
-    msg: String
+    msg: String,
+		name: '',
+		grade: '',
+		class: '',
   },
   methods : {
     register() {
@@ -148,7 +151,19 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		}
-  }
+  },
+	mounted: function () {
+		console.log('마운트 되었음')
+		if (this.name !== '') {
+			console.log('바로 이동쓰~')
+			const nameTag = document.getElementById('name')
+			nameTag.value = this.name
+			const classTag = document.getElementById('roomName')
+			classTag.value = this.grade + '학년 ' + this.class + '반'
+
+			this.register()
+		}
+	}
 }
 </script>
 

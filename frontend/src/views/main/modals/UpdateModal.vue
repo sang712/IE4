@@ -17,19 +17,21 @@
           </div>
         </div>
         <div>
-          <p style="text-align:left">첨부 파일</p>
+          <p style="text-align:left">첨부 파일 : {{fileName}}</p>
+
           <!-- <img style="width: 60%; height: 10%;" v-bind:src="fileUrl"> -->
         </div>
         <div class="form-check mb-3">
           <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
-          <label class="form-check-label" for="chkFileUploadInsert">파일 변경</label>
+          <label class="form-check-label" for="chkFileUploadInsert">파일 추가</label>
         </div>
         <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
-          <input @change="changeFile" type="file" id="inputFileUploadInsert" />
+          <input @change="changeFile2" type="file" id="inputFileUploadInsert2">
           <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
-            <img v-bind:src="file">
+            <img v-bind:src="file2">
           </div>
         </div>
+
       </div>
       <div class="modal-footer">
         <button @click="boardUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">수정</button>
@@ -57,7 +59,7 @@ export default {
       title: '',
       attachFile: false,
       fileUrl: computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
-      file : null,
+      file2: null,
       editor: ClassicEditor,
       fileName: computed(() => store.getters['rootMain/getBoardDetail'].fileName),
       boardType: computed(() => store.getters['rootMain/getBoardType'].type),
@@ -91,20 +93,13 @@ export default {
       });
       setup;
     }
-    const changeFile = (fileEvent) => {
+
+    const changeFile2 = (fileEvent) => {
       console.log("fileEvent >>>> ", fileEvent)
       if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
-        state.file = URL.createObjectURL(fileEvent.target.files[0]);
-        console.log("file >>>> ", state.file)
+        state.file2 = URL.createObjectURL(fileEvent.target.files[0]);
+        console.log("file2 >>>> ", state.file2)
       }
-      var attachFiles = document.querySelector("inputFileUploadInsert");
-      console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
-      console.log("inputFileUploadInsert.files >>> ",  document.getElementById("inputFileUploadInsert").files)
-      console.log("querySelector inputFileUploadInsert.files >>> ",  document.querySelector("inputFileUploadInsert").files)
-      if (document.getElementById("inputFileUploadInsert").files.length > 0 )
-        {
-          console.log("length 크면 여기로... attachFiles.files[0] >>> ",  attachFiles.files[0])
-        }
     }
 
 
@@ -118,11 +113,9 @@ export default {
       formData.append("userId",localStorage.getItem('id'))
       formData.append("userName",localStorage.getItem('name'))
 
-      var attachFiles = document.querySelector("#inputFileUploadInsert");
+      var attachFiles = document.querySelector("#inputFileUploadInsert2");
+      console.log("insert 2 attachFiles >>> ",  attachFiles.files[0])
       if (attachFiles != null){
-        console.log("attachFiles >>> ",  attachFiles)
-        console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
-        console.log("attachFiles >>> ",  attachFiles.files[0])
         formData.append("files", attachFiles.files[0])
       }
       formData.append("boardType",state.boardType)
@@ -145,7 +138,7 @@ export default {
       emit('call-parent-update'); // no parameter
     }
 
-    return { ...toRefs(state), onMounted, changeFile, boardUpdate, closeModal, }
+    return { ...toRefs(state), onMounted, changeFile, boardUpdate, changeFile2 }
 
   },
 }
