@@ -63,6 +63,6 @@ public class GroupCallApplication implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(groupCallHandler(), "/groupcall");
+        registry.addHandler(groupCallHandler(), "/api/groupcall");
     }
 }
