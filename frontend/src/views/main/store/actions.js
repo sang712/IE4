@@ -6,7 +6,6 @@ import $axios from 'axios'
 import { routerKey } from 'vue-router';
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
 
 export function requestLogin ({ state }, payload) {
   console.log('requestLogin', state, payload)
@@ -62,6 +61,8 @@ export function updateStudent (context, payload){
       text: '수정되었습니다!',
       icon: 'success',
     })
+
+    let router = useRouter()
     router.go()
 
   })
@@ -90,6 +91,9 @@ export function updateTeacher (context, payload){
       text: '수정되었습니다!',
       icon: 'success',
     })
+
+    let router = useRouter()
+    router.go()
   })
   .catch(function (err) {
     console.log("updateTeacher error", err)
