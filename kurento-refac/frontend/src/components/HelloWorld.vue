@@ -79,8 +79,8 @@
 				<div class="button-wrapper">
 					<button class="button" type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
 					<button class="button" type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></button>
-					<button class="button" @click="displayOnoff" type="button" id="button-videoOn"><i class="fas fa-video"></i></button>
-					<button class="button" @click="displayOnoff" type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></button>
+					<button class="button" @click="displayOn" type="button" id="button-videoOn"><i class="fas fa-video"></i></button>
+					<button class="button" @click="displayOff" type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></button>
 					<button class="button" type="button" id="button-share"><i class="far fa-share-square"></i></button>
 					<button class="button" type="button" id="button-session"><i class="fas fa-th-large"></i></button>
 					<button class="button" type="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button>
@@ -148,17 +148,15 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		},
-		displayOnoff() {
-			if(document.getElementById('video').style.display =='none')
-			{
-				document.getElementById('video').style.display=='block'
-			}
-			else{
-				document.getElementById('video').style.display=='none'
-			}
+		displayOn() {		
+			document.getElementById('video').style.display=='block'
+		},
+		displayOff() {
+			document.getElementById('video').style.display=='none'
+		},
 		}
   }
-}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
