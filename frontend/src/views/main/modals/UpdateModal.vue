@@ -17,7 +17,8 @@
           </div>
         </div>
         <div>
-          <p style="text-align:left">첨부 파일</p>
+          <p style="text-align:left">첨부 파일 : {{fileName}}</p>
+
           <!-- <img style="width: 60%; height: 10%;" v-bind:src="fileUrl"> -->
         </div>
         <div class="form-check mb-3">
@@ -137,7 +138,7 @@ export default {
       emit('call-parent-update'); // no parameter
     }
 
-    return { ...toRefs(state), onMounted, changeFile, boardUpdate, closeModal, changeFile2 }
+    return { ...toRefs(state), onMounted, changeFile, boardUpdate, changeFile2 }
 
   },
 }
