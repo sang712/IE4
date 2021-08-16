@@ -54,7 +54,6 @@ export default {
     });
 
     const clickMypage = () => {
-      store.dispatch('rootMain/requestMyprofile', state.jwt)
       router.push({ name: 'mypage' })
     }
 
