@@ -25,7 +25,7 @@
           <label class="form-check-label" for="chkFileUploadInsert">파일 변경</label>
         </div>
         <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
-          <input @change="changeFile" type="file" id="inputFileUploadInsert">
+          <input @change="changeFile" type="file" id="inputFileUploadInsert"/>
           <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
             <img v-bind:src="file">
           </div>
