@@ -10,6 +10,7 @@ import SectionNews from '@/views/main/main-section/section-news'
 import SectionMeterials from '@/views/main/main-section/section-meterials'
 import SectionMyclass from '@/views/main/main-section/section-myclass'
 import SectionMypage from '@/views/main/main-section/section-mypage'
+import Conference from '@/views/conferences/conference.vue'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -26,7 +27,7 @@ function makeRoutesFromMenu () {
   routes = routes.filter(item => item)
   // menu 자체에는 나오지 않는 페이지 라우터에 추가(방 상세보기)
   routes.push({
-    path: '/conferences/:conferenceId',
+    path: '/conferences/:conferenceId', 
     name: 'conference-detail',
     component: ConferencesDetail
   })
@@ -79,6 +80,13 @@ function makeRoutesFromMenu () {
     path: '/mypage',
     name: 'mypage',
     component: SectionMypage,
+  })
+// 회의 참가
+  routes.push({
+    // path: 'wss://' + location.host + '/groupcall',
+    path: '/conference',
+    name: 'conference',
+    component: Conference,
   })
   return routes
 }
