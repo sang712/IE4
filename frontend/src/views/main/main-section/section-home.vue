@@ -55,7 +55,7 @@ export default {
     }
 
     const joinCon = () => {
-      router.push({ name : 'conference' })
+      router.push({ name : 'conference', params: { name: localStorage.getItem('name'), grade: 1, class: 1 } })
     }
 
     return { clickSchedule, clickNote, clickMvp, joinCon }

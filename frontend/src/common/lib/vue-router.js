@@ -105,6 +105,7 @@ function makeRoutesFromMenu () {
     path: '/conference',
     name: 'conference',
     component: Conference,
+    props: true,
   })
   return routes
 }

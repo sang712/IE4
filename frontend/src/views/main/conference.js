@@ -64,7 +64,7 @@ export function register() {
 	name = document.getElementById('name').value;
 	var room = document.getElementById('roomName').value;
 
-	document.getElementById('room-header').innerText = room + "번 방의 수업";
+	document.getElementById('room-header').innerText = room + "의 수업";
 	document.getElementById('join').style.display = 'none';
 	document.getElementById('room').style.display = 'block';
 	document.getElementById('footer').style.display = 'block';
