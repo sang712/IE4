@@ -97,6 +97,9 @@ export default {
         state.file = URL.createObjectURL(fileEvent.target.files[0]);
         console.log("file >>>> ", state.file)
       }
+      var attachFiles = document.querySelector("#inputFileUploadInsert");
+      console.log("attachFiles >>> ",  attachFiles)
+      console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
     }
 
 

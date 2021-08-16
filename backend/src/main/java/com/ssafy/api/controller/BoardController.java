@@ -59,6 +59,7 @@ public class BoardController {
         if (files != null){
             BoardFile boardfile = boardService.updateBoard(files, board);
         }else{
+            System.out.println("수정하려는 boardfile 이 null입니다>>>>>" + files);
             Board boardfile = boardService.updateBoard(board);
         }
 
