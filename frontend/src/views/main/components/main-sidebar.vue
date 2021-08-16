@@ -50,7 +50,6 @@ export default {
       }else{
         return '/' + state.nProfileImgUrl;
       }
-
     });
 
     const clickMypage = () => {

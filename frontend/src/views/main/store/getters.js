@@ -39,3 +39,8 @@ export function getRankingList (state) {
 export function getSchoolSchedule (state) {
 	return state.schoolSchedule
 }
+
+// myInfo 가져오기
+export function getMypageInfo (state) {
+  return state.mypageInfo
+}
