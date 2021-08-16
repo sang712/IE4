@@ -30,6 +30,18 @@
             <img v-bind:src="file">
           </div>
         </div>
+        <br>
+        <div class="form-check mb-3">
+          <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
+          <label class="form-check-label" for="chkFileUploadInsert">파일 추가</label>
+        </div>
+        <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
+          <input @change="changeFile2" type="file" id="inputFileUploadInsert2">
+          <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
+            <img v-bind:src="file2">
+          </div>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button @click="boardUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">수정</button>
@@ -58,6 +70,7 @@ export default {
       attachFile: false,
       fileUrl: computed(() => store.getters['rootMain/getBoardDetail'].fileUrl),
       file : null,
+      file2: null,
       editor: ClassicEditor,
       fileName: computed(() => store.getters['rootMain/getBoardDetail'].fileName),
       boardType: computed(() => store.getters['rootMain/getBoardType'].type),
@@ -107,6 +120,16 @@ export default {
         }
     }
 
+    const changeFile2 = (fileEvent) => {
+      console.log("fileEvent >>>> ", fileEvent)
+      if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
+        state.file2 = URL.createObjectURL(fileEvent.target.files[0]);
+        console.log("file2 >>>> ", state.file2)
+      }
+      var attachFiles = document.querySelector("#inputFileUploadInsert2");
+      console.log("insert 2 attachFiles >>> ",  attachFiles.files[0])
+    }
+
 
     const boardUpdate = () => {
       var formData = new FormData();
@@ -145,7 +168,7 @@ export default {
       emit('call-parent-update'); // no parameter
     }
 
-    return { ...toRefs(state), onMounted, changeFile, boardUpdate, closeModal, }
+    return { ...toRefs(state), onMounted, changeFile, boardUpdate, closeModal, changeFile2 }
 
   },
 }

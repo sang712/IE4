@@ -87,6 +87,8 @@ export default {
         state.file = URL.createObjectURL(fileEvent.target.files[0]);
         console.log("file >>>> ", state.file)
       }
+      var attachFiles = document.querySelector("#inputFileUploadInsert");
+      console.log("insert attachFiles >>> ",  attachFiles.files[0])
     }
 
     const onEditorReady = (editor) => {
