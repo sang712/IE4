@@ -26,7 +26,10 @@
     "vue-resource": "^1.5.3",
     "vue-router": "^4.0.6",
     "vue-simple-alert": "^1.1.1",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "kurento-utils": "^6.16.0",
+    "vue-webrtc": "^2.0.0",
+    "webrtc-adapter": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
