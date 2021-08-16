@@ -131,8 +131,15 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public int deleteBoardFile(int boardId) {
-        System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
+        System.out.println("in boardfile!!!!!!!!! ");
         Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
+        if(boardfile.isPresent()){
+            System.out.println("in if isPrsent boardfile >>>> after findBy !!!!!!!!! " + boardfile.get());
+            boardFileRepository.delete(boardfile.get());
+            return 1;
+        }else{
+            return 2;
+        }
 //        String fileUrl = boardfile.get().getFileUrl();
 //        System.out.println("삭제할 fileURL >>>> " + fileUrl);
 //        if(fileUrl != null) {
@@ -140,13 +147,6 @@ public class BoardServiceImpl implements BoardService{
 //            if(deleteFile.exists()) deleteFile.delete();
 //        }
 //        System.out.println("boardfile >>>> " + boardfile.get());
-
-        try {
-            boardFileRepository.delete(boardfile.get());
-            return 1;
-        } catch (Exception e) {
-            return 2;
-        }
     }
 
     @Override

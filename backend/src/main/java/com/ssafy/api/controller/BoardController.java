@@ -84,9 +84,8 @@ public class BoardController {
             @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 500, message = "서버 오류") })
     public ResponseEntity<? extends BaseResponseBody> delete(
             @PathVariable @ApiParam(value = "게시물 정보", required = true) int boardId) {
-
-        int deleteResult = boardService.deleteBoard(boardId);
         int deletefileResult = boardService.deleteBoardFile(boardId);
+        int deleteResult = boardService.deleteBoard(boardId);
         if(deleteResult == 1)
             return ResponseEntity.status(204).body(BaseResponseBody.of(204, "삭제 성공"));
         else
