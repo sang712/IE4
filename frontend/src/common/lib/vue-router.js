@@ -36,14 +36,14 @@ function makeRoutesFromMenu () {
 
   // 로그인 화면 라우터
   routes.push({
-    path: '/start',
+    path: '/',
     name: 'start',
     conponent: Start,
   })
 
   // 메인 화면 라우터
   routes.push({
-    path: '/',
+    path: '/main',
     name: 'main',
     component: Main,
     children: [

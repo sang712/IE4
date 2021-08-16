@@ -45,7 +45,7 @@ import MainSidebar from './components/main-sidebar'
 import { useStore } from 'vuex'
 
 export default {
-  name: 'Main',
+  name: 'main',
   components: {
     MainHeader,
     MainFooter,
