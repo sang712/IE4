@@ -25,7 +25,7 @@
           <label class="form-check-label" for="chkFileUploadInsert">파일 변경</label>
         </div>
         <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
-          <input @change="changeFile" type="file" id="inputFileUploadInsert"/>
+          <input @change="changeFile" type="file" id="inputFileUploadInsert" />
           <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
             <img v-bind:src="file">
           </div>
@@ -100,6 +100,10 @@ export default {
       var attachFiles = document.querySelector("#inputFileUploadInsert");
       console.log("attachFiles >>> ",  attachFiles)
       console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
+      if (document.getElementById("inputFileUploadInsert").files.length > 0 )
+        {
+          console.log("length 크면 여기로... attachFiles.files[0] >>> ",  attachFiles.files[0])
+        }
     }
 
 

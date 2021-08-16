@@ -91,7 +91,7 @@ export default {
     // });
 
     const state = reactive({
-      mypageInfo : computed(() => store.getters['rootMain/getMypageInfo']),
+      mypageInfo : store.getters['rootMain/getMypageInfo'],
       file : store.getters['rootMain/getMypageInfo'].profileImgUrl,
       nSex : localStorage.getItem('sex')
     });
@@ -110,11 +110,11 @@ export default {
         var updateStudentData = new FormData()
         var attachFiles = document.querySelector("#inputFileUploadInsert")
         updateStudentData.append("id", localStorage.getItem('id'))
-        updateStudentData.append("password", store.state.rootMain.mypageInfo.password)
-        updateStudentData.append("phone", store.state.rootMain.mypageInfo.phone)
-        updateStudentData.append("address", store.state.rootMain.mypageInfo.address)
-        updateStudentData.append("parentPhone", store.state.rootMain.mypageInfo.parentPhone)
-        updateStudentData.append("passwordAnswer", store.state.rootMain.mypageInfo.passwordAnswer)
+        updateStudentData.append("password", state.mypageInfo.password)
+        updateStudentData.append("phone", state.mypageInfo.phone)
+        updateStudentData.append("address", state.mypageInfo.address)
+        updateStudentData.append("parentPhone", state.mypageInfo.parentPhone)
+        updateStudentData.append("passwordAnswer", state.passwordAnswer)
         updateStudentData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateStudent', updateStudentData)
         .then(() => {
@@ -125,10 +125,10 @@ export default {
         var attachFiles = document.querySelector("#inputFileUploadInsert")
         updateTeacherData.append("id", localStorage.getItem('id'))
         updateTeacherData.append("classId", localStorage.getItem('classId'))
-        updateTeacherData.append("password", store.state.rootMain.mypageInfo.password)
-        updateTeacherData.append("phone", store.state.rootMain.mypageInfo.phone)
-        updateTeacherData.append("address", store.state.rootMain.mypageInfo.address)
-        updateTeacherData.append("classMotto", store.state.rootMain.mypageInfo.classMotto)
+        updateTeacherData.append("password", state.mypageInfo.password)
+        updateTeacherData.append("phone", state.mypageInfo.phone)
+        updateTeacherData.append("address", state.mypageInfo.address)
+        updateTeacherData.append("classMotto", state.mypageInfo.classMotto)
         updateTeacherData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateTeacher', updateTeacherData)
         .then(() => {
