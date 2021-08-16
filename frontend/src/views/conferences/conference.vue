@@ -152,16 +152,15 @@ export default {
 			}
 		},
 		displayOn() {		
-			document.getElementById('video').style.display=='block'
+			document.getElementById('video-'+ this.name).style.display = 'block'
 		},
 		displayOff() {
-			document.getElementById('video').style.display=='none'
+			document.getElementById('video-'+ this.name).style.display = 'none'
 		},
   },
 	mounted: function () {
 		console.log('마운트 되었음')
 		if (this.name !== '') {
-			console.log('바로 이동쓰~')
 			const nameTag = document.getElementById('name')
 			nameTag.value = this.name
 			const classTag = document.getElementById('roomName')
