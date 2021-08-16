@@ -23,7 +23,7 @@ export default {
 
     const router = useRouter()
 
-    watch(isLogin, (val, oldVal) => {
+    watch(state.isLogin, (val, oldVal) => {
       if (val) router.push({ name: main })
       else router.push({ name: start })
     })
