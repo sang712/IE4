@@ -4,9 +4,6 @@ import { toHandlers } from 'vue'
 import http from "@/common/lib/axios.js";
 import $axios from 'axios'
 import { routerKey } from 'vue-router';
-import { useStore } from 'vuex'
-
-const store = useStore()
 
 export function requestLogin ({ state }, payload) {
   console.log('requestLogin', state, payload)
@@ -31,10 +28,10 @@ export function requestMyprofile (context, token) {
   .then(function (result) {
     console.log(result.data)
     if(result.data.position === '학생'){
-      store.commit('rootMain/setStudentMypageInfo', result.data, {root: true})
+      context.commit('rootMain/setStudentMypageInfo', result.data, {root: true})
       // store.dispatch('rootMain/setMypageInfo', result.data)
     }else{
-      store.commit('rootMain/setTeacherMypageInfo', result.data, {root: true})
+      context.commit('rootMain/setTeacherMypageInfo', result.data, {root: true})
     }
   })
   .catch(function (err) {
@@ -44,7 +41,8 @@ export function requestMyprofile (context, token) {
 
 export function updateStudent (context, payload){
   console.log('updateStudent')
-  console.log(context.state)
+  console.log('context.state:', context.state)
+  console.log('context:', context)
   console.log(typeof(payload.password))
   const url = '/api/users/student'
 
@@ -56,7 +54,7 @@ export function updateStudent (context, payload){
   .then(({ data }) => {
     console.log('updateStudent complete')
     console.log(data)
-    store.commit('rootMain/setStudentMypageInfo', data, {root: true})
+    context.commit('rootMain/setStudentMypageInfo', data, {root: true})
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',
@@ -82,7 +80,7 @@ export function updateTeacher (context, payload){
   .then(({ data }) => {
     console.log('updateTeacher complete')
     console.log(data)
-    store.commit('rootMain/setTeacherMypageInfo', data, {root: true})
+    context.commit('rootMain/setTeacherMypageInfo', data, {root: true})
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',

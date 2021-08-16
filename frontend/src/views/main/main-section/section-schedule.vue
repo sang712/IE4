@@ -49,6 +49,7 @@ export default {
       var attachFiles = document.querySelector("#inputFileUploadInsert");
       formData.append("file", attachFiles.files[0]);
       console.log('files[0]:', attachFiles.files[0])
+      console.log('store:', store)
 
       store.dispatch('rootMain/updateTimetable', formData, localStorage.getItem('jwt'))
       .then(function (result) {
