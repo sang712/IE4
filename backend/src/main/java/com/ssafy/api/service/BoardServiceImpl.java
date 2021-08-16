@@ -139,7 +139,7 @@ public class BoardServiceImpl implements BoardService{
 //            File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
 //            if(deleteFile.exists()) deleteFile.delete();
 //        }
-        System.out.println("boardfile >>>> " + boardfile.get());
+//        System.out.println("boardfile >>>> " + boardfile.get());
 
         try {
             boardFileRepository.delete(boardfile.get());
