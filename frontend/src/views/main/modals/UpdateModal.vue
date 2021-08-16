@@ -97,9 +97,13 @@ export default {
         state.file = URL.createObjectURL(fileEvent.target.files[0]);
         console.log("file >>>> ", state.file)
       }
-      var attachFiles = document.querySelector("#inputFileUploadInsert");
-      console.log("attachFiles >>> ",  attachFiles)
+      var attachFiles = document.querySelector("inputFileUploadInsert");
+      console.log("attachFiles[0] >>> ",  attachFiles[0])
+      console.log("attachFiles[0].files[0] >>> ",  attachFiles[0].files[0])
       console.log("attachFiles.files[0] >>> ",  attachFiles.files[0])
+      console.log("inputFileUploadInsert >>> ",  document.getElementById("inputFileUploadInsert"))
+      console.log("inputFileUploadInsert.files >>> ",  document.getElementById("inputFileUploadInsert").files)
+      console.log("inputFileUploadInsert[0] >>> ",  document.getElementById("inputFileUploadInsert")[0])
       if (document.getElementById("inputFileUploadInsert").files.length > 0 )
         {
           console.log("length 크면 여기로... attachFiles.files[0] >>> ",  attachFiles.files[0])
@@ -140,6 +144,7 @@ export default {
     }
 
     const closeModal = () => {
+      document.getElementById("inputFileUploadInsert").value = "";
       emit('call-parent-update'); // no parameter
     }
 
