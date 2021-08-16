@@ -133,13 +133,13 @@ public class BoardServiceImpl implements BoardService{
     public int deleteBoardFile(int boardId) {
         System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
         Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
-        String fileUrl = boardfile.get().getFileUrl();
-        System.out.println("삭제할 fileURL >>>> " + fileUrl);
+//        String fileUrl = boardfile.get().getFileUrl();
+//        System.out.println("삭제할 fileURL >>>> " + fileUrl);
 //        if(fileUrl != null) {
 //            File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
 //            if(deleteFile.exists()) deleteFile.delete();
 //        }
-        System.out.println("boardfile >>>> " + boardfile);
+//        System.out.println("boardfile >>>> " + boardfile.get());
 
         try {
             boardFileRepository.delete(boardfile.get());
