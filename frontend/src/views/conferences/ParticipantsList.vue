@@ -3,6 +3,18 @@
     <div id="participants-title">참석자 명단</div>
     <button class="button" type="button" @click="getParticipant()">참석자 가져오기</button>
     <div id="participants-views"></div>
+    <ul class="news-table">
+      <li class="table-header">
+        <!-- <div class="header-number">No</div> -->
+        <div class="header-title" style="text-align:center">이름</div>
+        <div class="header-author">userId</div>
+      </li>
+      <li v-for="(name, userId) in partList" v-bind:key="userId" class="table-row">
+        <!-- <div class="row-number">{{board.id}}</div>-->
+        <div class="row-title">{{name}}</div>
+        <div class="row-author">{{userId}}</div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -56,6 +68,7 @@ export default {
     // let participants = ref('');
     const state = reactive({
       participants: '',
+      partList : {}
     })
 
     // watch(participants,
@@ -104,6 +117,8 @@ export default {
         //     createParticipant(part[val])
         //   }
         // )
+        part.delete(undefined)
+        state.partList = part;
         part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
 
     }
