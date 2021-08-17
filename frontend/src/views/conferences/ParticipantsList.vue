@@ -162,4 +162,73 @@ export default {
   padding: 5px;
   margin: 2px 0px;
 }
+.section-news {
+  width: 99.8%;
+  height: 100%;
+  margin: 5px 1px;
+  padding: 5px 5px;
+  background-color: #efeee9;
+}
+.news-title {
+  text-align: center;
+  margin: 20px 0px;
+}
+.news-table {
+  min-height: 430px;
+  padding: 0px;
+}
+.news-table li {
+  border-radius: 15px;
+  padding: 20px 30px;
+  margin: 0px 5%;
+  font-size: 130%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1px;
+}
+.news-table .table-header {
+  background-color: #95A5A6;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.news-table .table-row {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+}
+li .header-number, .row-number{
+  flex-basis: 10%;
+}
+li .header-title, .row-title{
+  flex-basis: 50%;
+}
+li .header-author, .row-author{
+  text-align: center;
+  flex-basis: 15%;
+}
+li .header-date, .row-date{
+  text-align: center;
+  flex-basis: 15%;
+}
+.lower-sidebar {
+  position: relative;
+  width: 90%;
+  min-height: 60px;
+  margin: auto 5%;
+}
+.lower-sidebar .el-pagination {
+  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.lower-sidebar .el-button {
+  display: inline-block;
+  position: absolute;
+  width: 8vw;
+  height: 40px;
+  right: 5px;
+  padding: 0px;
+}
 </style>
