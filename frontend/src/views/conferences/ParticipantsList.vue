@@ -108,10 +108,10 @@ export default {
       const part = conference.getParticipants()
       console.log("conference.getParticipants() part >>>>> ", part)
       console.log("conference.getParticipants() state.partList >>>>> ", state.partList)
-      let participantsViews = document.getElementById('participants-views')
-        participantsViews.remove
-        participantsViews = document.createElement('div')
-        participantsViews.id = 'participants-views'
+      // let participantsViews = document.getElementById('participants-views')
+      //   participantsViews.remove
+      //   participantsViews = document.createElement('div')
+      //   participantsViews.id = 'participants-views'
 
         // Object.getOwnPropertyNames(part).forEach(
         //   function (val, idx, array) {
