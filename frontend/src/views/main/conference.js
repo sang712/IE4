@@ -35,6 +35,9 @@ ws.onmessage = function(message) {
 
 	// Received message: {"id":"existingParticipants","data":[]}
 	console.info('Received message: ' + message.data);
+  participantList.push(parsedMessage.name+parsedMessage.userId)
+
+  console.log("participantList >>>  " ,Array.from(new Set(participantList)) )
 	switch (parsedMessage.id) {
 	case 'existingParticipants':		// 클라이언트가 현재 새로운 참가자인 경우
 		onExistingParticipants(parsedMessage);
@@ -46,8 +49,6 @@ ws.onmessage = function(message) {
 		onParticipantLeft(parsedMessage);
 		break;
 	case 'receiveVideoAnswer':
-    participantList.push({name : parsedMessage.name, userId: parsedMessage.userId})
-    console.log("participantList >>>  " ,participantList )
 		receiveVideoResponse(parsedMessage);
 		break;
 	case 'iceCandidate':
@@ -67,6 +68,7 @@ export function register() {
 	name = document.getElementById('name').value;
 	var room = document.getElementById('roomName').value;
   userId = document.getElementById('userId').value;
+  console.log("수업 입장 >>>> name and userId >>>", name, " and ", userId)
 
 	document.getElementById('room-header').innerText = room + "의 수업";
 	document.getElementById('join').style.display = 'none';
