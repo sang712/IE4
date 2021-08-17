@@ -46,6 +46,7 @@ ws.onmessage = function(message) {
 		break;
 	case 'participantLeft':
 		onParticipantLeft(parsedMessage);
+    participantList.delete(parsedMessage.userId)
 		break;
 	case 'receiveVideoAnswer':
 		receiveVideoResponse(parsedMessage);
@@ -227,6 +228,6 @@ export function sendMessage(message) {
 }
 
 export function getParticipants() {
-	console.log('참석자 명단 보내기', participants, Object.keys(participants), Object.getOwnPropertyNames(participants))
-	return participants
+	console.log('참석자 명단 보내기 >> ',participantList, participants, Object.keys(participants), Object.getOwnPropertyNames(participants))
+	return participantList
 }

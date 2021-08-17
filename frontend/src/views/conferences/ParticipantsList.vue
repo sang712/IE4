@@ -99,15 +99,17 @@ export default {
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
-        Object.getOwnPropertyNames(part).forEach(
-          function (val, idx, array) {
-            createParticipant(part[val])
-          }
-        )
+        // Object.getOwnPropertyNames(part).forEach(
+        //   function (val, idx, array) {
+        //     createParticipant(part[val])
+        //   }
+        // )
+        part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
+
     }
 
     const createParticipant = (participant) => {
-      console.log("추가 되나요", participant, "참석자 이름", participant.name,)
+      console.log("추가 되나요", participant, "참석자 이름", participant.name,"참석자 userId", participant.userId,)
       const participantsViews = document.getElementById('participants-views')
 
       const container = document.createElement('div')
