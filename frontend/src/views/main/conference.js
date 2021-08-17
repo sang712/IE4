@@ -21,6 +21,7 @@ import * as Participant from './participant.js'
 
 var ws = new WebSocket('wss://' + location.host + '/api/groupcall');
 var participants = {};
+var participantList=[];
 var name;
 var userId;
 
@@ -34,10 +35,11 @@ ws.onmessage = function(message) {
 
 	// Received message: {"id":"existingParticipants","data":[]}
 	console.info('Received message: ' + message.data);
-
 	switch (parsedMessage.id) {
 	case 'existingParticipants':		// 클라이언트가 현재 새로운 참가자인 경우
 		onExistingParticipants(parsedMessage);
+    participantList.push({name : message.data.name, userId: message.data.userId})
+    console.log("participantList >>>  " ,participantList )
 		break;
 	case 'newParticipantArrived':		// 클라이언트가 기존 참여자인 경우
 		onNewParticipant(parsedMessage);
