@@ -63,6 +63,7 @@ ws.onmessage = function(message) {
 export function register() {
 	name = document.getElementById('name').value;
 	var room = document.getElementById('roomName').value;
+  const userId = localStorage.getItem("id");
 
 	document.getElementById('room-header').innerText = room + "의 수업";
 	document.getElementById('join').style.display = 'none';
@@ -73,6 +74,7 @@ export function register() {
 		id : 'joinRoom',
 		name : name,
 		room : room,
+    userId : userId,
 	}
 	sendMessage(message);
 }

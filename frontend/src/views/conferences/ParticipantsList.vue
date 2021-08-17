@@ -95,7 +95,7 @@ export default {
       const part = conference.getParticipants()
 
       let participantsViews = document.getElementById('participants-views')
-        participantsViews.remove
+        participantsViews.remove()
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
