@@ -71,7 +71,8 @@ export default {
             localStorage.setItem('classId', result.data.classId)
             localStorage.setItem('name', result.data.name)
             localStorage.setItem('profileImgUrl', result.data.profileImgUrl)
-            store.state.mypageInfo.profileImgUrl = result.data.profileImgUrl
+            console.log('store:', store)
+            store.commit('rootMain/setProfileImgUrl',result.data.profileImgUrl)
             localStorage.setItem('position', result.data.position == null ? '학생' : result.data.position)
             localStorage.setItem('sex', result.data.sex)
             if(result.data.position == '학생') {
