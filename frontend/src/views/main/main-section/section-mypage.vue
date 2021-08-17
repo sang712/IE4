@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="mypage-second-background">
-        <el-form class="mypage-form" :rules="rules">
+        <el-form class="mypage-form" :rules="rules" ref="mypageForm">
           <el-form-item label="아이디">
             <div>{{ mypageInfo.loginId }}</div>
           </el-form-item>
@@ -153,11 +153,13 @@ export default {
       }
     };
 
+    const mypageForm = ref(null)
+
     const updateUser = () => {
       console.log(document.querySelector("#inputFileUploadInsert").files[0])
       console.log(localStorage.getItem('position'))
       console.log(store.state.rootMain.mypageInfo.password)
-      signupForm.value.validate((valid, object) => {
+      mypageForm.value.validate((valid, object) => {
         if (valid) {
           if(localStorage.getItem('position') == '학생'){
             var updateStudentData = new FormData()
@@ -197,7 +199,7 @@ export default {
     };
 
 
-    return { ...toRefs(state), changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog }
+    return { ...toRefs(state), changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog, mypageForm }
   }
 }
 </script>
