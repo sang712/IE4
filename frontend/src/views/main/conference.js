@@ -35,7 +35,7 @@ ws.onmessage = function(message) {
 
 	// Received message: {"id":"existingParticipants","data":[]}
 	console.info('Received message: ' + message.data);
-  participantList.push({name : parsedMessage.name, userId: parsedMessage.userId})
+  participantList.push(parsedMessage.name+parsedMessage.userId)
 
   console.log("participantList >>>  " ,Array.from(new Set(participantList)) )
 	switch (parsedMessage.id) {
