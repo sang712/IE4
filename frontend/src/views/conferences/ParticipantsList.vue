@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { reactive, computed, toRefs, watch } from 'vue'
+import { reactive, computed, toRefs, watch, ref } from 'vue'
 import * as conference from '../main/conference.js'
 
 export default {
@@ -53,46 +53,57 @@ export default {
   //   }
   // },
   setup() {
+    // let participants = ref('');
     const state = reactive({
       participants: '',
     })
 
-    watch(
-      () => state.participants,
-      (participants, prevParticipants) => {
-        console.log('참석자 받았음', participants)
-        let participantsViews = document.getElementById('participants-views')
-        participantsViews.remove
-        participantsViews = document.createElement('div')
-        participantsViews.id = 'participants-views'
+    // watch(participants,
+    //   (participants, prevParticipants) => {
+    //     console.log('참석자 받았음', participants)
+    //     let participantsViews = document.getElementById('participants-views')
+    //     participantsViews.remove
+    //     participantsViews = document.createElement('div')
+    //     participantsViews.id = 'participants-views'
 
-        Object.getOwnPropertyNames(participants).forEach(
-          function (val, idx, array) {
-            createParticipant(participants[val])
-          }
-        )
-      }
-      // (participants, prevParticipants) => {
-      //   console.log('참석자 받았음', participants)
-      //   let participantsViews = document.getElementById('participants-views')
-      //   participantsViews.remove
-      //   participantsViews = document.createElement('div')
-      //   participantsViews.id = 'participants-views'
+    //     Object.getOwnPropertyNames(participants).forEach(
+    //       function (val, idx, array) {
+    //         createParticipant(participants[val])
+    //       }
+    //     ),
+    //     { deep: true }
+    //   }
+    //   // (participants, prevParticipants) => {
+    //   //   console.log('참석자 받았음', participants)
+    //   //   let participantsViews = document.getElementById('participants-views')
+    //   //   participantsViews.remove
+    //   //   participantsViews = document.createElement('div')
+    //   //   participantsViews.id = 'participants-views'
 
-      //   Object.getOwnPropertyNames(participants).forEach(
-      //     function (val, idx, array) {
-      //       createParticipant(participants[val])
-      //     }
-      //   )
-      // }
-    )
+    //   //   Object.getOwnPropertyNames(participants).forEach(
+    //   //     function (val, idx, array) {
+    //   //       createParticipant(participants[val])
+    //   //     }
+    //   //   )
+    //   // }
+    // )
 
     const getParticipant = () => {
       console.log('버튼 클릭')
       // state.participants = ''
-      state.participants = conference.getParticipants()
+      // state.participants = conference.getParticipants()
+      const part = conference.getParticipants()
 
-      createParticipant(conference.getParticipants())
+      let participantsViews = document.getElementById('participants-views')
+        participantsViews.remove
+        participantsViews = document.createElement('div')
+        participantsViews.id = 'participants-views'
+
+        Object.getOwnPropertyNames(part).forEach(
+          function (val, idx, array) {
+            createParticipant(part[val])
+          }
+        )
     }
 
     const createParticipant = (participant) => {

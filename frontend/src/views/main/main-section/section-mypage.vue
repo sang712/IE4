@@ -114,7 +114,7 @@ export default {
         updateStudentData.append("phone", state.mypageInfo.phone)
         updateStudentData.append("address", state.mypageInfo.address)
         updateStudentData.append("parentPhone", state.mypageInfo.parentPhone)
-        updateStudentData.append("passwordAnswer", state.passwordAnswer)
+        updateStudentData.append("passwordAnswer", state.mypageInfo.passwordAnswer)
         updateStudentData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateStudent', updateStudentData)
         // .then(() => {
