@@ -38,8 +38,6 @@ ws.onmessage = function(message) {
 	switch (parsedMessage.id) {
 	case 'existingParticipants':		// 클라이언트가 현재 새로운 참가자인 경우
 		onExistingParticipants(parsedMessage);
-    participantList.push({name : message.data.name, userId: message.data.userId})
-    console.log("participantList >>>  " ,participantList )
 		break;
 	case 'newParticipantArrived':		// 클라이언트가 기존 참여자인 경우
 		onNewParticipant(parsedMessage);
@@ -51,6 +49,9 @@ ws.onmessage = function(message) {
 		receiveVideoResponse(parsedMessage);
 		break;
 	case 'iceCandidate':
+    participantList.push({name : message.data.name, userId: message.data.userId})
+    console.log("participantList >>>  " ,participantList )
+
 		participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
 			if (error) {
 				console.error("Error adding candidate: " + error);
