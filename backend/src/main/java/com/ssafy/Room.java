@@ -72,8 +72,8 @@ public class Room implements Closeable {
   }
 
   public void leave(UserSession user) throws IOException {
-    log.debug("PARTICIPANT {}: Leaving room {}", user.getName(), this.name);
-    this.removeParticipant(user.getName());
+    log.debug("PARTICIPANT {} / {} : Leaving room {}", user.getName(),user.getUserId(), this.name);
+    this.removeParticipant(user.getName(), user.getUserId());
     user.close();
   }
 
@@ -99,7 +99,7 @@ public class Room implements Closeable {
     return participantsList;
   }
 
-  private void removeParticipant(String name) throws IOException {
+  private void removeParticipant(String name, int userId) throws IOException {
     participants.remove(name);
 
     log.debug("ROOM {}: notifying all users that {} is leaving the room", this.name, name);
@@ -108,6 +108,7 @@ public class Room implements Closeable {
     final JsonObject participantLeftJson = new JsonObject();
     participantLeftJson.addProperty("id", "participantLeft");
     participantLeftJson.addProperty("name", name);
+    participantLeftJson.addProperty("userId", userId);
 
     System.out.println("여기는 Room!! >>>> name : " + name);
 
