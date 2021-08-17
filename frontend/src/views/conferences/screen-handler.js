@@ -19,6 +19,7 @@ function ScreenHandler() {
    */
   function getCrossBrowserScreenCapture() {
     if (navigator.getDisplayMedia) {
+      console.log("getCrossBrowserScreenCapture!!!")
       return navigator.getDisplayMedia(constraints);
     } else if (navigator.mediaDevices.getDisplayMedia) {
       return navigator.mediaDevices.getDisplayMedia(constraints);
@@ -32,10 +33,13 @@ function ScreenHandler() {
   async function start() {
     try {
       localStream = await getCrossBrowserScreenCapture();
+      console.log("getCrossBrowserScreenCapture!!! 완료~~")
     } catch (err) {
       console.error('Error getDisplayMedia', err);
     }
 
+    console.log("start 정산작동~~")
+    console.log(localStream)
     return localStream;
   }
 
