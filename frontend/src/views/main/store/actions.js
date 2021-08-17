@@ -102,7 +102,7 @@ export function deleteUser({ state }, payload){
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   let body = payload
 
-  return $axios.delete(url, body, header)
+  return $axios.post(url, body, header)
 }
 
 export function requestClass ({ state }, token) {

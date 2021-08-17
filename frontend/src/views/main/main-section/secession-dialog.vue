@@ -75,7 +75,7 @@ export default {
             Swal.fire({
               title: '성공!',
               text: '계정이 삭제되었습니다..',
-              icon: 'error',
+              icon: 'success',
             }) // 같이 쓸수있으려나,,
             emit('closeSecessionDialog')
             router.go()

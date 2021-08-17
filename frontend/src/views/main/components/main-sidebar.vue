@@ -33,7 +33,7 @@ export default {
       nGrade : localStorage.getItem('classId')[0],
       nClass : localStorage.getItem('classId')[2],
       nName : localStorage.getItem('name'),
-      nProfileImgUrl : localStorage.getItem('profileImgUrl'),
+      nProfileImgUrl : computed (() => store.getters['rootMain/getMypageInfo'].profileImgUrl),
       nSnum : localStorage.getItem('snum'),
       nSex : localStorage.getItem('sex')
     });
