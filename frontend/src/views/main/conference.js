@@ -64,8 +64,10 @@ ws.onmessage = function(message) {
 	}
 }
 
-export function register() {
-	name = document.getElementById('name').value;
+export function register(isScreen) {
+  if(isScreen) name = 'shareScreen'
+  else name = document.getElementById('name').value;
+
 	var room = document.getElementById('roomName').value;
   userId = document.getElementById('userId').value;
   console.log("수업 입장 >>>> name and userId >>>", name, " and ", userId)
@@ -108,16 +110,32 @@ export function callResponse(message) {
 
 // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성.
 export function onExistingParticipants(msg) {
-	var constraints = {
-		audio : true,
-		video : {
-			mandatory : {
-				maxWidth : 320,
-				maxFrameRate : 15,
-				minFrameRate : 15
-			}
-		}
-	};
+
+  if(msg.name == 'shareScreen') {
+    var constraints = {
+      audio : true,
+      video : {
+        mandatory : {
+          maxWidth : 1080,
+          maxFrameRate : 15,
+          minFrameRate : 15
+        }
+      }
+    };
+  } else {
+    var constraints = {
+      audio : true,
+      video : {
+        mandatory : {
+          maxWidth : 320,
+          maxFrameRate : 15,
+          minFrameRate : 15
+        }
+      }
+    };
+  }
+
+
 
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);
@@ -125,11 +143,20 @@ export function onExistingParticipants(msg) {
 	participants[name] = participant;
 	var video = participant.getVideoElement();
 
-	var options = {
-        localVideo: video,
-        mediaConstraints: constraints,
-        onicecandidate: participant.onIceCandidate.bind(participant)
-	}
+  if(msg.name == 'shareScreen') {
+    var options = {
+      localVideo: video,
+      mediaConstraints: constraints,
+      onicecandidate: onIceCandidate,
+      sendSource: 'screen'
+    }
+  } else  {
+    var options = {
+          localVideo: video,
+          mediaConstraints: constraints,
+          onicecandidate: participant.onIceCandidate.bind(participant)
+    }
+  }
 
 	// 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
 	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
