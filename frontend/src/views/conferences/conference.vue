@@ -225,15 +225,15 @@ export default {
     onLocalStream(stream) {
       console.log('onLocalStream', stream);
 
-      const $video = document.querySelector('#video-'+this.name);
+      const $video = document.querySelector('#video-shareScreen');
       $video.srcObject = stream;
     },
 
     async share() {
       // const screenHandler = new ScreenHandler();
       const stream = await this.screenHandler.start(); //return => localStream
-      this.onLocalStream(stream);
       conference.register(true);
+      this.onLocalStream(stream);
     },
   },
 	mounted: function () {
