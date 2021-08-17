@@ -85,7 +85,7 @@
 					<button class="button" @click="micOff" type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></button>
 					<button class="button" @click="displayOn" type="button" id="button-videoOn"><i class="fas fa-video"></i></button>
 					<button class="button" @click="displayOff" type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></button>
-					<button class="button" type="button" id="button-share"><i class="far fa-share-square"></i></button>
+					<button class="button" @click="share()" type="button" id="button-share"><i class="far fa-share-square"></i></button>
 					<button class="button" type="button" id="button-session"><i class="fas fa-th-large"></i></button>
 					<button class="button" type="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button>
 					<button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"></i></button>
@@ -106,6 +106,7 @@
 import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
+import ScreenHandler from './screen-handler.js';
 
 export default {
   name: 'Conference',
@@ -131,6 +132,7 @@ export default {
 						}
 					},
 				},
+        screenHandler: ''
 			}
 		},
   methods : {
@@ -171,44 +173,44 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		},
-		
+
 		// displayOff() {
 		// 	localStream = navigator.mediaDevices.getUserMedia(this.constraints)
 		// 	console.log('pauseVideo', arguments);
 		// 	localStream.getVideoTracks()[0].enabled = false;
-    
+
   	// },
 		// displayOn() {
 		// 	localStream =  navigator.mediaDevices.getUserMedia(this.constraints)
 		// 	console.log('resumeVideo', arguments);
 		// 	localStream.getVideoTracks()[0].enabled = true;
-    
+
 		// },
 		// micOn() {
 		// 	localStream =  navigator.mediaDevices.getUserMedia(this.constraints)
 		// 	console.log('unmuteAudio', arguments);
 		// 	localStream.getAudioTracks()[0].enabled = true;
-    
+
   	// },
 		// micOff() {
 		// 	localStream =  navigator.mediaDevices.getUserMedia(this.constraints)
 		// 	console.log('muteAudio', arguments);
 		// 	localStream.getAudioTracks()[0].enabled = false;
-    
+
   	// },
 		displayOff() {
 			getVideoTracks().readyState = 'ended'
   	},
 		displayOn() {
-			getVideoTracks().readyState = 'live'   
+			getVideoTracks().readyState = 'live'
 		},
 		micOn() {
 			getAudioTracks().enabled = true
-    
+
   	},
 		micOff() {
 			getAudioTracks().enabled = false
-    
+
   	},
 		// stopStreamedVideo(videoElem) {
 		// 	const stream = videoElem.srcObject;
@@ -220,9 +222,21 @@ export default {
 
 		// 	videoElem.srcObject = null;
 		// }
+    async share() {
+      // const screenHandler = new ScreenHandler();
+      const stream = await this.screenHandler.start();
+      onLocalStream(stream);
+    },
+    onLocalStream(stream) {
+      console.log('onLocalStream', stream);
+
+      const $video = document.querySelector('#video-'+this.name);
+      $video.srcObject = stream;
+    }
   },
 	mounted: function () {
 		console.log('마운트 되었음')
+    this.screenHandler = new ScreenHandler();
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
 			nameTag.value = this.name
