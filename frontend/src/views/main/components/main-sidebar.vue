@@ -43,11 +43,11 @@ export default {
     const profileImgUrl = computed(() => {
       if(state.nProfileImgUrl == 'null') {
         if(state.nSex == '남자' && state.nPosition == '교사') {
-          return '../../../assets/images/no_profile_img_man.png';
+          return 'ie4_upload/profileImg/no_profile_img_man.png';
         } else if(state.nSex == '여자' && state.nPosition == '교사') {
-            return '../../../assets/images/no_profile_img_woman.png';
+            return 'ie4_upload/profileImg/no_profile_img_woman.png';
         } else if(state.nPosition == '학생') {
-            return state.nName.charCodeAt([1])%2 ? '../../../assets/images/no_profile_img_student1.jpg' : '../../../assets/images/no_profile_img_student0.jpg'
+            return state.nName.charCodeAt([1])%2 ? 'ie4_upload/profileImg/no_profile_img_student1.jpg' : '../../../assets/images/no_profile_img_student0.jpg'
         }
       }else{
         return '/' + state.nProfileImgUrl;
