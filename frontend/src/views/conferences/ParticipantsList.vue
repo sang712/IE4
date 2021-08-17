@@ -2,7 +2,7 @@
   <div id="participants-list" class="col-3" style="display: none;">
     <div id="participants-title">참석자 명단</div>
     <button class="button" type="button" @click="getParticipant()">참석자 가져오기</button>
-    <div id="participants-views"></div>
+    <div id="participants-views">
     <ul class="news-table">
       <li class="table-header">
         <!-- <div class="header-number">No</div> -->
@@ -15,6 +15,7 @@
         <div class="row-author">{{userId}}</div>
       </li>
     </ul>
+    </div>
   </div>
 </template>
 
