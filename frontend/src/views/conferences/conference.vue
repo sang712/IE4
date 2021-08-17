@@ -107,6 +107,8 @@ import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
 import ScreenHandler from './screen-handler.js';
+import StartMedia from './media-handler.js'
+// import PeerHandler from './peer-handler'
 
 export default {
   name: 'Conference',
@@ -132,7 +134,9 @@ export default {
 					}
 				},
 			},
-      screenHandler: ''
+      screenHandler: '',
+			startMedia:''
+
 		}
 	},
   methods : {
@@ -173,31 +177,38 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		},
-		async getLocalStream(){
-			const stream = await navigator.mediaDevices.getUserMedia(this.constraints)
-			return  stream
-		},
+		async startMedia() {
+			try {
+				const stream = await navigator.mediaDevices.getUserMedia({
+					audio: false,
+					video: true,
+				});
+				success(stream);
+			} catch (err) {
+				error(err);
+			}
+		}
 		
 		displayOff() {
-			localStream = this.getLocalStream()
+			const localStream = this.getLocalStream()
 			console.log('pauseVideo', arguments);
 			localStream.getVideoTracks()[0].enabled = false;
 
   	},
 		displayOn() {
-			localStream = this.getLocalStream()
+			const localStream = this.getLocalStream()
 			console.log('resumeVideo', arguments);
 			localStream.getVideoTracks()[0].enabled = true;
 
 		},
 		micOn() {
-			localStream = this.getLocalStream()
+			const localStream = this.getLocalStream()
 			console.log('unmuteAudio', arguments);
 			localStream.getAudioTracks()[0].enabled = true;
 
   	},
 		micOff() {
-			localStream = this.getLocalStream()
+			const localStream = this.getLocalStream()
 			console.log('muteAudio', arguments);
 			localStream.getAudioTracks()[0].enabled = false;
 
@@ -229,6 +240,8 @@ export default {
 	mounted: function () {
 		console.log('마운트 되었음')
     this.screenHandler = new ScreenHandler();
+		this.startMedia = new StartMedia();
+
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
 			nameTag.value = this.name
