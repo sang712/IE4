@@ -183,7 +183,7 @@ export default {
 					audio: false,
 					video: true,
 				});
-				success(stream);
+				return stream;
 			} catch (err) {
 				error(err);
 			}
