@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
 
@@ -118,6 +119,20 @@ export default {
     userId: 0,
 		class: '',
   },
+	data() {
+		return {
+			constraints : {
+				audio : true,
+				video : {
+					mandatory : {
+						maxWidth : 320,
+						maxFrameRate : 15,
+						minFrameRate : 15
+						}
+					},
+				},
+			}
+		},
   methods : {
     register() {
       conference.register()
@@ -156,26 +171,41 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		},
+		
 		displayOff() {
+			var localStream = await navigator.mediaDevices.getUserMedia(this.constraints)
 			console.log('pauseVideo', arguments);
 			localStream.getVideoTracks()[0].enabled = false;
     
   	},
 		displayOn() {
+			var localStream = await navigator.mediaDevices.getUserMedia(this.constraints)
 			console.log('resumeVideo', arguments);
 			localStream.getVideoTracks()[0].enabled = true;
     
 		},
 		micOn() {
+			var localStream = await navigator.mediaDevices.getUserMedia(this.constraints)
 			console.log('unmuteAudio', arguments);
 			localStream.getAudioTracks()[0].enabled = true;
     
   	},
 		micOff() {
+			var localStream = await navigator.mediaDevices.getUserMedia(this.constraints)
 			console.log('muteAudio', arguments);
 			localStream.getAudioTracks()[0].enabled = false;
     
   	},
+		// stopStreamedVideo(videoElem) {
+		// 	const stream = videoElem.srcObject;
+		// 	const tracks = stream.getTracks();
+
+		// 	tracks.forEach(function(track) {
+		// 		track.stop();
+		// 	});
+
+		// 	videoElem.srcObject = null;
+		// }
   },
 	mounted: function () {
 		console.log('마운트 되었음')
