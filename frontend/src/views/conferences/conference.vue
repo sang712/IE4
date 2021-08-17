@@ -107,8 +107,8 @@ import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
 import ScreenHandler from './screen-handler.js';
-import MediaHandler from './media-handler.js';
-import PeerHandler from './peer-handler';
+import StartMedia from './media-handler.js'
+// import PeerHandler from './peer-handler'
 
 export default {
   name: 'Conference',
@@ -135,9 +135,8 @@ export default {
 				},
 			},
       screenHandler: '',
-			mediaHandler: '',
-			peerHandler: '',
-			localStream: '',
+			startMedia:''
+
 		}
 	},
   methods : {
@@ -178,39 +177,40 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		},
-		async control() {
-			this.peerHandler = new PeerHandler()
-			this.mediaHandler = new MediaHandler()
+		async getLocalStream() {
 			try {
-				const stream = await peerHandler.getUserMedia({
+				const stream = await navigator.mediaDevices.getUserMedia({
 					audio: false,
 					video: true,
 				});
-				this.localStream = stream
-				
+				return stream;
 			} catch (err) {
 				error(err);
 			}
 		},
 		
 		displayOff() {
+			const localStream = this.getLocalStream()
 			console.log('pauseVideo', arguments);
-			this.localStream.getVideoTracks()[0].enabled = false;
+			localStream.getVideoTracks()[0].enabled = false;
 
   	},
 		displayOn() {
+			const localStream = this.getLocalStream()
 			console.log('resumeVideo', arguments);
-			this.localStream.getVideoTracks()[0].enabled = true;
+			localStream.getVideoTracks()[0].enabled = true;
 
 		},
 		micOn() {
+			const localStream = this.getLocalStream()
 			console.log('unmuteAudio', arguments);
-			this.localStream.getAudioTracks()[0].enabled = true;
+			localStream.getAudioTracks()[0].enabled = true;
 
   	},
 		micOff() {
+			const localStream = this.getLocalStream()
 			console.log('muteAudio', arguments);
-			this.localStream.getAudioTracks()[0].enabled = false;
+			localStream.getAudioTracks()[0].enabled = false;
 
   	},
 		// stopStreamedVideo(videoElem) {
@@ -240,6 +240,7 @@ export default {
 	mounted: function () {
 		console.log('마운트 되었음')
     this.screenHandler = new ScreenHandler();
+		this.startMedia = new StartMedia();
 
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
