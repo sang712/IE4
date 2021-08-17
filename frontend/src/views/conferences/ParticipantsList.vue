@@ -113,8 +113,8 @@ export default {
       const items = ul.getElementsByTagName('li');
       console.log("items 길이는 >>>> ", items.length);
       if(items.length > 0){
-        for (var i = 0; i < items.length; i++) {
-          items[i].remove();
+        while(items.length>0){
+          items[0].remove();
         }
       }
       part.delete(undefined)
