@@ -89,6 +89,8 @@ export function onNewParticipant(request) {
 }
 
 export function receiveVideoResponse(result) {
+  participantList.push({name : request.name, userId: request.userId})
+  console.log("participantList >>>  " ,participantList )
 	participants[result.name].rtcPeer.processAnswer (result.sdpAnswer, function (error) {
 		if (error) return console.error (error);
 	});
