@@ -120,7 +120,7 @@ export default {
       part.delete(undefined)
       setTimeout(function() {
         part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
-      }, 5000);
+      }, 1000);
       // let participantsViews = document.getElementById('participants-views')
       //   participantsViews.remove
       //   participantsViews = document.createElement('div')
