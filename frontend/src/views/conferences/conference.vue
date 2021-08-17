@@ -232,7 +232,7 @@ export default {
     async share() {
       // const screenHandler = new ScreenHandler();
       const stream = await this.screenHandler.start(); //return => localStream
-      onLocalStream(stream);
+      this.onLocalStream(stream);
     },
   },
 	mounted: function () {
