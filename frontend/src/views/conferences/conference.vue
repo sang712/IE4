@@ -175,7 +175,7 @@ export default {
 		},
 		async getLocalStream(){
 			const stream = await navigator.mediaDevices.getUserMedia(this.constraints)
-			this.onLocalStream(stream);
+			return stream
 		},
 		
 		displayOff() {
