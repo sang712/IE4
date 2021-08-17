@@ -3,19 +3,17 @@
     <div id="participants-title">참석자 명단</div>
     <button class="button" type="button" @click="getParticipant()">참석자 가져오기</button>
     <div id="participants-views">
-    <ul class="news-table">
-      <li class="table-header">
-        <!-- <div class="header-number">No</div> -->
+    <ul class="news-table" id="partlist">
+      <!-- <li class="table-header">
         <div class="header-title" style="text-align:left">no</div>
         <div class="header-title" style="text-align:center">이름</div>
         <div class="header-author">userId</div>
-      </li>
-      <li v-for="(person, index) in partList" v-bind:key="person.userId" class="table-row">
-        <!-- <div class="row-number">{{board.id}}</div>-->
+      </li> -->
+      <!-- <li v-for="(person, index) in partList" v-bind:key="person.userId" class="table-row">
         <div class="row-title">{{index}}</div>
         <div class="row-title">{{person.name}}</div>
         <div class="row-author">{{person.userId}}</div>
-      </li>
+      </li> -->
     </ul>
     </div>
   </div>
@@ -131,16 +129,22 @@ export default {
       console.log("추가 되나요", participant, "참석자 이름", participant.name,"참석자 userId", participant.userId,)
       const participantsViews = document.getElementById('participants-views')
 
-      const container = document.createElement('div')
-      container.id = 'aParticipant'
-      container.className = ''
+      const li = document.createElement("li");
+      li.setAttribute('id', participant.userId);
+      const textNode = document.createTextNode(participant.name, " / ", participant.userId);
+      li.appendChild(textNode);
+      document.getElementById('partlist').appendChild(li);
 
-      const nameTag = document.createElement('div')
-      nameTag.id = 'name-tag'
-      nameTag.innerText = participant.name
+      // const container = document.createElement('div')
+      // container.id = 'aParticipant'
+      // container.className = ''
 
-      container.appendChild(nameTag)
-      participantsViews.appendChild(container)
+      // const nameTag = document.createElement('div')
+      // nameTag.id = 'name-tag'
+      // nameTag.innerText = participant.name
+
+      // container.appendChild(nameTag)
+      // participantsViews.appendChild(container)
     }
 
     return { state, watch, getParticipant, createParticipant }
