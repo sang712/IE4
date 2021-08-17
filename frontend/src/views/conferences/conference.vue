@@ -221,9 +221,9 @@ export default {
 
 		// 	videoElem.srcObject = null;
 		// }
-    share() {
-      const screenHandler = new ScreenHandler();
-      const stream = screenHandler.start();
+    async share() {
+      // const screenHandler = new ScreenHandler();
+      const stream = await screenHandler.start();
       onLocalStream(stream);
     },
     onLocalStream(stream) {
@@ -235,6 +235,7 @@ export default {
   },
 	mounted: function () {
 		console.log('마운트 되었음')
+    const screenHandler = new ScreenHandler();
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
 			nameTag.value = this.name
