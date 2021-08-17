@@ -134,17 +134,28 @@ export function onExistingParticipants(msg) {
     };
   }
 
+
+
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);
 	var participant = new Participant.Participant(name, userId);
 	participants[name] = participant;
 	var video = participant.getVideoElement();
 
-	var options = {
-        localVideo: video,
-        mediaConstraints: constraints,
-        onicecandidate: participant.onIceCandidate.bind(participant)
-	}
+  if(msg.name == 'shareScreen') {
+    var options = {
+      localVideo: video,
+      mediaConstraints: constraints,
+      onicecandidate: onIceCandidate,
+      sendSource: 'screen'
+    }
+  } else  {
+    var options = {
+          localVideo: video,
+          mediaConstraints: constraints,
+          onicecandidate: participant.onIceCandidate.bind(participant)
+    }
+  }
 
 	// 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
 	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
