@@ -23,7 +23,7 @@ const PARTICIPANT_CLASS = 'participant';
 
 export function Participant(name) {
 	this.name = name;
-  this.userId = userId;
+  this.userId = localStorage.getItem("id");
 	var container = document.createElement('div');
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
 	container.id = name;
