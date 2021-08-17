@@ -132,6 +132,7 @@ export default {
 						}
 					},
 				},
+        screenHandler: ''
 			}
 		},
   methods : {
@@ -223,7 +224,7 @@ export default {
 		// }
     async share() {
       // const screenHandler = new ScreenHandler();
-      const stream = await screenHandler.start();
+      const stream = await this.screenHandler.start();
       onLocalStream(stream);
     },
     onLocalStream(stream) {
@@ -235,7 +236,7 @@ export default {
   },
 	mounted: function () {
 		console.log('마운트 되었음')
-    const screenHandler = new ScreenHandler();
+    this.screenHandler = new ScreenHandler();
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
 			nameTag.value = this.name
