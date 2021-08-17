@@ -113,14 +113,14 @@ export default {
       const items = ul.getElementsByTagName('li');
       console.log("items 길이는 >>>> ", items.length);
       if(items.length > 0){
-        for (var i = 0; i <= items.length; i++) {
+        for (var i = 0; i < items.length; i++) {
           items[i].remove();
         }
       }
       part.delete(undefined)
       setTimeout(function() {
         part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
-      }, 3000);
+      }, 2000);
       // let participantsViews = document.getElementById('participants-views')
       //   participantsViews.remove
       //   participantsViews = document.createElement('div')
