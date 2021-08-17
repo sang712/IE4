@@ -112,7 +112,7 @@ export default {
       const ul = document.getElementById('partlist');
       const items = ul.getElementsByTagName('li');
       if(items.length > 0){
-        items.remove();
+        items[0].remove();
       }
 
       // let participantsViews = document.getElementById('participants-views')
