@@ -223,7 +223,7 @@ export default {
 		// }
     share() {
       const screenHandler = new ScreenHandler();
-      const stream = await screenHandler.start();
+      const stream = screenHandler.start();
       onLocalStream(stream);
     },
     onLocalStream(stream) {
