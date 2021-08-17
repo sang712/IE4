@@ -121,7 +121,7 @@ export default {
   },
 	data() {
 		return {
-			constraints = {
+			constraints : {
 				audio : true,
 				video : {
 					mandatory : {
