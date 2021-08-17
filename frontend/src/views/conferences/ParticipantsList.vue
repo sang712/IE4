@@ -118,9 +118,7 @@ export default {
         }
       }
       part.delete(undefined)
-      setTimeout(function() {
-        part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
-      }, 1000);
+      part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
       // let participantsViews = document.getElementById('participants-views')
       //   participantsViews.remove
       //   participantsViews = document.createElement('div')
@@ -131,7 +129,7 @@ export default {
         //     createParticipant(part[val])
         //   }
         // )
-        part.delete(undefined)
+        //part.delete(undefined)
         //state.partList = part;
         //part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
 
