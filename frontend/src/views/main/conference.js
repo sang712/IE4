@@ -22,6 +22,7 @@ import * as Participant from './participant.js'
 var ws = new WebSocket('wss://' + location.host + '/api/groupcall');
 var participants = {};
 var name;
+var userId;
 
 window.onbeforeunload = function() {
 	ws.close();
@@ -63,7 +64,7 @@ ws.onmessage = function(message) {
 export function register() {
 	name = document.getElementById('name').value;
 	var room = document.getElementById('roomName').value;
-  const userId = localStorage.getItem("id");
+  userId = document.getElementById('userId').value;
 
 	document.getElementById('room-header').innerText = room + "의 수업";
 	document.getElementById('join').style.display = 'none';
@@ -115,8 +116,8 @@ export function onExistingParticipants(msg) {
 	};
 
 	// gabojago registered in room [object HTMLDivElement]
-	console.log(name + " registered in room " + room);
-	var participant = new Participant.Participant(name);
+	console.log(name +"//"+userId+ " registered in room " + room);
+	var participant = new Participant.Participant(name, userId);
 	participants[name] = participant;
 	var video = participant.getVideoElement();
 
@@ -161,7 +162,7 @@ export function leaveRoom() {
 
 // 영상을 전달 받을 수신용 WebRtcPeer 생성 함수
 export function receiveVideo(sender) {
-	var participant = new Participant.Participant(sender);
+	var participant = new Participant.Participant(sender, userId);
 	participants[sender] = participant;
 	var video = participant.getVideoElement();
 

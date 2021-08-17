@@ -12,6 +12,10 @@
 						<input type="text" name="room" value="1" id="roomName"
 							placeholder="Room" required>
 					</p>
+          <p style="display: none;">
+						<input type="text" name="userId" value="" id="userId"
+							placeholder="userId" required>
+					</p>
 					<p class="submit">
 						<input type="submit" name="commit" value="Join!">
 					</p>
@@ -111,6 +115,7 @@ export default {
     msg: String,
 		name: '',
 		grade: '',
+    userId: 0,
 		class: '',
   },
   methods : {
@@ -179,6 +184,8 @@ export default {
 			nameTag.value = this.name
 			const classTag = document.getElementById('roomName')
 			classTag.value = this.grade + '학년 ' + this.class + '반'
+      const userIdTag = document.getElementById('userId')
+      userIdTag.value = this.userId
 
 			this.register()
 		}
