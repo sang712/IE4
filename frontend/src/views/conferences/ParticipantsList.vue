@@ -6,13 +6,15 @@
     <ul class="news-table">
       <li class="table-header">
         <!-- <div class="header-number">No</div> -->
+        <div class="header-title" style="text-align:left">no</div>
         <div class="header-title" style="text-align:center">이름</div>
         <div class="header-author">userId</div>
       </li>
-      <li v-for="(name, userId) in partList" v-bind:key="userId" class="table-row">
+      <li v-for="(person, index) in partList" v-bind:key="person.userId" class="table-row">
         <!-- <div class="row-number">{{board.id}}</div>-->
-        <div class="row-title">{{name}}</div>
-        <div class="row-author">{{userId}}</div>
+        <div class="row-title">{{index}}</div>
+        <div class="row-title">{{person.name}}</div>
+        <div class="row-author">{{person.userId}}</div>
       </li>
     </ul>
     </div>
@@ -69,7 +71,7 @@ export default {
     // let participants = ref('');
     const state = reactive({
       participants: '',
-      partList : {}
+      partList : conference.getParticipants(),
     })
 
     // watch(participants,
@@ -108,6 +110,7 @@ export default {
       // state.participants = conference.getParticipants()
       const part = conference.getParticipants()
       console.log("conference.getParticipants() part >>>>> ", part)
+      console.log("conference.getParticipants() state.partList >>>>> ", state.partList)
       let participantsViews = document.getElementById('participants-views')
         participantsViews.remove
         participantsViews = document.createElement('div')
@@ -119,7 +122,7 @@ export default {
         //   }
         // )
         part.delete(undefined)
-        state.partList = part;
+        //state.partList = part;
         part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
 
     }
