@@ -36,7 +36,8 @@ ws.onmessage = function(message) {
 	// Received message: {"id":"existingParticipants","data":[]}
 	console.info('Received message: ' + message.data);
   participantList.push({name : parsedMessage.name, userId: parsedMessage.userId})
-  console.log("participantList >>>  " ,participantList )
+
+  console.log("participantList >>>  " ,Array.from(new Set(participantList)) )
 	switch (parsedMessage.id) {
 	case 'existingParticipants':		// 클라이언트가 현재 새로운 참가자인 경우
 		onExistingParticipants(parsedMessage);
