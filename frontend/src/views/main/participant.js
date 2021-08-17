@@ -76,6 +76,7 @@ export function Participant(name) {
 		var msg = {
 			id: "receiveVideoFrom",
 			sender: name,
+      userId : localStorage.getItem("id"),
 			sdpOffer: offerSdp
 		};
 		wp;
