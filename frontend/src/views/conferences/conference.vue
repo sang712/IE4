@@ -137,7 +137,7 @@ export default {
 	},
   methods : {
     register() {
-      conference.register()
+      conference.register(false)
     },
     leaveRoom() {
       conference.leaveRoom()
@@ -233,6 +233,7 @@ export default {
       // const screenHandler = new ScreenHandler();
       const stream = await this.screenHandler.start(); //return => localStream
       this.onLocalStream(stream);
+      conference.register(true);
     },
   },
 	mounted: function () {
