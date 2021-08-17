@@ -93,7 +93,7 @@ export default {
       // state.participants = ''
       // state.participants = conference.getParticipants()
       const part = conference.getParticipants()
-
+      console.log("conference.getParticipants() part >>>>> ", part)
       let participantsViews = document.getElementById('participants-views')
         participantsViews.remove
         participantsViews = document.createElement('div')
