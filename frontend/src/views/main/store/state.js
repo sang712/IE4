@@ -45,7 +45,6 @@ const mypageInfo = reactive({
   snum: '',
   address: '',
   sex: '',
-  classMotto: ''
 })
 
 const studentInfo = reactive({

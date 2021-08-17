@@ -16,6 +16,14 @@ export function setTimeTable(state, payload){
   state.classInfo.timetable = payload
 }
 
+export function setClassMotto(state, payload){
+  state.classInfo.classMotto = payload
+}
+
+export function setProfileImgUrl(state, payload){
+  state.mypageInfo.profileImgUrl = payload
+}
+
 export function setStudentMypageInfo (state, payload) {
   state.mypageInfo.id = payload.id
   state.mypageInfo.loginId = payload.loginId
@@ -41,6 +49,5 @@ export function setTeacherMypageInfo (state, payload) {
   state.mypageInfo.phone = payload.phone
   state.mypageInfo.address = payload.address
   state.mypageInfo.sex = payload.sex
-  state.mypageInfo.classMotto = payload.classMotto
   state.mypageInfo.profileImgUrl = payload.profileImgUrl
 }
