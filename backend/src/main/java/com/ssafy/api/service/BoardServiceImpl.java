@@ -111,6 +111,13 @@ public class BoardServiceImpl implements BoardService{
 
         if (boardfile.isPresent()){
             System.out.println("boardfile >>>> try update !!!!!!!!! ");
+
+            String fileUrl = boardfile.get().getFileUrl();
+            if(fileUrl != null) {
+                File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+                if(deleteFile.exists()) deleteFile.delete();
+            }
+
             BoardFile updateBoardFile = boardfile.get();
             updateBoardFile.setFileName(files.getOriginalFilename());
             updateBoardFile.setFileSize(files.getSize());
@@ -137,6 +144,11 @@ public class BoardServiceImpl implements BoardService{
         if(boardfile.isPresent()){
             System.out.println("in if isPrsent boardfile >>>> after findBy !!!!!!!!! " + boardfile.get());
             boardFileRepository.delete(boardfile.get());
+            String fileUrl = boardfile.get().getFileUrl();
+            if(fileUrl != null) {
+                File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+                if(deleteFile.exists()) deleteFile.delete();
+            }
             return 1;
         }else{
             return 2;
