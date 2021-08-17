@@ -143,30 +143,41 @@ export function onExistingParticipants(msg) {
 	participants[name] = participant;
 	var video = participant.getVideoElement();
 
-  if(msg.name == 'shareScreen') {
-    var options = {
-      localVideo: video,
-      mediaConstraints: constraints,
-      onicecandidate: onIceCandidate,
-      sendSource: 'screen'
-    }
-  } else  {
-    var options = {
-          localVideo: video,
-          mediaConstraints: constraints,
-          onicecandidate: participant.onIceCandidate.bind(participant)
-    }
+  // if(msg.name == 'shareScreen') {
+  //   var options = {
+  //     localVideo: video,
+  //     mediaConstraints: constraints,
+  //     onicecandidate: participant.onIceCandidate.bind(participant),
+  //     sendSource: 'screen'
+  //   }
+  // } else  {
+  // }
+
+  var options = {
+        localVideo: video,
+        mediaConstraints: constraints,
+        onicecandidate: participant.onIceCandidate.bind(participant)
   }
 
-	// 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
-	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
-		function (error) {
-            if(error) {
-                return console.error(error);
-            }
-        this.generateOffer (
-			participant.offerToReceiveVideo.bind(participant));
-	});
+
+  // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
+  if(msg.name != 'shareScreen') {
+    webRtcPeerScreencast = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
+      if (error) return onError(error) //You'll need to use whatever you use for handling errors
+
+      this.generateOffer(onOffer)
+    });
+  } else {
+
+    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
+      function (error) {
+              if(error) {
+                  return console.error(error);
+              }
+          this.generateOffer (
+        participant.offerToReceiveVideo.bind(participant));
+    });
+  }
 
 	// 기존 참가자 영상을 전달 받을 수신용 WebRtcPeer를 생성.
   if(msg.name != 'shareScreen')
