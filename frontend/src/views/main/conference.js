@@ -163,9 +163,11 @@ export function onExistingParticipants(msg) {
   // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
   if(msg.name != 'shareScreen') {
     participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
-      if (error) return onError(error) //You'll need to use whatever you use for handling errors
+      // if (error) return onError(error) //You'll need to use whatever you use for handling errors
+      if(error) console.log("에러가 난다고..? ㅎㅎ  ,,,")
 
-      this.generateOffer(onOffer)
+      this.generateOffer (
+        participant.offerToReceiveVideo.bind(participant));
     });
   } else {
 

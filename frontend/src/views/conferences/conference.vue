@@ -177,13 +177,13 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		},
-		async startMedia() {
+		async getLocalStream() {
 			try {
 				const stream = await navigator.mediaDevices.getUserMedia({
 					audio: false,
 					video: true,
 				});
-				success(stream);
+				return stream;
 			} catch (err) {
 				error(err);
 			}
