@@ -129,12 +129,12 @@ export default {
 						maxWidth : 320,
 						maxFrameRate : 15,
 						minFrameRate : 15
-						}
-					},
+					}
 				},
-        screenHandler: ''
-			}
-		},
+			},
+      screenHandler: ''
+		}
+	},
   methods : {
     register() {
       conference.register()
@@ -222,17 +222,18 @@ export default {
 
 		// 	videoElem.srcObject = null;
 		// }
-    async share() {
-      // const screenHandler = new ScreenHandler();
-      const stream = await this.screenHandler.start();
-      onLocalStream(stream);
-    },
     onLocalStream(stream) {
       console.log('onLocalStream', stream);
 
       const $video = document.querySelector('#video-'+this.name);
       $video.srcObject = stream;
-    }
+    },
+
+    async share() {
+      // const screenHandler = new ScreenHandler();
+      const stream = await this.screenHandler.start(); //return => localStream
+      onLocalStream(stream);
+    },
   },
 	mounted: function () {
 		console.log('마운트 되었음')
