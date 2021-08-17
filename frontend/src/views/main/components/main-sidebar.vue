@@ -27,6 +27,8 @@ export default {
     const store = useStore()
     const router = useRouter()
 
+    store.commit('rootMain/setProfileImgUrl', localStorage.getItem('profileImgUrl'))
+
     const state = reactive({
       jwt : localStorage.getItem('jwt'),
       nPosition : localStorage.getItem('position'),
