@@ -66,6 +66,7 @@ public class UserSession implements Closeable {
         JsonObject response = new JsonObject();
         response.addProperty("id", "iceCandidate");
         response.addProperty("name", name);
+        response.addProperty("userId", userId);
         response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
         try {
           synchronized (session) {

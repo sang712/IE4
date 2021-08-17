@@ -95,7 +95,7 @@ export default {
       const part = conference.getParticipants()
 
       let participantsViews = document.getElementById('participants-views')
-        participantsViews.remove()
+        participantsViews.remove
         participantsViews = document.createElement('div')
         participantsViews.id = 'participants-views'
 
@@ -107,7 +107,7 @@ export default {
     }
 
     const createParticipant = (participant) => {
-      console.log("추가 되나요", participant, "참석자 이름", participant.name)
+      console.log("추가 되나요", participant, "참석자 이름", participant.name,)
       const participantsViews = document.getElementById('participants-views')
 
       const container = document.createElement('div')
