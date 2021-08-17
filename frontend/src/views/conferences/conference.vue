@@ -77,8 +77,8 @@
 			<ParticipantsList />
 			<div id="footer" style="display: none;">
 				<div class="button-wrapper">
-					<button class="button" type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
-					<button class="button" type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></button>
+					<button class="button" @click="micOn" type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
+					<button class="button" @click="micOff" type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></button>
 					<button class="button" @click="displayOn" type="button" id="button-videoOn"><i class="fas fa-video"></i></button>
 					<button class="button" @click="displayOff" type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></button>
 					<button class="button" type="button" id="button-share"><i class="far fa-share-square"></i></button>
@@ -152,10 +152,16 @@ export default {
 			}
 		},
 		displayOn() {		
-			document.getElementById('video-'+ this.name).style.display = 'block'
+			document.getElementById('video-'+ this.name).className = ''
 		},
 		displayOff() {
-			document.getElementById('video-'+ this.name).style.display = 'none'
+			document.getElementById('video-'+ this.name).className = 'active'
+		},
+		micOn() {		
+			document.getElementById('video-'+ this.name).className = ''
+		},
+		micOff() {
+			document.getElementById('video-'+ this.name).className = 'active'
 		},
   },
 	mounted: function () {
