@@ -151,18 +151,26 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		},
-		displayOn() {		
-			document.getElementById('video-'+ this.name).className = ''
+		displayOff(callback) {
+    console.log('pauseVideo', arguments);
+    localStream.getVideoTracks()[0].enabled = false;
+    callback && callback();
+  	},
+		displayOn(callback) {
+    console.log('resumeVideo', arguments);
+    localStream.getVideoTracks()[0].enabled = true;
+    callback && callback();
 		},
-		displayOff() {
-			document.getElementById('video-'+ this.name).className = 'active'
-		},
-		micOn() {		
-			document.getElementById('video-'+ this.name).className = ''
-		},
-		micOff() {
-			document.getElementById('video-'+ this.name).className = 'active'
-		},
+		micOn(callback) {
+    console.log('unmuteAudio', arguments);
+    localStream.getAudioTracks()[0].enabled = true;
+    callback && callback();
+  	},
+		micOff(callback) {
+    console.log('muteAudio', arguments);
+    localStream.getAudioTracks()[0].enabled = false;
+    callback && callback();
+  	},
   },
 	mounted: function () {
 		console.log('마운트 되었음')
