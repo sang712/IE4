@@ -110,13 +110,14 @@ public class BoardServiceImpl implements BoardService{
         //System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
 
         if (boardfile.isPresent()){
-            System.out.println("boardfile >>>> 삭제시도!!!!!!!!! ");
+            System.out.println("boardfile >>>> try update !!!!!!!!! ");
             BoardFile updateBoardFile = boardfile.get();
             updateBoardFile.setFileName(files.getOriginalFilename());
             updateBoardFile.setFileSize(files.getSize());
             updateBoardFile.setFileUrl(boardFileUrl);
             return boardFileRepository.save(updateBoardFile);
         }else{
+            System.out.println("boardfile >>>> try new board file!!!!!!!!! ");
             BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
             return boardFileRepository.save(boardFile);
         }
