@@ -59,7 +59,7 @@ export default {
       secessionForm.value.validate((valid) => {
         if (valid){
           console.log(state.form.password)
-          store.dispatch('rootMain/deleteUser', { password : state.form.password }, localStorage.getItem('jwt'))
+          store.dispatch('rootMain/deleteUser', { id: localStorage.getItem('id'), password : state.form.password })
           .then(function (result) {
             localStorage.removeItem('jwt')
             localStorage.removeItem('id')
