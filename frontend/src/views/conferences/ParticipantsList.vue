@@ -2,8 +2,8 @@
   <div id="participants-list" class="col-3" style="display: none;">
     <div id="participants-title">참석자 명단</div>
     <button class="button" type="button" @click="getParticipant()">참석자 가져오기</button>
-    <div id="participants-views">
-    <ul class="news-table" id="partlist">
+    <!-- <div id="participants-views"> -->
+    <ul id="partlist"></ul>
       <!-- <li class="table-header">
         <div class="header-title" style="text-align:left">no</div>
         <div class="header-title" style="text-align:center">이름</div>
@@ -14,8 +14,7 @@
         <div class="row-title">{{person.name}}</div>
         <div class="row-author">{{person.userId}}</div>
       </li> -->
-    </ul>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -131,7 +130,7 @@ export default {
 
       const li = document.createElement("li");
       li.setAttribute('id', participant.userId);
-      const textNode = document.createTextNode(participant.name, " / ", participant.userId);
+      const textNode = document.createTextNode(participant.name+ " / "+ participant.userId);
       li.appendChild(textNode);
       document.getElementById('partlist').appendChild(li);
 
