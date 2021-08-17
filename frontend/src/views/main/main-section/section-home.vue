@@ -24,22 +24,22 @@
 </template>
 
 <script>
+import { reactive, computed, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default {
   name: 'section-home',
 
-  data () {
-    return {
+  setup(props, { emit }) {
+
+    const state = reactive({
       position : localStorage.getItem('position'),
       nGrade : localStorage.getItem('classId')[0],
       nClass : localStorage.getItem('classId')[2],
       nTeacherName : localStorage.getItem('teacherName'),
       nTeacherProfileImgUrl : localStorage.getItem('teacherProfileImgUrl')
-    }
-  },
 
-  setup(props, { emit }) {
+    })
     const router = useRouter()
 
     const clickSchedule = () => {
@@ -55,11 +55,11 @@ export default {
     }
 
     const joinCon = () => {
-      console.log('조인콘 버튼 클릭됨!', this.nGrade + '학년' + this.nClass + '반 으로!')
-      router.push({ name : 'conference', params: { name: localStorage.getItem('name'), grade: this.nGrade, class: this.nClass } })
+      console.log('조인콘 버튼 클릭됨!', state.nGrade + '학년' + state.nClass + '반 으로!')
+      router.push({ name : 'conference', params: { name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
     }
 
-    return { clickSchedule, clickNote, clickMvp, joinCon }
+    return { ...toRefs(state), clickSchedule, clickNote, clickMvp, joinCon }
   }
 
 }
