@@ -141,7 +141,7 @@ export default {
 
       const li = document.createElement("li");
       li.setAttribute('id', participant.userId);
-      li.setAttribute('@click', getboardDetail(board.id));
+      //li.setAttribute('@click', getboardDetail(board.id));
       const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
       li.appendChild(textNode);
       document.getElementById('partlist').appendChild(li);
