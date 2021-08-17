@@ -71,7 +71,7 @@ export default {
     // let participants = ref('');
     const state = reactive({
       participants: '',
-      partList : conference.getParticipants().delete(undefined),
+      partList : conference.getParticipants(),
     })
 
     // watch(participants,
@@ -110,7 +110,7 @@ export default {
       // state.participants = conference.getParticipants()
       const part = conference.getParticipants()
       console.log("conference.getParticipants() part >>>>> ", part)
-
+      console.log("conference.getParticipants() state.partList >>>>> ", state.partList)
       let participantsViews = document.getElementById('participants-views')
         participantsViews.remove
         participantsViews = document.createElement('div')
@@ -122,7 +122,7 @@ export default {
         //   }
         // )
         part.delete(undefined)
-        state.partList = part;
+        //state.partList = part;
         part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
 
     }
