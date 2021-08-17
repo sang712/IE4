@@ -111,12 +111,16 @@ export default {
 
       const ul = document.getElementById('partlist');
       const items = ul.getElementsByTagName('li');
+      console.log("items 길이는 >>>> ", items.length);
       if(items.length > 0){
         for (var i = 0; i < items.length; i++) {
           items[i].remove();
         }
       }
-
+      part.delete(undefined)
+      setTimeout(function() {
+        part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
+      }, 3000);
       // let participantsViews = document.getElementById('participants-views')
       //   participantsViews.remove
       //   participantsViews = document.createElement('div')
@@ -129,7 +133,7 @@ export default {
         // )
         part.delete(undefined)
         //state.partList = part;
-        part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
+        //part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
 
     }
 
@@ -139,7 +143,7 @@ export default {
 
       const li = document.createElement("li");
       li.setAttribute('id', participant.userId);
-      const textNode = document.createTextNode(participant.name+ " / "+ participant.userId);
+      const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
       li.appendChild(textNode);
       document.getElementById('partlist').appendChild(li);
 
