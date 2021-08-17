@@ -52,6 +52,8 @@ export default {
       }
     });
 
+    profileImgUrl = localStorage.getItem('profileImgUrl')
+
     const clickMypage = () => {
       router.push({ name: 'mypage' })
     }

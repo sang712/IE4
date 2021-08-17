@@ -81,6 +81,7 @@ export function updateTeacher (context, payload){
     console.log('updateTeacher complete')
     console.log(data)
     context.commit('rootMain/setTeacherMypageInfo', data, {root: true})
+    context.commit('rooMain/setClassMotto', data.classMotto, {root: true})
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',
