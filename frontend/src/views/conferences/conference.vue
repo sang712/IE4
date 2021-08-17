@@ -175,29 +175,29 @@ export default {
 		},
 		async getLocalStream(){
 			const stream = await navigator.mediaDevices.getUserMedia(this.constraints)
-			return  stream
+			this.onLocalStream(stream);
 		},
 		
 		displayOff() {
-			localStream = this.getLocalStream()
+			const localStream = this.getLocalStream()
 			console.log('pauseVideo', arguments);
 			localStream.getVideoTracks()[0].enabled = false;
 
   	},
 		displayOn() {
-			localStream = this.getLocalStream()
+			const localStream = this.getLocalStream()
 			console.log('resumeVideo', arguments);
 			localStream.getVideoTracks()[0].enabled = true;
 
 		},
 		micOn() {
-			localStream = this.getLocalStream()
+			const localStream = this.getLocalStream()
 			console.log('unmuteAudio', arguments);
 			localStream.getAudioTracks()[0].enabled = true;
 
   	},
 		micOff() {
-			localStream = this.getLocalStream()
+			const localStream = this.getLocalStream()
 			console.log('muteAudio', arguments);
 			localStream.getAudioTracks()[0].enabled = false;
 
