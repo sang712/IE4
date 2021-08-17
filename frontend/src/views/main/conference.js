@@ -162,7 +162,7 @@ export function onExistingParticipants(msg) {
 
   // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
   if(msg.name != 'shareScreen') {
-    webRtcPeerScreencast = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
+    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
       if (error) return onError(error) //You'll need to use whatever you use for handling errors
 
       this.generateOffer(onOffer)
