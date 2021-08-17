@@ -168,7 +168,8 @@ export function onExistingParticipants(msg) {
 	});
 
 	// 기존 참가자 영상을 전달 받을 수신용 WebRtcPeer를 생성.
-	msg.data.forEach(receiveVideo);
+  if(msg.name != 'shareScreen')
+	  msg.data.forEach(receiveVideo);
 }
 
 export function leaveRoom() {
