@@ -66,6 +66,7 @@ public class UserSession implements Closeable {
         JsonObject response = new JsonObject();
         response.addProperty("id", "iceCandidate");
         response.addProperty("name", name);
+        response.addProperty("userId", userId);
         response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
         try {
           synchronized (session) {
@@ -103,7 +104,7 @@ public class UserSession implements Closeable {
   }
 
   public void receiveVideoFrom(UserSession sender, String sdpOffer) throws IOException {
-    log.info("USER {}: connecting with {} in room {}", this.name, sender.getName(), this.roomName);
+    log.info("USER {} / num {} : connecting with {} in room {}", this.name, sender.getUserId(), sender.getName(), this.roomName);
 
     log.trace("USER {}: SdpOffer for {} is {}", this.name, sender.getName(), sdpOffer);
 
@@ -111,6 +112,7 @@ public class UserSession implements Closeable {
     final JsonObject scParams = new JsonObject();
     scParams.addProperty("id", "receiveVideoAnswer");
     scParams.addProperty("name", sender.getName());
+    scParams.addProperty("userId", sender.getUserId());
     scParams.addProperty("sdpAnswer", ipSdpAnswer);
 
     log.trace("USER {}: SdpAnswer for {} is {}", this.name, sender.getName(), ipSdpAnswer);
@@ -139,6 +141,7 @@ public class UserSession implements Closeable {
           JsonObject response = new JsonObject();
           response.addProperty("id", "iceCandidate");
           response.addProperty("name", sender.getName());
+          response.addProperty("userId", sender.getUserId());
           response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
           try {
             synchronized (session) {

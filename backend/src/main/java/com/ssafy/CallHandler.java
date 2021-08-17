@@ -66,6 +66,7 @@ public class CallHandler extends TextWebSocketHandler {
         break;
       case "receiveVideoFrom":
         final String senderName = jsonMessage.get("sender").getAsString();
+        final int userId = jsonMessage.get("userId").getAsInt();
         final UserSession sender = registry.getByName(senderName);
         final String sdpOffer = jsonMessage.get("sdpOffer").getAsString();
         user.receiveVideoFrom(sender, sdpOffer);
