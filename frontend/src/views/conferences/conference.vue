@@ -156,25 +156,25 @@ export default {
 				document.getElementById('participants-list').className = ''
 			}
 		},
-		displayOff(callback) {
-    console.log('pauseVideo', arguments);
-    localStream.getVideoTracks()[0].enabled = false;
-    callback && callback();
+		displayOff() {
+			console.log('pauseVideo', arguments);
+			localStream.getVideoTracks()[0].enabled = false;
+    
   	},
-		displayOn(callback) {
-    console.log('resumeVideo', arguments);
-    localStream.getVideoTracks()[0].enabled = true;
-    callback && callback();
+		displayOn() {
+			console.log('resumeVideo', arguments);
+			localStream.getVideoTracks()[0].enabled = true;
+    
 		},
-		micOn(callback) {
-    console.log('unmuteAudio', arguments);
-    localStream.getAudioTracks()[0].enabled = true;
-    callback && callback();
+		micOn() {
+			console.log('unmuteAudio', arguments);
+			localStream.getAudioTracks()[0].enabled = true;
+    
   	},
-		micOff(callback) {
-    console.log('muteAudio', arguments);
-    localStream.getAudioTracks()[0].enabled = false;
-    callback && callback();
+		micOff() {
+			console.log('muteAudio', arguments);
+			localStream.getAudioTracks()[0].enabled = false;
+    
   	},
   },
 	mounted: function () {
