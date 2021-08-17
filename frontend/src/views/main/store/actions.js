@@ -97,7 +97,7 @@ export function deleteUser({ state }, payload){
   console.log('deleteUser', state, payload)
   console.log(state)
 
-  const url = '/api/users/'
+  const url = '/api/users'
   let token = localStorage.getItem('jwt')
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   let body = payload
