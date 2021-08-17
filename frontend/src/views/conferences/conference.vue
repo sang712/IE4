@@ -187,7 +187,7 @@ export default {
 			} catch (err) {
 				error(err);
 			}
-		}
+		},
 		
 		displayOff() {
 			const localStream = this.getLocalStream()
