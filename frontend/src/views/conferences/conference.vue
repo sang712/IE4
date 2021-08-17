@@ -173,25 +173,25 @@ export default {
 		},
 		
 		displayOff() {
-			localStream = navigator.mediaDevices.getUserMedia(this.constraints)
+			var localStream = await navigator.mediaDevices.getUserMedia(this.constraints)
 			console.log('pauseVideo', arguments);
 			localStream.getVideoTracks()[0].enabled = false;
     
   	},
 		displayOn() {
-			localStream = navigator.mediaDevices.getUserMedia(this.constraints)
+			var localStream = await navigator.mediaDevices.getUserMedia(this.constraints)
 			console.log('resumeVideo', arguments);
 			localStream.getVideoTracks()[0].enabled = true;
     
 		},
 		micOn() {
-			localStream = navigator.mediaDevices.getUserMedia(this.constraints)
+			var localStream = await navigator.mediaDevices.getUserMedia(this.constraints)
 			console.log('unmuteAudio', arguments);
 			localStream.getAudioTracks()[0].enabled = true;
     
   	},
 		micOff() {
-			localStream = navigator.mediaDevices.getUserMedia(this.constraints)
+			var localStream = await navigator.mediaDevices.getUserMedia(this.constraints)
 			console.log('muteAudio', arguments);
 			localStream.getAudioTracks()[0].enabled = false;
     
