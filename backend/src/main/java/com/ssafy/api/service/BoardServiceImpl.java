@@ -89,7 +89,7 @@ public class BoardServiceImpl implements BoardService{
         updateboard.setContent(board.getContent());
         boardRepository.save(updateboard);
 
-        Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
+        Optional<BoardFile> boardfile = boardFileRepository.findByBoardId(boardId);
 
 //        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
 //        File uploadDir = new File(uploadPath + File.separator + uploadFolder);
