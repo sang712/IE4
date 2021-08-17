@@ -46,6 +46,8 @@ ws.onmessage = function(message) {
 		onParticipantLeft(parsedMessage);
 		break;
 	case 'receiveVideoAnswer':
+    participantList.push({name : parsedMessage.name, userId: parsedMessage.userId})
+    console.log("participantList >>>  " ,participantList )
 		receiveVideoResponse(parsedMessage);
 		break;
 	case 'iceCandidate':
@@ -82,15 +84,10 @@ export function register() {
 
 // 새로운 참가자에 영상을 전달 받을 수신용 WebRtcPeer를 생성
 export function onNewParticipant(request) {
-  participantList.push({name : request.name, userId: request.userId})
-  console.log("participantList >>>  " ,participantList )
-
 	receiveVideo(request.name);
 }
 
 export function receiveVideoResponse(result) {
-  participantList.push({name : request.name, userId: request.userId})
-  console.log("participantList >>>  " ,participantList )
 	participants[result.name].rtcPeer.processAnswer (result.sdpAnswer, function (error) {
 		if (error) return console.error (error);
 	});
