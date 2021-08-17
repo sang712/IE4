@@ -55,7 +55,8 @@ export default {
     }
 
     const joinCon = () => {
-      router.push({ name : 'conference', params: { name: localStorage.getItem('name'), grade: 1, class: 1 } })
+      console.log('조인콘 버튼 클릭됨!', this.nGrade + '학년' + this.nClass + '반 으로!')
+      router.push({ name : 'conference', params: { name: localStorage.getItem('name'), grade: this.nGrade, class: this.nClass } })
     }
 
     return { clickSchedule, clickNote, clickMvp, joinCon }
