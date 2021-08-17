@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="mypage-second-background">
-        <el-form class="mypage-form">
+        <el-form class="mypage-form" :rules="rules" ref="mypageForm">
           <el-form-item label="아이디">
             <div>{{ mypageInfo.loginId }}</div>
           </el-form-item>
@@ -90,10 +90,61 @@ export default {
     //   return store.state.rootMain.mypageInfo
     // });
 
+    const checkPassword = (rule, value, callback) => {
+      if (value.length < 8 || value.length > 16) {
+        callback(new Error('비밀번호는 8자 이상 16자 이하여야 합니다.'))
+      }
+      else if (!(/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).$/.test(value))) {
+        // if (!/[a-z]/.test(value)) callback(new Error('비밀번호는 영문 소문자를 포함해야합니다.'))}
+        // else if (!(/[A-Z]/).test(value)) callback(new Error('비밀번호는 영문 대문자를 포함해야합니다.'))
+        if (!(/[a-z]|[A-Z]/).test(value)) callback(new Error('비밀번호는 영문을 포함해야 합니다.'))
+        else if (!(/[0-9]/).test(value)) callback(new Error('비밀번호는 숫자를 포함해야합니다.'))
+        else if (!(/[$`~!@$!%*#^?&\\(\\)\-_=+]/).test(value)) callback(new Error('비밀번호는 특수문자를 포함해야합니다.'))
+      }
+      callback()
+    }
+
+    const checkPhone = (rule, value, callback) => {
+      if (!(/^010\d{3,4}\d{4}$/.test(value))) {
+        if(!(/^010/.test(value))) callback(new Error('휴대전화번호는 010으로 시작해야 합니다.'))
+        else if (/-/.test(value)) callback(new Error('-없이 입력해주세요.'))
+        else callback(new Error('올바른 휴대전화번호를 입력해주세요.'))
+      }
+      callback()
+    }
+
+    const checkParentsPhone = (rule, value, callback) => {
+      if (!(/^010\d{3,4}\d{4}$/.test(value))) {
+        if(!(/^010/.test(value))) callback(new Error('휴대전화번호는 010으로 시작해야 합니다.'))
+        else if (/-/.test(value)) callback(new Error('-없이 입력해주세요.'))
+        else callback(new Error('올바른 휴대전화번호를 입력해주세요.'))
+      }
+      callback()
+    }
+
+    const checkPassAnswer = (rule, value, callback) => {
+      if (value.length < 2) callback(new Error('비밀번호 답변은 2자 이상이어야 합니다.'))
+      callback()
+    }
+
     const state = reactive({
       mypageInfo : store.getters['rootMain/getMypageInfo'],
       file : store.getters['rootMain/getMypageInfo'].profileImgUrl,
-      nSex : localStorage.getItem('sex')
+      nSex : localStorage.getItem('sex'),
+      rules: {
+        password: [
+          { validator: checkPassword, trigger: ['blur', 'change'] }
+        ],
+        phone: [
+          { validator: checkPhone, trigger: 'blur'}
+        ],
+        parents_phone: [
+          { validator: checkParentsPhone, trigger: 'blur'}
+        ],
+        password_answer: [
+          { validator: checkPassAnswer, trigger: 'blur'}
+        ],
+      },
     });
 
     const changeFile = (fileEvent) => {
@@ -102,43 +153,53 @@ export default {
       }
     };
 
+    const mypageForm = ref(null)
+
     const updateUser = () => {
       console.log(document.querySelector("#inputFileUploadInsert").files[0])
       console.log(localStorage.getItem('position'))
       console.log(store.state.rootMain.mypageInfo.password)
-      if(localStorage.getItem('position') == '학생'){
-        var updateStudentData = new FormData()
-        var attachFiles = document.querySelector("#inputFileUploadInsert")
-        updateStudentData.append("id", localStorage.getItem('id'))
-        updateStudentData.append("password", state.mypageInfo.password)
-        updateStudentData.append("phone", state.mypageInfo.phone)
-        updateStudentData.append("address", state.mypageInfo.address)
-        updateStudentData.append("parentPhone", state.mypageInfo.parentPhone)
-        updateStudentData.append("passwordAnswer", state.mypageInfo.passwordAnswer)
-        updateStudentData.append("profileImgUrl", attachFiles.files[0])
-        store.dispatch('rootMain/updateStudent', updateStudentData)
-        // .then(() => {
-        //   router.go()
-        // })
-      }else{
-        var updateTeacherData = new FormData()
-        var attachFiles = document.querySelector("#inputFileUploadInsert")
-        updateTeacherData.append("id", localStorage.getItem('id'))
-        updateTeacherData.append("classId", localStorage.getItem('classId'))
-        updateTeacherData.append("password", state.mypageInfo.password)
-        updateTeacherData.append("phone", state.mypageInfo.phone)
-        updateTeacherData.append("address", state.mypageInfo.address)
-        updateTeacherData.append("classMotto", state.mypageInfo.classMotto)
-        updateTeacherData.append("profileImgUrl", attachFiles.files[0])
-        store.dispatch('rootMain/updateTeacher', updateTeacherData)
-        // .then(() => {
-        //   router.go()
-        // })
-      }
+      mypageForm.value.validate((valid, object) => {
+        if (valid) {
+          if(localStorage.getItem('position') == '학생'){
+            var updateStudentData = new FormData()
+            var attachFiles = document.querySelector("#inputFileUploadInsert")
+            updateStudentData.append("id", localStorage.getItem('id'))
+            updateStudentData.append("password", state.mypageInfo.password)
+            updateStudentData.append("phone", state.mypageInfo.phone)
+            updateStudentData.append("address", state.mypageInfo.address)
+            updateStudentData.append("parentPhone", state.mypageInfo.parentPhone)
+            updateStudentData.append("passwordAnswer", state.mypageInfo.passwordAnswer)
+            updateStudentData.append("profileImgUrl", attachFiles.files[0])
+            store.dispatch('rootMain/updateStudent', updateStudentData)
+            // .then(() => {
+            //   router.go()
+            // })
+          }else{
+            var updateTeacherData = new FormData()
+            var attachFiles = document.querySelector("#inputFileUploadInsert")
+            updateTeacherData.append("id", localStorage.getItem('id'))
+            updateTeacherData.append("classId", localStorage.getItem('classId'))
+            updateTeacherData.append("password", state.mypageInfo.password)
+            updateTeacherData.append("phone", state.mypageInfo.phone)
+            updateTeacherData.append("address", state.mypageInfo.address)
+            updateTeacherData.append("classMotto", state.mypageInfo.classMotto)
+            updateTeacherData.append("profileImgUrl", attachFiles.files[0])
+            store.dispatch('rootMain/updateTeacher', updateTeacherData)
+            // .then(() => {
+            //   router.go()
+            // })
+          }
+        }
+        else{
+          console.log(valid)
+          Swal.fire({ title: '이런!', text: '유효한 정보를 입력해주세요.', icon: 'error', })
+        }
+      })
     };
 
 
-    return { ...toRefs(state), changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog }
+    return { ...toRefs(state), changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog, mypageForm }
   }
 }
 </script>
