@@ -21,9 +21,9 @@ const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
 
 
-export function Participant(name) {
+export function Participant(name, userId) {
 	this.name = name;
-  this.userId = localStorage.getItem("id");
+  this.userId = userId;
 	var container = document.createElement('div');
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
 	container.id = name;

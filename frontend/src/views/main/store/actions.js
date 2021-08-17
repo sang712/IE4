@@ -82,6 +82,7 @@ export function updateTeacher (context, payload){
     console.log(data)
     context.commit('rootMain/setTeacherMypageInfo', data, {root: true})
     context.commit('rootMain/setClassMotto', data.classMotto, {root: true})
+    localStorage.setItem('profileImgUrl', data.profileImgUrl)
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',
