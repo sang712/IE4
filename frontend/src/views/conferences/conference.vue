@@ -107,6 +107,8 @@ import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
 import ScreenHandler from './screen-handler.js';
+import MediaHandler from './media-handler.js'
+// import PeerHandler from './peer-handler'
 
 export default {
   name: 'Conference',
@@ -132,7 +134,9 @@ export default {
 					}
 				},
 			},
-      screenHandler: ''
+      screenHandler: '',
+			mediaHandler:''
+
 		}
 	},
   methods : {
@@ -229,6 +233,8 @@ export default {
 	mounted: function () {
 		console.log('마운트 되었음')
     this.screenHandler = new ScreenHandler();
+		this.mediaHandler = new MediaHandler();
+
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
 			nameTag.value = this.name
