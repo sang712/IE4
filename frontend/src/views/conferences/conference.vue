@@ -188,7 +188,7 @@ export default {
 				error(err);
 			}
 		},
-		
+
 		displayOff() {
 			const localStream = this.getLocalStream()
 			console.log('pauseVideo', arguments);
@@ -234,6 +234,8 @@ export default {
       // const screenHandler = new ScreenHandler();
       const stream = await this.screenHandler.start(); //return => localStream
       this.onLocalStream(stream);
+
+      conference.leaveRoom(true);
       conference.register(true);
     },
   },
