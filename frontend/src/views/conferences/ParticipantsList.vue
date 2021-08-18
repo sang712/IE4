@@ -1,9 +1,9 @@
 <template>
   <div id="participants-list" class="col-3" style="text-align:center;display: none;">
     <!-- <div id="participants-title">참석자 명단</div> -->
-    <button class="button" type="button" style="width:200px; height:40px; margin-left: 30px;margin-bottom: 10px; margin-top: 10px; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참석자 명단</button>
+    <button class="button" type="button" style="width:80%; height:40px; margin:10px auto; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참석자 명단</button>
     <!-- <div id="participants-views"> -->
-    <div id="partlist" style="margin-left:50px"></div>
+    <div id="partlist" style="margin: auto;"></div>
       <!-- <li class="table-header">
         <div class="header-title" style="text-align:left">no</div>
         <div class="header-title" style="text-align:center">이름</div>
@@ -21,86 +21,16 @@
 <script>
 import { reactive, computed, toRefs, watch, ref } from 'vue'
 import * as conference from '../main/conference.js'
+import $axios from 'axios'
 
 export default {
   name: 'ParticipantsList',
-  // data: {
-  //   participants: ''
-  // },
-  // methods: {
-  //   getParticipant() {
-  //     console.log('버튼 클릭')
-  //     // state.participants = ''
-  //     this.participants = conference.getParticipants()
-  //   },
-  //   createParticipant(participant) {
-  //     console.log("추가 되나요", participant, "참석자 이름", participant.name)
-  //     const participantsViews = document.getElementById('participants-views')
-
-  //     const container = document.createElement('div')
-  //     container.id = 'aParticipant'
-  //     container.className = ''
-
-  //     const nameTag = document.createElement('div')
-  //     nameTag.id = 'name-tag'
-  //     nameTag.innerText = participant.name
-
-  //     container.appendChild(nameTag)
-  //     participantsViews.appendChild(container)
-  //   }
-  // },
-  // watch: {
-  //   participants: function(newParti) {
-  //     console.log('참석자 받았음', this.participants)
-  //       let participantsViews = document.getElementById('participants-views')
-  //       participantsViews.remove
-  //       participantsViews = document.createElement('div')
-  //       participantsViews.id = 'participants-views'
-
-  //       Object.getOwnPropertyNames(this.participants).forEach(
-  //         function (val, idx, array) {
-  //           createParticipant(val)
-  //         }
-  //       )
-  //   }
-  // },
   setup() {
     // let participants = ref('');
     const state = reactive({
       participants: '',
       partList : conference.getParticipants(),
     })
-
-    // watch(participants,
-    //   (participants, prevParticipants) => {
-    //     console.log('참석자 받았음', participants)
-    //     let participantsViews = document.getElementById('participants-views')
-    //     participantsViews.remove
-    //     participantsViews = document.createElement('div')
-    //     participantsViews.id = 'participants-views'
-
-    //     Object.getOwnPropertyNames(participants).forEach(
-    //       function (val, idx, array) {
-    //         createParticipant(participants[val])
-    //       }
-    //     ),
-    //     { deep: true }
-    //   }
-    //   // (participants, prevParticipants) => {
-    //   //   console.log('참석자 받았음', participants)
-    //   //   let participantsViews = document.getElementById('participants-views')
-    //   //   participantsViews.remove
-    //   //   participantsViews = document.createElement('div')
-    //   //   participantsViews.id = 'participants-views'
-
-    //   //   Object.getOwnPropertyNames(participants).forEach(
-    //   //     function (val, idx, array) {
-    //   //       createParticipant(participants[val])
-    //   //     }
-    //   //   )
-    //   // }
-    // )
-
     const getParticipant = () => {
       console.log('버튼 클릭')
       // state.participants = ''
@@ -119,19 +49,6 @@ export default {
       }
       part.delete(undefined)
       part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
-      // let participantsViews = document.getElementById('participants-views')
-      //   participantsViews.remove
-      //   participantsViews = document.createElement('div')
-      //   participantsViews.id = 'participants-views'
-
-        // Object.getOwnPropertyNames(part).forEach(
-        //   function (val, idx, array) {
-        //     createParticipant(part[val])
-        //   }
-        // )
-        //part.delete(undefined)
-        //state.partList = part;
-        //part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
 
     }
 
@@ -140,26 +57,30 @@ export default {
       const participantsViews = document.getElementById('participants-views')
 
       const li = document.createElement("li");
-      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px; margin-bottom:10px; font-size:20px;padding:6px;border-radius: 20px;"
       li.setAttribute('id', participant.userId);
+      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif;width: 75%;font-size: 20px;padding:6px;border-radius: 20px;margin: auto;"
       //li.setAttribute('@click', getboardDetail(board.id));
-      const textNode = document.createTextNode("이름 : " + participant.name );
+      const textNode = document.createTextNode( participant.name );
       // const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
       li.appendChild(textNode);
       document.getElementById('partlist').appendChild(li);
       li.onclick = function(){
         console.log("클릭 성공 >>> ", participant.name);
-        }
-      // const container = document.createElement('div')
-      // container.id = 'aParticipant'
-      // container.className = ''
 
-      // const nameTag = document.createElement('div')
-      // nameTag.id = 'name-tag'
-      // nameTag.innerText = participant.name
+        const url = '/api/conference/point/' + participant.userId;
+        let token = localStorage.getItem('jwt')
+        let header = {headers:{'Authorization':`Bearer ${token}`} }
+        console.log(" 보내려는 userId >>> ", participant.userId, "타입은 >>>", typeof(participant.userId));
 
-      // container.appendChild(nameTag)
-      // participantsViews.appendChild(container)
+        $axios.post(url, header)
+        .then(function () {
+          console.log('점수주기 성공맨~')
+        })
+        .catch(function (err) {
+          console.log("give point error")
+        })
+
+      }
     }
 
     return { state, watch, getParticipant, createParticipant }
@@ -170,11 +91,11 @@ export default {
 <style scoped>
 
 #participants-list {
-  background-color: #e9e795;
+  background-color: #ebe774;
 	padding: 0;
   margin: 0;
 	height: 100vh;
-  background-image: url(https://cdn.wallpapersafari.com/85/44/6qQuzK.jpg);
+  /* background-image: url(https://cdn.wallpapersafari.com/85/44/6qQuzK.jpg); */
   background-size:490px 1100px ;
 }
 #participants-views {
@@ -256,5 +177,13 @@ li .header-date, .row-date{
   height: 40px;
   right: 5px;
   padding: 0px;
+}
+</style>
+
+<style>
+#partlist li:hover {
+  background-color: hsl(103, 100%, 67%);
+  font-weight:bold;
+  cursor: pointer;
 }
 </style>

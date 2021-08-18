@@ -126,6 +126,9 @@ export function onExistingParticipants(msg) {
         }
       }
     };
+
+    var participant = new Participant.Participant(msg.name, userId);
+	  participants[msg.name] = participant;
   } else {
     var constraints = {
       audio : true,
@@ -137,14 +140,15 @@ export function onExistingParticipants(msg) {
         }
       }
     };
+
+    var participant = new Participant.Participant(name, userId);
+	  participants[name] = participant;
   }
-
-
 
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);
-	var participant = new Participant.Participant(name, userId);
-	participants[name] = participant;
+	// var participant = new Participant.Participant(name, userId);
+	// participants[name] = participant;
 
   if(msg.name == 'shareScreen') {
     var video = document.querySelector('#video-'+name);
@@ -178,7 +182,7 @@ export function onExistingParticipants(msg) {
   });
 
 	// 기존 참가자 영상을 전달 받을 수신용 WebRtcPeer를 생성.
-  msg.data.forEach(receiveVideo);
+  if(msg.name != 'shareScreen') msg.data.forEach(receiveVideo);
 }
 
 export function onShareScreen(stream) {
