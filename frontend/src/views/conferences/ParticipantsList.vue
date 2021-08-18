@@ -1,7 +1,7 @@
 <template>
   <div id="participants-list" class="col-3" style="text-align:center;display: none;">
     <!-- <div id="participants-title">참석자 명단</div> -->
-    <button class="button d-flex" type="button" style="width:200px; height:40px; margin-left: 50px;margin-bottom: 10px; margin-top: 10px; font-size:20px; padding: auto" @click="getParticipant()">참석자 명단</button>
+    <button class="button" type="button" style="width:200px; height:40px; margin-left: 30px;margin-bottom: 10px; margin-top: 10px; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참석자 명단</button>
     <!-- <div id="participants-views"> -->
     <div id="partlist" style="margin-left:50px"></div>
       <!-- <li class="table-header">
@@ -140,7 +140,7 @@ export default {
       const participantsViews = document.getElementById('participants-views')
 
       const li = document.createElement("li");
-      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px"
+      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px; margin-bottom:10px; font-size:20px;padding:6px"
       li.setAttribute('id', participant.userId);
       //li.setAttribute('@click', getboardDetail(board.id));
       const textNode = document.createTextNode("이름 : " + participant.name );
@@ -170,7 +170,7 @@ export default {
 <style scoped>
 
 #participants-list {
-  background-color: #ffffff;
+  background-color: #e9e795;
 	padding: 0;
   margin: 0;
 	height: 100vh;
