@@ -58,6 +58,7 @@ export default {
 
     const joinCon = () => {
       console.log('조인콘 버튼 클릭됨!', state.nGrade + '학년' + state.nClass + '반 으로!')
+      store.dispatch('rootMain/getConferenceActive', localStorage.getItem('jwt'))
       if(state.conferenceActive == "open"){
         console.log('conference open 상태!!')
         router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
@@ -68,7 +69,10 @@ export default {
     }
 
     const createCon = () => {
-      store.commit('rootMain/setConferenceActive', "open")
+      store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'open'})
+      .then(function(result){
+        store.commit('rootMain/setConferenceActive', result.data)
+      })
     }
 
     return { ...toRefs(state), clickSchedule, clickNote, clickMvp, joinCon, createCon }

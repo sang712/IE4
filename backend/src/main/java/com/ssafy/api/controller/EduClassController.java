@@ -1,11 +1,15 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.EduClassConferenceActiveUpdateReq;
+import com.ssafy.api.request.UserDeleteReq;
+import com.ssafy.api.request.UserLoginPostReq;
 import com.ssafy.api.response.EduClassMem;
 import com.ssafy.api.response.EduClassMemListRes;
 import com.ssafy.api.service.EduClassService;
 import com.ssafy.db.entity.EduClass;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +67,26 @@ public class EduClassController {
         List<String> list = eduClassService.getRank(classId);
 
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/conferenceActive/{classId}")
+    @ApiOperation(value = "수업 room 상태 조회", notes = "해당 반의 수업방 상태를 가져온다.")
+    public ResponseEntity<String> getEduClassConferenceActive(@PathVariable int classId) {
+
+        EduClass c = eduClassService.getEduClassByEduClassId(classId);
+
+        return new ResponseEntity<>(c.getConferenceActive(), HttpStatus.OK);
+    }
+
+    @PatchMapping("/conferenceActive/{classId}")
+    @ApiOperation(value = "수업 room 상태 수정", notes = "해당 반의 수업방 상태를 업데이트한다.")
+    public ResponseEntity<String> updateEduClassConferenceActive(
+            @PathVariable int classId,
+            @RequestBody @ApiParam(value="수업room 상태값", required = true) EduClassConferenceActiveUpdateReq conferenceActiveInfo) {
+
+        EduClass c = eduClassService.setConferenceActiveByEduClassId(classId, conferenceActiveInfo.getConferenceActive());
+
+        return new ResponseEntity<>(c.getConferenceActive(), HttpStatus.OK);
     }
 
 }

@@ -45,6 +45,14 @@ public class EduClassServiceImpl implements EduClassService {
     }
 
     @Override
+    public EduClass setConferenceActiveByEduClassId(int eduClassId, String conferenceActive){
+        EduClass c = eduClassRepository.findEduClassById(eduClassId).orElse(null);
+        c.setConferenceActive(conferenceActive);
+
+        return eduClassRepository.save(c);
+    }
+
+    @Override
     public String updateTimetable(int eduClassId, MultipartHttpServletRequest request) {
 
         String uploadFolder = "timetable";
@@ -125,5 +133,8 @@ public class EduClassServiceImpl implements EduClassService {
 
         return list;
     }
+
+
+
 
 }

@@ -19,5 +19,4 @@ public class EduClass extends BaseEntity{
     String classMotto;
     String conferenceActive;
 
-
 }
