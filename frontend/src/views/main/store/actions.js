@@ -4,6 +4,7 @@ import { toHandlers } from 'vue'
 import http from "@/common/lib/axios.js";
 import $axios from 'axios'
 import { routerKey } from 'vue-router';
+import { storeKey } from 'vuex';
 
 export function requestLogin ({ state }, payload) {
   console.log('requestLogin', state, payload)
@@ -140,6 +141,35 @@ export function getRanking ({ state }, token) {
   const url = '/api/class/ranking/' + localStorage.getItem('classId');
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
   return $axios.get(url, header)
+}
+
+export function getConferenceActive(context){
+  console.log('getConferenceActive')
+  console.log(localStorage.getItem('classId'))
+
+  const token = localStorage.getItem('jwt')
+  const url = '/api/class/conferenceActive/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+
+  $axios.get(url, header)
+  .then(function (result) {
+    console.log(result.data)
+    context.commit('rootMain/setConferenceActive', result.data, {root: true})
+  })
+  .catch(function (err) {
+    console.log("getConferenceActive error", err)
+    Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
+  })
+}
+
+export function updateConferenceActive(context, payload){
+  console.log('updateConferenceActive')
+
+  const token = localStorage.getItem('jwt')
+  const url = '/api/class/conferenceActive/' + localStorage.getItem('classId');
+  let header = { headers: { 'Authorization': `Bearer ${token}` } }
+
+  return $axios.patch(url, payload, header)
 }
 
 export function requestSchoolSchedule ({ state }) {
