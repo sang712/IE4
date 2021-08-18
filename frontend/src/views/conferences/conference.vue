@@ -138,7 +138,6 @@ export default {
 			mediaHandler:'',
 			peerHandler:'',
 			localStream:'',
-
 		}
 	},
   methods : {
@@ -147,6 +146,20 @@ export default {
     },
     leaveRoom() {
       conference.leaveRoom(false)
+
+      if(localStorage.getItem('position') == "교사"){
+        store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'close'})
+        .then(({ data }) => {
+          console.log('updateConferenceActive complete')
+          console.log(data)
+          store.commit('rootMain/setConferenceActive', data, {root: true})
+        })
+        .catch(function (err) {
+          console.log("updateConferenceActive error", err)
+          Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
+        })
+      }
+
 			location.reload();
     },
 		openChatBox(){

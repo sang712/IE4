@@ -91,7 +91,7 @@ public class CallHandler extends TextWebSocketHandler {
         // 엔드포인트 삭제
         screenShare(user);
         // 다시 엔드포인트 연결
-        user.receiveVideoFrom(sSender, sSdpOffer);
+        user.receiveVideoFromForScreenShare(sSender, sSdpOffer);
         break;
       default:
         break;
