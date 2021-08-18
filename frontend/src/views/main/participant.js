@@ -57,6 +57,7 @@ export function Participant(name, userId) {
 	video.controls = false;
 
   if(state == 'share') {
+    console.log("video share >>>>> ", videoStream)
     video.srcObject = videoStream;
   }
 
