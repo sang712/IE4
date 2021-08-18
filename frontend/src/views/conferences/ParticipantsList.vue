@@ -142,6 +142,7 @@ export default {
 
       const li = document.createElement("li");
       li.setAttribute('id', participant.userId);
+      li.setAttribute('style', 'display: block; #6c757d 1px solid');
       //li.setAttribute('@click', getboardDetail(board.id));
       const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
       li.appendChild(textNode);
@@ -151,8 +152,8 @@ export default {
         const url = '/api/conference/';
         let token = localStorage.getItem('jwt')
         let header = { headers: { 'Authorization': `Bearer ${token}` } }
-
-        $axios.post(url, participant.userId)
+        let params = {params: {userId:participant.userId}}
+        $axios.post(url,params )
         .then(function (result) {
           console.log("점수주기 성공?")
         })
@@ -217,17 +218,18 @@ export default {
   right: 5px;
   padding: 0px;
 }
-#partlist li {
-  display: inline-block;
-  padding: 5px 0px 5px 5px;
+#partlist li{
+  display: block;
+  border: #6c757d 1px solid;
+  padding: 6px 0px 5px 5px;
   margin-bottom: 5px;
-  border-bottom: 1px solid #efefef;
-  font-size: 12px;
+  /* border-bottom: 1px solid #efefef; */
+  font-size: 15px;
 }
 #partlist li:last-child {
     border-bottom: 0px;
 }
-#partlist li:hover{
+#partlist :hover{
   border-top-color:tomato;
   border-bottom-color:tomato;
   background-color:#FFE5D4;
