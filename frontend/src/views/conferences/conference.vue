@@ -138,6 +138,7 @@ export default {
 			mediaHandler:'',
 			peerHandler:'',
 			localStream:'',
+
 		}
 	},
   methods : {
@@ -146,20 +147,6 @@ export default {
     },
     leaveRoom() {
       conference.leaveRoom(false)
-
-      if(localStorage.getItem('position') == "교사"){
-        store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'close'})
-        .then(({ data }) => {
-          console.log('updateConferenceActive complete')
-          console.log(data)
-          store.commit('rootMain/setConferenceActive', data, {root: true})
-        })
-        .catch(function (err) {
-          console.log("updateConferenceActive error", err)
-          Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
-        })
-      }
-
 			location.reload();
     },
 		openChatBox(){
@@ -245,6 +232,28 @@ export default {
 
       const $video = document.querySelector('#video-'+this.name);
       $video.srcObject = stream;
+
+      // this.name = name;
+      // this.userId = userId;
+      var container = document.createElement('div');
+      container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
+      container.id = 'screenShare';
+      var span = document.createElement('span');
+      span.className = 'participant-name'
+      var video = document.createElement('video');
+      var rtcPeer;
+
+      rtcPeer;
+
+      container.appendChild(video);
+      container.appendChild(span);
+      container.onclick = switchContainerClass;
+      document.getElementById('participants').appendChild(container);
+
+      span.appendChild(document.createTextNode(screenShare));
+
+      const $video = document.querySelector('#video-'+'screenShare');
+      $video.srcObject = stream;
     },
 
     async share() {
@@ -252,7 +261,7 @@ export default {
       const stream = await this.screenHandler.start(); //return => localStream
       this.onLocalStream(stream);
 
-      conference.sendingScreen(this.name);
+      // conference.sendingScreen(stream);
       // conference.register(true)
       // conference.onShareScreen(stream);
 
@@ -342,15 +351,6 @@ a {
     box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
-.button-wrapper, .button-wrapper2 {
-	display: inline-block;
-	margin: 10px;
-}
-.button-wrapper2 {
-	position: absolute;
-	right: 10px;
-}
-
 </style>
 <style scoped>
 #room{
@@ -619,6 +619,14 @@ video {
 	width: 100%;
 	height: 50px;
 	background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
+}
+.button-wrapper, .button-wrapper2 {
+	display: inline-block;
+	margin: 10px;
+}
+.button-wrapper2 {
+	position: absolute;
+	right: 10px;
 }
 
 </style>
