@@ -25,83 +25,12 @@ import $axios from 'axios'
 
 export default {
   name: 'ParticipantsList',
-  // data: {
-  //   participants: ''
-  // },
-  // methods: {
-  //   getParticipant() {
-  //     console.log('버튼 클릭')
-  //     // state.participants = ''
-  //     this.participants = conference.getParticipants()
-  //   },
-  //   createParticipant(participant) {
-  //     console.log("추가 되나요", participant, "참석자 이름", participant.name)
-  //     const participantsViews = document.getElementById('participants-views')
-
-  //     const container = document.createElement('div')
-  //     container.id = 'aParticipant'
-  //     container.className = ''
-
-  //     const nameTag = document.createElement('div')
-  //     nameTag.id = 'name-tag'
-  //     nameTag.innerText = participant.name
-
-  //     container.appendChild(nameTag)
-  //     participantsViews.appendChild(container)
-  //   }
-  // },
-  // watch: {
-  //   participants: function(newParti) {
-  //     console.log('참석자 받았음', this.participants)
-  //       let participantsViews = document.getElementById('participants-views')
-  //       participantsViews.remove
-  //       participantsViews = document.createElement('div')
-  //       participantsViews.id = 'participants-views'
-
-  //       Object.getOwnPropertyNames(this.participants).forEach(
-  //         function (val, idx, array) {
-  //           createParticipant(val)
-  //         }
-  //       )
-  //   }
-  // },
   setup() {
     // let participants = ref('');
     const state = reactive({
       participants: '',
       partList : conference.getParticipants(),
     })
-
-    // watch(participants,
-    //   (participants, prevParticipants) => {
-    //     console.log('참석자 받았음', participants)
-    //     let participantsViews = document.getElementById('participants-views')
-    //     participantsViews.remove
-    //     participantsViews = document.createElement('div')
-    //     participantsViews.id = 'participants-views'
-
-    //     Object.getOwnPropertyNames(participants).forEach(
-    //       function (val, idx, array) {
-    //         createParticipant(participants[val])
-    //       }
-    //     ),
-    //     { deep: true }
-    //   }
-    //   // (participants, prevParticipants) => {
-    //   //   console.log('참석자 받았음', participants)
-    //   //   let participantsViews = document.getElementById('participants-views')
-    //   //   participantsViews.remove
-    //   //   participantsViews = document.createElement('div')
-    //   //   participantsViews.id = 'participants-views'
-
-    //   //   Object.getOwnPropertyNames(participants).forEach(
-    //   //     function (val, idx, array) {
-    //   //       createParticipant(participants[val])
-    //   //     }
-    //   //   )
-    //   // }
-    // )
-
     const getParticipant = () => {
       console.log('버튼 클릭')
       // state.participants = ''
@@ -270,5 +199,12 @@ li .header-date, .row-date{
   height: 40px;
   right: 5px;
   padding: 0px;
+}
+#partlist li:hover {
+  border-top-color: tomato;
+  border-bottom-color: tomato;
+  background-color: #FFE5D4;
+  font-weight:bold;
+  cursor: pointer;
 }
 </style>
