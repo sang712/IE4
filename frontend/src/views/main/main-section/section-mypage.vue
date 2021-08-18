@@ -12,7 +12,7 @@
       <div class="mypage-second-background">
         <el-form class="mypage-form">
           <el-form-item label="아이디">
-            <div>{{ mypageInfo.loginId }}</div>
+            <el-input v-model="mypageInfo.loginId" :disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="비밀번호">
             <el-input v-model="mypageInfo.password" show-password></el-input>
@@ -28,7 +28,7 @@
               <el-input v-model="mypageInfo.parentPhone"></el-input>
             </el-form-item>
             <el-form-item label="비밀번호 질문">
-              <div>{{ mypageInfo.passwordQuestion }}</div>
+              <el-input v-model="mypageInfo.passwordQuestion" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="비밀번호 질문 답">
               <el-input v-model="mypageInfo.passwordAnswer"></el-input>
@@ -154,7 +154,7 @@ export default {
   .section-mypage {
     background-color: #efeee9 ;
     margin: 5px 5px;
-    height: 66vh;
+    height: 70vh;
     width: 83vw;
   }
   .mypage-in-background {
