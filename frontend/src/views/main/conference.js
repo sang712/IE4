@@ -249,22 +249,28 @@ export function onExistingParticipants(msg) {
   // }
 
 
-  if(state == 'share') {
-    console.log("state >>>> ", state);
-    var options = {
-      localVideo: video,
-      mediaConstraints: constraints,
-      onicecandidate: participant.onIceCandidate.bind(participant),
-      sendSource: 'screen'
-    }
-  } else {
-    var options = {
-          localVideo: video,
-          mediaConstraints: constraints,
-          onicecandidate: participant.onIceCandidate.bind(participant)
-    }
+  // if(state == 'share') {
+  //   console.log("state >>>> ", state);
+  //   var options = {
+  //     localVideo: video,
+  //     mediaConstraints: constraints,
+  //     onicecandidate: participant.onIceCandidate.bind(participant),
+  //     sendSource: 'screen'
+  //   }
+  // } else {
+  //   var options = {
+  //         localVideo: video,
+  //         mediaConstraints: constraints,
+  //         onicecandidate: participant.onIceCandidate.bind(participant)
+  //   }
 
-  }
+  // }
+
+  var options = {
+    localVideo: video,
+    mediaConstraints: constraints,
+    onicecandidate: participant.onIceCandidate.bind(participant)
+}
 
 
   // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
