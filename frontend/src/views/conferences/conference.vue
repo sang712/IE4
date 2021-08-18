@@ -266,8 +266,8 @@ export default {
 
       span.appendChild(document.createTextNode('screenShare'));
 
-      const $video = document.querySelector('#video-'+'screenShare');
-      $video.srcObject = stream;
+      // const $video = document.querySelector('#video-'+'screenShare');
+      video.srcObject = stream;
     },
 
     async share() {
