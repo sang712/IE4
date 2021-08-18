@@ -69,7 +69,6 @@ public class CallHandler extends TextWebSocketHandler {
         final int userId = jsonMessage.get("userId").getAsInt();
         final UserSession sender = registry.getByName(senderName);
         final String sdpOffer = jsonMessage.get("sdpOffer").getAsString();
-        if(sender.getName().equals("screenShare")) break;
         user.receiveVideoFrom(sender, sdpOffer);
         break;
       case "leaveRoom":

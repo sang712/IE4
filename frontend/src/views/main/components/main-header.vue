@@ -177,8 +177,8 @@ export default {
     margin: 0 calc(50% - 51px)
   }
   .main-header .hide-on-big .logo-wrapper .ic.ic-logo {
-    width: 70px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url('../../../assets/images/ie4-logo.png');
@@ -214,8 +214,8 @@ export default {
     display: block
   }
   .mobile-sidebar-wrapper .mobile-sidebar .logo-wrapper .ic.ic-logo {
-    width: 70px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     margin: 0 auto;
     margin-top: 30px;
     background-size: contain;
@@ -246,8 +246,8 @@ export default {
     display: inline-block;
   }
   .main-header .upper-header .logo-wrapper .ic.ic-logo {
-    width: 70px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url('../../../assets/images/ie4-logo.png');
