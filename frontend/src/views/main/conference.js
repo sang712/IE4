@@ -231,10 +231,21 @@ export function onExistingParticipants(msg) {
   // }
 
 
-  var options = {
-        localVideo: video,
-        mediaConstraints: constraints,
-        onicecandidate: participant.onIceCandidate.bind(participant)
+  if(state == 'share') {
+    console.log("state >>>> ", state);
+    var options = {
+      localVideo: video,
+      mediaConstraints: constraints,
+      onicecandidate: participant.onIceCandidate.bind(participant),
+      sendSource: 'screen'
+    }
+  } else {
+    var options = {
+          localVideo: video,
+          mediaConstraints: constraints,
+          onicecandidate: participant.onIceCandidate.bind(participant)
+    }
+
   }
 
 
