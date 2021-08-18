@@ -131,7 +131,7 @@ export function sendingScreen(stream) {
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);
   console.log("participant >>>>> " + participant);
-  console.log("participants >>>>> " + participants);
+  console.log("participants >>>>> " + this.participants);
 	// var participant = new Participant.Participant(name, userId);
 	// participants[name] = participant;
 
