@@ -1,9 +1,9 @@
 <template>
-  <div id="participants-list" class="col-3" style="display: none;">
-    <div id="participants-title">참석자 명단</div>
-    <button class="button" type="button" @click="getParticipant()">참석자 가져오기</button>
+  <div id="participants-list" class="col-3" style="text-align:center;display: none;">
+    <!-- <div id="participants-title">참석자 명단</div> -->
+    <button class="button" type="button" style="width:200px; height:40px; margin-left: 30px;margin-bottom: 10px; margin-top: 10px; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참석자 명단</button>
     <!-- <div id="participants-views"> -->
-    <ol id="partlist"></ol>
+    <div id="partlist" style="margin-left:50px"></div>
       <!-- <li class="table-header">
         <div class="header-title" style="text-align:left">no</div>
         <div class="header-title" style="text-align:center">이름</div>
@@ -21,7 +21,6 @@
 <script>
 import { reactive, computed, toRefs, watch, ref } from 'vue'
 import * as conference from '../main/conference.js'
-import $axios from 'axios'
 
 export default {
   name: 'ParticipantsList',
@@ -110,8 +109,8 @@ export default {
       console.log("conference.getParticipants() part >>>>> ", part)
       console.log("conference.getParticipants() state.partList >>>>> ", state.partList)
 
-      const ol = document.getElementById('partlist');
-      const items = ol.getElementsByTagName('li');
+      const ul = document.getElementById('partlist');
+      const items = ul.getElementsByTagName('li');
       console.log("items 길이는 >>>> ", items.length);
       if(items.length > 0){
         while(items.length>0){
@@ -141,26 +140,15 @@ export default {
       const participantsViews = document.getElementById('participants-views')
 
       const li = document.createElement("li");
+      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px; margin-bottom:10px; font-size:20px;padding:6px"
       li.setAttribute('id', participant.userId);
-      li.setAttribute('style', 'display: block; #6c757d 1px solid');
       //li.setAttribute('@click', getboardDetail(board.id));
-      const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
+      const textNode = document.createTextNode("이름 : " + participant.name );
+      // const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
       li.appendChild(textNode);
       document.getElementById('partlist').appendChild(li);
       li.onclick = function(){
         console.log("클릭 성공 >>> ", participant.name);
-        const url = '/api/conference/';
-        let token = localStorage.getItem('jwt')
-        let header = { headers: { 'Authorization': `Bearer ${token}` } }
-        console.log("보내려는 userId >>>>", participant.userId, "타입은 >>>> " , typeof(participant.userId))
-        let params = {params: {userId: 'participant.userId'}}
-        $axios.post(url,params)
-        .then(function (result) {
-          console.log("점수주기 성공?")
-        })
-        .catch(function (err) {
-          console.log("점수주기 error",err)
-        })
         }
       // const container = document.createElement('div')
       // container.id = 'aParticipant'
@@ -180,8 +168,9 @@ export default {
 </script>
 
 <style scoped>
+
 #participants-list {
-  background-color: #ffffff;
+  background-color: #e9e795;
 	padding: 0;
   margin: 0;
 	height: 100vh;
@@ -197,7 +186,54 @@ export default {
   padding: 5px;
   margin: 2px 0px;
 }
-
+.section-news {
+  width: 99.8%;
+  height: 100%;
+  margin: 5px 1px;
+  padding: 5px 5px;
+  background-color: #efeee9;
+}
+.news-title {
+  text-align: center;
+  margin: 20px 0px;
+}
+.news-table {
+  min-height: 430px;
+  padding: 0px;
+}
+.news-table li {
+  border-radius: 15px;
+  padding: 20px 30px;
+  margin: 0px 5%;
+  font-size: 130%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1px;
+}
+.news-table .table-header {
+  background-color: #95A5A6;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.news-table .table-row {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+}
+li .header-number, .row-number{
+  flex-basis: 10%;
+}
+li .header-title, .row-title{
+  flex-basis: 50%;
+}
+li .header-author, .row-author{
+  text-align: center;
+  flex-basis: 15%;
+}
+li .header-date, .row-date{
+  text-align: center;
+  flex-basis: 15%;
+}
 .lower-sidebar {
   position: relative;
   width: 90%;
@@ -218,25 +254,5 @@ export default {
   height: 40px;
   right: 5px;
   padding: 0px;
-}
-</style>
-<style>
-#partlist li{
-  display: block;
-  border: #6c757d 1px solid;
-  padding: 6px 0px 5px 5px;
-  margin-bottom: 5px;
-  /* border-bottom: 1px solid #efefef; */
-  font-size: 15px;
-}
-#partlist li:last-child {
-    border-bottom: 0px;
-}
-#partlist :hover{
-  border-top-color:tomato;
-  border-bottom-color:tomato;
-  background-color:#FFE5D4;
-  font-weight:bold;
-  cursor:  pointer;
 }
 </style>
