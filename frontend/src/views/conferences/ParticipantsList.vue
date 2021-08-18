@@ -21,6 +21,7 @@
 <script>
 import { reactive, computed, toRefs, watch, ref } from 'vue'
 import * as conference from '../main/conference.js'
+import $axios from 'axios'
 
 export default {
   name: 'ParticipantsList',
@@ -216,21 +217,21 @@ export default {
   right: 5px;
   padding: 0px;
 }
-ol.partlist li {
+#partlist li {
   display: inline-block;
   padding: 5px 0px 5px 5px;
-  margin-bottom: 5pxs;
+  margin-bottom: 5px;
   border-bottom: 1px solid #efefef;
   font-size: 12px;
 }
-ol.mylist li:last-child {
+#partlist li:last-child {
     border-bottom: 0px;
 }
-ol.mylist li:hover{
-        border-top-color:tomato;
-        border-bottom-color:tomato;
-        background-color:#FFE5D4;
-        font-weight:bold;
-        cursor:  pointer;
-    }
+#partlist li:hover{
+  border-top-color:tomato;
+  border-bottom-color:tomato;
+  background-color:#FFE5D4;
+  font-weight:bold;
+  cursor:  pointer;
+}
 </style>
