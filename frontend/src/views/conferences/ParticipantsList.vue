@@ -21,6 +21,7 @@
 <script>
 import { reactive, computed, toRefs, watch, ref } from 'vue'
 import * as conference from '../main/conference.js'
+import $axios from 'axios'
 
 export default {
   name: 'ParticipantsList',
@@ -149,7 +150,20 @@ export default {
       document.getElementById('partlist').appendChild(li);
       li.onclick = function(){
         console.log("클릭 성공 >>> ", participant.name);
-        }
+      }
+      const url = '/api/conference/point/' + participant.userId;
+      let token = localStorage.getItem('jwt')
+      let header = {headers:{'Authorization':`Bearer ${token}`} }
+      console.log(" 보내려는 userId >>> ", participant.userId, "타입은 >>>", typeof(participant.userId));
+
+      $axios.post(url, header)
+      .then(function () {
+        console.log('점수주기 성공맨~')
+      })
+      .catch(function (err) {
+        console.log("give point error")
+      })
+
       // const container = document.createElement('div')
       // container.id = 'aParticipant'
       // container.className = ''
