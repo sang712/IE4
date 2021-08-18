@@ -128,7 +128,7 @@ export default {
   background-repeat: no-repeat;
 }
 .meeting-preview{
-  height: 42vh;
+  height: 46vh;
   width: 39vw;
   background-color: #ffffff ;
   margin: 25px 5px 0px 5px;

@@ -182,6 +182,8 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url('../../../assets/images/ie4-logo.png');
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
   }
   .mobile-sidebar-wrapper {
     position: absolute;
@@ -221,6 +223,8 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url('../../../assets/images/ie4-logo.png');
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
   }
   .mobile-sidebar-wrapper .mobile-sidebar-backdrop {
     width: calc(100% - 260px); height: calc(100vh - 1px);
@@ -251,6 +255,8 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url('../../../assets/images/ie4-logo.png');
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
   }
   .main-header .upper-header .tool-wrapper {
     width: 45%;
