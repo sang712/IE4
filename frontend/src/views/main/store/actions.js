@@ -153,6 +153,7 @@ export function getConferenceActive(context){
 
   $axios.get(url, header)
   .then(function (result) {
+    console.log('result : ', result)
     console.log(result.data)
     context.commit('rootMain/setConferenceActive', result.data, {root: true})
   })
@@ -320,7 +321,7 @@ export function setClassInfo ({ state }, response) {
   state.classInfo.classNo = response.classNo
   state.classInfo.timetable = response.timetable
   state.classInfo.classMotto = response.classMotto
-  state.classInfo.conferenceActive = "close"
+  state.classInfo.conferenceActive = response.conferenceActive
   state.classInfo.url = response.conferenceUrl
 
   console.log(response.grade + "     " + state.classInfo.grade)
