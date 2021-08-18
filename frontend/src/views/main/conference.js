@@ -24,7 +24,7 @@ var participants = {};
 let participantList= new Map();
 var name;
 var userId;
-var stream;
+var videoStream;
 
 window.onbeforeunload = function() {
 	ws.close();
@@ -114,51 +114,51 @@ export function callResponse(message) {
 }
 
 // 화면공유 보내기
-export function sendingScreen(stream) {
+// export function sendingScreen(stream) {
 
-  var constraints = {
-    audio : true,
-    video : {
-      mandatory : {
-        maxWidth : 1080,
-        maxFrameRate : 15,
-        minFrameRate : 15
-      }
-    }
-  };
+//   var constraints = {
+//     audio : true,
+//     video : {
+//       mandatory : {
+//         maxWidth : 1080,
+//         maxFrameRate : 15,
+//         minFrameRate : 15
+//       }
+//     }
+//   };
 
-  var participant = new Participant.Participant(name, userId);
-	participants[name] = participant;
+//   var participant = new Participant.Participant(name, userId);
+// 	participants[name] = participant;
 
-	// gabojago registered in room [object HTMLDivElement]
-	console.log(name +"//"+userId+ " registered in room " + room);
-  console.log("participant >>>>> " + participant);
-  console.log("participants >>>>> " + participants);
-	// var participant = new Participant.Participant(name, userId);
-	// participants[name] = participant;
+// 	// gabojago registered in room [object HTMLDivElement]
+// 	console.log(name +"//"+userId+ " registered in room " + room);
+//   console.log("participant >>>>> " + participant);
+//   console.log("participants >>>>> " + participants);
+// 	// var participant = new Participant.Participant(name, userId);
+// 	// participants[name] = participant;
 
-  var video = stream;
+//   var video = stream;
 
-  var options = {
-        localVideo: video,
-        mediaConstraints: constraints,
-        onicecandidate: participant.onIceCandidate.bind(participant)
-  }
+//   var options = {
+//         localVideo: video,
+//         mediaConstraints: constraints,
+//         onicecandidate: participant.onIceCandidate.bind(participant)
+//   }
 
-  // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
-  participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
-    function (error) {
-            if(error) {
-                return console.error(error);
-            }
+//   // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
+//   participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
+//     function (error) {
+//             if(error) {
+//                 return console.error(error);
+//             }
 
-        this.generateOffer (
-      participant.offerToReceiveVideoForScreenShare.bind(participant));
-  });
+//         this.generateOffer (
+//       participant.offerToReceiveVideoForScreenShare.bind(participant));
+//   });
 
-	// 기존 참가자 영상을 전달 받을 수신용 WebRtcPeer를 생성.
-  // if(msg.name != 'shareScreen') msg.data.forEach(receiveVideo);
-}
+// 	// 기존 참가자 영상을 전달 받을 수신용 WebRtcPeer를 생성.
+//   // if(msg.name != 'shareScreen') msg.data.forEach(receiveVideo);
+// }
 
 // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성.
 export function onExistingParticipants(msg) {
@@ -338,5 +338,5 @@ export function getParticipants() {
 }
 
 export function onLocalStream(stream) {
-  this.stream = stream;
+  videoStream = stream;
 }
