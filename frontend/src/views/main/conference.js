@@ -126,12 +126,13 @@ export function sendingScreen(stream) {
     }
   };
 
-  var participant = participants[0];
+  var participant = new Participant.Participant(name, userId);
+	participants[name] = participant;
 
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);
   console.log("participant >>>>> " + participant);
-  console.log("participants >>>>> " + this.participants);
+  console.log("participants >>>>> " + participants);
 	// var participant = new Participant.Participant(name, userId);
 	// participants[name] = participant;
 
