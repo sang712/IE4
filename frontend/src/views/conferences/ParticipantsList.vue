@@ -68,8 +68,8 @@ export default {
         console.log("클릭 성공 >>> ", participant.name);
         let position = localStorage.getItem("position");
 
-        if(position == '교사' && participant.name == localStorage.getItem('name')){
-          if(confirm(participant.name, "에게 3 point 주기") == true){
+        if((position == '교사') && (participant.name != localStorage.getItem('name'))){
+          if(confirm(participant.name+ "에게 3 point 입력합니다.") == true){
             const url = '/api/conference/point/' + participant.userId;
 
             let token = localStorage.getItem('jwt')

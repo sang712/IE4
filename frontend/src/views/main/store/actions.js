@@ -151,15 +151,7 @@ export function getConferenceActive(context){
   const url = '/api/class/conferenceActive/' + localStorage.getItem('classId');
   let header = { headers: { 'Authorization': `Bearer ${token}` } }
 
-  $axios.get(url, header)
-  .then(function (result) {
-    console.log(result.data)
-    context.commit('rootMain/setConferenceActive', result.data, {root: true})
-  })
-  .catch(function (err) {
-    console.log("getConferenceActive error", err)
-    Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
-  })
+  return $axios.get(url, header)
 }
 
 export function updateConferenceActive(context, payload){
@@ -320,7 +312,7 @@ export function setClassInfo ({ state }, response) {
   state.classInfo.classNo = response.classNo
   state.classInfo.timetable = response.timetable
   state.classInfo.classMotto = response.classMotto
-  state.classInfo.conferenceActive = "close"
+  state.classInfo.conferenceActive = response.conferenceActive
   state.classInfo.url = response.conferenceUrl
 
   console.log(response.grade + "     " + state.classInfo.grade)
