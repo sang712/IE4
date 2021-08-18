@@ -59,29 +59,28 @@ export default {
       const li = document.createElement("li");
       li.setAttribute('id', participant.userId);
       li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif;width: 75%;font-size: 20px;padding:6px;border-radius: 20px;margin: auto;"
-      //li.setAttribute('@click', getboardDetail(board.id));
       const textNode = document.createTextNode( participant.name );
-      // const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
       li.appendChild(textNode);
       document.getElementById('partlist').appendChild(li);
+
       li.onclick = function(){
-        console.log("클릭 성공 >>> ", participant.name);
+
+        console.log("클릭>>> ", participant.name);
         let position = localStorage.getItem("position");
 
         if((position == '교사') && (participant.name != localStorage.getItem('name'))){
-          if(confirm(participant.name, "에게 3 point 주기") == true){
-            const url = '/api/conference/point/' + participant.userId;
 
+          if(confirm(participant.name+ "에게 3 point 입력합니다.") == true){
+
+            const url = '/api/conference/point/' + participant.userId;
             let token = localStorage.getItem('jwt')
             let header = {headers:{'Authorization':`Bearer ${token}`} }
-            console.log(" 보내려는 userId >>> ", participant.userId, "타입은 >>>", typeof(participant.userId));
-
             $axios.post(url, header)
             .then(function () {
-              console.log('점수주기 성공맨~')
+              console.log('점수가 입력되었습니다.')
             })
             .catch(function (err) {
-              console.log("give point error")
+              console.log("give point error", err)
             })
           }else{
             return;

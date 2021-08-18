@@ -109,6 +109,7 @@ import ParticipantsList from './ParticipantsList.vue'
 import ScreenHandler from './screen-handler.js';
 import MediaHandler from './media-handler.js'
 import PeerHandler from './peer-handler'
+import { useStore } from 'vuex'
 
 export default {
   name: 'Conference',
@@ -138,7 +139,7 @@ export default {
 			mediaHandler:'',
 			peerHandler:'',
 			localStream:'',
-
+			store:'',
 		}
 	},
   methods : {
@@ -147,6 +148,20 @@ export default {
     },
     leaveRoom() {
       conference.leaveRoom(false)
+
+      if(localStorage.getItem('position') == "교사"){
+        this.store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'close'})
+        .then(({ data }) => {
+          console.log('updateConferenceActive complete')
+          console.log(data)
+          store.commit('rootMain/setConferenceActive', data, {root: true})
+        })
+        .catch(function (err) {
+          console.log("updateConferenceActive error", err)
+          Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
+        })
+      }
+
 			location.reload();
     },
 		openChatBox(){
@@ -230,8 +245,39 @@ export default {
     onLocalStream(stream) {
       console.log('onLocalStream', stream);
 
-      const $video = document.querySelector('#video-'+this.name);
-      $video.srcObject = stream;
+      // const $video = document.querySelector('#video-'+this.name);
+      // $video.srcObject = stream;
+
+      // this.name = name;
+      // this.userId = userId;
+      // var container = document.createElement('div');
+      // container.className = 'participant';
+      // container.id = 'screenShare';
+      // var span = document.createElement('span');
+      // span.className = 'participant-name'
+      // var video = document.createElement('video');
+      // var rtcPeer;
+
+      // rtcPeer;
+
+      // container.appendChild(video);
+      // container.appendChild(span);
+      // document.getElementById('participants').appendChild(container);
+
+      // span.appendChild(document.createTextNode('screenShare'));
+
+      // video.id = 'video-screenShare';
+	    // video.autoplay = true;
+	    // video.controls = false;
+
+      // var participant = new Participant.Participant('screenShare', 0);
+      // participants['screenShare'] = participant;
+
+      // const $video = document.querySelector('#video-screenShare');
+      // $video.srcObject = stream;
+
+      conference.onLocalStream(stream);
+      conference.register(true);
     },
 
     async share() {
@@ -239,7 +285,7 @@ export default {
       const stream = await this.screenHandler.start(); //return => localStream
       this.onLocalStream(stream);
 
-      conference.sendingScreen(this.name);
+      // conference.sendingScreen(stream);
       // conference.register(true)
       // conference.onShareScreen(stream);
 
@@ -255,6 +301,8 @@ export default {
     },
   },
 	mounted: function () {
+    this.store = useStore()
+
 		console.log('마운트 되었음')
     this.screenHandler = new ScreenHandler();
 
@@ -337,7 +385,6 @@ a {
 	position: absolute;
 	right: 10px;
 }
-
 </style>
 <style scoped>
 #room{
