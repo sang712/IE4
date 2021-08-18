@@ -5,6 +5,7 @@ import com.ssafy.api.request.StudentUpdatePatchReq;
 import com.ssafy.api.request.TeacherUpdatePatchReq;
 import com.ssafy.db.entity.Student;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.UserPoint;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
@@ -26,4 +27,5 @@ public interface UserService {
 
 	String findLoginId(String name, int snum, String phone);
 	String findPassword(String loginId, String passwordQuestion, String passwordAnswer);
+	UserPoint getPoint(int userId);
 }

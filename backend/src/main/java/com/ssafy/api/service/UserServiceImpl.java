@@ -2,7 +2,6 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.StudentUpdatePatchReq;
 import com.ssafy.api.request.TeacherUpdatePatchReq;
-import com.ssafy.api.response.EduClassMem;
 import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.entity.Student;
 import com.ssafy.db.entity.UserPoint;
@@ -16,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ssafy.api.request.StudentRegisterPostReq;
@@ -287,6 +285,14 @@ public class UserServiceImpl implements UserService {
 		return password;
 	}
 
+	@Override
+	public UserPoint getPoint(int userId) {
+		User user = userRepository.findUserById(userId).orElse(null);
+		UserPoint userpoint = new UserPoint();
+		userpoint.setUser(user);
+		userpoint.setPoint(3);
+		return userPointRepository.save(userpoint);
+	}
 
 
 //	@Override
