@@ -146,7 +146,7 @@ export default {
       conference.register(false)
     },
     leaveRoom() {
-      conference.leaveRoom()
+      conference.leaveRoom(false)
 			location.reload();
     },
 		openChatBox(){
@@ -181,7 +181,7 @@ export default {
 		},
 		async getLocalStream() {
 			peerHandler = new PeerHandler
-			
+
 			try {
 				const stream = await peerHandler.getUserMedia({
 					audio: false,
@@ -192,7 +192,7 @@ export default {
 				error(err);
 			}
 		},
-		
+
 		displayOff() {
 			// const localStream = this.getLocalStream()
 			console.log('pauseVideo', arguments);
@@ -238,7 +238,18 @@ export default {
       // const screenHandler = new ScreenHandler();
       const stream = await this.screenHandler.start(); //return => localStream
       this.onLocalStream(stream);
-      conference.register(true);
+
+      conference.onShareScreen(stream);
+
+      // conference.leaveRoom(true);
+
+      // const nameTag = document.getElementById('name')
+			// nameTag.value = this.name
+			// const classTag = document.getElementById('roomName')
+			// classTag.value = this.grade + '학년 ' + this.class + '반'
+      // const userIdTag = document.getElementById('userId')
+      // userIdTag.value = this.userId
+      // conference.register(true);
     },
   },
 	mounted: function () {

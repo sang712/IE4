@@ -86,6 +86,10 @@ export function register(isScreen) {
 	sendMessage(message);
 }
 
+export function shareS() {
+  participant.rtcPeer.tr
+}
+
 // 새로운 참가자에 영상을 전달 받을 수신용 WebRtcPeer를 생성
 export function onNewParticipant(request) {
 	receiveVideo(request.name);
@@ -141,7 +145,10 @@ export function onExistingParticipants(msg) {
 	console.log(name +"//"+userId+ " registered in room " + room);
 	var participant = new Participant.Participant(name, userId);
 	participants[name] = participant;
-	var video = participant.getVideoElement();
+
+  if(msg.name == 'shareScreen') {
+    var video = document.querySelector('#video-'+name);
+  } else var video = participant.getVideoElement();
 
   // if(msg.name == 'shareScreen') {
   //   var options = {
@@ -161,32 +168,61 @@ export function onExistingParticipants(msg) {
 
 
   // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
-  if(msg.name != 'shareScreen') {
-    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
-      // if (error) return onError(error) //You'll need to use whatever you use for handling errors
-      if(error) console.log("에러가 난다고..? ㅎㅎ  ,,,")
-
-      this.generateOffer (
-        participant.offerToReceiveVideo.bind(participant));
-    });
-  } else {
-
-    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
-      function (error) {
-              if(error) {
-                  return console.error(error);
-              }
-          this.generateOffer (
-        participant.offerToReceiveVideo.bind(participant));
-    });
-  }
+  participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
+    function (error) {
+            if(error) {
+                return console.error(error);
+            }
+        this.generateOffer (
+      participant.offerToReceiveVideo.bind(participant));
+  });
 
 	// 기존 참가자 영상을 전달 받을 수신용 WebRtcPeer를 생성.
-  if(msg.name != 'shareScreen')
-	  msg.data.forEach(receiveVideo);
+  msg.data.forEach(receiveVideo);
 }
 
-export function leaveRoom() {
+export function onShareScreen(stream) {
+
+  var constraints = {
+    audio : true,
+    video : {
+      mandatory : {
+        maxWidth : 1080,
+        maxFrameRate : 15,
+        minFrameRate : 15
+      }
+    }
+  };
+
+	// gabojago registered in room [object HTMLDivElement]
+	console.log(name +"//"+userId+ " registered in room " + room);
+	var participant = participants[name];
+
+  // var video = participant.getVideoElement();
+  var video = stream;
+
+  var options = {
+        localVideo: video,
+        mediaConstraints: constraints,
+        onicecandidate: participant.onIceCandidate.bind(participant)
+  }
+
+
+  // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
+  participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
+    function (error) {
+            if(error) {
+                return console.error(error);
+            }
+        this.generateOffer (
+      participant.offerToReceiveVideo.bind(participant));
+  });
+
+	// 기존 참가자 영상을 전달 받을 수신용 WebRtcPeer를 생성.
+  // msg.data.forEach(receiveVideo);
+}
+
+export function leaveRoom(isScreen) {
 	sendMessage({
 		id : 'leaveRoom'
 	});
@@ -195,9 +231,11 @@ export function leaveRoom() {
 		participants[key].dispose();
 	}
 
-	document.getElementById('join').style.display = 'block';
-	document.getElementById('room').style.display = 'none';
-	document.getElementById('footer').style.display = 'none';
+  if(!isScreen) {
+    document.getElementById('join').style.display = 'block';
+    document.getElementById('room').style.display = 'none';
+    document.getElementById('footer').style.display = 'none';
+  }
 
 	// setTimeout(function() {
 	// 	console.log('ws closed');
