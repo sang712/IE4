@@ -109,6 +109,7 @@ import ParticipantsList from './ParticipantsList.vue'
 import ScreenHandler from './screen-handler.js';
 import MediaHandler from './media-handler.js'
 import PeerHandler from './peer-handler'
+import { useStore } from 'vuex'
 
 export default {
   name: 'Conference',
@@ -138,6 +139,7 @@ export default {
 			mediaHandler:'',
 			peerHandler:'',
 			localStream:'',
+			store:'',
 		}
 	},
   methods : {
@@ -148,7 +150,7 @@ export default {
       conference.leaveRoom(false)
 
       if(localStorage.getItem('position') == "교사"){
-        store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'close'})
+        this.store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'close'})
         .then(({ data }) => {
           console.log('updateConferenceActive complete')
           console.log(data)
@@ -268,6 +270,8 @@ export default {
     },
   },
 	mounted: function () {
+    this.store = useStore()
+
 		console.log('마운트 되었음')
     this.screenHandler = new ScreenHandler();
 
