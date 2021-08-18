@@ -49,19 +49,6 @@ export default {
       }
       part.delete(undefined)
       part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
-      // let participantsViews = document.getElementById('participants-views')
-      //   participantsViews.remove
-      //   participantsViews = document.createElement('div')
-      //   participantsViews.id = 'participants-views'
-
-        // Object.getOwnPropertyNames(part).forEach(
-        //   function (val, idx, array) {
-        //     createParticipant(part[val])
-        //   }
-        // )
-        //part.delete(undefined)
-        //state.partList = part;
-        //part.forEach((value, key, mapObject) => createParticipant({userId: key, name: value}));
 
     }
 
@@ -73,7 +60,7 @@ export default {
       li.setAttribute('id', participant.userId);
       li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif;width: 75%;font-size: 20px;padding:6px;border-radius: 20px;margin: auto;"
       //li.setAttribute('@click', getboardDetail(board.id));
-      const textNode = document.createTextNode("이름 : " + participant.name );
+      const textNode = document.createTextNode( participant.name );
       // const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
       li.appendChild(textNode);
       document.getElementById('partlist').appendChild(li);
@@ -94,17 +81,6 @@ export default {
         })
 
       }
-
-      // const container = document.createElement('div')
-      // container.id = 'aParticipant'
-      // container.className = ''
-
-      // const nameTag = document.createElement('div')
-      // nameTag.id = 'name-tag'
-      // nameTag.innerText = participant.name
-
-      // container.appendChild(nameTag)
-      // participantsViews.appendChild(container)
     }
 
     return { state, watch, getParticipant, createParticipant }
@@ -115,11 +91,11 @@ export default {
 <style scoped>
 
 #participants-list {
-  background-color: #e9e795;
+  background-color: #ebe774;
 	padding: 0;
   margin: 0;
 	height: 100vh;
-  background-image: url(https://cdn.wallpapersafari.com/85/44/6qQuzK.jpg);
+  /* background-image: url(https://cdn.wallpapersafari.com/85/44/6qQuzK.jpg); */
   background-size:490px 1100px ;
 }
 #participants-views {
@@ -206,7 +182,7 @@ li .header-date, .row-date{
 
 <style>
 #partlist li:hover {
-  background-color: #5762ff;
+  background-color: hsl(103, 100%, 67%);
   font-weight:bold;
   cursor: pointer;
 }
