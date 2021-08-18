@@ -113,7 +113,7 @@ export function callResponse(message) {
 }
 
 // 화면공유 보내기
-export function sendingScreen(stream, senderN) {
+export function sendingScreen(stream) {
 
   var constraints = {
     audio : true,
@@ -130,7 +130,8 @@ export function sendingScreen(stream, senderN) {
 
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);
-  console.log("인자로 온 이름은..? " + senderN);
+  console.log("participant >>>>> " + participant);
+  console.log("participants >>>>> " + this.participants);
 	// var participant = new Participant.Participant(name, userId);
 	// participants[name] = participant;
 
