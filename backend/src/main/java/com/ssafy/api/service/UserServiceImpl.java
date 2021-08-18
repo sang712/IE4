@@ -292,7 +292,9 @@ public class UserServiceImpl implements UserService {
 		userpoint.setUser(user);
 		userpoint.setUserId(userId);
 		userpoint.setPoint(3);
-		return userPointRepository.save(userpoint);
+
+		userPointRepository.insertPoint(userId);
+		return userpoint;
 	}
 
 

@@ -29,7 +29,7 @@ public class ConferenceController {
     public ResponseEntity<? extends BaseResponseBody> getPoint(@PathVariable int userId) throws IOException {
         System.out.println("도르마무 점수를 거래하러왔다 >>>>>" + userId);
         UserPoint userpoint = userService.getPoint(userId);
-
+        System.out.println("도르마무 점수 입력에 성공했다 >>>>>" + userId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 }
