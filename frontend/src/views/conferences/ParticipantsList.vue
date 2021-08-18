@@ -205,7 +205,7 @@ export default {
   right: 5px;
   padding: 0px;
 }
-ul.partlist li, ol.mylist li {
+ol.partlist li {
   display: inline-block;
   padding: 5px 0px 5px 5px;
   margin-bottom: 5pxs;
@@ -215,4 +215,11 @@ ul.partlist li, ol.mylist li {
 ol.mylist li:last-child {
     border-bottom: 0px;
 }
+ol.mylist li:hover{
+        border-top-color:tomato;
+        border-bottom-color:tomato;
+        background-color:#FFE5D4;
+        font-weight:bold;
+        cursor:  pointer;
+    }
 </style>
