@@ -113,7 +113,7 @@ export function callResponse(message) {
 }
 
 // 화면공유 보내기
-export function sendingScreen(senderN) {
+export function sendingScreen(stream, senderN) {
 
   var constraints = {
     audio : true,
@@ -134,7 +134,7 @@ export function sendingScreen(senderN) {
 	// var participant = new Participant.Participant(name, userId);
 	// participants[name] = participant;
 
-  var video = participant.getVideoElement();
+  var video = stream;
 
   var options = {
         localVideo: video,
@@ -158,7 +158,7 @@ export function sendingScreen(senderN) {
 }
 
 // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성.
-export function onExistingParticipants(stream, msg) {
+export function onExistingParticipants(msg) {
 
   if(msg.name == 'shareScreen') {
     var constraints = {
@@ -197,7 +197,7 @@ export function onExistingParticipants(stream, msg) {
 
   if(msg.name == 'shareScreen') {
     var video = document.querySelector('#video-'+name);
-  } else var video = stream;
+  } else var video = participant.getVideoElement();
 
   // if(msg.name == 'shareScreen') {
   //   var options = {
