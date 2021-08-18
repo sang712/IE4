@@ -158,7 +158,7 @@ export function sendingScreen(senderN) {
 }
 
 // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성.
-export function onExistingParticipants(msg) {
+export function onExistingParticipants(stream, msg) {
 
   if(msg.name == 'shareScreen') {
     var constraints = {
@@ -197,7 +197,7 @@ export function onExistingParticipants(msg) {
 
   if(msg.name == 'shareScreen') {
     var video = document.querySelector('#video-'+name);
-  } else var video = participant.getVideoElement();
+  } else var video = stream;
 
   // if(msg.name == 'shareScreen') {
   //   var options = {
