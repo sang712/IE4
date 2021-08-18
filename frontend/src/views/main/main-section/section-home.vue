@@ -11,7 +11,7 @@
       <el-button v-else style="width: 25%; height: 10%; font-size: 140% " @click="createCon()">방만들기</el-button>
     </div>
     <div class="col">
-      <div class="d-flex justify-content-center row">
+      <div class="d-flex justify-content-center row" style="--bs-gutter-x: 0; margin: auto 0px;">
         <div class="notice-button-wrapper d-flex justify-content-evenly align-items-center" >
           <el-button @click="clickSchedule" style="width: 22%; height: 50%; font-size: 120%">시간표</el-button>
           <el-button @click="clickNote" style="width: 22%; height: 50%; font-size: 120%">학사일정</el-button>
