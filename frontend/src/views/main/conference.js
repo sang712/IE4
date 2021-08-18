@@ -164,36 +164,50 @@ export function callResponse(message) {
 // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성.
 export function onExistingParticipants(msg) {
 
-  if(state == 'share') {
-    console.log("state >>>> ", state);
-    var constraints = {
-      audio : true,
-      video : {
-        mandatory : {
-          maxWidth : 1080,
-          maxFrameRate : 15,
-          minFrameRate : 15
-        }
-      }
-    };
+  // if(state == 'share') {
+  //   console.log("state >>>> ", state);
+  //   var constraints = {
+  //     audio : true,
+  //     video : {
+  //       mandatory : {
+  //         maxWidth : 1080,
+  //         maxFrameRate : 15,
+  //         minFrameRate : 15
+  //       }
+  //     }
+  //   };
 
-    var participant = new Participant.Participant(msg.name, userId);
-	  participants[msg.name] = participant;
-  } else {
-    var constraints = {
-      audio : true,
-      video : {
-        mandatory : {
-          maxWidth : 320,
-          maxFrameRate : 15,
-          minFrameRate : 15
-        }
-      }
-    };
+  //   var participant = new Participant.Participant(msg.name, userId);
+	//   participants[msg.name] = participant;
+  // } else {
+  //   var constraints = {
+  //     audio : true,
+  //     video : {
+  //       mandatory : {
+  //         maxWidth : 320,
+  //         maxFrameRate : 15,
+  //         minFrameRate : 15
+  //       }
+  //     }
+  //   };
 
-    var participant = new Participant.Participant(name, userId);
-	  participants[name] = participant;
-  }
+  //   var participant = new Participant.Participant(name, userId);
+	//   participants[name] = participant;
+  // }
+
+  var constraints = {
+    audio : true,
+    video : {
+      mandatory : {
+        maxWidth : 320,
+        maxFrameRate : 15,
+        minFrameRate : 15
+      }
+    }
+  };
+
+  var participant = new Participant.Participant(name, userId);
+  participants[name] = participant;
 
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);
@@ -215,6 +229,7 @@ export function onExistingParticipants(msg) {
   //   }
   // } else  {
   // }
+
 
   var options = {
         localVideo: video,

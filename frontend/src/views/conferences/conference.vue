@@ -280,6 +280,7 @@ export default {
       // $video.srcObject = stream;
 
       conference.setState('share');
+      participant.setStateParti('share');
       participant.onLocalStreamInParticipant(stream);
 
       conference.register(true);
