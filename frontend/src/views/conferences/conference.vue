@@ -245,8 +245,8 @@ export default {
     onLocalStream(stream) {
       console.log('onLocalStream', stream);
 
-      const $video = document.querySelector('#video-'+this.name);
-      $video.srcObject = stream;
+      // const $video = document.querySelector('#video-'+this.name);
+      // $video.srcObject = stream;
 
       // this.name = name;
       // this.userId = userId;
@@ -266,8 +266,8 @@ export default {
 
       span.appendChild(document.createTextNode('screenShare'));
 
-      const $svideo = document.querySelector('#video-'+'screenShare');
-      $svideo.srcObject = stream;
+      const $video = document.querySelector('#video-'+'screenShare');
+      $video.srcObject = stream;
     },
 
     async share() {
