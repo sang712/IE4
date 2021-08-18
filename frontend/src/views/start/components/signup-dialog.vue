@@ -227,7 +227,8 @@ export default {
     })
 
     onMounted(() => {
-      // console.log(signupForm.value)
+      console.log('마운트 됨 >>>', '학년', state.form.grade, '반', state.form.class_no)
+      console.log('비밀번호 확인 질문', state.form.password_question)
     })
 
     const clickSignup = function () {
