@@ -290,6 +290,7 @@ export function setClassInfo ({ state }, response) {
   state.classInfo.classNo = response.classNo
   state.classInfo.timetable = response.timetable
   state.classInfo.classMotto = response.classMotto
+  state.classInfo.conferenceActive = "close"
   state.classInfo.url = response.conferenceUrl
 
   console.log(response.grade + "     " + state.classInfo.grade)

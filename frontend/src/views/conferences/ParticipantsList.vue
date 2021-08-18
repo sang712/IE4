@@ -140,7 +140,7 @@ export default {
       const participantsViews = document.getElementById('participants-views')
 
       const li = document.createElement("li");
-      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px; margin-bottom:10px; font-size:20px;padding:6px;border-radius: 20px;"
+      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px; margin-bottom:10px; font-size: 20px; padding:6px; border-radius: 20px; box-shadow: 1px 6px 15px black;"
       li.setAttribute('id', participant.userId);
       //li.setAttribute('@click', getboardDetail(board.id));
       const textNode = document.createTextNode("이름 : " + participant.name );

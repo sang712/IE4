@@ -8,7 +8,7 @@
         <h1 class="text-center">{{ nGrade }}학년 {{ nClass }}반 수업을 시작합니다.</h1>
       </div>
       <el-button v-if="position=='학생'" style="width: 25%; height: 10%; font-size: 140% " @click="joinCon()">참여하기</el-button>
-      <el-button v-else style="width: 25%; height: 10%; font-size: 140% ">방만들기</el-button>
+      <el-button v-else style="width: 25%; height: 10%; font-size: 140% " @click="createCon()">방만들기</el-button>
     </div>
     <div class="col">
       <div class="d-flex justify-content-center row">
@@ -26,19 +26,21 @@
 <script>
 import { reactive, computed, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
   name: 'section-home',
 
   setup(props, { emit }) {
+    const store = useStore()
 
     const state = reactive({
       position : localStorage.getItem('position'),
       nGrade : localStorage.getItem('classId')[0],
       nClass : localStorage.getItem('classId')[2],
       nTeacherName : localStorage.getItem('teacherName'),
-      nTeacherProfileImgUrl : localStorage.getItem('teacherProfileImgUrl')
-
+      nTeacherProfileImgUrl : localStorage.getItem('teacherProfileImgUrl'),
+      conferenceActive : computed(() => store.getters['rootMain/getClassInfo'].conferenceActive)
     })
     const router = useRouter()
 
@@ -56,10 +58,20 @@ export default {
 
     const joinCon = () => {
       console.log('조인콘 버튼 클릭됨!', state.nGrade + '학년' + state.nClass + '반 으로!')
-      router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
+      if(state.conferenceActive == "open"){
+        console.log('conference open 상태!!')
+        router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
+      }else{ //close
+        console.log('conference close 상태!!')
+        Swal.fire({ title: '잠깐!', text: '아직 수업이 시작하지 않았어요! 조금만 기다려주세요~', icon: 'warning', })
+      }
     }
 
-    return { ...toRefs(state), clickSchedule, clickNote, clickMvp, joinCon }
+    const createCon = () => {
+      store.commit('rootMain/setConferenceActive', "open")
+    }
+
+    return { ...toRefs(state), clickSchedule, clickNote, clickMvp, joinCon, createCon }
   }
 
 }

@@ -52,6 +52,7 @@ const classInfo = reactive({
   classNo: '',
   timetable: '',
   classMotto: '',
+  conferenceActive: '',
   url: ''
 })
 
