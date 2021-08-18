@@ -270,11 +270,14 @@ export default {
 	    // video.autoplay = true;
 	    // video.controls = false;
 
-      var participant = new Participant.Participant('screenShare', 0);
-      participants['screenShare'] = participant;
+      // var participant = new Participant.Participant('screenShare', 0);
+      // participants['screenShare'] = participant;
 
-      const $video = document.querySelector('#video-screenShare');
-      $video.srcObject = stream;
+      // const $video = document.querySelector('#video-screenShare');
+      // $video.srcObject = stream;
+
+      conference.onLocalStream(stream);
+      conference.register(true);
     },
 
     async share() {

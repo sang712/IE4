@@ -24,6 +24,7 @@ var participants = {};
 let participantList= new Map();
 var name;
 var userId;
+var stream;
 
 window.onbeforeunload = function() {
 	ws.close();
@@ -198,7 +199,7 @@ export function onExistingParticipants(msg) {
 	// participants[name] = participant;
 
   if(msg.name == 'shareScreen') {
-    var video = document.querySelector('#video-'+name);
+    var video = this.stream;
   } else var video = participant.getVideoElement();
 
   // if(msg.name == 'shareScreen') {
@@ -334,4 +335,8 @@ export function sendMessage(message) {
 export function getParticipants() {
 	console.log('참석자 명단 보내기 >> ',participantList, participants, Object.keys(participants), Object.getOwnPropertyNames(participants))
 	return participantList
+}
+
+export function onLocalStream(stream) {
+  this.stream = stream;
 }
