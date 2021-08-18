@@ -84,6 +84,7 @@ public class CallHandler extends TextWebSocketHandler {
         }
         break;
       case "screenShare":
+        System.out.println("screenShare 들어왔음!!");
         final String sSenderName = jsonMessage.get("sender").getAsString();
         final UserSession sSender = registry.getByName(sSenderName);
         final String sSdpOffer = jsonMessage.get("sdpOffer").getAsString();
@@ -98,11 +99,12 @@ public class CallHandler extends TextWebSocketHandler {
   }
 
   private void screenShare(UserSession user) throws IOException {
+    System.out.println("screenShare 함수 들어왔음!");
     final Room room = roomManager.getRoom(user.getRoomName());
     room.leaveForScreenShare(user);
-    if (room.getParticipants().isEmpty()) {
-      roomManager.removeRoom(room);
-    }
+//    if (room.getParticipants().isEmpty()) {
+//      roomManager.removeRoom(room);
+//    }
   }
 
   @Override
