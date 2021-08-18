@@ -100,11 +100,11 @@ export default {
 <style scoped>
 
 #participants-list {
-  /* background-color: #ebe774; */
+  background-color: #ebe774;
 	padding: 0;
   margin: 0;
 	height: 100vh;
-  background-image: '../../assets/images/participantslist.jpg';
+  background-image: url("../../assets/images/participantslist.jpg");
   background-size:490px 1100px ;
 }
 #participants-views {
