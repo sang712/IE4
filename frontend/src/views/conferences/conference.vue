@@ -240,6 +240,13 @@ export default {
       this.onLocalStream(stream);
 
       conference.leaveRoom(true);
+
+      const nameTag = document.getElementById('name')
+			nameTag.value = this.name
+			const classTag = document.getElementById('roomName')
+			classTag.value = this.grade + '학년 ' + this.class + '반'
+      const userIdTag = document.getElementById('userId')
+      userIdTag.value = this.userId
       conference.register(true);
     },
   },
