@@ -13,6 +13,6 @@ public class UserPoint extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     User user;
-
+    int userId;
     int point;
 }

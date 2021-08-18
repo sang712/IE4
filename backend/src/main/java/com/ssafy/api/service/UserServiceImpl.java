@@ -290,6 +290,7 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findUserById(userId).orElse(null);
 		UserPoint userpoint = new UserPoint();
 		userpoint.setUser(user);
+		userpoint.setUserId(userId);
 		userpoint.setPoint(3);
 		return userPointRepository.save(userpoint);
 	}

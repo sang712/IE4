@@ -1,9 +1,9 @@
 <template>
   <div id="participants-list" class="col-3" style="text-align:center;display: none;">
     <!-- <div id="participants-title">참석자 명단</div> -->
-    <button class="button" type="button" style="width:200px; height:40px; margin-left: 30px;margin-bottom: 10px; margin-top: 10px; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참석자 명단</button>
+    <button class="button" type="button" style="width:80%; height:40px; margin:10px auto; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참석자 명단</button>
     <!-- <div id="participants-views"> -->
-    <div id="partlist" style="margin-left:50px"></div>
+    <div id="partlist" style="margin: auto;"></div>
       <!-- <li class="table-header">
         <div class="header-title" style="text-align:left">no</div>
         <div class="header-title" style="text-align:center">이름</div>
@@ -200,10 +200,18 @@ li .header-date, .row-date{
   right: 5px;
   padding: 0px;
 }
+#partlist li {
+  display: block;
+  border: thick double #32a1ce;
+  font: bold 1rem sans-serif;
+  width: 75%;
+  font-size: 20px;
+  padding:6px;
+  border-radius: 20px;
+  margin: auto;
+}
 #partlist li:hover {
-  border-top-color: tomato;
-  border-bottom-color: tomato;
-  background-color: #FFE5D4;
+  background-color: #5762ff;
   font-weight:bold;
   cursor: pointer;
 }
