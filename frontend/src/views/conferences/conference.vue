@@ -251,7 +251,7 @@ export default {
       // this.name = name;
       // this.userId = userId;
       var container = document.createElement('div');
-      container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
+      container.className = 'participant';
       container.id = 'screenShare';
       var span = document.createElement('span');
       span.className = 'participant-name'
