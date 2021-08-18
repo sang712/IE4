@@ -199,7 +199,9 @@ export function onExistingParticipants(msg) {
 	// participants[name] = participant;
 
   if(msg.name == 'shareScreen') {
-    var video = this.stream;
+    var video = videoStream;
+    console.log("videoStream >>>>>> ", videoStream);
+    console.log("video >>>>>>> ", video);
   } else var video = participant.getVideoElement();
 
   // if(msg.name == 'shareScreen') {
