@@ -31,15 +31,21 @@
     background-color: #efeee9 ;
     margin: 5px 5px;
     width: 300px;
-    height: 66vh;
+    height: 70vh;
   }
   .main-content {
     width: 100%;
-    height: 66vh;
+    height: 70vh;
   }
-  .el-button {
-    padding: 12px 2%;
-  }
+.el-button--mini {
+  min-height: 28px;
+  padding: 7px 15px;
+  font-size: 12px;
+  border-radius: calc(var(--el-border-radius-base) - 1px);
+}
+.el-button {
+  padding: 12px 2%;
+}
 </style>
 <script>
 import MainHeader from './components/main-header'
