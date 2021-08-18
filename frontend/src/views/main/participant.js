@@ -24,6 +24,7 @@ var videoStream;
 
 export function onLocalStreamInParticipant(stream) {
   videoStream = stream;
+  return 1;
 }
 
 export function Participant(name, userId) {
