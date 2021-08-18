@@ -27,5 +27,5 @@ public interface UserPointRepository extends JpaRepository<UserPoint, Integer> {
     void deleteAllByIds(@Param("ids") List<Integer> ids);
 
     @Query(value = " INSERT INTO USER_POINT VALUES (userId, 3)", nativeQuery = true)
-    void insertPoint(@Param("userId") int userId);
+    void insertPoint(int userId);
 }
