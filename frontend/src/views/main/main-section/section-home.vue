@@ -33,6 +33,7 @@ export default {
 
   setup(props, { emit }) {
     const store = useStore()
+    const router = useRouter()
 
     const state = reactive({
       position : localStorage.getItem('position'),
@@ -42,7 +43,6 @@ export default {
       nTeacherProfileImgUrl : localStorage.getItem('teacherProfileImgUrl'),
       conferenceActive : computed(() => store.getters['rootMain/getClassInfo'].conferenceActive)
     })
-    const router = useRouter()
 
     const clickSchedule = () => {
       router.push({ name: 'schedule' })
@@ -73,7 +73,7 @@ export default {
       .then(({ data }) => {
         console.log('updateConferenceActive complete')
         console.log(data)
-        context.commit('rootMain/setConferenceActive', data, {root: true})
+        store.commit('rootMain/setConferenceActive', data, {root: true})
         router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
       })
       .catch(function (err) {
