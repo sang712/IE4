@@ -195,16 +195,34 @@ export function onExistingParticipants(msg) {
 	//   participants[name] = participant;
   // }
 
-  var constraints = {
-    audio : true,
-    video : {
-      mandatory : {
-        maxWidth : 320,
-        maxFrameRate : 15,
-        minFrameRate : 15
+  if(state == 'share') {
+    var constraints = {
+      audio : true,
+      video : true
+    };
+  } else {
+    var constraints = {
+      audio : true,
+      video : {
+        mandatory : {
+          maxWidth : 320,
+          maxFrameRate : 15,
+          minFrameRate : 15
+        }
       }
-    }
-  };
+    };
+  }
+
+  // var constraints = {
+  //   audio : true,
+  //   video : {
+  //     mandatory : {
+  //       maxWidth : 320,
+  //       maxFrameRate : 15,
+  //       minFrameRate : 15
+  //     }
+  //   }
+  // };
 
   var participant = new Participant.Participant(name, userId);
   participants[name] = participant;
