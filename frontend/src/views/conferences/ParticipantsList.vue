@@ -167,27 +167,6 @@ li .header-date, .row-date{
   text-align: center;
   flex-basis: 15%;
 }
-.lower-sidebar {
-  position: relative;
-  width: 90%;
-  min-height: 60px;
-  margin: auto 5%;
-}
-.lower-sidebar .el-pagination {
-  display: inline-block;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-.lower-sidebar .el-button {
-  display: inline-block;
-  position: absolute;
-  width: 8vw;
-  height: 40px;
-  right: 5px;
-  padding: 0px;
-}
 </style>
 
 <style>

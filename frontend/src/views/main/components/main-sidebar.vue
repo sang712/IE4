@@ -7,7 +7,7 @@
     <h2 v-if="nPosition=='학생'">{{nName}} 학생</h2>
     <h2 v-else>{{nName}} 선생님</h2>
 
-    <hr style="margin-top: 45px;">
+    <hr style="margin-top: 4vh 0;">
     <div class="lower-sidebar d-flex justify-content-evenly align-items-center">
       <el-button class="mypage-button" @click="clickMypage">내 정보</el-button>
     </div>
@@ -77,6 +77,12 @@ export default {
 }
 .lower-sidebar {
   margin-top: 3vh;
+}
+.lower-sidebar .el-button {
+    display: inline-block;
+    width: 8vw;
+    height: 40px;
+    padding: 0;
 }
 .mypage-button {
   width: 60%;
