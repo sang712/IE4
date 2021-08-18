@@ -140,7 +140,7 @@ export default {
       const participantsViews = document.getElementById('participants-views')
 
       const li = document.createElement("li");
-      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px; margin-bottom:10px; font-size:20px;padding:6px"
+      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px; margin-bottom:10px; font-size:20px;padding:6px;border-radius: 20px;"
       li.setAttribute('id', participant.userId);
       //li.setAttribute('@click', getboardDetail(board.id));
       const textNode = document.createTextNode("이름 : " + participant.name );
@@ -174,6 +174,8 @@ export default {
 	padding: 0;
   margin: 0;
 	height: 100vh;
+  background-image: url(https://cdn.wallpapersafari.com/85/44/6qQuzK.jpg);
+  background-size:490px 1100px ;
 }
 #participants-views {
   background-color: white;
