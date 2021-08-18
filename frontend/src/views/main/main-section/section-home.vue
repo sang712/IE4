@@ -60,6 +60,7 @@ export default {
       console.log('조인콘 버튼 클릭됨!', state.nGrade + '학년' + state.nClass + '반 으로!')
       store.dispatch('rootMain/getConferenceActive')
       .then(function (result) {
+        console.log(result)
         console.log(result.data)
         context.commit('rootMain/setConferenceActive', result.data, {root: true})
 
