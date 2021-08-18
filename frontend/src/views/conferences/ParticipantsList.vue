@@ -147,6 +147,17 @@ export default {
       document.getElementById('partlist').appendChild(li);
       li.onclick = function(){
         console.log("클릭 성공 >>> ", participant.name);
+        const url = '/api/conference/';
+        let token = localStorage.getItem('jwt')
+        let header = { headers: { 'Authorization': `Bearer ${token}` } }
+
+        $axios.post(url, participant.userId)
+        .then(function (result) {
+          console.log("점수주기 성공?")
+        })
+        .catch(function (err) {
+          console.log("점수주기 error",err)
+        })
         }
       // const container = document.createElement('div')
       // container.id = 'aParticipant'
