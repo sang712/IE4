@@ -105,7 +105,7 @@ export default {
   margin: 0;
 	height: 100vh;
   background-image: url("../../assets/images/participantslist.jpg");
-  background-size:100% 94% ;
+  background-size:100% 95% ;
 }
 #participants-views {
   background-color: white;
