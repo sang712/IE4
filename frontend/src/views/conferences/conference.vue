@@ -250,25 +250,28 @@ export default {
 
       // this.name = name;
       // this.userId = userId;
-      var container = document.createElement('div');
-      container.className = 'participant';
-      container.id = 'screenShare';
-      var span = document.createElement('span');
-      span.className = 'participant-name'
-      var video = document.createElement('video');
-      var rtcPeer;
+      // var container = document.createElement('div');
+      // container.className = 'participant';
+      // container.id = 'screenShare';
+      // var span = document.createElement('span');
+      // span.className = 'participant-name'
+      // var video = document.createElement('video');
+      // var rtcPeer;
 
-      rtcPeer;
+      // rtcPeer;
 
-      container.appendChild(video);
-      container.appendChild(span);
-      document.getElementById('participants').appendChild(container);
+      // container.appendChild(video);
+      // container.appendChild(span);
+      // document.getElementById('participants').appendChild(container);
 
-      span.appendChild(document.createTextNode('screenShare'));
+      // span.appendChild(document.createTextNode('screenShare'));
 
-      video.id = 'video-screenShare';
-	    video.autoplay = true;
-	    video.controls = false;
+      // video.id = 'video-screenShare';
+	    // video.autoplay = true;
+	    // video.controls = false;
+
+      var participant = new Participant.Participant('screenShare', 0);
+      participants[name] = participant;
 
       const $video = document.querySelector('#video-screenShare');
       $video.srcObject = stream;
