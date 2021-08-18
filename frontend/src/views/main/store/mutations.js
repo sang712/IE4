@@ -24,6 +24,10 @@ export function setProfileImgUrl(state, payload){
   state.mypageInfo.profileImgUrl = payload
 }
 
+export function setConferenceActive(state, payload){
+  state.classInfo.conferenceActive = payload
+}
+
 export function setStudentMypageInfo (state, payload) {
   state.mypageInfo.id = payload.id
   state.mypageInfo.loginId = payload.loginId
