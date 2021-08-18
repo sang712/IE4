@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,12 +24,12 @@ public class ConferenceController {
     @Autowired
     UserService userService;
 
-    @PostMapping(value = "")
+    @PostMapping(value = "/point/{userId}")
     @ApiOperation(value = "점수 주기", notes = "학생의 점수를 추가한다.")
-    public ResponseEntity<? extends BaseResponseBody> getPoint(int userId) throws IOException {
+    public ResponseEntity<? extends BaseResponseBody> getPoint(@PathVariable int userId) throws IOException {
         System.out.println("도르마무 점수를 거래하러왔다 >>>>>" + userId);
         UserPoint userpoint = userService.getPoint(userId);
-
+        System.out.println("도르마무 점수 입력에 성공했다 >>>>>" + userId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 }
