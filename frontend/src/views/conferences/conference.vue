@@ -271,7 +271,7 @@ export default {
 	    // video.controls = false;
 
       var participant = new Participant.Participant('screenShare', 0);
-      participants[name] = participant;
+      participants['screenShare'] = participant;
 
       const $video = document.querySelector('#video-screenShare');
       $video.srcObject = stream;
