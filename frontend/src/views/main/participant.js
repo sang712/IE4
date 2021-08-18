@@ -19,7 +19,7 @@ import * as Conference from './conference.js'
 
 const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
-const videoStream;
+var videoStream;
 
 
 export function onLocalStreamInParticipant(stream) {
