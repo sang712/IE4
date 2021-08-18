@@ -181,7 +181,7 @@ export default {
     height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('../../../assets/images/ssafy-logo.png');
+    background-image: url('../../../assets/images/ie4-logo.png');
   }
   .mobile-sidebar-wrapper {
     position: absolute;
@@ -220,7 +220,7 @@ export default {
     margin-top: 30px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('../../../assets/images/ssafy-logo.png');
+    background-image: url('../../../assets/images/ie4-logo.png');
   }
   .mobile-sidebar-wrapper .mobile-sidebar-backdrop {
     width: calc(100% - 260px); height: calc(100vh - 1px);
@@ -250,7 +250,7 @@ export default {
     height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('../../../assets/images/ssafy-logo.png');
+    background-image: url('../../../assets/images/ie4-logo.png');
   }
   .main-header .upper-header .tool-wrapper {
     width: 45%;

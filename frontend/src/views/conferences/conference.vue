@@ -406,18 +406,6 @@ a {
   margin: 0;
 	height: 100vh;
 }
- .chat-profile-img{
-
-}
-
-.chat-text-wrapper{
-
-}
-
-.chat-name-tag{
-
-}
-
 .main-wrapper{
 	/* background-color: #080A0D;
 	height: 100vh;

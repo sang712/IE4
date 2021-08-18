@@ -15,7 +15,7 @@
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
     </ul>
-    <div class="lower-sidebar">
+    <div class="lower-wrapper">
       <el-pagination
         :pager-count="5"
         :page-size="board.limit"
@@ -217,20 +217,20 @@ li .header-date, .row-date{
   text-align: center;
   flex-basis: 15%;
 }
-.lower-sidebar {
+.lower-wrapper {
   position: relative;
   width: 90%;
   min-height: 60px;
   margin: auto 5%;
 }
-.lower-sidebar .el-pagination {
+.lower-wrapper .el-pagination {
   display: inline-block;
   position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translate(-50%, 0);
 }
-.lower-sidebar .el-button {
+.lower-wrapper .el-button {
   display: inline-block;
   position: absolute;
   width: 8vw;

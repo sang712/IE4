@@ -134,8 +134,8 @@ export default {
   margin: 25px 5px 0px 5px;
 }
 .notice-content{
-  height: 41vh;
-  width: 32vw;
+  height: 46vh;
+  width: 35vw;
   background-color: #ffffff ;
   margin: 20px 5px;
   background-size: contain;
