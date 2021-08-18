@@ -66,20 +66,30 @@ export default {
       document.getElementById('partlist').appendChild(li);
       li.onclick = function(){
         console.log("클릭 성공 >>> ", participant.name);
+        let position = localStorage.getItem("position");
 
-        const url = '/api/conference/point/' + participant.userId;
-        let token = localStorage.getItem('jwt')
-        let header = {headers:{'Authorization':`Bearer ${token}`} }
-        console.log(" 보내려는 userId >>> ", participant.userId, "타입은 >>>", typeof(participant.userId));
+        if(position == '교사'){
+          if(confirm(participant.name, "에게 3 point 주기") == true){
+            const url = '/api/conference/point/' + participant.userId;
 
-        $axios.post(url, header)
-        .then(function () {
-          console.log('점수주기 성공맨~')
-        })
-        .catch(function (err) {
-          console.log("give point error")
-        })
+            let token = localStorage.getItem('jwt')
+            let header = {headers:{'Authorization':`Bearer ${token}`} }
+            console.log(" 보내려는 userId >>> ", participant.userId, "타입은 >>>", typeof(participant.userId));
 
+            $axios.post(url, header)
+            .then(function () {
+              console.log('점수주기 성공맨~')
+            })
+            .catch(function (err) {
+              console.log("give point error")
+            })
+          }else{
+            return;
+          }
+
+        }else{
+
+        }
       }
     }
 
