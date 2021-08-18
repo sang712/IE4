@@ -146,6 +146,7 @@ public class UserSession implements Closeable {
     System.out.println("getEndpointForUserForScreenShare 함수 들어왔음!");
     WebRtcEndpoint incoming = incomingMedia.get(sender.getName());
     if (incoming == null) {
+      System.out.println("getEndpointForUserForScreenShare에서 incoming 새로 만드는지?");
       log.debug("PARTICIPANT {}: creating new endpoint for {}", this.name, sender.getName());
       incoming = new WebRtcEndpoint.Builder(pipeline).build();
 
