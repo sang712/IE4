@@ -71,6 +71,7 @@ export default {
 
       const li = document.createElement("li");
       li.setAttribute('id', participant.userId);
+      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif;width: 75%;font-size: 20px;padding:6px;border-radius: 20px;margin: auto;"
       //li.setAttribute('@click', getboardDetail(board.id));
       const textNode = document.createTextNode("이름 : " + participant.name );
       // const textNode = document.createTextNode("이름 : " + participant.name+ ", userId : "+ participant.userId);
@@ -201,16 +202,9 @@ li .header-date, .row-date{
   right: 5px;
   padding: 0px;
 }
-#partlist li {
-  display: block;
-  border: thick double #32a1ce;
-  font: bold 1rem sans-serif;
-  width: 75%;
-  font-size: 20px;
-  padding:6px;
-  border-radius: 20px;
-  margin: auto;
-}
+</style>
+
+<style>
 #partlist li:hover {
   background-color: #5762ff;
   font-weight:bold;
