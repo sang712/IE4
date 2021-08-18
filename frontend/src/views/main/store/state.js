@@ -47,10 +47,6 @@ const mypageInfo = reactive({
   sex: '',
 })
 
-const studentInfo = reactive({
-
-})
-
 const classInfo = reactive({
   grade: '',
   classNo: '',
