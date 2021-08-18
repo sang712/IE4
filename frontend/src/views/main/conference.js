@@ -201,7 +201,7 @@ export function onShareScreen(stream) {
 	participants[sname] = participant;
 
   // var video = participant.getVideoElement();
-  var video = getVideoElement();
+  var video = participant.getVideoElement();
 
   var options = {
         localVideo: video,
