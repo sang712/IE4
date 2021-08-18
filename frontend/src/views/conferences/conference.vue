@@ -239,7 +239,8 @@ export default {
       const stream = await this.screenHandler.start(); //return => localStream
       this.onLocalStream(stream);
 
-      conference.register(true)
+      conference.sendingScreen(this.name);
+      // conference.register(true)
       // conference.onShareScreen(stream);
 
       // conference.leaveRoom(true);

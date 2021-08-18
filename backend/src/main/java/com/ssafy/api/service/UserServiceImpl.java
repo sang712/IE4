@@ -288,13 +288,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserPoint getPoint(int userId) {
 		User user = userRepository.findUserById(userId).orElse(null);
-		UserPoint userpoint = new UserPoint();
-		userpoint.setUser(user);
-		userpoint.setUserId(userId);
-		userpoint.setPoint(3);
-
-		userPointRepository.insertPoint(userId);
-		return userpoint;
+		if(user != null){
+			UserPoint userpoint = new UserPoint();
+			userpoint.setUser(user);
+			userpoint.setPoint(3);
+			return userPointRepository.save(userpoint);
+		}
+		else return null;
 	}
 
 
