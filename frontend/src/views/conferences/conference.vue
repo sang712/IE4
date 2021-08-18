@@ -146,7 +146,7 @@ export default {
       conference.register(false)
     },
     leaveRoom() {
-      conference.leaveRoom()
+      conference.leaveRoom(false)
 			location.reload();
     },
 		openChatBox(){
@@ -181,7 +181,7 @@ export default {
 		},
 		async getLocalStream() {
 			peerHandler = new PeerHandler
-			
+
 			try {
 				const stream = await peerHandler.getUserMedia({
 					audio: false,
