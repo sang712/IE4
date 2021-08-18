@@ -181,7 +181,6 @@ export default {
     height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
-/* ############# 우리껄로 바꿔넣어>>안돼네 ############*/
     background-image: url('../../../assets/images/ssafy-logo.png');
   }
   .mobile-sidebar-wrapper {
@@ -258,7 +257,7 @@ export default {
     float: right;
   }
   .main-header .upper-header .tool-wrapper .button-wrapper {
-    width:45vw;
+    width: 45vw;
     float: right;
   }
   .main-header .upper-header .tool-wrapper .button-wrapper .el-button {

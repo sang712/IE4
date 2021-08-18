@@ -329,6 +329,15 @@ a {
     box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
+.button-wrapper, .button-wrapper2 {
+	display: inline-block;
+	margin: 10px;
+}
+.button-wrapper2 {
+	position: absolute;
+	right: 10px;
+}
+
 </style>
 <style scoped>
 #room{
@@ -597,14 +606,6 @@ video {
 	width: 100%;
 	height: 50px;
 	background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
-}
-.button-wrapper, .button-wrapper2 {
-	display: inline-block;
-	margin: 10px;
-}
-.button-wrapper2 {
-	position: absolute;
-	right: 10px;
 }
 
 </style>

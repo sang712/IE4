@@ -2,8 +2,8 @@
   <el-dialog custom-class="signup-dialog" title="회원가입" v-model="state.dialogVisible" @close="handleClose">
     <el-form class="signup-form" :model="state.form" :rules="state.rules" ref="signupForm" :label-position="state.form.align">
       <el-scrollbar height="400px" style="display: flex; justify-content: center;">
-        <div style="margin: 0px;">
-          <el-button @click="clickCheckId" size="mini" style="margin: 0px 0px 0px 280px">중복확인</el-button>
+        <div class="d-flex flex-row-reverse" style="margin: 4px;">
+          <el-button @click="clickCheckId" size="mini">중복확인</el-button>
         </div>
         <el-form-item prop="id" label="아이디" :label-width="state.formLabelWidth" >
           <el-input v-model="state.form.id" autocomplete="off"></el-input>
@@ -18,22 +18,22 @@
           <el-input v-model="state.form.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item prop="grade" label="학년 / 반 / 번호" :label-width="state.formLabelWidth">
-          <el-select v-model="state.form.grade" placeholder="학년" style="width: 35%">
-            <el-option label="1학년" value="1"></el-option>
-            <el-option label="2학년" value="2"></el-option>
-            <el-option label="3학년" value="3"></el-option>
-            <el-option label="4학년" value="4"></el-option>
-            <el-option label="5학년" value="5"></el-option>
-            <el-option label="6학년" value="6"></el-option>
-          </el-select>
-          <el-select v-model="state.form.class_no" placeholder="반" style="width: 30%">
-            <el-option label="1반" value="01"></el-option>
-            <el-option label="2반" value="02"></el-option>
-            <el-option label="3반" value="03"></el-option>
-            <el-option label="4반" value="04"></el-option>
-            <el-option label="5반" value="05"></el-option>
-            <el-option label="6반" value="06"></el-option>
-          </el-select>
+          <select class="form-select" v-model="state.form.grade" title="학년" style="width: 35%">
+            <option label="1학년" value="1"></option>
+            <option label="2학년" value="2"></option>
+            <option label="3학년" value="3"></option>
+            <option label="4학년" value="4"></option>
+            <option label="5학년" value="5"></option>
+            <option label="6학년" value="6"></option>
+          </select>
+          <select class="form-select" v-model="state.form.class_no" title="반" style="width: 30%">
+            <option label="1반" value="01"></option>
+            <option label="2반" value="02"></option>
+            <option label="3반" value="03"></option>
+            <option label="4반" value="04"></option>
+            <option label="5반" value="05"></option>
+            <option label="6반" value="06"></option>
+          </select>
           <el-input v-model="state.form.snum" placeholder="번호" style="width: 35%"></el-input>
         </el-form-item>
         <el-form-item prop="sex" label="성별" :label-width="state.formLabelWidth">
@@ -52,9 +52,9 @@
           <el-input v-model="state.form.address"></el-input>
         </el-form-item>
         <el-form-item prop="password_question" label="비밀번호 질문" :label-width="state.formLabelWidth">
-          <el-select v-model="state.form.password_question" placeholder="질문을 선택하세요." style="width: 100%">
-            <el-option v-for="item in state.passQuestions" :key="item.question" :label="item.question" :value="item.question"></el-option>
-          </el-select>
+          <select class="form-select" v-model="state.form.password_question" title="질문을 선택하세요." style="width: 100%">
+            <option v-for="item in state.passQuestions" :key="item.question" :label="item.question" :value="item.question"></option>
+          </select>
         </el-form-item>
         <el-form-item prop="password_answer" label="비밀번호 답변" :label-width="state.formLabelWidth">
           <el-input v-model="state.form.password_answer"></el-input>
@@ -393,4 +393,9 @@ input:-webkit-autofill:focus {
 .swal2-container {
   z-index: 5000;
 }
+</style>
+<style scoped>
+  .form-select {
+    display: inline-block;
+  }
 </style>

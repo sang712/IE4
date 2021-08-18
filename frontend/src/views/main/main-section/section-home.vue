@@ -11,7 +11,7 @@
       <el-button v-else style="width: 25%; height: 10%; font-size: 140% " @click="createCon()">방만들기</el-button>
     </div>
     <div class="col">
-      <div class="d-flex justify-content-center row">
+      <div class="d-flex justify-content-center row" style="--bs-gutter-x: 0; margin: auto 0px;">
         <div class="notice-button-wrapper d-flex justify-content-evenly align-items-center" >
           <el-button @click="clickSchedule" style="width: 22%; height: 50%; font-size: 120%">시간표</el-button>
           <el-button @click="clickNote" style="width: 22%; height: 50%; font-size: 120%">학사일정</el-button>
@@ -59,22 +59,13 @@ export default {
     const joinCon = () => {
       console.log('조인콘 버튼 클릭됨!', state.nGrade + '학년' + state.nClass + '반 으로!')
       store.dispatch('rootMain/getConferenceActive')
-      .then(function (result) {
-        console.log(result.data)
-        context.commit('rootMain/setConferenceActive', result.data, {root: true})
-
-        if(state.conferenceActive == "open"){
+      if(state.conferenceActive == "open"){
         console.log('conference open 상태!!')
         router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
-        }else{ //close
-          console.log('conference close 상태!!')
-          Swal.fire({ title: '잠깐!', text: '아직 수업이 시작하지 않았어요! 조금만 기다려주세요~', icon: 'warning', })
-        }
-      })
-      .catch(function (err) {
-        console.log("getConferenceActive error", err)
-        Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
-      })
+      }else{ //close
+        console.log('conference close 상태!!')
+        Swal.fire({ title: '잠깐!', text: '아직 수업이 시작하지 않았어요! 조금만 기다려주세요~', icon: 'warning', })
+      }
     }
 
     const createCon = () => {

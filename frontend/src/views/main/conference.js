@@ -126,7 +126,8 @@ export function sendingScreen(stream) {
     }
   };
 
-  var participant = participants[0];
+  var participant = new Participant.Participant(name, userId);
+	participants[name] = participant;
 
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);

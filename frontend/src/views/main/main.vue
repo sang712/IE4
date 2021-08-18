@@ -37,6 +37,9 @@
     width: 100%;
     height: 66vh;
   }
+  .el-button {
+    padding: 12px 2%;
+  }
 </style>
 <script>
 import MainHeader from './components/main-header'
