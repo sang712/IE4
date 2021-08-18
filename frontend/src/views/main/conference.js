@@ -196,7 +196,9 @@ export function onShareScreen(stream) {
 
 	// gabojago registered in room [object HTMLDivElement]
 	console.log(name +"//"+userId+ " registered in room " + room);
-	var participant = participants[name];
+  var sname = 'shareScreen'
+	var participant = new Participant.Participant(sname, userId);
+	participants[sname] = participant;
 
   // var video = participant.getVideoElement();
   var video = stream;
