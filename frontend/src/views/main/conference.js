@@ -165,6 +165,7 @@ export function callResponse(message) {
 export function onExistingParticipants(msg) {
 
   if(state) {
+    console.log("state >>>> ", state);
     var constraints = {
       audio : true,
       video : {
