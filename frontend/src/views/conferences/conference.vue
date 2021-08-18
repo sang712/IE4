@@ -262,10 +262,9 @@ export default {
 
       container.appendChild(video);
       container.appendChild(span);
-      container.onclick = switchContainerClass;
       document.getElementById('participants').appendChild(container);
 
-      span.appendChild(document.createTextNode(screenShare));
+      span.appendChild(document.createTextNode('screenShare'));
 
       const $svideo = document.querySelector('#video-'+'screenShare');
       $svideo.srcObject = stream;
