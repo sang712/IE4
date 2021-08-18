@@ -153,7 +153,7 @@ export default {
         let token = localStorage.getItem('jwt')
         let header = { headers: { 'Authorization': `Bearer ${token}` } }
         console.log("보내려는 userId >>>>", participant.userId, "타입은 >>>> " , typeof(participant.userId))
-        let params = {params: {userId: participant.userId}}
+        let params = {params: {userId: 'participant.userId'}}
         $axios.post(url,params)
         .then(function (result) {
           console.log("점수주기 성공?")
@@ -219,6 +219,8 @@ export default {
   right: 5px;
   padding: 0px;
 }
+</style>
+<style>
 #partlist li{
   display: block;
   border: #6c757d 1px solid;
