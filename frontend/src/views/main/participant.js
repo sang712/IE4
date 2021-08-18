@@ -19,7 +19,12 @@ import * as Conference from './conference.js'
 
 const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
+const videoStream;
 
+
+export function onLocalStreamInParticipant(stream) {
+  videoStream = stream;
+}
 
 export function Participant(name, userId) {
 	this.name = name;
@@ -44,6 +49,10 @@ export function Participant(name, userId) {
 	video.id = 'video-' + name;
 	video.autoplay = true;
 	video.controls = false;
+
+  if(name == 'shareScreen') {
+    video.srcObject = videoStream;
+  }
 
 
 	this.getElement = function () {
