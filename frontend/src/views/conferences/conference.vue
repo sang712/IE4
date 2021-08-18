@@ -106,7 +106,7 @@
 import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
-import onLocalStreamInParticipant from './ParticipantsList.vue'
+import onLocalStreamInParticipant from '../main/participant.js'
 import ScreenHandler from './screen-handler.js';
 import MediaHandler from './media-handler.js'
 import PeerHandler from './peer-handler'
