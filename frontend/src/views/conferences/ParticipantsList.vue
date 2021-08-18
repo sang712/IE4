@@ -152,8 +152,9 @@ export default {
         const url = '/api/conference/';
         let token = localStorage.getItem('jwt')
         let header = { headers: { 'Authorization': `Bearer ${token}` } }
-        let params = {params: {userId:participant.userId}}
-        $axios.post(url,params )
+        console.log("보내려는 userId >>>>", participant.userId, "타입은 >>>> " , typeof(participant.userId))
+        let params = {params: {userId: participant.userId}}
+        $axios.post(url,params)
         .then(function (result) {
           console.log("점수주기 성공?")
         })
