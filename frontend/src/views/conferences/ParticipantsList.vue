@@ -70,7 +70,6 @@ export default {
       const participantsViews = document.getElementById('participants-views')
 
       const li = document.createElement("li");
-      li.style = "display: block; border: thick double #32a1ce;font: bold 1rem sans-serif; width: 400px; margin-bottom:10px; font-size: 20px; padding:6px; border-radius: 20px; box-shadow: 1px 6px 15px black;"
       li.setAttribute('id', participant.userId);
       //li.setAttribute('@click', getboardDetail(board.id));
       const textNode = document.createTextNode("이름 : " + participant.name );
@@ -79,19 +78,21 @@ export default {
       document.getElementById('partlist').appendChild(li);
       li.onclick = function(){
         console.log("클릭 성공 >>> ", participant.name);
-      }
-      const url = '/api/conference/point/' + participant.userId;
-      let token = localStorage.getItem('jwt')
-      let header = {headers:{'Authorization':`Bearer ${token}`} }
-      console.log(" 보내려는 userId >>> ", participant.userId, "타입은 >>>", typeof(participant.userId));
 
-      $axios.post(url, header)
-      .then(function () {
-        console.log('점수주기 성공맨~')
-      })
-      .catch(function (err) {
-        console.log("give point error")
-      })
+        const url = '/api/conference/point/' + participant.userId;
+        let token = localStorage.getItem('jwt')
+        let header = {headers:{'Authorization':`Bearer ${token}`} }
+        console.log(" 보내려는 userId >>> ", participant.userId, "타입은 >>>", typeof(participant.userId));
+
+        $axios.post(url, header)
+        .then(function () {
+          console.log('점수주기 성공맨~')
+        })
+        .catch(function (err) {
+          console.log("give point error")
+        })
+
+      }
 
       // const container = document.createElement('div')
       // container.id = 'aParticipant'
