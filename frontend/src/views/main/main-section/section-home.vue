@@ -62,7 +62,7 @@ export default {
       .then(function (result) {
         console.log('result : ', result)
         console.log(result.data)
-        context.commit('rootMain/setConferenceActive', result.data, {root: true})
+        store.commit('rootMain/setConferenceActive', result.data, {root: true})
 
         if(state.conferenceActive == "open"){
           console.log('conference open 상태!!')
