@@ -58,7 +58,7 @@ export default {
 
     const joinCon = () => {
       console.log('조인콘 버튼 클릭됨!', state.nGrade + '학년' + state.nClass + '반 으로!')
-      store.dispatch('rootMain/getConferenceActive', localStorage.getItem('jwt'))
+      store.dispatch('rootMain/getConferenceActive')
       if(state.conferenceActive == "open"){
         console.log('conference open 상태!!')
         router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
@@ -70,8 +70,15 @@ export default {
 
     const createCon = () => {
       store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'open'})
-      .then(function(result){
-        store.commit('rootMain/setConferenceActive', result.data)
+      .then(({ data }) => {
+        console.log('updateConferenceActive complete')
+        console.log(data)
+        context.commit('rootMain/setConferenceActive', data, {root: true})
+        router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
+      })
+      .catch(function (err) {
+        console.log("updateConferenceActive error", err)
+        Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
       })
     }
 
