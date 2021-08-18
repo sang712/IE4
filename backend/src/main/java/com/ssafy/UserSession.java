@@ -127,6 +127,8 @@ public class UserSession implements Closeable {
 
     log.trace("USER {}: SdpOffer for {} is {}", this.name, sender.getName(), sdpOffer);
 
+    if(this.name.equals("shareScreen") && sender.getName().equals("shareScreen")) return;
+
     final String ipSdpAnswer = this.getEndpointForUser(sender).processOffer(sdpOffer);
     final JsonObject scParams = new JsonObject();
     scParams.addProperty("id", "receiveVideoAnswer");
