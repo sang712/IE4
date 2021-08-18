@@ -3,7 +3,7 @@
     <div id="participants-title">참석자 명단</div>
     <button class="button" type="button" @click="getParticipant()">참석자 가져오기</button>
     <!-- <div id="participants-views"> -->
-    <ul id="partlist"></ul>
+    <ol id="partlist"></ol>
       <!-- <li class="table-header">
         <div class="header-title" style="text-align:left">no</div>
         <div class="header-title" style="text-align:center">이름</div>
@@ -109,8 +109,8 @@ export default {
       console.log("conference.getParticipants() part >>>>> ", part)
       console.log("conference.getParticipants() state.partList >>>>> ", state.partList)
 
-      const ul = document.getElementById('partlist');
-      const items = ul.getElementsByTagName('li');
+      const ol = document.getElementById('partlist');
+      const items = ol.getElementsByTagName('li');
       console.log("items 길이는 >>>> ", items.length);
       if(items.length > 0){
         while(items.length>0){
@@ -183,54 +183,7 @@ export default {
   padding: 5px;
   margin: 2px 0px;
 }
-.section-news {
-  width: 99.8%;
-  height: 100%;
-  margin: 5px 1px;
-  padding: 5px 5px;
-  background-color: #efeee9;
-}
-.news-title {
-  text-align: center;
-  margin: 20px 0px;
-}
-.news-table {
-  min-height: 430px;
-  padding: 0px;
-}
-.news-table li {
-  border-radius: 15px;
-  padding: 20px 30px;
-  margin: 0px 5%;
-  font-size: 130%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1px;
-}
-.news-table .table-header {
-  background-color: #95A5A6;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-.news-table .table-row {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
-}
-li .header-number, .row-number{
-  flex-basis: 10%;
-}
-li .header-title, .row-title{
-  flex-basis: 50%;
-}
-li .header-author, .row-author{
-  text-align: center;
-  flex-basis: 15%;
-}
-li .header-date, .row-date{
-  text-align: center;
-  flex-basis: 15%;
-}
+
 .lower-sidebar {
   position: relative;
   width: 90%;
@@ -251,5 +204,15 @@ li .header-date, .row-date{
   height: 40px;
   right: 5px;
   padding: 0px;
+}
+ul.partlist li, ol.mylist li {
+  display: inline-block;
+  padding: 5px 0px 5px 5px;
+  margin-bottom: 5pxs;
+  border-bottom: 1px solid #efefef;
+  font-size: 12px;
+}
+ol.mylist li:last-child {
+    border-bottom: 0px;
 }
 </style>
