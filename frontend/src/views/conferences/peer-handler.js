@@ -1,6 +1,6 @@
-import EventEmitter from '/js/lib/eventemitter.js';
-import inherit from '/js/lib/inherit.js';
-import { RTCPeerConnection, RTCSessionDescription, RTCIceCandidate, getDefaultIceServers } from '/js/helpers/rtc.js';
+import EventEmitter from './eventemitter.js';
+import inherit from './inherit.js';
+import { RTCPeerConnection, RTCSessionDescription, RTCIceCandidate, getDefaultIceServers } from './rtc.js';
 
 /**
  * PeerHandler

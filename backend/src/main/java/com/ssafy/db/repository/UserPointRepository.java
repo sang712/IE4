@@ -25,4 +25,5 @@ public interface UserPointRepository extends JpaRepository<UserPoint, Integer> {
     @Modifying
     @Query("DELETE from UserPoint up where up.id in :ids")
     void deleteAllByIds(@Param("ids") List<Integer> ids);
+
 }
