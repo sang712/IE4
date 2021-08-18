@@ -292,14 +292,14 @@ export function onExistingParticipants(msg) {
 
 
   // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성
-  participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
-    function (error) {
-            if(error) {
-                return console.error(error);
-            }
-        this.generateOffer (
-      participant.offerToReceiveVideo.bind(participant));
-  });
+  // participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
+  //   function (error) {
+  //           if(error) {
+  //               return console.error(error);
+  //           }
+  //       this.generateOffer (
+  //     participant.offerToReceiveVideo.bind(participant));
+  // });
 
 	// 기존 참가자 영상을 전달 받을 수신용 WebRtcPeer를 생성.
   if(msg.name != 'shareScreen') msg.data.forEach(receiveVideo);
