@@ -84,6 +84,19 @@ export function Participant(name, userId) {
 		Conference.sendMessage(msg);
 	}
 
+  this.offerToReceiveVideoForScreenShare = function (error, offerSdp, wp) {
+		if (error) return console.error("sdp offer error")
+		console.log('Invoking SDP offer callback function');
+		var msg = {
+			id: "screenShare",
+			sender: name,
+      userId : localStorage.getItem("id"),
+			sdpOffer: offerSdp
+		};
+		wp;
+		Conference.sendMessage(msg);
+	}
+
 
 	this.onIceCandidate = function (candidate, wp) {
 		console.log("Local candidate" + JSON.stringify(candidate));
