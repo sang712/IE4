@@ -164,7 +164,7 @@ export function callResponse(message) {
 // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성.
 export function onExistingParticipants(msg) {
 
-  if(state) {
+  if(state == 'share') {
     console.log("state >>>> ", state);
     var constraints = {
       audio : true,
