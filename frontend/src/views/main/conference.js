@@ -25,6 +25,7 @@ let participantList= new Map();
 var name;
 var userId;
 var videoStream;
+var state;
 
 window.onbeforeunload = function() {
 	ws.close();
@@ -163,7 +164,7 @@ export function callResponse(message) {
 // 자신의 영상을 미디어서버에 전달할 송신용 WebRtcPeer를 생성.
 export function onExistingParticipants(msg) {
 
-  if(msg.name == 'shareScreen') {
+  if(state) {
     var constraints = {
       audio : true,
       video : {
@@ -341,4 +342,8 @@ export function getParticipants() {
 
 export function onLocalStream(stream) {
   videoStream = stream;
+}
+
+export function setState(isState) {
+  state = isState;
 }

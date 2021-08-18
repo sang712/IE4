@@ -279,6 +279,7 @@ export default {
       // const $video = document.querySelector('#video-screenShare');
       // $video.srcObject = stream;
 
+      conference.setState();
       participant.onLocalStreamInParticipant(stream);
 
       conference.register(true);
