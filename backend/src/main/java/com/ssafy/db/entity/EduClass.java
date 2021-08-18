@@ -17,7 +17,7 @@ public class EduClass extends BaseEntity{
     int classNo;
     String timetable;
     String classMotto;
-    String conferenceUrl;
+    String conferenceActive;
 
 
 }
