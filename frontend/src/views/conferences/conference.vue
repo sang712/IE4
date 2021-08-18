@@ -243,7 +243,7 @@ export default {
 		// 	videoElem.srcObject = null;
 		// }
     onLocalStream(stream) {
-      console.log('onLocalStream', stream);
+      console.log('onLocalStream >>>> ', stream);
 
       // const $video = document.querySelector('#video-'+this.name);
       // $video.srcObject = stream;
