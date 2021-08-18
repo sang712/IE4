@@ -109,6 +109,7 @@ import ParticipantsList from './ParticipantsList.vue'
 import ScreenHandler from './screen-handler.js';
 import MediaHandler from './media-handler.js'
 import PeerHandler from './peer-handler'
+import { useStore } from 'vuex'
 
 export default {
   name: 'Conference',
@@ -138,7 +139,7 @@ export default {
 			mediaHandler:'',
 			peerHandler:'',
 			localStream:'',
-
+			store:'',
 		}
 	},
   methods : {
@@ -147,6 +148,20 @@ export default {
     },
     leaveRoom() {
       conference.leaveRoom(false)
+
+      if(localStorage.getItem('position') == "교사"){
+        this.store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'close'})
+        .then(({ data }) => {
+          console.log('updateConferenceActive complete')
+          console.log(data)
+          store.commit('rootMain/setConferenceActive', data, {root: true})
+        })
+        .catch(function (err) {
+          console.log("updateConferenceActive error", err)
+          Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
+        })
+      }
+
 			location.reload();
     },
 		openChatBox(){
@@ -277,6 +292,8 @@ export default {
     },
   },
 	mounted: function () {
+    this.store = useStore()
+
 		console.log('마운트 되었음')
     this.screenHandler = new ScreenHandler();
 
@@ -350,6 +367,14 @@ a {
 .button:active {
     box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+.button-wrapper, .button-wrapper2 {
+	display: inline-block;
+	margin: 10px;
+}
+.button-wrapper2 {
+	position: absolute;
+	right: 10px;
 }
 </style>
 <style scoped>
@@ -619,14 +644,6 @@ video {
 	width: 100%;
 	height: 50px;
 	background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
-}
-.button-wrapper, .button-wrapper2 {
-	display: inline-block;
-	margin: 10px;
-}
-.button-wrapper2 {
-	position: absolute;
-	right: 10px;
 }
 
 </style>
