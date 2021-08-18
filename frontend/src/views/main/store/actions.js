@@ -153,6 +153,7 @@ export function getConferenceActive(context){
 
   $axios.get(url, header)
   .then(function (result) {
+    console.log('result : ', result)
     console.log(result.data)
     context.commit('rootMain/setConferenceActive', result.data, {root: true})
   })
