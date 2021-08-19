@@ -14,6 +14,9 @@
         <div class="row-author">{{board.userName}}</div>
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
+      <li v-if="newsboard.list.length <= 0" class="table-row">
+        <div class="row-blank">작성된 글이 없습니다.</div>
+      </li>
     </ul>
     <!-- :page-size="newsboard.limit" :current-page="currentPage" -->
     <div class="lower-wrapper">
@@ -215,6 +218,12 @@ li .header-date, .row-date{
   text-align: center;
   flex-basis: 15%;
 }
+
+li .row-blank {
+  text-align: center;
+  flex-basis: 100%;
+}
+
 .lower-wrapper {
   position: relative;
   width: 90%;
@@ -235,5 +244,13 @@ li .header-date, .row-date{
   height: 40px;
   right: 5px;
   padding: 0px;
+}
+</style>
+<style>
+.el-pagination .btn-prev {
+    padding: 0px 0px 0px 12px;
+}
+.el-pagination button {
+  box-shadow: none !important;
 }
 </style>

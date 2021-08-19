@@ -148,4 +148,9 @@ export default {
 	margin-right: 5px;
 	max-width: 100%;
 }
+
+.modal-header .btn-close:hover {
+    color: white;
+}
 </style>
+
