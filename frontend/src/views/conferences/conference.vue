@@ -81,8 +81,7 @@ export default {
         })
       }
 
-      router.push({ name: 'main' });
-			// location.reload();
+			location.reload();
     },
 		openParticipantsList() {
 			if (document.getElementById('participants-list').style.display == 'none')

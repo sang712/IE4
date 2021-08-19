@@ -162,9 +162,9 @@ export function leaveRoom() {
 		participants[key].dispose();
 	}
 
-  document.getElementById('join').style.display = 'block';
-  document.getElementById('room').style.display = 'none';
-  document.getElementById('footer').style.display = 'none'
+  // document.getElementById('join').style.display = 'block';
+  // document.getElementById('room').style.display = 'none';
+  // document.getElementById('footer').style.display = 'none'
 }
 
 // 영상을 전달 받을 수신용 WebRtcPeer 생성 함수
