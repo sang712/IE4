@@ -103,31 +103,10 @@ public class UserSession implements Closeable {
     return this.roomName;
   }
 
-  public void receiveVideoFromForScreenShare(UserSession sender, String sdpOffer) throws IOException {
-    log.info("USER {} / num {} : connecting with {} in room {}", this.name, sender.getUserId(), sender.getName(), this.roomName);
-
-    System.out.println("receiveVideoFromForScreenShare 함수 들어왔음!");
-    log.trace("USER {}: SdpOffer for {} is {}", this.name, sender.getName(), sdpOffer);
-
-    final String ipSdpAnswer = this.getEndpointForUserForScreenShare(sender).processOffer(sdpOffer);
-    final JsonObject scParams = new JsonObject();
-    scParams.addProperty("id", "receiveVideoAnswer");
-    scParams.addProperty("name", sender.getName());
-    scParams.addProperty("userId", sender.getUserId());
-    scParams.addProperty("sdpAnswer", ipSdpAnswer);
-
-    log.trace("USER {}: SdpAnswer for {} is {}", this.name, sender.getName(), ipSdpAnswer);
-    this.sendMessage(scParams);
-    log.debug("gather candidates");
-    this.getEndpointForUser(sender).gatherCandidates();
-  }
-
   public void receiveVideoFrom(UserSession sender, String sdpOffer) throws IOException {
     log.info("USER {} / num {} : connecting with {} in room {}", this.name, sender.getUserId(), sender.getName(), this.roomName);
 
     log.trace("USER {}: SdpOffer for {} is {}", this.name, sender.getName(), sdpOffer);
-
-    if(this.name.equals("shareScreen") && sender.getName().equals("shareScreen")) return;
 
     final String ipSdpAnswer = this.getEndpointForUser(sender).processOffer(sdpOffer);
     final JsonObject scParams = new JsonObject();
@@ -140,44 +119,6 @@ public class UserSession implements Closeable {
     this.sendMessage(scParams);
     log.debug("gather candidates");
     this.getEndpointForUser(sender).gatherCandidates();
-  }
-
-  private WebRtcEndpoint getEndpointForUserForScreenShare(final UserSession sender) {
-    log.debug("PARTICIPANT {}: receiving video from {}", this.name, sender.getName());
-
-    System.out.println("getEndpointForUserForScreenShare 함수 들어왔음!");
-    WebRtcEndpoint incoming = incomingMedia.get(sender.getName());
-    if (incoming == null) {
-      System.out.println("getEndpointForUserForScreenShare에서 incoming 새로 만드는지?");
-      log.debug("PARTICIPANT {}: creating new endpoint for {}", this.name, sender.getName());
-      incoming = new WebRtcEndpoint.Builder(pipeline).build();
-
-      incoming.addIceCandidateFoundListener(new EventListener<IceCandidateFoundEvent>() {
-
-        @Override
-        public void onEvent(IceCandidateFoundEvent event) {
-          JsonObject response = new JsonObject();
-          response.addProperty("id", "iceCandidate");
-          response.addProperty("name", sender.getName());
-          response.addProperty("userId", sender.getUserId());
-          response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
-          try {
-            synchronized (session) {
-              session.sendMessage(new TextMessage(response.toString()));
-            }
-          } catch (IOException e) {
-            log.debug(e.getMessage());
-          }
-        }
-      });
-
-      incomingMedia.put(sender.getName(), incoming);
-    }
-
-    log.debug("PARTICIPANT {}: obtained endpoint for {}", this.name, sender.getName());
-    sender.getOutgoingWebRtcPeer().connect(incoming);
-
-    return incoming;
   }
 
   private WebRtcEndpoint getEndpointForUser(final UserSession sender) {
@@ -227,10 +168,7 @@ public class UserSession implements Closeable {
 
   public void cancelVideoFrom(final String senderName) {
     log.debug("PARTICIPANT {}: canceling video reception from {}", this.name, senderName);
-    System.out.println("여기는 UserSession!!! >> this.name >>> " + this.name + " and senderName >>> " + senderName);
     final WebRtcEndpoint incoming = incomingMedia.remove(senderName);
-
-    if(incoming == null) System.out.println("incoming이 null!!!!!!!!!");
 
     log.debug("PARTICIPANT {}: removing endpoint for {}", this.name, senderName);
     incoming.release(new Continuation<Void>() {
