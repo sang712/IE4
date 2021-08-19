@@ -38,7 +38,7 @@ export function Participant(name, userId) {
 	container.onclick = function() {
     switchContainerClass();
   }
-    document.getElementById('participants').appendChild(container);
+  document.getElementById('participants').appendChild(container);
 
 	span.appendChild(document.createTextNode(name));
 
@@ -57,7 +57,7 @@ export function Participant(name, userId) {
 	function switchContainerClass() {
 		if (container.className === PARTICIPANT_CLASS) {
 			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
-			container.style = "display: block; border: thick double #32a1ce; width: 900px; height: 504px"
+			container.style = "display: block; border: thick double #32a1ce; width: 900px; height: 504px; margin: 5px auto;"
       elements.forEach(function (item) {
 				item.className = PARTICIPANT_CLASS;
         item.style = "display: inline-block; width: 300px; height: 168px;"
