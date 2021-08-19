@@ -73,7 +73,7 @@ export function register() {
 
 	document.getElementById('room-header').innerText = room + "의 수업";
 	document.getElementById('join').style.display = 'none';
-	document.getElementById('room').style.display = 'block';
+	document.getElementById('room').style.display = 'grid';
 	document.getElementById('footer').style.display = 'block';
 
 	var message = {
