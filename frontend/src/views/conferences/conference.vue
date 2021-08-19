@@ -81,15 +81,15 @@
 			<ParticipantsList />
 			<div id="footer" style="display: none;">
 				<div class="button-wrapper">
-					<button class="button" @click="micOn" type="button" id="button-micOn" v-if="true"><i class="fas fa-microphone"></i></button>
-					<button class="button" @click="micOff" type="button" id="button-micOff" v-else><i class="fas fa-microphone-slash"></i></button>
-					<button class="button" @click="displayOn" type="button" id="button-videoOn" v-if="true"><i class="fas fa-video"></i></button>
-					<button class="button" @click="displayOff" type="button" id="button-videoOff" v-else><i class="fas fa-video-slash"></i></button>
+					<button class="button" @click="micOn" type="button" id="button-micOn"><i class="fas fa-microphone"></i></button>
+					<button class="button" @click="micOff" type="button" id="button-micOff"><i class="fas fa-microphone-slash"></i></button>
+					<button class="button" @click="displayOn" type="button" id="button-videoOn"><i class="fas fa-video"></i></button>
+					<button class="button" @click="displayOff" type="button" id="button-videoOff"><i class="fas fa-video-slash"></i></button>
 					<button class="button" @click="share()" type="button" id="button-share"><i class="far fa-share-square"></i></button>
-					<!-- <button class="button" type="button" id="button-session"><i class="fas fa-th-large"></i></button> -->
-					<!-- <button class="button" type="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button> -->
-					<!-- <button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"></i></button> -->
-					<!-- <button class="button" type="button" id="button-record"><i class="far fa-dot-circle"></i></button> -->
+					<button class="button" type="button" id="button-session"><i class="fas fa-th-large"></i></button>
+					<button class="button" type="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button>
+					<button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"></i></button>
+					<button class="button" type="button" id="button-record"><i class="far fa-dot-circle"></i></button>
 					<button class="button" type="button" id="button-leave" @mouseup="leaveRoom" value="Leave room"><i class="fas fa-door-open"></i></button>
 				</div>
 				<div class="button-wrapper2">
@@ -171,7 +171,6 @@ export default {
 			if (document.getElementById('chatbox').style.display == 'none')
 			{
 				document.getElementById('room').className = 'col-9'
-				document.getElementById('room').className = 'd-flex'
 				document.getElementById('chatbox').className = 'col-3'
 				document.getElementById('chatbox').style.display = 'block'
 				document.getElementById('participants-list').className = 'col-3'
@@ -180,7 +179,7 @@ export default {
 			else{
 				document.getElementById('chatbox').style.display = 'none'
 				document.getElementById('room').className = 'col-12'
-				document.getElementById('room').className = 'd-flex'
+				
 				document.getElementById('chatbox').className = ''
 			}
 		},
@@ -188,7 +187,6 @@ export default {
 			if (document.getElementById('participants-list').style.display == 'none')
 			{
 				document.getElementById('room').className = 'col-9'
-				document.getElementById('room').className = 'd-flex'
 				document.getElementById('participants-list').className = 'col-3'
 				document.getElementById('participants-list').style.display = 'block'
 				document.getElementById('chatbox').className = 'col-3'
@@ -197,7 +195,6 @@ export default {
 			else{
 				document.getElementById('room').className = 'col-12'
 				document.getElementById('participants-list').style.display = 'none'
-				document.getElementById('room').className = 'd-flex'
 				document.getElementById('participants-list').className = ''
 			}
 		},
@@ -353,9 +350,6 @@ a {
 	width: 55px;
 	margin: auto 2px;
 }
-.button:hover {
-	color: black;
-}
 .button-wrapper .button {
 	border-radius: 15px;
 }
@@ -398,20 +392,10 @@ a {
 	position: absolute;
 	right: 10px;
 }
-.button-wrapper {
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%);
-}
 </style>
 <style scoped>
 #room{
 	min-width: 310px;
-	background-color: #EFEEE9;
-	height: 100vh;
-	display: grid;
-	justify-content: center;
-	align-content: start;
 }
 /* chatting */
 
@@ -622,9 +606,10 @@ a {
 	border: none;
 	outline: none !important;
 }
-/* scoped 끝 */
+
 </style>
 <style>
+
 .participant {
 	margin: 0px 2px;
   display: inline-block;
@@ -664,4 +649,5 @@ video {
 	height: 50px;
 	background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
 }
+
 </style>
