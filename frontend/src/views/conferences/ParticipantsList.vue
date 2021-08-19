@@ -1,6 +1,6 @@
 <template>
   <div id="participants-list" class="col-3" style="text-align:center;display: none;">
-    <button class="button" type="button" style="width:80%; height:40px; margin:10px auto; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참석자 명단</button>
+    <button class="button" type="button" style="width:80%; height:40px; margin:10px auto; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참가자 명단</button>
     <div id="partlist" style="margin: auto;"></div>
   </div>
 </template>
