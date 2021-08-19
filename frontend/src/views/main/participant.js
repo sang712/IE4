@@ -19,7 +19,18 @@ import * as Conference from './conference.js'
 
 const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
+var videoStream;
+var state;
 
+
+export function onLocalStreamInParticipant(stream) {
+  videoStream = stream;
+  return 1;
+}
+
+export function setStateParti(isState) {
+  state = isState;
+}
 
 export function Participant(name, userId) {
 	this.name = name;
@@ -44,6 +55,11 @@ export function Participant(name, userId) {
 	video.id = 'video-' + name;
 	video.autoplay = true;
 	video.controls = false;
+
+  if(state == 'share') {
+    console.log("video share >>>>> ", videoStream)
+    video.srcObject = videoStream;
+  }
 
 
 	this.getElement = function () {

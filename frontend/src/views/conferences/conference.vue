@@ -106,10 +106,13 @@
 import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
+import * as participant from '../main/participant.js'
+// import onLocalStreamInParticipant from '../main/participant.js'
 import ScreenHandler from './screen-handler.js';
 import MediaHandler from './media-handler.js'
 import PeerHandler from './peer-handler'
 import { useStore } from 'vuex'
+import { Participant } from '../main/participant.js';
 
 export default {
   name: 'Conference',
@@ -276,7 +279,9 @@ export default {
       // const $video = document.querySelector('#video-screenShare');
       // $video.srcObject = stream;
 
-      conference.onLocalStream(stream);
+      conference.setState('share');
+      participant.setStateParti('share');
+      participant.onLocalStreamInParticipant(stream);
 
       conference.register(true);
     },
