@@ -148,7 +148,7 @@ export default {
         { question: "키우고 있는 애완동물의 이름은?" },
         { question: "가장 친한 친구의 이름은?" },
         { question: "본인의 별명은?" },
-        { question: "장례희망은?" },
+        { question: "장래희망은?" },
         { question: "가장 좋아하는 음식은?" },
       ],
       form: {
