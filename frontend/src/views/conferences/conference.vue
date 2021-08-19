@@ -27,59 +27,6 @@
 					<div class="flex-spacer" style="flex-basis: 100%; height:0; order: -1;"></div>
 				</div>
 			</div>
-			<div id="chatbox" class="col-3" style="display: none;">
-				<div class="main-wrapper">
-					<div class="cgl-live-chat">
-						<div class="chat-wrapper">
-							<div class="chat-title">우리반 채팅</div>
-							<div class="chat-view">
-								<div class="chat-item d-flex">
-										<img src="https://img6.yna.co.kr/photo/cms/2020/12/03/41/PCM20201203000041990_P2.jpg" alt="">
-										<div class="p-1">
-											<div class="d-flex align-items-end">
-												<div class="sender-name"><a href="#">박서준</a></div>
-												<div class="chat-time">09:54</div>
-											</div>
-											<div class="chat-text">안녕하세요</div>
-										</div>
-								</div>
-								<div class="chat-item d-flex">
-									<img src="http://www.nbnnews.co.kr/news/photo/201904/253101_305383_2748.jpg" alt="">
-									<div class="p-1">
-										<div class="d-flex align-items-end">
-											<div class="sender-name admin-tag">박민영 선생님</div>
-											<div class="chat-time">09:54<i class="fas fa-thumbtack"></i></div>
-										</div>
-										<div class="chat-text">애들아 반가워 ~ !</div>
-									</div>
-								</div>
-								<div class="chat-item d-flex">
-									<img class="chat-profile-img" src="http://www.sisaweek.com/news/photo/201801/101675_82604_3521.jpg" alt="">
-									<div class="chat-text-wrapper p-1">
-										<div class="chat-name-tag d-flex align-items-end">
-											<div class="sender-name"><a href="#">강호동</a></div>
-											<div class="chat-time">09:54<i class="fas fa-thumbtack"></i></div>
-										</div>
-										<div class="chat-text">안녕하십니까</div>
-									</div>
-								</div>
-							</div>
-							<div class="chat-message">
-								<form action="#">
-									<div class="input-group align-items-center">
-										<input type="text" class="form-control" placeholder="여기에 메시지를 입력하세요">
-										<div class="input-group-append">
-											<button class="" type="button" id="button-addon2">
-												<img src="https://github.com/suryavmds/Live-chat-HTML-design--like-YT-chat-/blob/master/assets/img/send-btn.svg?raw=true" alt="">
-											</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 			<ParticipantsList />
 			<div id="footer" style="display: none;">
 				<div class="button-wrapper">
