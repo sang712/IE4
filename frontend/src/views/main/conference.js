@@ -271,13 +271,13 @@ export function onExistingParticipants(msg) {
     // this statement verifies chrome extension availability
     // if installed and available then it will invoke extension API
     // otherwise it will fallback to command-line based screen capturing API
-    if (chromeMediaSource == 'desktop' && !sourceId) {
-      getSourceId(function() {
-        screen_constraints.mandatory.chromeMediaSourceId = sourceId;
-        callback(sourceId == 'PermissionDeniedError' ? sourceId : screen_constraints);
-      });
-      return;
-    }
+    // if (chromeMediaSource == 'desktop' && !sourceId) {
+    //   getSourceId(function() {
+    //     screen_constraints.mandatory.chromeMediaSourceId = sourceId;
+    //     callback(sourceId == 'PermissionDeniedError' ? sourceId : screen_constraints);
+    //   });
+    //   return;
+    // }
 
 
     // this statement sets gets 'sourceId" and sets "chromeMediaSourceId"
