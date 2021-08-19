@@ -274,7 +274,7 @@ export function onExistingParticipants(msg) {
     if (chromeMediaSource == 'desktop' && !sourceId) {
       getSourceId(function() {
         screen_constraints.mandatory.chromeMediaSourceId = sourceId;
-        callback(sourceId == 'PermissionDeniedError' ? sourceId : null, screen_constraints);
+        callback(sourceId == 'PermissionDeniedError' ? sourceId : screen_constraints);
       });
       return;
     }
@@ -287,7 +287,7 @@ export function onExistingParticipants(msg) {
 
 
     // now invoking native getUserMedia API
-    callback(null, screen_constraints);
+    callback(screen_constraints);
   }
 
 
