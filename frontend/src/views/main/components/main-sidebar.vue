@@ -44,6 +44,7 @@ export default {
        console.log('state.nProfileImgUrl >>>>>>>' , state.nProfileImgUrl)
       if(state.nProfileImgUrl == null) {
         console.log('profileImgUrl >>  if null  안으로 들어옴')
+        console.log('state.nProfileImgUrl >> ', state.nProfileImgUrl)
         if(state.nSex == '남자' && state.nPosition == '교사') {
           return 'ie4_upload/profileImg/no_profile_img_man.png';
         } else if(state.nSex == '여자' && state.nPosition == '교사') {
@@ -53,6 +54,7 @@ export default {
         }
       }else{
         console.log('profileImgUrl >> else 안으로 들어옴')
+        console.log('state.nProfileImgUrl >> ', state.nProfileImgUrl)
         return state.nProfileImgUrl;
       }
     });
