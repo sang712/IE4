@@ -57,17 +57,16 @@ export function Participant(name, userId) {
 	function switchContainerClass() {
 		if (container.className === PARTICIPANT_CLASS) {
 			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
-			container.style = "display: block; border: thick double #32a1ce; width: 1000px; height: 500px"
+			container.style = "display: block; border: thick double #32a1ce; width: 900px; height: 504px"
       elements.forEach(function (item) {
 				item.className = PARTICIPANT_CLASS;
-        item.style = "display: block;   width: 300px; height: 168px;"
-
+        item.style = "display: inline-block; width: 300px; height: 168px;"
 			});
 
 			container.className = PARTICIPANT_MAIN_CLASS;
 		} else {
 			container.className = PARTICIPANT_CLASS;
-      container.style = "border: none; display: block;   width: 300px; height: 168px;"
+      container.style = "border: 1px solid; display: inline-block; width: 300px; height: 168px;"
 		}
 	}
 

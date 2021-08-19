@@ -21,7 +21,7 @@
 					</p>
 				</form>
 			</div>
-			<div id="room" class="col-12" style="display: none;" >
+			<div id="room" class="col-12" style="display: none; overflow-y: scroll;" >
 				<h2 id="room-header" style="margin: 10px auto;"></h2>
 				<div id="participants"></div>
 			</div>
@@ -560,6 +560,9 @@ a {
 	border-radius: 10px;
 	overflow: hidden;
 	position: relative;
+}
+.participants {
+	padding-bottom: 50px;
 }
 video {
 	width: 100%;
