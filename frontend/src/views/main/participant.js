@@ -49,7 +49,7 @@ export function Participant(name, userId) {
 	container.appendChild(span);
 	container.onclick = function() {
     console.log("화면을 누르기 성공맨~")
-    container.style = "display: block; border: thick double #32a1ce;"
+    //container.style = "display: block; border: thick double #32a1ce;"
     switchContainerClass();
   }
     document.getElementById('participants').appendChild(container);
