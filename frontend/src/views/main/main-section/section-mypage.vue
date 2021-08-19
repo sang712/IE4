@@ -153,16 +153,16 @@ export default {
   }
   .section-mypage {
     background-color: #efeee9 ;
-    margin: 5px 5px;
+    margin: 5px 1px;
     height: 70vh;
-    width: 83vw;
+    width: 99.8%;
+    padding: 10px;
   }
   .mypage-in-background {
     background-color: #ffffff ;
     height: 52vh;
     width: 80vw;
     margin: 15px 5px 0px 5px;
-    overflow-y: scroll;
   }
   .profile-img{
     margin: 35px auto;
@@ -179,10 +179,15 @@ export default {
   }
   .mypage-second-background {
     background-color: #efeee9 ;
-    margin-top: 30px;
-    margin-right: 60px;
-    height: 430px;
+    margin: 20px 50px 20px 15px;
+    height: 90%;
     width: 55vw;
+    padding: 15px;
+    overflow-y: scroll;
   }
-
+</style>
+<style scoped>
+.el-button {
+  height: 50%;
+}
 </style>
