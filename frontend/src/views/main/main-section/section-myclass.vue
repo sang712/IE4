@@ -3,7 +3,8 @@
     <h1 class="myclass-title">우리반 정보</h1>
     <div class="myclass-content">
       <div class="myclass-profile">
-        <img class="myclass-profile-image" :src="classMemList[0].profileImgUrl" :alt="classMemList[0].name+'선생님의 프로필 사진'">
+        <img class="myclass-profile-image" v-if="classMemList[0].profileImgUrl != null" :src="classMemList[0].profileImgUrl" :alt="classMemList[0].name+'선생님의 프로필 사진'">
+        <img class="myclass-profile-image" v-else :src="'ie4_upload/profileImg/no_profile_img_man.png'" :alt="classMemList[0].name+'선생님의 프로필 사진'">
         <div class="myclass-profile-name">교사: {{ classMemList[0].name }}</div>
       </div>
       <br>
