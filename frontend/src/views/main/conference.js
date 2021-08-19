@@ -232,11 +232,12 @@ export function onExistingParticipants(msg) {
 	// var participant = new Participant.Participant(name, userId);
 	// participants[name] = participant;
 
-  if(msg.name == 'shareScreen') {
-    var video = videoStream;
-    console.log("videoStream >>>>>> ", videoStream);
-    console.log("video >>>>>>> ", video);
-  } else var video = participant.getVideoElement();
+  // if(msg.name == 'shareScreen') {
+  //   var video = videoStream;
+  //   console.log("videoStream >>>>>> ", videoStream);
+  //   console.log("video >>>>>>> ", video);
+  // } else
+  var video = participant.getVideoElement();
 
   // if(msg.name == 'shareScreen') {
   //   var options = {
@@ -247,48 +248,6 @@ export function onExistingParticipants(msg) {
   //   }
   // } else  {
   // }
-
-  function getScreenConstraints(callback) {
-    console.log("getScreenConstraints is getting called again...");
-    var firefoxScreenConstraints = {
-      mozMediaSource: 'window',
-      mediaSource: 'window'
-    };
-
-
-      // this statement defines getUserMedia constraints
-      // that will be used to capture content of screen
-    var screen_constraints = {audio: false, video: {mandatory: {
-
-      chromeMediaSource: chromeMediaSource,
-      maxWidth: screen.width > 1920 ? screen.width : 1920,
-      maxHeight: screen.height > 1080 ? screen.height : 1080
-      }}
-
-    };
-
-
-    // this statement verifies chrome extension availability
-    // if installed and available then it will invoke extension API
-    // otherwise it will fallback to command-line based screen capturing API
-    // if (chromeMediaSource == 'desktop' && !sourceId) {
-    //   getSourceId(function() {
-    //     screen_constraints.mandatory.chromeMediaSourceId = sourceId;
-    //     callback(sourceId == 'PermissionDeniedError' ? sourceId : screen_constraints);
-    //   });
-    //   return;
-    // }
-
-
-    // this statement sets gets 'sourceId" and sets "chromeMediaSourceId"
-    if (chromeMediaSource == 'desktop') {
-      screen_constraints.mandatory.chromeMediaSourceId = sourceId;
-    }
-
-
-    // now invoking native getUserMedia API
-    callback(screen_constraints);
-  }
 
 
   if(state == 'share') {
