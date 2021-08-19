@@ -251,44 +251,44 @@ export function onExistingParticipants(msg) {
   function getScreenConstraints(callback) {
     console.log("getScreenConstraints is getting called again...");
     var firefoxScreenConstraints = {
-    mozMediaSource: 'window',
-    mediaSource: 'window'
+      mozMediaSource: 'window',
+      mediaSource: 'window'
     };
 
 
-    // this statement defines getUserMedia constraints
-    // that will be used to capture content of screen
+      // this statement defines getUserMedia constraints
+      // that will be used to capture content of screen
     var screen_constraints = {audio: false, video: {mandatory: {
 
       chromeMediaSource: chromeMediaSource,
       maxWidth: screen.width > 1920 ? screen.width : 1920,
       maxHeight: screen.height > 1080 ? screen.height : 1080
-  }}
+      }}
 
-  };
+    };
 
 
     // this statement verifies chrome extension availability
     // if installed and available then it will invoke extension API
     // otherwise it will fallback to command-line based screen capturing API
     if (chromeMediaSource == 'desktop' && !sourceId) {
-    getSourceId(function() {
-    screen_constraints.mandatory.chromeMediaSourceId = sourceId;
-    callback(sourceId == 'PermissionDeniedError' ? sourceId : null, screen_constraints);
-    });
-    return;
+      getSourceId(function() {
+        screen_constraints.mandatory.chromeMediaSourceId = sourceId;
+        callback(sourceId == 'PermissionDeniedError' ? sourceId : null, screen_constraints);
+      });
+      return;
     }
 
 
     // this statement sets gets 'sourceId" and sets "chromeMediaSourceId"
     if (chromeMediaSource == 'desktop') {
-    screen_constraints.mandatory.chromeMediaSourceId = sourceId;
+      screen_constraints.mandatory.chromeMediaSourceId = sourceId;
     }
 
 
     // now invoking native getUserMedia API
     callback(null, screen_constraints);
-    }
+  }
 
 
   if(state == 'share') {
