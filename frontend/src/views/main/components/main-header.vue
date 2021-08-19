@@ -110,7 +110,6 @@ export default {
 
     const clickLogout = () => {
       const jwt = localStorage.getItem('jwt')
-      console.log(jwt)
       localStorage.removeItem('jwt')
       localStorage.removeItem('id')
       localStorage.removeItem('classId')
@@ -121,9 +120,6 @@ export default {
       localStorage.removeItem('sex')
       localStorage.removeItem('snum')
       localStorage.removeItem('teacherName')
-      // router.push('/')
-      // location.reload()
-      // router.push({name:'home'})
       router.go()
     }
 
