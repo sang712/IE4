@@ -271,7 +271,7 @@ a {
 	overflow: hidden;
 	position: relative;
 }
-.participants {
+#participants {
 	padding-bottom: 50px;
 	display: flex;
 	flex-wrap: wrap;
