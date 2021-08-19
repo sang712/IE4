@@ -404,6 +404,10 @@ a {
 #room{
 	min-width: 310px;
 	background-color: #EFEEE9;
+	height: 100vh;
+	display: grid;
+	justify-content: center;
+	align-content: start;
 }
 /* chatting */
 
