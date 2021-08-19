@@ -85,11 +85,6 @@
 					<button class="button" @click="micOff" type="button" id="button-micOff" v-else><i class="fas fa-microphone-slash"></i></button>
 					<button class="button" @click="displayOn" type="button" id="button-videoOn" v-if="true"><i class="fas fa-video"></i></button>
 					<button class="button" @click="displayOff" type="button" id="button-videoOff" v-else><i class="fas fa-video-slash"></i></button>
-					<!-- <button class="button" @click="share()" type="button" id="button-share"><i class="far fa-share-square"></i></button> -->
-					<!-- <button class="button" type="button" id="button-session"><i class="fas fa-th-large"></i></button> -->
-					<!-- <button class="button" type="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button> -->
-					<!-- <button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"></i></button> -->
-					<!-- <button class="button" type="button" id="button-record"><i class="far fa-dot-circle"></i></button> -->
 					<button class="button" type="button" id="button-leave" @mouseup="leaveRoom" value="Leave room"><i class="fas fa-door-open"></i></button>
 				</div>
 				<div class="button-wrapper2">
@@ -103,13 +98,9 @@
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
-import MediaHandler from './media-handler.js'
-import PeerHandler from './peer-handler'
 import { useStore } from 'vuex'
-import { Participant } from '../main/participant.js';
 
 export default {
   name: 'Conference',
@@ -125,20 +116,6 @@ export default {
   },
 	data() {
 		return {
-			constraints : {
-				audio : true,
-				video : {
-					mandatory : {
-						maxWidth : 320,
-						maxFrameRate : 15,
-						minFrameRate : 15
-					}
-				},
-			},
-      screenHandler: '',
-			mediaHandler:'',
-			peerHandler:'',
-			localStream:'',
 			store:'',
 		}
 	},
@@ -152,35 +129,15 @@ export default {
       if(localStorage.getItem('position') == "교사"){
         this.store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'close'})
         .then(({ data }) => {
-          console.log('updateConferenceActive complete')
-          console.log(data)
           store.commit('rootMain/setConferenceActive', data, {root: true})
         })
         .catch(function (err) {
-          console.log("updateConferenceActive error", err)
           Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
         })
       }
 
 			location.reload();
     },
-		openChatBox(){
-			if (document.getElementById('chatbox').style.display == 'none')
-			{
-				document.getElementById('room').className = 'col-9'
-				document.getElementById('room').style.display = 'grid'
-				document.getElementById('chatbox').className = 'col-3'
-				document.getElementById('chatbox').style.display = 'block'
-				document.getElementById('participants-list').className = 'col-3'
-				document.getElementById('participants-list').style.display = 'none'
-				}
-			else{
-				document.getElementById('chatbox').className = ''
-				document.getElementById('chatbox').style.display = 'none'
-				document.getElementById('room').className = 'col-12'
-				document.getElementById('room').style.display = 'grid'
-			}
-		},
 		openParticipantsList() {
 			if (document.getElementById('participants-list').style.display == 'none')
 			{
@@ -198,49 +155,9 @@ export default {
 				document.getElementById('participants-list').style.display = 'none'
 			}
 		},
-		async getLocalStream() {
-			peerHandler = new PeerHandler
-
-			try {
-				const stream = await peerHandler.getUserMedia({
-					audio: false,
-					video: true,
-				});
-				this.localStream = stream;
-			} catch (err) {
-				error(err);
-			}
-		},
-
-		displayOff() {
-			// const localStream = this.getLocalStream()
-			console.log('pauseVideo', arguments);
-			this.localStream.getVideoTracks()[0].enabled = false;
-
-  	},
-		displayOn() {
-			// const localStream = this.getLocalStream()
-			console.log('resumeVideo', arguments);
-			this.localStream.getVideoTracks()[0].enabled = true;
-
-		},
-		micOn() {
-			// const localStream = this.getLocalStream()
-			console.log('unmuteAudio', arguments);
-			this.localStream.getAudioTracks()[0].enabled = true;
-
-  	},
-		micOff() {
-			// const localStream = this.getLocalStream()
-			console.log('muteAudio', arguments);
-			this.localStream.getAudioTracks()[0].enabled = false;
-
-  	},
   },
 	mounted: function () {
     this.store = useStore()
-
-		console.log('마운트 되었음')
 
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
@@ -339,216 +256,7 @@ a {
 	justify-content: center;
 	align-content: start;
 }
-/* chatting */
 
-#chatbox{
-  background-color: #ffffff;
-	padding: 0;
-  margin: 0;
-	height: 100vh;
-}
-.main-wrapper{
-	/* background-color: #080A0D;
-	height: 100vh;
-	width: 100%; */
-	display: grid;
-	place-items:center;
-	height: 100%;
-}
-::-webkit-scrollbar {
-  width: 6px;
-  height: 4px;
-  background-color: #27282F;
-}
-
-::-webkit-scrollbar-thumb {
-  cursor: pointer;
-  background: #40404B;
-  border-radius: 30px;
-}
-/*-----------------------라이브 채팅-------------------------*/
-.cgl-live-chat{
-	width: 100%;
-	height: 100%;
-}
-.cgl-live-chat .chat-wrapper {
-	background-color: #141921;
-	border: 0px solid #141921;
-	box-sizing: border-box;
-	height: 100%;
-	width: 100%;
-	position: relative;
-}
-
-.cgl-live-chat .chat-wrapper .chat-title {
-	padding: 10px;
-	font-family: Hind Madurai;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 20px;
-	line-height: 28px;
-	color: #9FADC5;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view {
-	background-color: #11151A;
-	display: flex;
-	flex-direction: column;
-	min-height: 77vh;
-	max-height: 77vh;
-	overflow-y: auto;
-	/*    justify-content: flex-end;*/
-}
-
-.cgl-live-chat .chat-wrapper .chat-item {
-	padding: 5px;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view img {
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view .sender-name a {
-	font-family: Hind Madurai;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 14px;
-	line-height: 14px;
-	color: #ADADAD;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view .sender-name a:hover {
-	color: #FFFFFF;
-	font-weight: bold;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view .admin-tag a {
-	background-color: #4368EA !important;
-	color: #FFFFFF !important;
-	border-radius: 9px;
-	padding: 0 8px;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view .chat-time {
-	font-family: Hind Madurai;
-	font-style: normal;
-	font-weight: 500;
-	font-size: 12px;
-	line-height: 11px;
-	padding-left: 8px;
-	padding-right: 8px;
-	color: #585C61;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view .chat-time i {
-	display: none;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view .chat-pinned {
-	border: 2px solid #7389DC;
-	box-sizing: border-box;
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-	background-color: #11151A;
-}
-
-.chat-sticky {
-	position: fixed;
-	top: 0;
-	width: 100%;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view .chat-pinned .chat-time i {
-	display: inline;
-}
-
-.cgl-live-chat .chat-wrapper .chat-view .chat-text {
-	font-family: Hind Madurai;
-	font-style: normal;
-	font-weight: lighter;
-	font-size: 14px;
-	line-height: 17px;
-	padding: 3px;
-	color: #9FADC5;
-}
-
-.cgl-live-chat .chat-wrapper .chat-message {
-	background-color: #23272D;
-	padding: 6px;
-	position: absolute;
-	width: 100%;
-	bottom: 50px;
-}
-
-.cgl-live-chat .chat-wrapper .chat-message input {
-	background-color: transparent;
-	border: none !important;
-	font-family: Hind Madurai;
-	font-style: normal;
-	font-weight: 300;
-	font-size: 16px;
-	line-height: 22px;
-	color: #585C61;
-	outline: none !important;
-}
-
-.cgl-live-chat .chat-wrapper .chat-message button {
-	background-color: transparent;
-	border: none;
-	outline: none;
-}
-.cgl-live-chat .chat-wrapper .dropdown-menu{
-	background-color: #141921;
-}
-.cgl-live-chat .chat-wrapper .dropdown-menu .dropdown-item{
-	color: #9FADC5;
-	font-family: Hind Madurai;
-	font-style: normal;
-	font-weight: 300;
-}
-.cgl-live-chat .chat-wrapper .dropdown-menu .dropdown-item:hover{
-	background-color: #1C232E;
-}
-@media(max-width:450px) {
-	.cgl-live-chat .chat-wrapper .chat-view {
-		max-height: 300px;
-	}
-
-	.cgl-live-chat .chat-wrapper .chat-view img {
-		width: 30px;
-		height: 30px;
-	}
-
-	.cgl-live-chat .chat-wrapper .chat-view .sender-name a {
-		font-size: 10px;
-		line-height: 10px;
-	}
-
-	.cgl-live-chat .chat-wrapper .chat-view .chat-time {
-		font-weight: 500;
-		font-size: 10px;
-		line-height: 10px;
-		padding-left: 8px;
-		padding-right: 8px;
- 	}
-
-	.cgl-live-chat .chat-wrapper .chat-view .chat-text {
-		font-size: 12px;
-		line-height: 12px;
-		padding: 3px;
-	}
-}
-
-.dropdown-btn{
-	background-color: transparent;
-	color: #585C61;
-	border: none;
-	outline: none !important;
-}
-/* scoped 끝 */
 </style>
 <style>
 .participant {
@@ -578,7 +286,7 @@ video {
 	color: white;
 	font-weight: bold;
 	background: rgba(150,150,150, 0.8);
-	z-index: 1;
+	z-index: 0;
 	width: 100%;
 	float: left;
 	position: absolute;
@@ -592,5 +300,9 @@ video {
 	width: 100%;
 	height: 50px;
 	background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
+}
+#room::-webkit-scrollbar {
+	width: 0px;
+	background-color: lightgray;
 }
 </style>

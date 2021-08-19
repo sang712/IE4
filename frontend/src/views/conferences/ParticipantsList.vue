@@ -1,20 +1,7 @@
 <template>
   <div id="participants-list" class="col-3" style="text-align:center;display: none;">
-    <!-- <div id="participants-title">참석자 명단</div> -->
     <button class="button" type="button" style="width:80%; height:40px; margin:10px auto; font-size:20px; padding: auto;font-weight:bold" @click="getParticipant()">참석자 명단</button>
-    <!-- <div id="participants-views"> -->
     <div id="partlist" style="margin: auto;"></div>
-      <!-- <li class="table-header">
-        <div class="header-title" style="text-align:left">no</div>
-        <div class="header-title" style="text-align:center">이름</div>
-        <div class="header-author">userId</div>
-      </li> -->
-      <!-- <li v-for="(person, index) in partList" v-bind:key="person.userId" class="table-row">
-        <div class="row-title">{{index}}</div>
-        <div class="row-title">{{person.name}}</div>
-        <div class="row-author">{{person.userId}}</div>
-      </li> -->
-    <!-- </div> -->
   </div>
 </template>
 
@@ -26,22 +13,15 @@ import $axios from 'axios'
 export default {
   name: 'ParticipantsList',
   setup() {
-    // let participants = ref('');
     const state = reactive({
       participants: '',
       partList : conference.getParticipants(),
     })
     const getParticipant = () => {
-      console.log('버튼 클릭')
-      // state.participants = ''
-      // state.participants = conference.getParticipants()
       const part = conference.getParticipants()
-      console.log("conference.getParticipants() part >>>>> ", part)
-      console.log("conference.getParticipants() state.partList >>>>> ", state.partList)
 
       const ul = document.getElementById('partlist');
       const items = ul.getElementsByTagName('li');
-      console.log("items 길이는 >>>> ", items.length);
       if(items.length > 0){
         while(items.length>0){
           items[0].remove();
@@ -53,7 +33,6 @@ export default {
     }
 
     const createParticipant = (participant) => {
-      console.log("추가 되나요", participant, "참석자 이름", participant.name,"참석자 userId", participant.userId,)
       const participantsViews = document.getElementById('participants-views')
 
       const li = document.createElement("li");
@@ -65,7 +44,6 @@ export default {
 
       li.onclick = function(){
 
-        console.log("클릭>>> ", participant.name);
         let position = localStorage.getItem("position");
         let pname = participant.name.substring(0, participant.name.length-4);
         if((position == '교사') && (pname != localStorage.getItem('name'))){
@@ -76,12 +54,7 @@ export default {
             let token = localStorage.getItem('jwt')
             let header = {headers:{'Authorization':`Bearer ${token}`} }
             $axios.post(url, header)
-            .then(function () {
-              console.log('점수가 입력되었습니다.')
-            })
-            .catch(function (err) {
-              console.log("give point error", err)
-            })
+
           }else{
             return;
           }

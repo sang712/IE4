@@ -32,15 +32,11 @@ export default {
 
     store.dispatch('rootMain/requestClassMem', localStorage.getItem('jwt'))
     .then(function (result) {
-      console.log("여기 안와?")
-      console.log(result.data)
       store.dispatch('rootMain/setClassMemList', result.data)
     })
     .catch(function (err) {
       console.log("requestClassMem error")
     })
-
-    console.log("classMemList >>>> " + state.classMemList)
 
     return {
       ...toRefs(state)
