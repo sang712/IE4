@@ -65,15 +65,6 @@ export default {
   methods : {
     register() {
       conference.register()
-      .then(() => {
-        setInterval(conference.sendMessage(
-          message = {
-          id : 'reconnect',
-          name : this.name,
-          room : room,
-          userId : userId,
-        }), 30000);
-      })
     },
     leaveRoom() {
       conference.leaveRoom()
