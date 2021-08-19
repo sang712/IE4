@@ -2,8 +2,8 @@
   <div class="section-home d-flex align-items-stretch">
     <div class="col d-flex justify-content-center row">
       <div class="meeting-preview d-flex justify-content-center row" >
-        <div class="host-profile" v-if="position=='학생' && (nTeacherProfileImgUrl != 'null' || nTeacherProfileImgUrl != null)" :style="{backgroundImage:`url(${nTeacherProfileImgUrl})`}"></div>
-        <div class="host-profile" v-else-if="position=='학생' && (nTeacherProfileImgUrl == 'null' || nTeacherProfileImgUrl == null)" :style="{backgroundImage:`url('ie4_upload/profileImg/no_profile_img_man.png')`}"></div>
+        <div class="host-profile" v-if="position=='학생' && nTeacherProfileImgUrl != 'null'" :style="{backgroundImage:`url(${nTeacherProfileImgUrl})`}"></div>
+        <div class="host-profile" v-else-if="position=='학생' && nTeacherProfileImgUrl == 'null'" :style="{backgroundImage:`url('ie4_upload/profileImg/no_profile_img_man.png')`}"></div>
         <div class="conference-img" v-else style="margin-top: 5%"></div>
         <h1 class="text-center" v-if="position=='학생'">{{ nTeacherName }} 선생님</h1>
         <h1 class="text-center">{{ nGrade }}학년 {{ nClass }}반 수업을 시작합니다.</h1>
