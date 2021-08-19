@@ -246,7 +246,7 @@ export default {
             snum: state.form.snum,
             sex: state.form.sex,
             phone: state.form.phone,
-            parents_phone: state.form.parents_phone,
+            parentsPhone: state.form.parents_phone,
             address: state.form.address,
             passwordQuestion: state.form.password_question,
             passwordAnswer: state.form.password_answer,
