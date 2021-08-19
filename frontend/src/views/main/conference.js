@@ -232,11 +232,12 @@ export function onExistingParticipants(msg) {
 	// var participant = new Participant.Participant(name, userId);
 	// participants[name] = participant;
 
-  if(msg.name == 'shareScreen') {
-    var video = videoStream;
-    console.log("videoStream >>>>>> ", videoStream);
-    console.log("video >>>>>>> ", video);
-  } else var video = participant.getVideoElement();
+  // if(msg.name == 'shareScreen') {
+  //   var video = videoStream;
+  //   console.log("videoStream >>>>>> ", videoStream);
+  //   console.log("video >>>>>>> ", video);
+  // } else
+  var video = participant.getVideoElement();
 
   // if(msg.name == 'shareScreen') {
   //   var options = {
@@ -255,8 +256,18 @@ export function onExistingParticipants(msg) {
       localVideo: video,
       mediaConstraints: constraints,
       onicecandidate: participant.onIceCandidate.bind(participant),
-      sendSource: 'screen'
+      // sendSource: 'screen'
     }
+
+
+
+    // getScreenConstraints = function(callback) {
+    //   getScreenConstraints(function(error, screen_constraints) {
+    //       if (!error) {
+    //           screen_constraints = connection.modifyScreenConstraints(screen_constraints);
+    //           callback(error, screen_constraints);
+    //       }
+    // });
 
     participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
       function (error) {
@@ -266,6 +277,7 @@ export function onExistingParticipants(msg) {
           this.generateOffer (
         participant.offerToReceiveVideo.bind(participant));
     });
+
   } else {
     var options = {
           localVideo: video,

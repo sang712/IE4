@@ -14,6 +14,9 @@
         <div class="row-author">{{board.userName}}</div>
         <div class="row-date">{{board.regDt.substr(0,10)}}</div>
       </li>
+      <li v-if="board.list.length <= 0" class="table-row">
+        <div class="row-blank">작성된 글이 없습니다.</div>
+      </li>
     </ul>
     <div class="lower-wrapper">
       <el-pagination
@@ -216,6 +219,10 @@ li .header-author, .row-author{
 li .header-date, .row-date{
   text-align: center;
   flex-basis: 15%;
+}
+li .row-blank {
+  text-align: center;
+  flex-basis: 100%;
 }
 .lower-wrapper {
   position: relative;

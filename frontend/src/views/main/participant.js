@@ -47,8 +47,12 @@ export function Participant(name, userId) {
 
 	container.appendChild(video);
 	container.appendChild(span);
-	container.onclick = switchContainerClass;
-	document.getElementById('participants').appendChild(container);
+	container.onclick = function() {
+    console.log("화면을 누르기 성공맨~")
+    container.style = "display: block; border: thick double #32a1ce;"
+    switchContainerClass();
+  }
+    document.getElementById('participants').appendChild(container);
 
 	span.appendChild(document.createTextNode(name));
 
@@ -71,6 +75,7 @@ export function Participant(name, userId) {
 	}
 
 	function switchContainerClass() {
+    console.log("메인화면 바꾸기 입장맨~")
 		if (container.className === PARTICIPANT_CLASS) {
 			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
 			elements.forEach(function (item) {

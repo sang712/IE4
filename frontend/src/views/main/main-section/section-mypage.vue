@@ -45,8 +45,8 @@
       </div>
     </div>
     <div class="d-flex justify-content-evenly">
-      <el-button @click="updateUser" style="width: 13%; height: 70%; font-size: 120%" >수정</el-button>
-      <el-button @click="clickSecession" style="width: 13%; height: 70%; font-size: 120%" >탈퇴</el-button>
+      <el-button @click="updateUser" style="width: 13%; height: 50%; font-size: 120%" >수정</el-button>
+      <el-button @click="clickSecession" style="width: 13%; height: 50%; font-size: 120%" >탈퇴</el-button>
     </div>
     <secession-dialog
       :open="secession.secessionDialogOpen"
