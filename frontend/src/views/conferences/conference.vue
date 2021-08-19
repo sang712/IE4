@@ -23,7 +23,9 @@
 			</div>
 			<div id="room" class="col-12" style="display: none; overflow-y: scroll;" >
 				<h2 id="room-header" style="margin: 10px auto;"></h2>
-				<div id="participants"></div>
+				<div id="participants">
+					<div class="flex-spacer" style="flex-basis: 100%; height:0; order: -1;"></div>
+				</div>
 			</div>
 			<div id="chatbox" class="col-3" style="display: none;">
 				<div class="main-wrapper">
@@ -552,7 +554,7 @@ a {
 </style>
 <style>
 .participant {
-	margin: 0px 2px;
+	margin: 2px 2px;
   display: inline-block;
   width: 300px;
 	height: 168px;
@@ -563,6 +565,9 @@ a {
 }
 .participants {
 	padding-bottom: 50px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 video {
 	width: 100%;
