@@ -1,6 +1,5 @@
 package com.ssafy.api.service;
 
-
 import com.ssafy.api.response.EduClassMem;
 import com.ssafy.db.entity.EduClass;
 import org.springframework.web.multipart.MultipartHttpServletRequest;

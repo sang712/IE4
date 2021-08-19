@@ -51,9 +51,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u.password FROM User u WHERE u.id in :ids AND u.loginId = :loginId")
     Optional<String> findByIdsAndLoginId(@Param("ids")List<Integer> idList, @Param("loginId")String loginId);
 
-//    @Query(value = "SELECT u.login_id FROM User u WHERE u.id = :id IN (SELECT user_id FROM student WHERE snum=:snum) AND name = :name AND phone = :phone", nativeQuery = true)
-//    Optional<String> findByIdAndSnumAndPhone(@Param("name")String name, @Param("snum")int snum, @Param("phone")String phone);
-
 //    @Query("SELECT u.name, u.profileImgUrl FROM User u WHERE u.classId = :classId AND u.position = :position ORDER BY u.name")    --> 이건 왜 안되는 건지?
     @Query(value = "SELECT u.name, u.profile_img_url FROM user u WHERE u.class_id = :classId AND u.position = :position ORDER BY u.name", nativeQuery = true)
     Optional<List<EduClassMem>> findByClassIdAndPositionOrderByName(@Param("classId")int classId, @Param("position")String position);

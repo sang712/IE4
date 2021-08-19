@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 방 상태 수정 API ([PATCH] /classId/conferenceActive) 요청에 필요한 리퀘스트 바디 정의.
+ * 방 상태 수정 API ([Post] /api/classId/conferenceActive) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter

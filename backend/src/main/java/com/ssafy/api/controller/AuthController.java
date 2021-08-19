@@ -1,14 +1,10 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.TeacherUpdatePatchReq;
 import com.ssafy.api.response.*;
-import com.ssafy.common.auth.SsafyUserDetails;
-import com.ssafy.db.entity.EduClass;
 import com.ssafy.db.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +13,12 @@ import com.ssafy.api.service.UserService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.JwtTokenUtil;
 import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.UserRepositorySupport;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +56,6 @@ public class AuthController {
 				Student student = userService.getStudentByUserId(user.getId());
 				String teacherName = userService.getTeacherNameByClassId(user.getClassId());
 				String teacherProfileImgUrl = userService.getTeacherProfileImgUrl(user.getClassId());
-				System.out.println(teacherName);
 				return ResponseEntity.ok(StudentLoginPostRes.of(
 						user.getId(), user.getClassId(), user.getPosition(), user.getName(), student.getSnum(), user.getProfileImgUrl(), teacherProfileImgUrl, user.getSex(), teacherName, JwtTokenUtil.getToken(loginId)));
 			}else{ // 선생님

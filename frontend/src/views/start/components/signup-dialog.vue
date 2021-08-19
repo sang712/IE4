@@ -45,7 +45,7 @@
         <el-form-item prop="phone" label="휴대전화" :label-width="state.formLabelWidth">
           <el-input v-model="state.form.phone"></el-input>
         </el-form-item>
-        <el-form-item prop="Parents_phone" label="부모님번호" :label-width="state.formLabelWidth">
+        <el-form-item prop="parents_phone" label="부모님번호" :label-width="state.formLabelWidth">
           <el-input v-model="state.form.parents_phone"></el-input>
         </el-form-item>
         <el-form-item prop="address" label="주소" :label-width="state.formLabelWidth">

@@ -5,9 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 유저 회원가입 API ([PATCH] /users?id=1&classId=101) 요청에 필요한 리퀘스트 바디 정의.
- */
 @Getter
 @Setter
 @ApiModel("UserUpdatePatchRequest")

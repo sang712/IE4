@@ -67,8 +67,8 @@ export default {
 
         console.log("클릭>>> ", participant.name);
         let position = localStorage.getItem("position");
-
-        if((position == '교사') && (participant.name != localStorage.getItem('name'))){
+        let pname = participant.name.substring(0, participant.name.length-4);
+        if((position == '교사') && (pname != localStorage.getItem('name'))){
 
           if(confirm(participant.name+ "에게 3 point 입력합니다.") == true){
 
