@@ -85,7 +85,7 @@ export default {
         console.log('updateConferenceActive complete')
         console.log(data)
         store.commit('rootMain/setConferenceActive', data, {root: true})
-        router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
+        router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name') + " 선생님", grade: state.nGrade, class: state.nClass } })
       })
       .catch(function (err) {
         console.log("updateConferenceActive error", err)
