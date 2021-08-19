@@ -35,7 +35,7 @@
           </template>
           <template v-else>
             <el-form-item label="우리반 급훈">
-              <el-input v-model="mypageInfo.classMotto"></el-input>
+              <el-input v-model="classMotto"></el-input>
             </el-form-item>
           </template>
         </el-form>
@@ -82,6 +82,7 @@ export default {
 
     const state = reactive({
       mypageInfo : store.getters['rootMain/getMypageInfo'],
+      classMotto : store.getters['rootMain/getClassInfo'].classMotto,
       file : store.getters['rootMain/getMypageInfo'].profileImgUrl,
       nSex : localStorage.getItem('sex')
     });
