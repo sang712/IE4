@@ -50,7 +50,7 @@ export default {
             return state.nName.charCodeAt([1])%2 ? 'ie4_upload/profileImg/no_profile_img_student1.jpg' : 'ie4_upload/profileImg/no_profile_img_student0.jpg'
         }
       }else{
-        return '/' + state.nProfileImgUrl;
+        return state.nProfileImgUrl;
       }
     });
 
