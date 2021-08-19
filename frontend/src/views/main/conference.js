@@ -258,14 +258,14 @@ export function onExistingParticipants(msg) {
 
     // this statement defines getUserMedia constraints
     // that will be used to capture content of screen
-    var screen_constraints = {
-    mandatory: {
-    chromeMediaSource: chromeMediaSource,
-    maxWidth: screen.width > 1920 ? screen.width : 1920,
-    maxHeight: screen.height > 1080 ? screen.height : 1080
-    },
-    optional: []
-    };
+    var screen_constraints = {audio: false, video: {mandatory: {
+
+      chromeMediaSource: chromeMediaSource,
+      maxWidth: screen.width > 1920 ? screen.width : 1920,
+      maxHeight: screen.height > 1080 ? screen.height : 1080
+  }}
+
+  };
 
 
     // this statement verifies chrome extension availability
