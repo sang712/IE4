@@ -1,6 +1,5 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.BoardUpdatePatchReq;
 import com.ssafy.db.entity.Board;
 import com.ssafy.db.entity.BoardFile;
 import com.ssafy.db.repository.BoardFileRepository;
@@ -14,8 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,10 +34,8 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public BoardFile insertBoard(MultipartFile files, Board board) throws IOException {
-        System.out.println("------------------게시판 글 등록 시도-----------------" );
         Board newboard = boardRepository.save(board);
 
-//        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
         File uploadDir = new File(uploadPath + File.separator + uploadFolder);
         if (!uploadDir.exists()) uploadDir.mkdir();
 
@@ -50,17 +45,15 @@ public class BoardServiceImpl implements BoardService{
         //Random File Id
         UUID uuid = UUID.randomUUID();
         //file extension
-        String extension = FilenameUtils.getExtension(fileName); // vs FilenameUtils.getBaseName()
+        String extension = FilenameUtils.getExtension(fileName);
         String savingFileName = uuid + "." + extension;
         File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
 
-        System.out.println("파일 경로" + destFile);
         files.transferTo(destFile);
 
         // Table Insert
         String boardFileUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
         BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
-        System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
 
         return boardFileRepository.save(boardFile.toEntity());
     }
@@ -72,9 +65,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Board updateBoard(Board board) throws IOException {
-        System.out.println("업데이트 할 board >>>>>> " + board.toEntity());
         int boardId = board.getId();
-        System.out.println("업데이트 할 board Id >>>>>> " + boardId);
         Board updateboard = boardRepository.findById(boardId).get();
         updateboard.setTitle(board.getTitle());
         updateboard.setContent(board.getContent());
@@ -91,30 +82,23 @@ public class BoardServiceImpl implements BoardService{
 
         Optional<BoardFile> boardfile = boardFileRepository.findByBoardId(boardId);
 
-//        String baseDir = "C:\\Users\\multicampus\\Documents\\boardfiles";
-//        File uploadDir = new File(uploadPath + File.separator + uploadFolder);
-
         String fileName = files.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
         //file extension
-        String extension = FilenameUtils.getExtension(fileName); // vs FilenameUtils.getBaseName()
+        String extension = FilenameUtils.getExtension(fileName);
         String savingFileName = uuid + "." + extension;
         File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
 
-        System.out.println("새로운 파일 경로" + destFile);
         files.transferTo(destFile);
 
         // Table Insert
         String boardFileUrl = "ie4_upload/" + uploadFolder + "/" + savingFileName;
-        //BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
-        //System.out.println("------------------------boardFileEntity: "+boardFile.toString() +"--------------");
 
         if (boardfile.isPresent()){
-            System.out.println("boardfile >>>> try update !!!!!!!!! ");
 
             String fileUrl = boardfile.get().getFileUrl();
             if(fileUrl != null) {
-                File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+                File deleteFile = new File(uploadPath + File.separator, fileUrl);
                 if(deleteFile.exists()) deleteFile.delete();
             }
 
@@ -124,7 +108,6 @@ public class BoardServiceImpl implements BoardService{
             updateBoardFile.setFileUrl(boardFileUrl);
             return boardFileRepository.save(updateBoardFile);
         }else{
-            System.out.println("boardfile >>>> try new board file!!!!!!!!! ");
             BoardFile boardFile = new BoardFile(boardId,files.getOriginalFilename(),files.getSize(),boardFileUrl );
             return boardFileRepository.save(boardFile);
         }
@@ -139,27 +122,18 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public int deleteBoardFile(int boardId) {
-        System.out.println("in boardfile!!!!!!!!! ");
         Optional<BoardFile> boardfile = boardFileRepository.findById(boardId);
         if(boardfile.isPresent()){
-            System.out.println("in if isPrsent boardfile >>>> after findBy !!!!!!!!! " + boardfile.get());
             boardFileRepository.delete(boardfile.get());
             String fileUrl = boardfile.get().getFileUrl();
             if(fileUrl != null) {
-                File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+                File deleteFile = new File(uploadPath + File.separator, fileUrl);
                 if(deleteFile.exists()) deleteFile.delete();
             }
             return 1;
         }else{
             return 2;
         }
-//        String fileUrl = boardfile.get().getFileUrl();
-//        System.out.println("삭제할 fileURL >>>> " + fileUrl);
-//        if(fileUrl != null) {
-//            File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
-//            if(deleteFile.exists()) deleteFile.delete();
-//        }
-//        System.out.println("boardfile >>>> " + boardfile.get());
     }
 
     @Override

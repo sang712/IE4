@@ -78,11 +78,7 @@ public class UserServiceImpl implements UserService {
 		Student student = studentRepository.findByUserId(studentUpdateInfo.getId()).get();
 		User user = userRepository.findUserById(studentUpdateInfo.getId()).get();
 
-		System.out.println(studentUpdateInfo.getPassword() + "type" + studentUpdateInfo.getPassword().getClass().getName());
-
 		if(!studentUpdateInfo.getPassword().equals("null")) {
-			System.out.println("if not null here");
-			System.out.println("password > " + studentUpdateInfo.getPassword());
 			user.setPassword(passwordEncoder.encode(studentUpdateInfo.getPassword()));
 		}
 
@@ -93,7 +89,6 @@ public class UserServiceImpl implements UserService {
 			String uploadFolder = "profileImg";
 			String uploadPath = "/home/ubuntu/ie4_upload";
 
-//		String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
 			String saveUrl = "";
 
 			try {
@@ -104,10 +99,8 @@ public class UserServiceImpl implements UserService {
 
 				String fileUrl = userRepository.findById(studentUpdateInfo.getId()).orElse(null);
 
-				// fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
-				// fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
 				if(fileUrl != null) {
-					File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+					File deleteFile = new File(uploadPath + File.separator, fileUrl);
 					if(deleteFile.exists()) deleteFile.delete();
 				}
 				String fileName = file.getOriginalFilename();
@@ -119,8 +112,6 @@ public class UserServiceImpl implements UserService {
 				String extension = FilenameUtils.getExtension(fileName);
 				String savingFileName = uuid + "." + extension;
 				File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
-
-				System.out.println("파일 경로!!!>>> " + destFile);
 
 				file.transferTo(destFile);
 
@@ -155,7 +146,6 @@ public class UserServiceImpl implements UserService {
 			String uploadFolder = "profileImg";
 			String uploadPath = "/home/ubuntu/ie4_upload";
 
-//		String uploadPath = request.getServletContext().getRealPath("/");       // uploadPath가 실행될때마다 계속 새로 생성되는 곳으로 바뀌기 때문에 서버에 올리기 전에 path 수정필요!
 			String saveUrl = "";
 
 			try {
@@ -166,14 +156,11 @@ public class UserServiceImpl implements UserService {
 
 				String fileUrl = userRepository.findById(teacherUpdateInfo.getId()).orElse(null);
 
-				// fileUrl이 null이 아니라면 (이미 시간표 이미지가 업로드 되어 있다면) 기존의 이미지 삭제 후 업로드
-				// fileUrl이 null이라면 그냥 바로 업로드 ㄱㄱ
 				if(fileUrl != null) {
-					File deleteFile = new File(uploadPath + File.separator, fileUrl);       // fileUrl <- 지울 파일의 url 가져오기 respository!!
+					File deleteFile = new File(uploadPath + File.separator, fileUrl);
 					if(deleteFile.exists()) deleteFile.delete();
 				}
 
-				//
 				String fileName = file.getOriginalFilename();
 
 				// Random File Id
@@ -183,8 +170,6 @@ public class UserServiceImpl implements UserService {
 				String extension = FilenameUtils.getExtension(fileName);
 				String savingFileName = uuid + "." + extension;
 				File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
-
-				System.out.println("파일 경로!!!>>> " + destFile);
 
 				file.transferTo(destFile);
 
@@ -296,14 +281,4 @@ public class UserServiceImpl implements UserService {
 		}
 		else return null;
 	}
-
-
-//	@Override
-//	public int checkUserId(String userId) {
-//		// 디비에 유저 ID 조회
-//		User user = userRepositorySupport.findUserByUserId(userId).get();
-//
-//		if(user != null) return 1;
-//		else return 0;
-//	}
 }

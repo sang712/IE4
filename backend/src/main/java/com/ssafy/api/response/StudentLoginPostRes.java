@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 학생 로그인 API ([POST] /login) 요청에 대한 응답값 정의.
+ * 학생 로그인 API ([POST] /api/login) 요청에 대한 응답값 정의.
  */
 @Getter
 @Setter

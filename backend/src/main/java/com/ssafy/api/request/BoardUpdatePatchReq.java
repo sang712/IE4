@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 게시판 수정 API ([PATCH] /api/v1/board/{boardId}) 요청에 필요한 리퀘스트 바디 정의.
+ * 게시판 수정 API ([PATCH] /api/board/{boardId}) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter

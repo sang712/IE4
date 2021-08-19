@@ -41,7 +41,6 @@ public class BoardController {
     @ApiOperation(value = "게시판 글과 파일 등록", notes = "게시판에 글 및 파일업로드 작성한다.")
     public ResponseEntity<? extends BaseResponseBody> insertBoardFile(Board board, MultipartFile files) throws IOException {
 
-        System.out.println("boardfile 이 있나요? >>>>>" + files);
         if (files != null){
             BoardFile boardfile = boardService.insertBoard(files, board);
         }else{
@@ -55,28 +54,14 @@ public class BoardController {
     @ApiOperation(value = "게시판 글과 파일 수정", notes = "게시판에 글 및 파일업로드 수정한다.")
     public ResponseEntity<? extends BaseResponseBody> update(Board board, MultipartFile files) throws IOException {
 
-        System.out.println("boardfile 이 있나요? >>>>>" + files);
         if (files != null){
             BoardFile boardfile = boardService.updateBoard(files, board);
         }else{
-            System.out.println("수정하려는 boardfile 이 null입니다>>>>>" + files);
             Board boardfile = boardService.updateBoard(board);
         }
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
-
-//    @PatchMapping("/{boardId}")
-//    @ApiOperation(value = "게시판 글 수정", notes = "글의 제목 및 내용을 수정한다.")
-//    @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-//            @ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류") })
-//    public ResponseEntity<? extends BaseResponseBody> update(
-//            @PathVariable @ApiParam(value="게시판 정보", required = true) Integer boardId, @RequestBody @ApiParam(value="게시판 아이디", required = true) BoardUpdatePatchReq boardUpdateInfo) {
-//
-//        Board board = boardService.updateBoard(boardUpdateInfo, boardId);
-//
-//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//    }
 
     @DeleteMapping("/{boardId}")
     @ApiOperation(value = "게시물 삭제", notes = "해당 게시물을 삭제한다..")
@@ -97,37 +82,10 @@ public class BoardController {
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "글 없음"), @ApiResponse(code = 500, message = "서버 오류") })
     public ResponseEntity<BoardDetailRes> detail(@ApiIgnore Authentication authentication, @PathVariable int boardId) {
-        System.out.println("게시물 상세내용 조회 시도------->"+ boardId);
         Board board = boardService.detailBoard(boardId);
-        System.out.print("board는------------> "+ board);
         BoardFile file = boardService.detailBoardFile(boardId);
-        System.out.print("board file은------------> "+ file);
         return ResponseEntity.status(200).body(BoardDetailRes.of(board, file));
     }
-// 일반 게시글
-//    @GetMapping("/")
-//    @ApiOperation(value = "게시글 목록", notes = "게시글 리스트를 가져온다.")
-//    public List<Board> list(Model model,
-//                       @RequestParam(value = "classId") int classId,
-//                       @RequestParam(value = "boardType") String boardType) {
-//        List<Board> boardList = boardService.getBoardList(classId,boardType);
-//
-//        model.addAttribute("boardList", boardList);
-//        return boardList;
-//    }
-
-//    @GetMapping("/search")
-//    @ApiOperation(value = "게시글 검색", notes = "검색 단어로 게시글을 검색한다.")
-//    public List<Board> search(Model model,
-//                                 @RequestParam(value = "classId") int classId,
-//                                 @RequestParam(value = "boardType") String boardType,
-//                                 @RequestParam(value = "keyword") String keyword){
-//        List<Board> boardList = boardService.searchBoard(classId,boardType,keyword);
-//        model.addAttribute("boardList", boardList);
-//
-//        return boardList;
-//    }
-
 
     //pageing 목록 불러오기
     @CrossOrigin
