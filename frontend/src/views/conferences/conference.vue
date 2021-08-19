@@ -578,7 +578,7 @@ video {
 	color: white;
 	font-weight: bold;
 	background: rgba(150,150,150, 0.8);
-	z-index: 1;
+	z-index: 0;
 	width: 100%;
 	float: left;
 	position: absolute;
@@ -592,5 +592,9 @@ video {
 	width: 100%;
 	height: 50px;
 	background: linear-gradient(180deg, rgba(200,200,200,1) 40%, rgba(150,150,150,1) 100%);
+}
+#room::-webkit-scrollbar {
+	width: 0px;
+	background-color: lightgray;
 }
 </style>
