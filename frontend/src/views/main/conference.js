@@ -19,11 +19,25 @@ import WebRTC from 'vue-webrtc'
 import kurentoUtils from 'kurento-utils'
 import * as Participant from './participant.js'
 
-var ws = new WebSocket('wss://' + location.host + '/api/groupcall');
+
+
+var ws;
+// var ws = new WebSocket('wss://' + location.host + '/api/groupcall');
 var participants = {};
 let participantList= new Map();
 var name;
 var userId;
+
+// reconnect 위한 코드
+function connect() {
+  ws = new WebSocket('wss://' + location.host + '/api/groupcall');
+  // const ws = new WebSocket('wss://' + location.host + '/api/groupcall');
+  ws.onclose = () => setTimeout(connect, 1000);
+  ws.onerror = () => setTimeout(connect, 1000);
+}
+
+connect();
+// reconnect 위한 코드 [끝]
 
 window.onbeforeunload = function() {
 	ws.close();
