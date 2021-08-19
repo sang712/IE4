@@ -19,18 +19,6 @@ import * as Conference from './conference.js'
 
 const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
-var videoStream;
-var state;
-
-
-export function onLocalStreamInParticipant(stream) {
-  videoStream = stream;
-  return 1;
-}
-
-export function setStateParti(isState) {
-  state = isState;
-}
 
 export function Participant(name, userId) {
 	this.name = name;
@@ -55,12 +43,6 @@ export function Participant(name, userId) {
 	video.id = 'video-' + name;
 	video.autoplay = true;
 	video.controls = false;
-
-  if(state == 'share') {
-    console.log("video share >>>>> ", videoStream)
-    video.srcObject = videoStream;
-  }
-
 
 	this.getElement = function () {
 		return container;
@@ -99,20 +81,6 @@ export function Participant(name, userId) {
 		wp;
 		Conference.sendMessage(msg);
 	}
-
-  this.offerToReceiveVideoForScreenShare = function (error, offerSdp, wp) {
-		if (error) return console.error("sdp offer error")
-		console.log('Invoking SDP offer callback function');
-		var msg = {
-			id: "screenShare",
-			sender: name,
-      userId : localStorage.getItem("id"),
-			sdpOffer: offerSdp
-		};
-		wp;
-		Conference.sendMessage(msg);
-	}
-
 
 	this.onIceCandidate = function (candidate, wp) {
 		console.log("Local candidate" + JSON.stringify(candidate));

@@ -85,7 +85,7 @@
 					<button class="button" @click="micOff" type="button" id="button-micOff" v-else><i class="fas fa-microphone-slash"></i></button>
 					<button class="button" @click="displayOn" type="button" id="button-videoOn" v-if="true"><i class="fas fa-video"></i></button>
 					<button class="button" @click="displayOff" type="button" id="button-videoOff" v-else><i class="fas fa-video-slash"></i></button>
-					<button class="button" @click="share()" type="button" id="button-share"><i class="far fa-share-square"></i></button>
+					<!-- <button class="button" @click="share()" type="button" id="button-share"><i class="far fa-share-square"></i></button> -->
 					<!-- <button class="button" type="button" id="button-session"><i class="fas fa-th-large"></i></button> -->
 					<!-- <button class="button" type="button" id="button-imoji"><i class="far fa-grin-beam-sweat"></i></button> -->
 					<!-- <button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"></i></button> -->
@@ -106,9 +106,6 @@
 import { reactive } from '@vue/reactivity'
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
-import * as participant from '../main/participant.js'
-// import onLocalStreamInParticipant from '../main/participant.js'
-import ScreenHandler from './screen-handler.js';
 import MediaHandler from './media-handler.js'
 import PeerHandler from './peer-handler'
 import { useStore } from 'vuex'
@@ -147,10 +144,10 @@ export default {
 	},
   methods : {
     register() {
-      conference.register(false)
+      conference.register()
     },
     leaveRoom() {
-      conference.leaveRoom(false)
+      conference.leaveRoom()
 
       if(localStorage.getItem('position') == "교사"){
         this.store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'close'})
@@ -235,82 +232,11 @@ export default {
 			this.localStream.getAudioTracks()[0].enabled = false;
 
   	},
-		// stopStreamedVideo(videoElem) {
-		// 	const stream = videoElem.srcObject;
-		// 	const tracks = stream.getTracks();
-
-		// 	tracks.forEach(function(track) {
-		// 		track.stop();
-		// 	});
-
-		// 	videoElem.srcObject = null;
-		// }
-    onLocalStream(stream) {
-      console.log('onLocalStream >>>> ', stream);
-
-      // const $video = document.querySelector('#video-'+this.name);
-      // $video.srcObject = stream;
-
-      // this.name = name;
-      // this.userId = userId;
-      // var container = document.createElement('div');
-      // container.className = 'participant';
-      // container.id = 'screenShare';
-      // var span = document.createElement('span');
-      // span.className = 'participant-name'
-      // var video = document.createElement('video');
-      // var rtcPeer;
-
-      // rtcPeer;
-
-      // container.appendChild(video);
-      // container.appendChild(span);
-      // document.getElementById('participants').appendChild(container);
-
-      // span.appendChild(document.createTextNode('screenShare'));
-
-      // video.id = 'video-screenShare';
-	    // video.autoplay = true;
-	    // video.controls = false;
-
-      // var participant = new Participant.Participant('screenShare', 0);
-      // participants['screenShare'] = participant;
-
-      // const $video = document.querySelector('#video-screenShare');
-      // $video.srcObject = stream;
-
-      conference.setState('share');
-      participant.setStateParti('share');
-      participant.onLocalStreamInParticipant(stream);
-
-      conference.register(true);
-    },
-
-    async share() {
-      // const screenHandler = new ScreenHandler();
-      const stream = await this.screenHandler.start(); //return => localStream
-      this.onLocalStream(stream);
-
-      // conference.sendingScreen(stream);
-      // conference.register(true)
-      // conference.onShareScreen(stream);
-
-      // conference.leaveRoom(true);
-
-      // const nameTag = document.getElementById('name')
-			// nameTag.value = this.name
-			// const classTag = document.getElementById('roomName')
-			// classTag.value = this.grade + '학년 ' + this.class + '반'
-      // const userIdTag = document.getElementById('userId')
-      // userIdTag.value = this.userId
-      // conference.register(true);
-    },
   },
 	mounted: function () {
     this.store = useStore()
 
 		console.log('마운트 되었음')
-    this.screenHandler = new ScreenHandler();
 
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
