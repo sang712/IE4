@@ -113,7 +113,7 @@ export default {
         updateTeacherData.append("password", state.mypageInfo.password)
         updateTeacherData.append("phone", state.mypageInfo.phone)
         updateTeacherData.append("address", state.mypageInfo.address)
-        updateTeacherData.append("classMotto", state.mypageInfo.classMotto)
+        updateTeacherData.append("classMotto", state.classMotto)
         updateTeacherData.append("profileImgUrl", attachFiles.files[0])
         store.dispatch('rootMain/updateTeacher', updateTeacherData)
       }
