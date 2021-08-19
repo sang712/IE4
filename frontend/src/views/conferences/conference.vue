@@ -292,7 +292,7 @@ export default {
       this.onLocalStream(stream);
 
       // conference.sendingScreen(stream);
-      conference.register(true)
+      // conference.register(true)
       // conference.onShareScreen(stream);
 
       // conference.leaveRoom(true);
