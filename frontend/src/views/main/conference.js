@@ -28,14 +28,6 @@ let participantList= new Map();
 var name;
 var userId;
 
-
-setInterval(sendMessage(message = {
-  id : 'reconnect',
-  name : name,
-  room : room,
-  userId : userId,
-}), 30000);
-
 // reconnect 위한 코드
 // function connect() {
 //   ws = new WebSocket('wss://' + location.host + '/api/groupcall');
