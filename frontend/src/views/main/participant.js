@@ -59,7 +59,7 @@ export function Participant(name, userId) {
     console.log("메인화면 바꾸기 입장맨~")
 		if (container.className === PARTICIPANT_CLASS) {
 			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
-			container.style = "display: block; border: thick double #32a1ce; width: 500px; height: 300px"
+			container.style = "display: block; border: thick double #32a1ce; width: 100%; height: 60%"
       elements.forEach(function (item) {
 				item.className = PARTICIPANT_CLASS;
         item.style = "display: block;   width: 300px; height: 168px;"
