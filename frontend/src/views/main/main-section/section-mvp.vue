@@ -23,8 +23,6 @@ export default {
 
     store.dispatch('rootMain/getRanking', localStorage.getItem('jwt'))
     .then(function (result) {
-      console.log("dispatch getRanking")
-      console.log(result.data)
       store.dispatch('rootMain/setRankingList', result.data)
     })
     .catch(function (err) {

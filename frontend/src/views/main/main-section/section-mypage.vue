@@ -6,7 +6,6 @@
           <img class="profile-img" :src="file" />
           <p style="width: 60%; height: 10%; font-size: 120% ;margin-left: 82px; ">프로필 사진 수정</p>
           <input style="margin-left: 40px; " @change="changeFile" type="file" id="inputFileUploadInsert" />
-        <!-- <el-button style="width: 60%; height: 10%; font-size: 120% ;margin-left: 82px; ">프로필수정</el-button> -->
         </div>
       </div>
       <div class="mypage-second-background">
@@ -40,8 +39,6 @@
             </el-form-item>
           </template>
         </el-form>
-        <!-- <h2>아이디:</h2>
-        <h3>{{ mypageInfo.loginId }}</h3> -->
       </div>
     </div>
     <div class="d-flex justify-content-evenly">
@@ -83,13 +80,6 @@ export default {
       secession.value.secessionDialogOpen = false
     };
 
-    console.log(store.state.rootMain.classInfo)
-    console.log(store.state.rootMain.mypageInfo)
-
-    // let mypageInfo = computed(function () {
-    //   return store.state.rootMain.mypageInfo
-    // });
-
     const state = reactive({
       mypageInfo : store.getters['rootMain/getMypageInfo'],
       file : store.getters['rootMain/getMypageInfo'].profileImgUrl,
@@ -103,9 +93,6 @@ export default {
     };
 
     const updateUser = () => {
-      console.log(document.querySelector("#inputFileUploadInsert").files[0])
-      console.log(localStorage.getItem('position'))
-      console.log(store.state.rootMain.mypageInfo.password)
       if(localStorage.getItem('position') == '학생'){
         var updateStudentData = new FormData()
         var attachFiles = document.querySelector("#inputFileUploadInsert")
@@ -131,7 +118,6 @@ export default {
       }
     };
 
-
     return { ...toRefs(state), changeFile, updateUser, secession, clickSecession, onCloseSecessionDialog }
   }
 }
@@ -141,7 +127,6 @@ export default {
   .el-dialog {
     background-size: fill !important;
     background-color: #FFFFFF;
-    /* background-image: url('../../assets/images/signuppage1.png') !important; */
     background-position: center;
     background-size: 100% !important;
     width: 40vw;
@@ -168,7 +153,6 @@ export default {
     margin: 35px auto;
     margin-left: 50px;
     height: 300px;
-    /* background-image: url('../../../assets/images/profile-picture.png'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

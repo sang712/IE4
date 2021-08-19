@@ -160,7 +160,6 @@ export default {
   .main-header {
     padding: 10px 20px;
   }
-  /*Mobile, Tablet*/
 
   .main-header.upper-header{
     display: flex;

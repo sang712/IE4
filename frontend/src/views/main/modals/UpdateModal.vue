@@ -18,8 +18,6 @@
         </div>
         <div>
           <p style="text-align:left">첨부 파일  {{fileUrl}}</p>
-
-          <!-- <img style="width: 60%; height: 10%;" v-bind:src="fileUrl"> -->
         </div>
         <div class="form-check mb-3">
           <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" >
@@ -66,16 +64,6 @@ export default {
       editorData: computed(() => store.getters['rootMain/getBoardDetail'].content),
       boardDetail : computed(() => store.getters['rootMain/getBoardDetail']),
     })
-    console.log("fileUrl >>> ", store.getters['rootMain/getBoardDetail'].fileUrl)
-    // const createFile = async() =>{
-    //   let response = await fetch('http://localhost:8080/'+state.fileUrl);
-    //   let data = await response.blob();
-    //   let metadata = {
-    //     type: 'image/jpeg'
-    //   };
-    //   state.file = new File([data], state.fileName, metadata);
-    // }
-    // createFile();
 
     state.boardDetail = store.getters['rootMain/getBoardDetail']
 
@@ -83,22 +71,18 @@ export default {
       ClassicEditor
       .create(document.querySelector('#divEditorUpdate'))
       .then(editor => {
-        console.log("created >>> ", editor)
         editorData = editor
         Swal.fire({ title: '성공!', text: '수정이 완료되었습니다.', icon: 'success', })
       })
       .catch(err => {
-          console.error("querySelector" , err)
           Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
       });
       setup;
     }
 
     const changeFile2 = (fileEvent) => {
-      console.log("fileEvent >>>> ", fileEvent)
       if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
         state.file2 = URL.createObjectURL(fileEvent.target.files[0]);
-        console.log("file2 >>>> ", state.file2)
       }
     }
 
@@ -108,13 +92,11 @@ export default {
       formData.append("id", state.boardDetail.boardId)
       formData.append("title", state.boardDetail.title)
       formData.append("content", state.editorData);
-      console.log("new content >>>> ", state.editorData)
       formData.append("classId",localStorage.getItem('classId'))
       formData.append("userId",localStorage.getItem('id'))
       formData.append("userName",localStorage.getItem('name'))
 
       var attachFiles = document.querySelector("#inputFileUploadInsert2");
-      console.log("insert 2 attachFiles >>> ",  attachFiles.files[0])
       if (attachFiles != null){
         formData.append("files", attachFiles.files[0])
       }
@@ -123,13 +105,11 @@ export default {
        store.dispatch('rootMain/requestBoardUpdate', formData)
        .then(function (result){
          Swal.fire({ title: '성공', text: '게시글 수정 완료되었습니다! ', icon: 'success', })
-         console.log("성공")
          closeModal();
          router.go();
        })
        .catch(function (err) {
          Swal.fire({ title: '실패', text: '게시글 수정 실패했습니다.', icon: 'error', })
-         console.log("requestBoardInsert erre :", err)
        })
     }
 

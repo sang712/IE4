@@ -14,9 +14,7 @@
             <tr><td>내용</td><td v-html=" boardDetail.content"></td></tr>
             <tr><td>작성자</td><td>{{ boardDetail.userName }}</td></tr>
             <tr><td>작성일시</td><td>{{  boardDetail.regDt}}</td></tr>
-            <!-- New for FileUpload -->
             <tr><td colspan="2">첨부파일</td></tr>
-            <!-- <img v-if="existFileUrl" style="width: 60%; height: 10%;" v-bind:src="fileUrl"> -->
              <tr>
               <td colspan="2">
                 <span class="fileName">{{ boardDetail.fileName }}</span>
@@ -24,7 +22,6 @@
                 <a type="button" class="btn btn-outline btn-default btn-xs" v-bind:href="boardDetail.fileUrl" download>내려받기</a>
               </td>
             </tr>
-            <!-- / New for FileUpload -->
           </tbody>
         </table>
       </div>
@@ -58,19 +55,6 @@ export default {
     const changeToDelete = () =>{
       emit( 'call-parent-change-to-delete' );
     }
-    // const changeFile = (fileEvent) => {
-    //   if(fileEvent.target.file && fileEvent.target.file.length > 0){
-    //     state.file = URL.createObjectURL(fileEvent.target.file);
-    //   }
-    // }
-
-    console.log(">" , store.state.rootMain.boardDetail)
-
-    // let boardDetail = computed(function () {
-    //   return store.state.rootMain.boardDetail
-    // })
-
-
 
     return { ...toRefs(state), changeToUpdate, changeToDelete }
   },

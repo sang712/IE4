@@ -11,7 +11,7 @@ export default {
   name: 'App',
 
   data: () => ({
-    //
+
   }),
   setup(props,{ emit }){
     const state = reactive({
@@ -25,12 +25,6 @@ export default {
       if (state.isLogin) router.push('/main')
       else router.push('/')
     })
-
-    // watch(state, (val, oldVal) => {
-    //   console.log(val.isLogin)
-    //   if (val.isLogin) router.push({ name: start })
-    //   else router.push({ name: main })
-    // })
 
     return { state }
 
