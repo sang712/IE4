@@ -30,9 +30,6 @@
             <option label="1반" value="01"></option>
             <option label="2반" value="02"></option>
             <option label="3반" value="03"></option>
-            <option label="4반" value="04"></option>
-            <option label="5반" value="05"></option>
-            <option label="6반" value="06"></option>
           </select>
           <el-input v-model="state.form.snum" placeholder="번호" style="width: 35%"></el-input>
         </el-form-item>
