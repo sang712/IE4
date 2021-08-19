@@ -81,7 +81,7 @@ export function Participant(name, userId) {
 			id: "receiveVideoFrom",
 			sender: name,
       userId : localStorage.getItem("id"),
-			sdpOffer: offerSdp
+			sdpOffer: offerSdp,
 		};
 		wp;
 		Conference.sendMessage(msg);

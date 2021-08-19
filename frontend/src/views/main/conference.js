@@ -119,9 +119,9 @@ export function onExistingParticipants(msg) {
       mandatory : {
         maxWidth : 320,
         maxFrameRate : 15,
-        minFrameRate : 15
+        minFrameRate : 15,
       }
-    }
+    },
   };
 
 
@@ -135,7 +135,7 @@ export function onExistingParticipants(msg) {
   var options = {
     localVideo: video,
     mediaConstraints: constraints,
-    onicecandidate: participant.onIceCandidate.bind(participant)
+    onicecandidate: participant.onIceCandidate.bind(participant),
   }
 
 
@@ -155,7 +155,7 @@ export function onExistingParticipants(msg) {
 
 export function leaveRoom() {
 	sendMessage({
-		id : 'leaveRoom'
+		id : 'leaveRoom',
 	});
 
 	for ( var key in participants) {
@@ -175,7 +175,7 @@ export function receiveVideo(sender) {
 
 	var options = {
       remoteVideo: video,
-      onicecandidate: participant.onIceCandidate.bind(participant)
+      onicecandidate: participant.onIceCandidate.bind(participant),
     }
 
 	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options,
