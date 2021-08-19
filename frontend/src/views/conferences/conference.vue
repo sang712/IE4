@@ -83,16 +83,10 @@
 			<ParticipantsList />
 			<div id="footer" style="display: none;">
 				<div class="button-wrapper">
-					<button class="button" @click="micOn" type="button" id="button-micOn" v-if="true"><i class="fas fa-microphone"></i></button>
-					<button class="button" @click="micOff" type="button" id="button-micOff" v-else><i class="fas fa-microphone-slash"></i></button>
-					<button class="button" @click="displayOn" type="button" id="button-videoOn" v-if="true"><i class="fas fa-video"></i></button>
-					<button class="button" @click="displayOff" type="button" id="button-videoOff" v-else><i class="fas fa-video-slash"></i></button>
-					<button class="button" type="button" id="button-leave" @mouseup="leaveRoom" value="Leave room"><i class="fas fa-door-open"></i></button>
+					<button class="button" @mouseup="leaveRoom" type="button" id="button-leave" value="Leave room"><i class="fas fa-door-open"></i></button>
+					<button class="button" @click="openParticipantsList" type="button" id="button-users"><i class="far fa-user"></i></button>
 				</div>
 				<div class="button-wrapper2">
-					<button class="button" @click="openParticipantsList" type="button" id="button-users"><i class="far fa-user"></i></button>
-					<button class="button" @click="openChatBox" type="button" id="button-chatting"><i class="far fa-comment-dots"></i></button>
-					<button class="button" type="button" id="button-more"><i class="fas fa-ellipsis-h"/></button>
 				</div>
 			</div>
 		</div>
