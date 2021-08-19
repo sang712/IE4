@@ -41,6 +41,7 @@ export function updateStudent (context, payload){
   $axios.post(url, body, header)
   .then(({ data }) => {
     context.commit('rootMain/setStudentMypageInfo', data, {root: true})
+    localStorage.setItem('profileImgUrl', data.profileImgUrl)
     Swal.fire({
       title: '성공!',
       text: '수정되었습니다!',
