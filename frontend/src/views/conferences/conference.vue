@@ -22,7 +22,7 @@
 				</form>
 			</div>
 			<div id="room" class="col-12" style="display: none;" >
-				<h2 id="room-header" style="margin: 10px 0px;"></h2>
+				<h2 id="room-header" style="margin: 10px auto;"></h2>
 				<div id="participants"></div>
 			</div>
 			<div id="chatbox" class="col-3" style="display: none;">
@@ -168,7 +168,7 @@ export default {
 			if (document.getElementById('chatbox').style.display == 'none')
 			{
 				document.getElementById('room').className = 'col-9'
-				document.getElementById('room').style.display = 'flex'
+				document.getElementById('room').style.display = 'grid'
 				document.getElementById('chatbox').className = 'col-3'
 				document.getElementById('chatbox').style.display = 'block'
 				document.getElementById('participants-list').className = 'col-3'
@@ -178,14 +178,14 @@ export default {
 				document.getElementById('chatbox').className = ''
 				document.getElementById('chatbox').style.display = 'none'
 				document.getElementById('room').className = 'col-12'
-				document.getElementById('room').style.display = 'flex'
+				document.getElementById('room').style.display = 'grid'
 			}
 		},
 		openParticipantsList() {
 			if (document.getElementById('participants-list').style.display == 'none')
 			{
 				document.getElementById('room').className = 'col-9'
-				document.getElementById('room').style.display = 'flex'
+				document.getElementById('room').style.display = 'grid'
 				document.getElementById('participants-list').className = 'col-3'
 				document.getElementById('participants-list').style.display = 'block'
 				document.getElementById('chatbox').className = 'col-3'
@@ -193,7 +193,7 @@ export default {
 				}
 			else{
 				document.getElementById('room').className = 'col-12'
-				document.getElementById('room').style.display = 'flex'
+				document.getElementById('room').style.display = 'grid'
 				document.getElementById('participants-list').className = ''
 				document.getElementById('participants-list').style.display = 'none'
 			}
