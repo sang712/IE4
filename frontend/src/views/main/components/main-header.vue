@@ -20,7 +20,7 @@
     <el-row class="main-header" style="height: 14vh;">
       <div class="lower-header">
         <div class="class-motto">
-          <h1>급훈 : {{ state.classInfo.classMotto }}</h1>
+          <h1 style="font-size:50px; font-weight: bold">급훈 : {{ state.classInfo.classMotto }}</h1>
         </div>
       </div>
     </el-row>
@@ -152,6 +152,7 @@ export default {
     margin: 10px auto;
     border-radius: 20px;
     text-align: center;
+    font-family: 'Nanum Brush Script', cursive;
 
     /* vertical-align: middle; */
   }
