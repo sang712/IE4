@@ -86,7 +86,6 @@ export default {
     store.dispatch('rootMain/requestClass', localStorage.getItem('jwt'))
     .then(function (result) {
       store.dispatch('rootMain/setClassInfo', result.data)
-      console.log(result.data)
     })
     .catch(function (err) {
       console.log("error")

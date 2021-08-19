@@ -51,14 +51,9 @@ export default {
       formLabelWidth: '120px'
     })
 
-    onMounted(() => {
-      // console.log(loginForm.value)
-    })
-
     const clickSecessionConfirm = function() {
       secessionForm.value.validate((valid) => {
         if (valid){
-          console.log(state.form.password)
           store.dispatch('rootMain/deleteUser', { id: localStorage.getItem('id'), password : state.form.password })
           .then(function (result) {
             localStorage.removeItem('jwt')
@@ -76,7 +71,7 @@ export default {
               title: '성공!',
               text: '계정이 삭제되었습니다..',
               icon: 'success',
-            }) // 같이 쓸수있으려나,,
+            })
             emit('closeSecessionDialog')
             router.go()
           })

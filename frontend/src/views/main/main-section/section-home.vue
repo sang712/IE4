@@ -57,23 +57,17 @@ export default {
     }
 
     const joinCon = () => {
-      console.log('조인콘 버튼 클릭됨!', state.nGrade + '학년' + state.nClass + '반 으로!')
       store.dispatch('rootMain/getConferenceActive')
       .then(function (result) {
-        console.log('result : ', result)
-        console.log(result.data)
         store.commit('rootMain/setConferenceActive', result.data, {root: true})
 
         if(state.conferenceActive == "open"){
-          console.log('conference open 상태!!')
           router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name'), grade: state.nGrade, class: state.nClass } })
         }else{ //close
-          console.log('conference close 상태!!')
           Swal.fire({ title: '잠깐!', text: '아직 수업이 시작하지 않았어요! 조금만 기다려주세요~', icon: 'warning', })
         }
       })
       .catch(function (err) {
-        console.log("getConferenceActive error", err)
         Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
       })
 
@@ -82,13 +76,10 @@ export default {
     const createCon = () => {
       store.dispatch('rootMain/updateConferenceActive', { conferenceActive : 'open'})
       .then(({ data }) => {
-        console.log('updateConferenceActive complete')
-        console.log(data)
         store.commit('rootMain/setConferenceActive', data, {root: true})
         router.push({ name : 'conference', params: { userId : localStorage.getItem('id'), name: localStorage.getItem('name') + " 선생님", grade: state.nGrade, class: state.nClass } })
       })
       .catch(function (err) {
-        console.log("updateConferenceActive error", err)
         Swal.fire({ title: '이런!', text: '에러가 발생했습니다.', icon: 'error', })
       })
     }

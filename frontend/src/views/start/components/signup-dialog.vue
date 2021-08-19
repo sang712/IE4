@@ -97,8 +97,6 @@ export default {
         callback(new Error('비밀번호는 8자 이상 16자 이하여야 합니다.'))
       }
       else if (!(/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).$/.test(value))) {
-        // if (!/[a-z]/.test(value)) callback(new Error('비밀번호는 영문 소문자를 포함해야합니다.'))}
-        // else if (!(/[A-Z]/).test(value)) callback(new Error('비밀번호는 영문 대문자를 포함해야합니다.'))
         if (!(/[a-z]|[A-Z]/).test(value)) callback(new Error('비밀번호는 영문을 포함해야 합니다.'))
         else if (!(/[0-9]/).test(value)) callback(new Error('비밀번호는 숫자를 포함해야합니다.'))
         else if (!(/[$`~!@$!%*#^?&\\(\\)\-_=+]/).test(value)) callback(new Error('비밀번호는 특수문자를 포함해야합니다.'))
@@ -226,18 +224,10 @@ export default {
       formLabelWidth: '120px'
     })
 
-    onMounted(() => {
-      console.log('마운트 됨 >>>', '학년', state.form.grade, '반', state.form.class_no)
-      console.log('비밀번호 확인 질문', state.form.password_question)
-    })
-
     const clickSignup = function () {
-      // console.log('폼', signupForm.value.model)
       // 가입하기 클릭 시 validate 체크 후 그 결과 값에 따라, 회원가입 API 호출 또는 경고창 표시
       signupForm.value.validate((valid, object) => {
-        // console.log('유효성체크완료', signupForm.value.model)
         if (valid) {
-          console.log('submit')
           store.dispatch('root/requestSignup', {
             loginId: state.form.id,
             password: state.form.password,
@@ -246,18 +236,16 @@ export default {
             snum: state.form.snum,
             sex: state.form.sex,
             phone: state.form.phone,
-            parentsPhone: state.form.parents_phone,
+            parentPhone: state.form.parents_phone,
             address: state.form.address,
             passwordQuestion: state.form.password_question,
             passwordAnswer: state.form.password_answer,
           })
           .then(function (result) {
-            console.log(result)
             emit('closeSignupDialog')
             Swal.fire({ title: '성공!', text: '회원가입이 완료되었습니다.', icon: 'success', })
           })
           .catch(function (err) {
-            console.log('에러발생', err.response.request.status)
             if (err.response.request.status == 500) {
               Swal.fire({ title: '이런!', text: '서버 오류가 발생했습니다..', icon: 'error', })
             } else {
@@ -265,7 +253,6 @@ export default {
             }
           })
         } else {
-          console.log(valid)
           Swal.fire({ title: '이런!', text: '유효한 정보를 입력해주세요.', icon: 'error', })
         }
       });

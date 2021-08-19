@@ -14,7 +14,6 @@
         <div class="mb-3">
           <div id=divEditorInsert>
             <ckeditor :editor="editor" v-model="editorData" @ready="onEditorReady"></ckeditor>
-             <!-- v-model="editorData" :config="editorConfig" -->
           </div>
         </div>
         <div class="form-check mb-3">
@@ -64,36 +63,24 @@ export default {
       ClassicEditor
       .create(document.querySelector('#divEditorInsert'))
       .then(editor => {
-          console.log("여기서 되나? >> ", editor.getData())
           editorData = editor
-          //this.editorData = editor
       })
       .catch(err => {
           console.error(err.stack);
       });
 
-      // bootstrap modal show event hook
-      // InsertModal 이 보일 때 초기화
-
-      //this.$el.addEventListener('show.bs.modal', function () {
-      //location.reload();
       setup;
-      //})
     }
 
     const changeFile = (fileEvent) => {
-      console.log("fileEvent >>>> ", fileEvent)
       if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
         state.file = URL.createObjectURL(fileEvent.target.files[0]);
-        console.log("file >>>> ", state.file)
       }
       var attachFiles = document.querySelector("#inputFileUploadInsert");
-      console.log("insert attachFiles >>> ",  attachFiles.files[0])
     }
 
     const onEditorReady = (editor) => {
       editorData = editor;
-      console.log("onEditor Ready>>", editorData.getData());
     }
 
     const boardInsert = () => {
@@ -105,24 +92,19 @@ export default {
       formData.append("userName",localStorage.getItem('name'))
 
       var attachFiles = document.querySelector("#inputFileUploadInsert");
-      // console.log("attachFiles >>> ",  attachFiles)
-      // console.log("attachFiles.files[0] >>> ",  attachFiles.files)
       formData.append("files", attachFiles.files[0])
 
       state.boardType = store.getters['rootMain/getBoardType'].type
-      console.log("boardType >>> ", state.boardType)
       formData.append("boardType",state.boardType)
 
       store.dispatch('rootMain/requestBoardInsert', formData)
       .then(function (result){
         Swal.fire({ title: '성공', text: '게시글 작성이 완료되었습니다! ', icon: 'success', })
-        console.log("성공")
         closeModal();
         router.go();
       })
       .catch(function (err) {
         Swal.fire({ title: '이런!', text: '작성 실패했습니다.', icon: 'error', })
-        console.log("requestBoardInsert erre :", err)
       })
     }
 

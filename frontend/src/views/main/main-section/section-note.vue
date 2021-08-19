@@ -1,16 +1,6 @@
 <template>
   <div class="section-note row" style="align-items: center">
-    <!-- <h1 class="note-title">학사일정</h1> -->
     <div class="note-content">
-      <!-- <span v-for="(item, index) in schedule" :key="index">
-        <h4 v-if="flag(item)">{{item.EVENT_NM}}</h4>
-      </span> -->
-
-      <!-- <div class="day">월 | &nbsp;zzzzzz</div>
-      <div class="day">화 | &nbsp;zzz</div>
-      <div class="day">수 | &nbsp;zzzzzzzzzz</div>
-      <div class="day">목 | &nbsp;zzzzzzzzzzzzz</div>
-      <div class="day">금 | &nbsp;zz</div> -->
 
       <div class="day">월 | &nbsp;{{ schedule[0].EVENT_NM }}</div>
       <div class="day">화 | &nbsp;{{ schedule[1].EVENT_NM }}</div>
@@ -49,7 +39,6 @@ export default {
 
     store.dispatch('rootMain/requestSchoolSchedule')
     .then(function (result) {
-      console.log(result.data.SchoolSchedule[1].row);
       store.dispatch('rootMain/setSchoolSchedule', result.data.SchoolSchedule[1].row)
     })
     .catch(function (err) {
@@ -60,7 +49,6 @@ export default {
       const today = new Date();
       return today.getDay();
     }
-
 
     return {
       getDate, flag, ...toRefs(state)
@@ -82,7 +70,6 @@ export default {
   color: white;
   font-size: 21px;
   text-align: center;
-  /* margin: 15px 5px; */
 }
 .day {
   margin-bottom: 10px;

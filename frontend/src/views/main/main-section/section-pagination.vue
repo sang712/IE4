@@ -21,7 +21,6 @@
 </template>
 <script>
 
-import { useSSRContext } from '@vue/runtime-core';
 import { useStore } from 'vuex'
 
 export default {
@@ -77,7 +76,6 @@ export default {
     },
     // 부모에게 event 전달
     paginationChanged(pageIndex){
-      console.log("paginationVue : paginationChanged : pageIndex : " + pageIndex );
       setTimeout(function(){
         location.reload();
       });

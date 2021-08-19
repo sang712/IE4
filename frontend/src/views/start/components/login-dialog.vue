@@ -56,10 +56,6 @@ export default {
       formLabelWidth: '120px'
     })
 
-    onMounted(() => {
-      // console.log(loginForm.value)
-    })
-
     const clickLogin = function () {
       // 로그인 클릭 시 validate 체크 후 그 결과 값에 따라, 로그인 API 호출 또는 경고창 표시
       loginForm.value.validate((valid) => {
@@ -71,7 +67,6 @@ export default {
             localStorage.setItem('classId', result.data.classId)
             localStorage.setItem('name', result.data.name)
             localStorage.setItem('profileImgUrl', result.data.profileImgUrl)
-            console.log('store:', store)
             localStorage.setItem('position', result.data.position == null ? '학생' : result.data.position)
             localStorage.setItem('sex', result.data.sex)
             if(result.data.position == '학생') {

@@ -41,7 +41,9 @@ export default {
     });
 
     const profileImgUrl = computed(() => {
+       console.log('state.nProfileImgUrl >>>>>>>' , state.nProfileImgUrl)
       if(state.nProfileImgUrl == 'null') {
+        console.log('profileImgUrl >>  if null  안으로 들어옴')
         if(state.nSex == '남자' && state.nPosition == '교사') {
           return 'ie4_upload/profileImg/no_profile_img_man.png';
         } else if(state.nSex == '여자' && state.nPosition == '교사') {
@@ -50,7 +52,8 @@ export default {
             return state.nName.charCodeAt([1])%2 ? 'ie4_upload/profileImg/no_profile_img_student1.jpg' : 'ie4_upload/profileImg/no_profile_img_student0.jpg'
         }
       }else{
-        return '/' + state.nProfileImgUrl;
+        console.log('profileImgUrl >> else 안으로 들어옴')
+        return state.nProfileImgUrl;
       }
     });
 
