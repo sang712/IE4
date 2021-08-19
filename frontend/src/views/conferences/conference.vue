@@ -631,6 +631,16 @@ a {
 	overflow: hidden;
 	position: relative;
 }
+.participant main {
+	margin: 0px 2px;
+  display: inline-block;
+  width: 500px;
+	height: 300px;
+	border: 1px solid;
+	border-radius: 10px;
+	overflow: hidden;
+	position: relative;
+}
 video {
 	width: 100%;
 	height: 100%;
