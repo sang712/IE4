@@ -44,6 +44,7 @@
 import * as conference from '../main/conference.js'
 import ParticipantsList from './ParticipantsList.vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'Conference',
@@ -60,6 +61,7 @@ export default {
 	data() {
 		return {
 			store:'',
+      router: '',
 		}
 	},
   methods : {
@@ -79,7 +81,8 @@ export default {
         })
       }
 
-			location.reload();
+      router.push({ name: 'main' });
+			// location.reload();
     },
 		openParticipantsList() {
 			if (document.getElementById('participants-list').style.display == 'none')
@@ -101,6 +104,7 @@ export default {
   },
 	mounted: function () {
     this.store = useStore()
+    this.router = useRouter()
 
 		if (this.name !== '') {
 			const nameTag = document.getElementById('name')
