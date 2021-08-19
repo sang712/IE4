@@ -77,12 +77,6 @@ public class Room implements Closeable {
     user.close();
   }
 
-  public void leaveForScreenShare(UserSession user) throws IOException {
-    log.debug("PARTICIPANT {}: Leaving room {}", user.getName(), this.name);
-    this.removeParticipantForScreenShare(user.getName());
-    user.close();
-  }
-
   private Collection<String> joinRoom(UserSession newParticipant) throws IOException {
     final JsonObject newParticipantMsg = new JsonObject();
     newParticipantMsg.addProperty("id", "newParticipantArrived");
@@ -131,28 +125,6 @@ public class Room implements Closeable {
     if (!unnotifiedParticipants.isEmpty()) {
       log.debug("ROOM {}: The users {} could not be notified that {} left the room", this.name,
           unnotifiedParticipants, name);
-    }
-
-  }
-
-  private void removeParticipantForScreenShare(String name) throws IOException {
-    participants.remove(name);
-
-    log.debug("ROOM {}: notifying all users that {} is leaving the room", this.name, name);
-
-    final List<String> unnotifiedParticipants = new ArrayList<>();
-
-    System.out.println("여기는 Room!! >>>> name : " + name);
-
-    for (final UserSession participant : participants.values()) {
-      System.out.println("for-each문 누구일까 >> " + participant.getName());
-      participant.cancelVideoFrom(name);
-
-    }
-
-    if (!unnotifiedParticipants.isEmpty()) {
-      log.debug("ROOM {}: The users {} could not be notified that {} left the room", this.name,
-              unnotifiedParticipants, name);
     }
 
   }

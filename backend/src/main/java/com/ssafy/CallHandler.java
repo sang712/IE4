@@ -83,28 +83,9 @@ public class CallHandler extends TextWebSocketHandler {
           user.addCandidate(cand, jsonMessage.get("name").getAsString());
         }
         break;
-      case "screenShare":
-        System.out.println("screenShare 들어왔음!!");
-        final String sSenderName = jsonMessage.get("sender").getAsString();
-        final UserSession sSender = registry.getByName(sSenderName);
-        final String sSdpOffer = jsonMessage.get("sdpOffer").getAsString();
-        // 엔드포인트 삭제
-        screenShare(user);
-        // 다시 엔드포인트 연결
-        user.receiveVideoFromForScreenShare(sSender, sSdpOffer);
-        break;
       default:
         break;
     }
-  }
-
-  private void screenShare(UserSession user) throws IOException {
-    System.out.println("screenShare 함수 들어왔음!");
-    final Room room = roomManager.getRoom(user.getRoomName());
-    room.leaveForScreenShare(user);
-//    if (room.getParticipants().isEmpty()) {
-//      roomManager.removeRoom(room);
-//    }
   }
 
   @Override
