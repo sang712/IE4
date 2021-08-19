@@ -298,6 +298,7 @@ video {
 	bottom: 0%;
 	left: 50%;
 	transform: translate(-50%, 0);
+	text-align: center;
 }
 #footer {
 	position: absolute;
