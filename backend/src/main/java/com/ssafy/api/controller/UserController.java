@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
-import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.User;
 
 import io.swagger.annotations.Api;
@@ -64,16 +63,11 @@ public class UserController {
 
 		}
 		else{ //(position == "학생")
-			System.out.println("user.getId() : " + user.getId());
 			Student student = userService.getStudentByUserId(user.getId());
 
 			return ResponseEntity.status(200).body(StudentRes.of(user, student));
 		}
 	}
-
-	// 1. 로그인 할 때 기본 이미지 url 넣어주기 => 프로필 수정했다가 다시 아무것도 설정안하면? DB에 아무것도 저장이 안될텐데
-	// => 기본이미지 설정하기 버튼 필요?
-	// 2. 프론트에서 null일 때 기본이미지 넣어주기
 
 	@PostMapping("/student")
 	@ApiOperation(value = "학생정보 수정", notes = "학생정보를 수정한다.")

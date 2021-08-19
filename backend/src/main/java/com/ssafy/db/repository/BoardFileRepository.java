@@ -9,7 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface BoardFileRepository extends JpaRepository<BoardFile, Integer>  {
-    //BoardFile save(BoardFile boardFile);
     Optional<BoardFile> findByBoardId(int boardId);
-    //List<BoardFile> fileAllByBoardId(int boardId);
 }

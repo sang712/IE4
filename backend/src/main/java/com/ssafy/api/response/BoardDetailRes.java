@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
- * 게시글 조회 API ([GET] /api/v1/users/{boardId) 요청에 대한 응답값 정의.
+ * 게시글 조회 API ([GET] /api/users/{boardId) 요청에 대한 응답값 정의.
  */
 
 @Getter

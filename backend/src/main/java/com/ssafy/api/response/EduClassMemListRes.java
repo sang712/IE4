@@ -10,11 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 우리 반 보기 API ([GET] /class/myclass/{classId}) 요청에 대한 응답값 정의.
+ * 우리 반 보기 API ([GET] /api/class/myclass/{classId}) 요청에 대한 응답값 정의.
  */
 @Getter
 @Setter
-@ApiModel("EduClassPeopleListResponse")
+@ApiModel("EduClassMemListResponse")
 public class EduClassMemListRes {
 
     @ApiModelProperty(name="User Name")

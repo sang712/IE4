@@ -1,6 +1,5 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.BoardUpdatePatchReq;
 import com.ssafy.db.entity.Board;
 import com.ssafy.db.entity.BoardFile;
 import org.springframework.data.domain.Page;
@@ -19,8 +18,6 @@ public interface BoardService {
     BoardFile detailBoardFile(int boardId);
     Board detailBoard(int boardId);
 
-    //List<Board> getBoardList(int classId, String boardType);
-    //List<Board> searchBoard(int classId, String boardType, String keyword);
     Page<Board> boardPage(int classId, String boardType, Pageable pageRequest);
     Page<Board> searchBoardPage(int classId, String boardType, Pageable pageRequest, String keyword);
 

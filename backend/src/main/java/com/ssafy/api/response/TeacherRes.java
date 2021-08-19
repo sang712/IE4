@@ -9,11 +9,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 회원 본인 정보 조회 API ([GET] /users/id) 요청에 대한 응답값 정의.
+ * 회원(선생님) 본인 정보 조회 API ([GET] /api/users/id) 요청에 대한 응답값 정의.
  */
 @Getter
 @Setter
-@ApiModel("UserResponse")
+@ApiModel("TeacherResponse")
 public class TeacherRes extends UserRes{
     @ApiModelProperty(name="Class Motto")
     String classMotto;
