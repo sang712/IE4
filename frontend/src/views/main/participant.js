@@ -69,7 +69,7 @@ export function Participant(name, userId) {
 			container.className = PARTICIPANT_MAIN_CLASS;
 		} else {
 			container.className = PARTICIPANT_CLASS;
-      item.style = "border: none; display: block;   width: 300px; height: 168px;"
+      container.style = "border: none; display: block;   width: 300px; height: 168px;"
 		}
 	}
 
