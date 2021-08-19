@@ -256,7 +256,7 @@ export function onExistingParticipants(msg) {
       localVideo: video,
       mediaConstraints: constraints,
       onicecandidate: participant.onIceCandidate.bind(participant),
-      sendSource: 'screen'
+      // sendSource: 'screen'
     }
 
 

@@ -292,7 +292,7 @@ export default {
       this.onLocalStream(stream);
 
       // conference.sendingScreen(stream);
-      // conference.register(true)
+      conference.register(true)
       // conference.onShareScreen(stream);
 
       // conference.leaveRoom(true);
@@ -619,7 +619,7 @@ a {
 	outline: none !important;
 }
 /* scoped 끝 */
-</style> 
+</style>
 <style>
 .participant {
 	margin: 0px 2px;
