@@ -140,7 +140,7 @@ a {
 	background: white;
 	border: 0px;
 	width: 55px;
-	margin: auto 2px;
+	margin: auto 4px;
 }
 .button:hover {
 	color: black;
@@ -161,7 +161,7 @@ a {
 	width: 45px;
 }
 #button-users {
-	border-radius: 12px 0px 0px 12px;
+	border-radius: 12px;
 	margin: 0px;
 }
 #button-chagtting {
