@@ -140,7 +140,7 @@ a {
 	background: white;
 	border: 0px;
 	width: 55px;
-	margin: auto 2px;
+	margin: auto 4px;
 }
 .button:hover {
 	color: black;
