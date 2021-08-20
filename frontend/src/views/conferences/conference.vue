@@ -161,7 +161,7 @@ a {
 	width: 45px;
 }
 #button-users {
-	border-radius: 12px 0px 0px 12px;
+	border-radius: 12px;
 	margin: 0px;
 }
 #button-chagtting {
