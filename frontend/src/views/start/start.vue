@@ -15,7 +15,7 @@
 </template>
 
 <style>
-@import "https://unpkg.com/element-plus/lib/theme-chalk/index.css";
+@import "https://unpkg.com/element-plus/theme-chalk/index.css";
 
 .el-dialog {
   background-size: fill !important;
